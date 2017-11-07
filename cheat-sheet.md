@@ -26,4 +26,5 @@ Detailed information can be found [here](https://kubernetes.io/docs/user-guide/k
 | `kubectl logs my-pod -n=my-namespace`| prints the logs written by `my-pod`|
 | `kubectl exec my-pod bash -n=my-namesapce` | starts a `bash`shell session in within the context of `my-pod`|
 | `kubectl delete pod my-pod -n=my-namespace` | Deletes the pod `my-pod`. Works also with other resource types |
+
 **Please note, the parameter -n=<namespace> is optional. If not specified all requests will target the `default` namespace.**
