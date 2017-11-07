@@ -1,14 +1,37 @@
 # Exercise 2 - create your first pod
 Now that you know, how kubectl works and how the smallest entity on kubernetes looks like, it is time to create your own pod.
 
-## Step 0:
+## Step 0: prepare a yaml file
 Create a file named pod.yaml with the following content:
 ```
 api:...
 ```
 Or download the raw file from [github](toDo: create file and insert link) with `curl` or `wget`
 
+Change the `namespace: <your-namespace>` to your actual namespace.
 >
 Options: https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
 https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/
 https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/
+
+## Step 1: create the pod
+Now tell the cluster that you would like it to schedule the pod for you. To do so, run the following command:
+`kubectl create -f pod.yaml`
+
+## Step 2: verify that the pod is running
+Use `kubectl`with the `get` verb, to check, if your pod has been scheduled. It should be up and running after a few seconds. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
+Experiment with `-o=yaml` to modify the output. Compare the result with your local `pod.yaml` file. Can you spot the odd/differences?
+
+## Step 3: get the logs
+Use `kubectl` with the `logs` command and get the logs of your pod. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
+
+## Step 4: exec into your pod
+In case `logs` or `describe` or any other of the output generating commands don't help you to get to the root cause of an issue, you may want to take a look yourself.
+The `exec` command helps you in this situation. Adapt & run the following command, to open a shell session into the container running as part of the pod:
+
+`kubectl exec <my-pod> bash -n=<your-namespace>`
+
+## Step 5: clean-up
+It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods -n=<your-namespace>`. As usual adapt the namespace.
+Now you can remove the pod from the cluster by running a `delete` command. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
+Which phases of the pod do you observe in your second shell?
