@@ -8,7 +8,7 @@
   * Docker
   * RKT
   * LXC/LXD
-# Docker
+## Docker
 * Where is it used, what is it good for?
 * Members of Docker's universe
   * Client-Server architecture and the docker client
