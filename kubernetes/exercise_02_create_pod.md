@@ -4,15 +4,23 @@ Now that you know, how kubectl works and how the smallest entity on kubernetes l
 ## Step 0: prepare a yaml file
 Create a file named pod.yaml with the following content:
 ```
-api:...
+apiVersion: v1
+kind: Pod
+metadata:
+  name: liveness-http
+  namespace: <your-namespace>
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.7.9
+    ports:
+    - containerPort: 80
 ```
-Or download the raw file from [github](toDo: create file and insert link) with `curl` or `wget`
+Or download the raw file from [github](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_example.yaml) with `curl` or `wget`.
 
-Change the `namespace: <your-namespace>` to your actual namespace.
->
-Options: https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
-https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/
-https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/
+Important: Change the `namespace: <your-namespace>` to your actual namespace!
+
+In case you have issues with the creation of the pod, check the indentation or refer to the api specification [here](https://kubernetes.io/docs/reference/).
 
 ## Step 1: create the pod
 Now tell the cluster that you would like it to schedule the pod for you. To do so, run the following command:
