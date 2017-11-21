@@ -4,7 +4,7 @@
 `kubectl` commands usually follow a fixed schema:
 
 * a `verb` like get, describe, create, delete - tells kubectl what to do.
-* a specification of the `resource` like pod, node or any other valid resource - specifies on which resource type the action defined by the `verb` should be executed.
+* a `resource` like pod, node - or any other valid resource - specifies against which resource type the action defined by the `verb` should be executed.
 * a concretization of the requested resource by ID/name or label (use `-l <key:value>`)
 * parameters or modifier like
   * `-n=<your-namespace>`: to route your query to another namespace than default
@@ -27,4 +27,10 @@ Detailed information can be found [here](https://kubernetes.io/docs/user-guide/k
 | `kubectl exec my-pod bash -n=my-namesapce` | starts a `bash`shell session in within the context of `my-pod`|
 | `kubectl delete pod my-pod -n=my-namespace` | Deletes the pod `my-pod`. Works also with other resource types |
 
-**Please note, the parameter -n=<namespace> is optional. If not specified all requests will target the `default` namespace.**
+**Please note, the parameter -n=<namespace> is optional. If not specified all requests will target the `default` namespace or the namesapce specified in your kubeconfig.**
+
+## short cuts
+kubectl wants you to reference resources by type. To do so, there are different formats availalbe. Most common is the following `kubect <verb> <resource type> <name>` like `kubectl get deployment nginx`. However it is also possible to connect resource type and name like this `deployment/nginx`.
+
+For several of the resource types there are also shortend identifiers available. For example the type `service` can be referenced by `svc`. A full list is available [here](https://kubernetes.io/docs/user-guide/kubectl-overview/) in section "resource types".
+Furthermore it is possible to get all resources of different types belonging to a name or label: `kubectl get svc,pod,deploy -l name=nginx`.
