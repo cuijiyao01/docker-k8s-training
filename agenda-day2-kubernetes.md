@@ -2,7 +2,7 @@
 
 ## Basics
 * Introduction to Kubernetes
-  * Origin, release cycles, fun facts? 
+  * Origin, release cycles, fun facts?
   * Demo
 * Core components
   * nodes
@@ -23,10 +23,9 @@
   * exec into pod
 * Entities part 2
   * labels
-  * replica sets, deployments, statefulset
+  * replica sets, deployments
 * Exercise - make your pod resilient to failure
 * Entities part 3
-  * recap: labels
   * services
   * overlay network
 * Exercise - add a service and connect to application
@@ -39,9 +38,10 @@
   * secrets
   * credentials
   * config maps
+* Exercise - configure your nginx & add certificates
 * Entities part 6
   * user management - service accounts
-  
+
 ## Special interest topics
 * Lifecycle mechanisms - rolling updates
 * further entities - jobs, daemonsets
