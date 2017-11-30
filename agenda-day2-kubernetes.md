@@ -36,7 +36,6 @@
 * Exercise - add storage to your application
 * Entities part 5
   * secrets
-  * credentials
   * config maps
 * Exercise - configure your nginx & add certificates
 * Entities part 6
