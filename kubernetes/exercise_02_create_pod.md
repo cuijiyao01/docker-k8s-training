@@ -8,7 +8,6 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: liveness-http
-  namespace: <your-namespace>
 spec:
   containers:
   - name: nginx
@@ -17,8 +16,6 @@ spec:
     - containerPort: 80
 ```
 Or download the raw file from [github](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_example.yaml) with `curl` or `wget`.
-
-Important: Change the `namespace: <your-namespace>` to your actual namespace!
 
 In case you have issues with the creation of the pod, check the indentation or refer to the api specification [here](https://kubernetes.io/docs/reference/).
 
@@ -37,9 +34,9 @@ Use `kubectl` with the `logs` command and get the logs of your pod. Check the [c
 In case `logs` or `describe` or any other of the output generating commands don't help you to get to the root cause of an issue, you may want to take a look yourself.
 The `exec` command helps you in this situation. Adapt & run the following command, to open a shell session into the container running as part of the pod:
 
-`kubectl exec <my-pod> bash -n=<your-namespace>`
+`kubectl exec <my-pod> bash`
 
 ## Step 5: clean-up
-It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods -n=<your-namespace>`. As usual adapt the namespace.
+It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`. As usual adapt the namespace.
 Now you can remove the pod from the cluster by running a `delete` command. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
 Which phases of the pod do you observe in your second shell?

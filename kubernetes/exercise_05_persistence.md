@@ -18,7 +18,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: nginx-pvc
-  namespace: <your-namespace>
 spec:
   storageClassName: standard
   accessModes:
@@ -28,7 +27,7 @@ spec:
       storage: 1Gi
 ```
 
-Change the namespace accordingly and create the resource: `kubectl create -f pvc.yaml`. Verify that your respective claim has been created and is bound to a PV.
+Create the resource: `kubectl create -f pvc.yaml`. Verify that your respective claim has been created and is bound to a PV.
 
 ### Step 2: Attach storage to a pod
 Create a new nginx pod but this time with a volume & mount section. Use the snippet or download from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_with_pvc.yaml)
@@ -38,7 +37,6 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: nginx-storage-test
-  namespace: <your-namespace>
 spec:
   volumes:
     - name: content-storage

@@ -46,7 +46,6 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: nginx-deployment
-  namespace: <your-namespace>
   labels:
     app: nginx
 spec:
@@ -67,8 +66,6 @@ spec:
 ```
 
 or download from github with `wget https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_example.yaml`.
-
-Adapt the file to fit to your namespace.
 
 ## Step 5 - optional: deploy(ment)!
 Now create the deployment again. However this time it will be created based on the yaml file:
