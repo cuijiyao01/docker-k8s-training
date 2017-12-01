@@ -2,7 +2,7 @@
 
 ## Basics
 * Introduction to Kubernetes
-  * Origin, release cycles, fun facts?
+  * Origin, release cycles, ...
   * Demo
 * Core components
   * nodes
@@ -14,6 +14,8 @@
   * yaml & json
 * Exercise - kubectl basics
   * use kubectl to query information
+
+## Core concetps
 * Entities part 1
   * namespaces
   * pods - schedule, describe, logs, exec
@@ -29,6 +31,8 @@
   * services
   * overlay network
 * Exercise - add a service and connect to application
+
+## Storage & configuration
 * Entities part 4
   * persistent volume
   * persistent volume claims
@@ -40,9 +44,3 @@
 * Exercise - configure your nginx & add certificates
 * Entities part 6
   * user management - service accounts
-
-## Special interest topics
-* Lifecycle mechanisms - rolling updates
-* further entities - jobs, daemonsets
-* custom scheduling
-* administration - taint, ready, no scheduling, ...
