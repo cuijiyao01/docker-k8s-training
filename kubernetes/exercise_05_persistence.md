@@ -53,7 +53,7 @@ spec:
 ```
 
 ### Step 3: Create some content
-Open a shell session into the pod with `kubectl exec nginx-storage-test bash` and navigate the location specified in the `mountPath`.
+Open a shell session into the pod with `kubectl exec nginx-storage-test bash` and navigate to the location specified in the `mountPath`.
 Re-use the index.html from the other day or create some custom content and insert it into the local index.html file.
 
 ### Step 4: Check the content
@@ -66,3 +66,7 @@ curl localhost
 
 ### Step 5: delete & re-create the pod
 Remove the pod from the cluster & re-create it. Once again, create a shell session into the pod and try to run `curl localhost` - it should not be present in the container. Re-run the update and install commands from the previous step and verify, your index.html file is still the same.
+
+### Step 6 (optional): create a service pointing to the pod
+Do you remember how to create a service? Try to label your pod and spin up a service for it. Access the index.htlm page via the service. 
+
