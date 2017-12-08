@@ -5,7 +5,7 @@ In this exercise you will set up a basic docker environment on a plain SLES 12 m
 ## Prerequisites
 
 During these exercises, we are going to use Docker on Linux - after all, this is where it all started.
-You can connect to your VM with any SSH client you like, if you do not have one already, we recommend you download and use [PyTTY](https://plx172.wdf.sap.corp/K8S_Training/putty.exe).
+You can connect to your VM with any SSH client you like, if you do not have one already, we recommend you download and use [PuTTY](https://plx172.wdf.sap.corp/K8S_Training/putty.exe).
 
 The VM will be assigned to you at the beginning of the training. Each VM has two users: `training`, who is unprivileged and `root`, who may do everything. The passwords will be given to you at the beginning of the training as well.
 
