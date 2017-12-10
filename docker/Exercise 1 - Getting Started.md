@@ -42,3 +42,13 @@ Tell systemd to reload all of its configuration files with `systemctl daemon-rel
 ## Step 4:  Run your first container... again
 
 Even though it might feel like a déjà-vu: use the docker command to pull and run the [whale-say image](https://hub.docker.com/r/docker/whalesay/).
+
+## Step 5: Make sure a non-privileged user can use Docker
+
+Until here, we were working as *root* who may do anything. Since this is dangerous and certainly not what is advisable in a production environment, we will use the user *training* from now on.
+
+Users must be members of the usergroup `docker` for them to able to use docker. Since this is not yet the case for user *training*, issue the following command to change that:
+
+```bash
+usermod -G docker training
+```
