@@ -12,7 +12,7 @@ An official NGINX image is provided on docker hub. Use the docker command to `se
 
 Start a new container and export the port of the NGINX webserver to a random port that is chosen by Docker. Use the `docker ps` command to find you which port the webserver is forwarded to and use your web browser to connect to it.
 
-## Step 2: forward NGINX' to a specified port
+## Step 2: forward NGINX to a specified port
 
 Within SAP it is more or less standard to let webservers run on port 1080. Start another nginx container but this time, make sure the exposed port of the webserver is forwarded to port 1080 on your host.
 
