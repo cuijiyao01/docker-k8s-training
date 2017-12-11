@@ -8,13 +8,19 @@ An official NGINX image is provided on docker hub. Use the docker command to `se
 
 **Hint:** The official NGINX image is appropriately labeled and features the most stars.
 
-## Step 1: expose NGINX' port
+## Step 1: forward NGINX' port
 
-Start a new container and export the port of the NGINX webserver to port 4000 of your VM. Use the `docker inspect` command to find out which ports are exposed by the NGINX container.
+Start a new container and export the port of the NGINX webserver to a random port that is chosen by Docker. Use the `docker ps` command to find you which port the webserver is forwarded to and use your web browser to connect to it.
 
-Again, use your webbrowser to connect to your VM, port 4000.
+## Step 2: forward NGINX' to a specified port
 
-## Step 2: import a volume
+Within SAP it is more or less standard to let webservers run on port 1080. Start another nginx container but this time, make sure the exposed port of the webserver is forwarded to port 1080 on your host.
+
+**Hint:** You can use `docker inspect` to find out which port is exposed by the image.
+
+Again, use your webbrowser to connect to your VM, port 1080.
+
+## Step 3: import a volume
 
 Create a directory on your VM. Inside that directory, create a file `index.html` and put some simple HTML into it. Start a new container that bind-mounts this directory to `/usr/share/nginx/html` as a volume so that NGINX will publish your custom HTML file instead of its default message.
 
