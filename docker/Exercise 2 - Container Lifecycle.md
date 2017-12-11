@@ -6,15 +6,15 @@ In this exercise, you will experience the container lifecycle, connect to runnin
 
 Create and run a new [busybox](https://hub.docker.com/_/busybox/) container. Make sure you let this container run interactively and connect a pseudo terminal to it.
 
-Inside your container, use the `top` find out which program is running as process with the PID 1 and if there are other processes. Do not exit from top, let it keep running.
+Inside your container, use the `top` command to find out which program is running as process with the PID 1 and if there are other processes. Do not exit from top, let it keep on running.
 
 ## Step 1: Detaching from containers
 
-Detach from your busybox container. Check with `docker ps` what state your container is in and find out its ~~silly~~ friendly name.
+Detach from your _busybox_ container. Check with `docker ps` what state your container is in and find out its ~~silly~~ friendly name.
 
 ## Step 2: Executing commands in containers
 
-Use the `docker exec` command to start another shell in your container. Use `ps` to find out how many programs are running in your container now. Once finished, detach from your container again.
+Use the `docker exec` command to start another shell (`/bin/sh`) in your container. Use `ps` to find out how many programs are running in your container now. Once finished, detach from your container again.
 
 ## Step 3: Reattaching to Containers
 
@@ -26,7 +26,7 @@ Exit from your container by ending top (simply press Q for Quit) and issuing the
 
 ## Step 4: Getting logs of a container
 
-Run a new container from the _nginx_ image. Make sure you start this container in detached mode. The _nginx_ webserver creates a log during startup, use `docker logs` to display it to your screen.
+Run a new container from the [nginx](https://hub.docker.com/_/nginx/) image. Make sure you start this container in detached mode. The _nginx_ webserver creates a log during startup, use `docker logs` to display it to your screen.
 
 ## Step 5: Killing Containers
 

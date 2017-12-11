@@ -1,6 +1,6 @@
 # Exercise 1 - Setup of Docker environment
 
-In this exercise you will set up a basic docker environment on a plain SLES 12 machine and run your first container on it.
+In this exercise you will set up a basic Docker environment on a plain SLES 12 machine and run your first container on it.
 
 ## Prerequisites
 
@@ -11,21 +11,21 @@ The VM will be assigned to you at the beginning of the training. Each VM has two
 
 ## Step 0: log in to your training virtual machine
 
-Using your SSH client, log in to your virtual machine as user training and as user root. With the `id -u` and `whoami` commands, verify that training has a user-ID of 1000 and root has a user-id of 0.
+Using your SSH client, log in to your virtual machine as user training and as user root. With the `id -u` and `whoami` commands, verify that training has a user-ID of 1000 and root has a user-id of 0. For the beginning of this exercise, you will need root privileges.
 
 ## Step 1: install docker
 
-Using the `zypper search` command, search for the docker packages. Once you found them, install them with the `zypper install` command. Verify if the packages installed successfully by checking if the files `/usr/bin/docker` and `/usr/bin/dockerd` exist.
+Using the `zypper search` command, search for the Docker packages. Once you found them, install them with the `zypper install` command. Verify if the packages installed successfully by checking if the files `/usr/bin/docker` and `/usr/bin/dockerd` exist.
 
 Try to run the command `docker info` but don't be surprised if you get an error message in return.
 
 ## Step 2: start docker and run your first container
 
-Start the docker daemon with `systemctl start docker.service`. The command `docker info` will now give you useful information about docker's configuration.
+Start the Docker daemon with `systemctl start docker.service`. The command `docker info` will now give you useful information about Docker's configuration.
 
-Use the docker command to pull and run the [whale-say image](https://hub.docker.com/r/docker/whalesay/).
+Use the `docker run` command to pull and run the [whale-say image](https://hub.docker.com/r/docker/whalesay/).
 
-**Hint:** If a command takes way too long to be right, it certainly is not. Abort with `Ctrl + C`.
+**Hint:** If a command takes way too long to be right, something is certainly wrong. Abort with **_Ctrl + C_**.
 
 ## Step 3: set up the proxy server
 
@@ -35,11 +35,12 @@ Create a systemd drop-in by creating the directory `/etc/systemd/system/docker.s
 [Service]
 Environment="http_proxy=http://proxy.wdf.sap.corp:8080"
 Environment="https_proxy=http://proxy.wdf.sap.corp:8080"
+Environment="no_proxy=.wdf.sap.corp"
 ```
 
-Tell systemd to reload all of its configuration files with `systemctl daemon-reload` and restart the docker daemon.
+Tell systemd to reload all of its configuration files with `systemctl daemon-reload` and restart the docker daemon with `systemctl restart docker.service`.
 
-## Step 4:  Run your first container... again
+## Step 4: Run your first container... again
 
 Even though it might feel like a déjà-vu: use the docker command to pull and run the [whale-say image](https://hub.docker.com/r/docker/whalesay/).
 
@@ -47,8 +48,10 @@ Even though it might feel like a déjà-vu: use the docker command to pull and r
 
 Until here, we were working as *root* who may do anything. Since this is dangerous and certainly not what is advisable in a production environment, we will use the user *training* from now on.
 
-Users must be members of the usergroup `docker` for them to able to use docker. Since this is not yet the case for user *training*, issue the following command to change that:
+Users must be members of the usergroup `docker` for them to able to use docker. Since this is not yet the case for user *training*, issue the following command as root to change that:
 
 ```bash
 usermod -G docker training
 ```
+
+Log out and log back in as user *training*.

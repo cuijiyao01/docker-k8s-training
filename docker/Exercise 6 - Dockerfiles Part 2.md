@@ -1,10 +1,10 @@
 # Exercise 6 - Dockerfiles Part 2: Building your own image from scratch
 
-In this exercise, you will create your very own nginx image from scratch.
+In this exercise, you will create your very own _nginx_ image from scratch.
 
 ## Step 0: Setting up your build context
 
-Create an empty directory that will be your build context. Download the archive that contains an empty Debian root filesystem to it.
+Create an empty directory on your VM that will be your build context. Download the archive that contains an empty Debian root filesystem to it.
 
 ```
 wget -O rootfs.tar.bz2 http://plx172.wdf.sap.corp:1080/K8S_Training/debian_rootfs.tar.bz2
@@ -57,11 +57,11 @@ apt-get -y install nginx wget
 
 ## Step 5: Download a custom website into the images
 
-Use the `RUN` directive to call `wget` to download an image and a custom HTML file into the image.
+Use the `RUN` directive to call `wget` to download a picture and a custom HTML file into the image.
 
 ```
-wget -O /usr/share/nginx/html/yo.jpg http://plx172.wdf.sap.corp:1080/K8S_Training/yo.jpg
-wget -O /usr/share/nginx/html/index.html http://plx172.wdf.sap.corp:1080/K8S_Training/yo.html
+wget -O /usr/share/nginx/html/cheers.jpg http://plx172.wdf.sap.corp:1080/K8S_Training/cheers.jpg
+wget -O /usr/share/nginx/html/index.html http://plx172.wdf.sap.corp:1080/K8S_Training/cheers.html
 ```
 
 ## Step 6: Copy a custom nginx configuration into the image
@@ -99,4 +99,4 @@ Use the `docker build` command to build your image. Tag it along the way so you 
 
 Run the image im detached mode, create a port forwarding from port 80 in the container to port 1081 on your host and connect with your webbrowser to it.
 
-If you see an image of Xzibit, you can consider yourself lucky as you have managed to complete this exercise.
+If you managed to finish this exercise successfully, you will get some celebrity credit.
