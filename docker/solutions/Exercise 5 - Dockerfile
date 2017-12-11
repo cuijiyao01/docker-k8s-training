@@ -1,0 +1,17 @@
+FROM nginx:stable
+
+# copy the custom website into the image
+COPY train.jpg /usr/share/nginx/html
+COPY index.html /usr/share/nginx/html
+
+# create a new directory
+RUN mkdir /etc/nginx/var
+
+# move the default configuration into there
+RUN mv /etc/nginx/conf.d/default.conf /etc/nginx/var
+
+# create a symlink
+RUN ln -s /etc/nginx/var/default.conf /etc/nginx/conf.d
+
+# fot the future, expose the https port
+EXPOSE 443
