@@ -14,8 +14,7 @@ wget -O rootfs.tar.bz2 http://plx172.wdf.sap.corp:1080/K8S_Training/debian_rootf
 We also want to use a custom nginx configuration inside our image so download it to your build context as well.
 
 ```
-wget -O nginx.conf
-http://plx172.wdf.sap.corp:1080/K8S_Training/nginx.conf
+wget -O nginx.conf http://plx172.wdf.sap.corp:1080/K8S_Training/nginx.conf
 ```
 
 ## Step 1: Creating the Dockerfile
