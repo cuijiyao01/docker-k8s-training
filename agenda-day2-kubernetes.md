@@ -44,3 +44,6 @@
 * Exercise - configure your nginx & add certificates
 * Entities part 6
   * user management - service accounts
+
+## Helm (optional)
+* Exercise - setup helm and learn, how to deploy a chart
