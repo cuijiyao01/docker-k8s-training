@@ -14,7 +14,7 @@ Can you figure out the name of the pod belonging to your deployment?
 ## Step 1: scaling
 Congratulations, you created your first deployment of a webserver. Now it's time to scale:
 `kubectl scale deployment nginx --replicas=3`
-Check the number of pods and the status of your deployment. Also don't miss the labels being attached to the pods. Run `kubectl get pods -l run:nginx` to filter for the pods belonging to your deployment.
+Check the number of pods and the status of your deployment. Also don't miss the labels being attached to the pods. Run `kubectl get pods -l run=nginx` to filter for the pods belonging to your deployment.
 
 ## Step 2: delete a pod :boom:
 In this step you will test the resilience of your deployment. To be able to monitor the events open a second shell and run the following command:
