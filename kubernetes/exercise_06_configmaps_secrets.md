@@ -71,7 +71,7 @@ Now you will create a new deployment that makes use of the configMap and the sec
 
 Download the yaml file from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_https.yaml) and store it locally.
 
-Verify that the newly created pod uses the configMap and secret by running `kubectl decribe pod <pod-name>`.
+Verify that the newly created pod uses the configMap and secret by running `kubectl describe pod <pod-name>`.
 
 ## Step 5: create a service
 Finally, you have to create a new service to expose your https-deployment. Either run a `kubectl expose` and figure out the ports needed or download the service.yaml from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/service_https.yaml).
