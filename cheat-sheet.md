@@ -5,7 +5,7 @@
 
 * a `verb` like get, describe, create, delete - tells kubectl what to do.
 * a `resource` like pod, node - or any other valid resource - specifies against which resource type the action defined by the `verb` should be executed.
-* a concretization of the requested resource by ID/name or label (use `-l <key:value>`)
+* a concretization of the requested resource by ID/name or label (use `-l <key=value>`)
 * parameters or modifier like
   * `-n=<your-namespace>`: to route your query to another namespace than default
   * `-o=wide`: more detailed output. The flag also accepts `yaml` or `json` as format.
