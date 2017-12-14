@@ -34,7 +34,7 @@ Use `kubectl` with the `logs` command and get the logs of your pod. Check the [c
 In case `logs` or `describe` or any other of the output generating commands don't help you to get to the root cause of an issue, you may want to take a look yourself.
 The `exec` command helps you in this situation. Adapt & run the following command, to open a shell session into the container running as part of the pod:
 
-`kubectl exec <my-pod> bash`
+`kubectl exec -ti <my-pod> bash`
 
 ## Step 5: clean-up
 It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`. As usual adapt the namespace.
