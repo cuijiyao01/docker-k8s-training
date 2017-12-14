@@ -69,7 +69,7 @@ Verify the configmap exists with `kubectl get configmap`
 ## Step 4: Combine everything into a deployment
 Now you will create a new deployment that makes use of the configMap and the secret.
 
-Download the yaml file from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_https.yaml) and store it locally. Don't forget to adapt the namespace and create the deployment with kubectl.
+Download the yaml file from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_https.yaml) and store it locally.
 
 Verify that the newly created pod uses the configMap and secret by running `kubectl decribe pod <pod-name>`.
 
