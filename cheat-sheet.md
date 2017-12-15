@@ -18,13 +18,16 @@ Detailed information can be found [here](https://kubernetes.io/docs/user-guide/k
 
 | command | expected result |
 | --- | ---|
-| `kubectl get all -n=my-namespace` | get all resources present in the specified namespace `my-namesapce`
-|`kubectl get pods -n=my-namespace`| get all pods within the specified namespace `my-namespace`. Instead of resource type pod any other valid resource can be used (i.e. deployment, service, ...) |
-|`kubectl get pods my-pod -n=my-namespace` | get the pod `my-pod` within `my-namespace`. Works also with other resource types |
-| `kubectl create -f pod.yaml` | create 1..n resources that are specified in the `pod.yaml` file |
+| `kubectl get all -n=my-namespace` | get all objects of the most common resources (services, pods, ...) present in the specified namespace `my-namesapce`
+| `kubectl get pods -n=my-namespace`| get all pods within the specified namespace `my-namespace`. Instead of resource type pod any other valid resource can be used (i.e. deployment, service, ...) |
+| `kubectl get pods -n=my-namespace --show-labels=true`| similar to the command above, but output shows all labels attached to the pods |
+| `kubectl get pods my-pod -n=my-namespace` | get the pod `my-pod` within `my-namespace`. Works also with other resource types |
+| `kubectl get pods -l status=awesome -n=my-namespace`| get all pods with label "status=awesome" in `my-namespace` |
 | `kubectl describe pod my-pod -n=my-namespace` | gives a detailed description of the the pod `my-pod`. Works also with other resource types|
+| `kubectl create -f pod.yaml` | create 1..n resources that are specified in the `pod.yaml` file |
 | `kubectl logs my-pod -n=my-namespace`| prints the logs written by `my-pod`|
 | `kubectl exec my-pod bash -n=my-namesapce` | starts a `bash`shell session in within the context of `my-pod`|
+| `kubectl label pod my-pod -n=mynamespace status=awesome`| attaches a lable `status=awesome` to my-pod |
 | `kubectl delete pod my-pod -n=my-namespace` | Deletes the pod `my-pod`. Works also with other resource types |
 
 **Please note, the parameter -n=<namespace> is optional. If not specified all requests will target the `default` namespace or the namesapce specified in your kubeconfig.**
