@@ -44,7 +44,7 @@ spec:
        claimName: nginx-pvc
   containers:
   - name: nginx
-    image: nginx:1.7.9
+    image: nginx:1.13.6
     ports:
     - containerPort: 80
     volumeMounts:
@@ -72,5 +72,4 @@ curl localhost
 Remove the pod from the cluster & re-create it. Once again, create a shell session into the pod and try to run `curl localhost` - it should not be present in the container. Re-run the update and install commands from the previous step and verify, your index.html file is still the same.
 
 ### Step 6 (optional): create a service pointing to the pod
-Do you remember how to create a service? Try to label your pod and spin up a service for it. Access the index.html page via the service. 
-
+Do you remember how to create a service? Try to label your pod and spin up a service for it. Access the index.html page via the service.
