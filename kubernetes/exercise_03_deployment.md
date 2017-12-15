@@ -7,9 +7,9 @@ To overcome this shortage kubernetes offers a hierachical constructed api. The p
 ## Step 0: deployments - the easy way
 Run the following command and check what happens:
 `kubectl run  nginx --image=nginx:1.12.2`
-It should create a new resource of type `deployment` named "nginx". Use `kubectl get deployment nginx -o yaml` or `kubectl describe deployment nginx` to get more detailed information on the deployment you just created.
+It should create a new resource of type `deployment` named "nginx". Use `kubectl get deployment nginx -o yaml` and `kubectl describe deployment nginx` to get more detailed information on the deployment you just created. Based on those information, determine the labels & selectors used by your deployment.
 
-Can you figure out the name of the pod belonging to your deployment?
+Can you figure out the name of the pod belonging to your deployment by using the label information? Hint use `-l` switch in combination with `kubectl get pods` 
 
 ## Step 1: scaling
 Congratulations, you created your first deployment of a webserver. Now it's time to scale:
