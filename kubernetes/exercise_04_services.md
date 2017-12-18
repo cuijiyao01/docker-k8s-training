@@ -17,3 +17,8 @@ Run `kubectl get nodes -o wide` to get the IP addresses of all cluster nodes. Yo
 ## Step 3: optional - create a service from a yaml file.
 Download the  [servic.yaml](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/service.yaml) to your machine.
 Check, that the label selector matches the lables of your deployment/pods and (re-)create the service (`kubectl create -f <your-file>.yaml`).
+
+## Step 4: optional/advanced - learn how to label
+In this last step you will expose another pod through a service. Simply create the pod from the 2nd exercise again and try to expose it as `NodePort` with `kubectl expose pod ...`.
+You will probably get an error message concerning missing labels. Solve this by adding a custom label to your pod and try again to expose it.
+Finally, clean-up and remove the pod as well as the service.
