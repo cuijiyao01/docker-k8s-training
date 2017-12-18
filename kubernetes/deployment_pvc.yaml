@@ -19,7 +19,6 @@ spec:
         persistentVolumeClaim:
           claimName: nginx-pvc
           readOnly: true
-
       containers:
       - name: nginx
         image: nginx:1.13.6
