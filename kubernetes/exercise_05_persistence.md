@@ -1,10 +1,12 @@
 # Exercise 5 - persistence
 
-In this exercise you will again create a simple pod with an nginx webserver and attach some storage to it.
+In this exercise you will add some content to the pods in your deployment
 
-## Step 0: Check your environment
-Take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`
-Inspect the resouces you found and find out how they are related (hint - look for `status: bound`).
+## Step 0: Prepare & check your environment
+Firstly, remove the deployment you created in the earlier exercise. Check the cheat sheet for the respective command.
+
+Next, take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`. Are there already PV and PVC resources?
+Inspect the resouces you found and try to figure out how they are related (hint - look for `status: bound`).
 
 ## Step 1: Create a PersistentVolume and a corresponding claim
 Instead of creating a PersistentVolume (PV) first and then bind it to a PersistentVolumeClaim (PVC), you will directly request storage via a PVC using the default storage class.
@@ -21,7 +23,7 @@ metadata:
 spec:
   storageClassName: standard
   accessModes:
-    - ReadWriteOnce
+    - ReadOnlyMany
   resources:
     requests:
       storage: 1Gi
@@ -29,47 +31,39 @@ spec:
 
 Create the resource: `kubectl create -f pvc.yaml`. Verify that your respective claim has been created and is bound to a PV.
 
-### Step 2: Attach storage to a pod
+### Step 2: Attach the PVC to a pod
 Create a new nginx pod but this time with a volume & mount section. Use the snippet or download from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_with_pvc.yaml)
 
 ```
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-storage-test
+  name: nginx-storage-pod
 spec:
   volumes:
     - name: content-storage
       persistentVolumeClaim:
        claimName: nginx-pvc
   containers:
-  - name: nginx
-    image: nginx:1.13.6
-    ports:
-    - containerPort: 80
+  - name: busybox
+    image: busybox
+    args:
+    - sleep
+    - "1000"
     volumeMounts:
-    - mountPath: "/usr/share/nginx/html"
+    - mountPath: "/usr/share/nginx/"
       name: content-storage
 ```
 
-### Step 3: Create some content
-Open a shell session into the pod with `kubectl exec -ti nginx-storage-test bash` and navigate to the location specified in the `mountPath`.
-Re-use the index.html from the other day or create some custom content and insert it into the local index.html file. To edit files, you probably have to install an editor:
-```
-apt-get update
-apt-get install vim
-```
+### Step 3: Remove and re-attach the storage
+Fistly, delete the busybox helper pod, you created earlier: ` kubectl delete pod nginx-storage-pod -n training-master`
+Then create a new deployment that uses the `nginx-pvc`. However `run nginx` will not work this time, since you need to specify the volume mount. Try to extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as example.
+
+Please note that our storage backend (`standard` storage class based on `gcePersistentDisk`) does not support `readWriteMany` mounts. You can either mount the volume once for write access (like you did in step 2) or several times as readOnly. Since our deployment has 3 replicas and we don't want to modify the `index.html`, mount the `nginx-pvc` by adding `readOnly: true` to both the `volumeMounts` and the `volumes.persistentVolumeClaim` sections.
+
+In case you need a hint, check the prepared yaml file on [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_pvc.yaml).
+
+Once you successfully created the deployment, check that all replicas are up and running.
 
 ### Step 4: Check the content
-Within the pod-shell session, run the subsequently mentioned commands. It will install the program `curl` locally in your pod. By running `curl localhost` you will send a  HTTP GET request to nginx asking for the index.html you just created.
-```
-apt-get update
-apt-get install curl
-curl localhost
-```
-
-### Step 5: delete & re-create the pod
-Remove the pod from the cluster & re-create it. Once again, create a shell session into the pod and try to run `curl localhost` - it should not be present in the container. Re-run the update and install commands from the previous step and verify, your index.html file is still the same.
-
-### Step 6 (optional): create a service pointing to the pod
-Do you remember how to create a service? Try to label your pod and spin up a service for it. Access the index.html page via the service.
+Remember the service from the previous exercise? Since the labels where not changed, the service will route incoming traffic to the new pods with the attached storage volume. Open a web browser and verfiy that your custom index.html page is displayed properly.

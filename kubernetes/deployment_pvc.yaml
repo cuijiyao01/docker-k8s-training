@@ -26,6 +26,6 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - mountPath: "/usr/share/nginx/"
+        - mountPath: "/usr/share/nginx/html"
           name: content-storage
           readOnly: true
