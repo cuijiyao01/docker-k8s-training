@@ -31,7 +31,7 @@ spec:
 
 Create the resource: `kubectl create -f pvc.yaml`. Verify that your respective claim has been created and is bound to a PV.
 
-### Step 2: Attach the PVC to a pod
+## Step 2: Attach the PVC to a pod
 Create a busybox pod with a volume & mount section to get access to your PVC. Use the snippet below or download from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_with_pvc.yaml)
 
 ```
