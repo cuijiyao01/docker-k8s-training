@@ -46,4 +46,6 @@
   * user management - service accounts
 
 ## Helm (optional)
-* Exercise - setup helm and learn, how to deploy a chart
+* what is helm?
+* how to use it?
+* Exercise - happy helming
