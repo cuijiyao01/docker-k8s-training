@@ -10,7 +10,7 @@
   * `-n=<your-namespace>`: to route your query to another namespace than default
   * `-o=wide`: more detailed output. The flag also accepts `yaml` or `json` as format.
 
-Example: `kubect get pod -n=my-namespace -o wide`
+Example: `kubect get pod -n=my-namespace -o=wide`
 
 Detailed information can be found [here](https://kubernetes.io/docs/user-guide/kubectl-overview/)
 
