@@ -26,11 +26,11 @@ Exit from your container by ending top (simply press Q for Quit) and issuing the
 
 ## Step 4: Getting logs of a container
 
-Run a new container from the [nginx](https://hub.docker.com/_/nginx/) image. Make sure you start this container in detached mode. The _nginx_ webserver creates a log during startup, use `docker logs` to display it to your screen.
+Use `docker logs` to display the logs of the container you just exited from. What do you see?
 
 ## Step 5: Killing Containers
 
-The container in step 4 was started in detached mode so it will continue to run until it gets explicitly stopped. Use the `docker stop` command to end it.
+Run a new container from the [nginx](https://hub.docker.com/_/nginx/) image. Make sure you start this container in detached mode. Since the container was started in detached mode it will continue to run until it gets explicitly stopped. Use the `docker stop` command to end it.
 
 ## Step 6: Cleaning up
 
