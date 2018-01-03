@@ -1,12 +1,12 @@
 # Exercise 5 - Dockerfiles Part 1: Extending existing images
 
-In this exercise, you will use a Dockerfile to extend an existing nginx image.
+In this exercise, you will use a Dockerfile to extend an existing nginx image so that it is SSL enabled.
 
 ## Step 0: Setting up a build context
 
 Create an empty directory on your VM, change into it and create an empty `Dockerfile`.
 
-We want to copy two files to the image, so we need to place them into our build context:
+We want to copy a custom (yet very simple) website to the image, so we will download the files into our build context:
 
 ```bash
 wget -O train.jpg http://plx172.wdf.sap.corp:1080/K8S_Training/train.jpg
@@ -21,34 +21,51 @@ As we want to extend an existing _nginx_ image, we need to come `FROM` it. It is
 
 Use the `COPY` directive to the place the two files you downloaded in Step 0 to your build context into the image at `/usr/share/nginx/html`.
 
-## Step 3: move the default configuration file to a different place
+## Step 3: create an SSL configuration for _nginx_
 
-Use the `RUN` directive to create the directory `/etc/nginx/var` inside the image.
+In order to enable SSL for nginx, you will have to place an additional configuration file into the image.
 
-Use another `RUN` directive to move the file `/etc/nginx/conf.d/default.conf` to the new directory `/etc/nginx/var`.
+Create a new file `ssl.conf` inside your build context and paste this into it:
 
-Finally, use a third `RUN` directive to create a symlink from `/etc/nginx/var/default.conf` to `/etc/nginx/conf.d/default.conf`.
+```nginx
+server {
+    listen       443 ssl;
+    server_name  localhost;
 
-**Hint:** In case you are not that familiar with Linux, here are the commands to create the directory, move the file and make a symlink.
+    ssl_certificate /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx.key;
 
-```bash
-mkdir -p /etc/nginx/var
-mv /etc/nginx/conf.d/default.conf /etc/nginx/var
-ln -sf /etc/nginx/var/default.conf /etc/nginx/conf.d
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+}
 ```
 
-## Step 4: expose the secure HTTP port
+**Shortcut:** You can also download this configuration file from http://plx172.wdf.sap.corp:1080/K8S_Training/ssl.conf.
 
-The default _nginx_ image only exposes port 80 for unencrypted HTTP. In case you want to enable encrypted HTTPS, it is a good idea to expose port 443 as well. Use the `EXPOSE` directive accordingly.
+Again, with the help of the `COPY` directive, make sure that this file ends up in your image at `/etc/nginx/conf.d/ssl.conf`.
 
-## Step 5: build the image
+## Step 4: add the certificates to image
+
+For SSL/TLS to work, we will need an encryption key and a certificate. These have already been prepared and should be downloaded directly into the image using the `ADD` directive.
+
+The encryption key can be downloaded from http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.key and should end up at `/etc/nginx/ssl/nginx.key`. The certificate can be obtained from http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.crt and should end up at `/etc/nginx/ssl/nginx.crt` inside the image.
+
+**WARNING:** Placing the encryption key for an SSL/TLS certificate on a webserver where it is accessible for everyone is a very bad idea. This is only done for the sake of simplicity during this training and of course, this key-certificate combination is to be considered compromised and insecure. Do not try this at home!
+
+## Step 5: expose the secure HTTP port
+
+The default _nginx_ image only exposes port 80 for unencrypted HTTP. Since we want to enable encrypted HTTPS, it is a good idea to expose port 443 as well. Use the `EXPOSE` directive accordingly.
+
+## Step 6: build the image
 
 Use the `docker build` command to build the image. Make note of the UID of the new image. Use `docker history` to examine how the image was built and how the output differs from when you use a simple `docker commit`.
 
-## Step 6: tag the image
+## Step 7: tag the image
 
 With `docker tag`, give your image a nice name such as _mynginx_ and a release number.
 
-## Step 7: run a container
+## Step 8: run a container
 
-Create and run a new container from your image. Do not forget to run the container in detached mode. Let Docker automatically assign port forwardings, find out to where the ports have been mapped and use your web browser to connect to them.
+Create and run a new container from your image. Do not forget to run the container in detached mode. Let Docker automatically assign port forwardings, find out to where the ports have been mapped and use your web browser to connect to them. Use them both, the non-SSL (that gets mapped to port 80) and the SSL port (the one that gets mapped to 443).
