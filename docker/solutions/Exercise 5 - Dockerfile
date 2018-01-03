@@ -4,14 +4,12 @@ FROM nginx:stable
 COPY train.jpg /usr/share/nginx/html
 COPY index.html /usr/share/nginx/html
 
-# create a new directory
-RUN mkdir /etc/nginx/var
+# copy the SSL configuration file into the image
+COPY ssl.conf /etc/nginx/conf.d/ssl.conf
 
-# move the default configuration into there
-RUN mv /etc/nginx/conf.d/default.conf /etc/nginx/var
+# download the SSL key and certificate into the image
+ADD http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.key /etc/nginx/ssl/nginx.key
+ADD http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.crt /etc/nginx/ssl/nginx.crt
 
-# create a symlink
-RUN ln -s /etc/nginx/var/default.conf /etc/nginx/conf.d
-
-# fot the future, expose the https port
+# expose the https port
 EXPOSE 443
