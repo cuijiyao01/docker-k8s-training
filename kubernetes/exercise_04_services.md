@@ -11,14 +11,19 @@ With `--type=LoadBalancer` you request our training infrastructure (GCP) to prov
 
 ## Step 2: connect to your service
 Checkout the newly created `service` object in your namespace. Try to get detailed information with `get -o=yaml` or `describe`. Note down the different ports exposed and try to access the application via the external IP.
+
 Next try to access the service via the NodePort. Since the NodePort is opened on any cluster node, all you need, is the IP of a cluster node + the NodePort.
 Run `kubectl get nodes -o wide` to get the IP addresses of all cluster nodes. You can take any of them and combine it with your NodePort.
 
 ## Step 3: optional - create a service from a yaml file.
-Download the  [servic.yaml](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/service.yaml) to your machine.
+Either try to write your own yaml or download the  [servic.yaml](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/service.yaml) to your machine.
 Check, that the label selector matches the lables of your deployment/pods and (re-)create the service (`kubectl create -f <your-file>.yaml`).
 
 ## Step 4: optional/advanced - learn how to label
 In this last step you will expose another pod through a service. Simply create the pod from the 2nd exercise again and try to expose it as `NodePort` with `kubectl expose pod ...`.
+
 You will probably get an error message concerning missing labels. Solve this by adding a custom label to your pod and try again to expose it.
+
+Once you are able to access the nginx via the `NodePort`, take a look at the pod and the service. Determine the label as well as the corresponding selectors. Now remove the label from the pod: `kubectl label pod <your-pod> --overwrite <your-label-key>-` and try again to access the nginx via the `NodePort`. Most likely this won't work anymore. 
+
 Finally, clean-up and remove the pod as well as the service.
