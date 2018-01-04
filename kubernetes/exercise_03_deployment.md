@@ -1,5 +1,5 @@
 # Exercise 3: Deployment
-With the deletion of the pod all information associated with it have been removed as well. Though an unplanned, forcefully deletion is an unlikely scenario, it illustrates the lack of resilience the pod construct suffers quite well.
+With the deletion of the pod all information associated with it have been removed as well. Though an unplanned, forcefully deletion is an unlikely scenario, it illustrates the lack of resilience of the pod construct quite well.
 
 To overcome this shortage kubernetes offers a hierachical constructed api. The pod, which encapsulated the container, is now wrapped in a more complex construct that takes care of the desired state - the deployment. In this case "desired state" means that a specified quorum of running instances is fulfilled.
 
