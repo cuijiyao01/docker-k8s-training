@@ -40,7 +40,7 @@ Of course it is possible to create deployments from a yaml file. The following s
 
 Firstly, delete the deployment you just created:
 `kubectl delete deployment nginx`
-Secondly, create a new yaml file from the snippet below
+Secondly, try to write your own yaml file for a new deployment. It could look like the snippet below
 ```
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -65,7 +65,7 @@ spec:
         - containerPort: 80
 ```
 
-or download from github with `wget https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_example.yaml`.
+or download the solution from github with `wget https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_example.yaml`.
 
 ## Step 5 - optional: deploy(ment)!
 Now create the deployment again. However this time it will be created based on the yaml file:
