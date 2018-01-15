@@ -1,4 +1,4 @@
-# Agenda Day 2 Kubernetes
+# Agenda Day 2 & 3 Kubernetes
 
 ## Basics
 * Introduction to Kubernetes
@@ -15,7 +15,7 @@
 * Exercise - kubectl basics
   * use kubectl to query information
 
-## Core concetps
+## Core concepts
 * Entities part 1
   * namespaces
   * pods - schedule, describe, logs, exec
@@ -42,10 +42,21 @@
   * secrets
   * config maps
 * Exercise - configure your nginx & add certificates
-* Entities part 6
-  * user management - service accounts
 
-## Helm (optional)
+## Furhter entities
+* networking
+* workloads
+* administration
+
+## Administration
+* User management - service accounts
+* Role based authorization (RBAC)
+* Network policies
+* Node management
+* Scheduling pods on dedicated nodes
+* get your cluster
+
+## Helm
 * what is helm?
 * how to use it?
 * Exercise - happy helming
