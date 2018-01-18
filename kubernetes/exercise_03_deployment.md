@@ -9,7 +9,7 @@ Run the following command and check what happens:
 `kubectl run  nginx --image=nginx:1.12.2`
 It should create a new resource of type `deployment` named "nginx". Use `kubectl get deployment nginx -o yaml` and `kubectl describe deployment nginx` to get more detailed information on the deployment you just created. Based on those information, determine the labels & selectors used by your deployment.
 
-Can you figure out the name of the pod belonging to your deployment by using the label information? Hint use `-l` switch in combination with `kubectl get pods` 
+Can you figure out the name of the pod belonging to your deployment by using the label information? Hint: use the `-l` switch in combination with `kubectl get pods`
 
 ## Step 1: scaling
 Congratulations, you created your first deployment of a webserver. Now it's time to scale:
@@ -36,14 +36,21 @@ Once finished, check the deplyoment, pods and ReplicaSets available in your name
 This way you would be able to roll back in case of an issue during update or with the new version. Check `kubectl rollout history deployment/nginx` for the existing versions of your deployment. By specifying `--revision=1` you will be able to get detailed on revision number one.
 
 ## Step 4 - optional: prepare for the hard way
-Of course it is possible to create deployments from a yaml file. The following steps give an example, how it could look like.
+Of course it is possible to create deployments from a yaml file. The following step gives an example, how it could look like.
 
 Firstly, delete the deployment you just created:
 `kubectl delete deployment nginx`
-Secondly, try to write your own yaml file for a new deployment. It could look like the snippet below
+
+Secondly, try to write your own yaml file for a new deployment that creates 3 replicas of an `nginx` image, version 1.13.6.
+
+Below is a skeleton of a deployment, however it is still missing some essential fields. Check the (api reference)[https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#deployment-v1beta2-apps] for details.
+
+* `kind: Deployment`
+* `containers` (check the pod spec from exercise 2 or the deployment created with run)
+* values for `matchLabels`
+
 ```
 apiVersion: apps/v1beta1
-kind: Deployment
 metadata:
   name: nginx-deployment
   labels:
@@ -52,20 +59,14 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      run: nginx
   template:
     metadata:
       labels:
         run: nginx
     spec:
-      containers:
-      - name: nginx
-        image: nginx:1.13.6
-        ports:
-        - containerPort: 80
 ```
 
-or download the solution from github with `wget https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_example.yaml`.
+As a reference, you can find a solution on [github](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_example.yaml).
 
 ## Step 5 - optional: deploy(ment)!
 Now create the deployment again. However this time it will be created based on the yaml file:

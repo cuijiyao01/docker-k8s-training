@@ -1,23 +1,26 @@
 # Exercise 2 - create your first pod
-Now that you know, how kubectl works and how the smallest entity on kubernetes looks like, it is time to create your own pod.
+Now that you know, how kubectl works and what the smallest entity on kubernetes looks like, it is time to create your own pod.
 
 ## Step 0: prepare a yaml file
-Create a file named pod.yaml with the following content:
+In kubernetes all resources have a well-described schema that is documented in the API definition. For example, the `Pod` resource is defined by `kind: Pod` and contains a `PodSpec`, which has a `Container`, which has an `Image`, which specifies the docker image to use, when running the pod.
+
+In this step you are going to describe a pod in a yaml file (`pod.yaml`). Take the skeleton listed below and insert the field/values mentioned below at the right place.
+* `kind: Pod`
+* `name: nginx` (metadata)
+* `image: nginx:1.7.9`
+
+Check the official [API reference](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#pod-v1-core) of the pod resource for help.
+
 ```
 apiVersion: v1
-kind: Pod
-metadata:
-  name: liveness-http
+metadata:  
 spec:
   containers:
-  - name: nginx
-    image: nginx:1.7.9
+  - name: nginx    
     ports:
     - containerPort: 80
 ```
-Or download the raw file from [github](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_example.yaml) with `curl` or `wget`.
-
-In case you have issues with the creation of the pod, check the indentation or refer to the api specification [here](https://kubernetes.io/docs/reference/).
+If it does not work as expected, check the indentation or take a look at the solution on  [github](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_example.yaml)
 
 ## Step 1: create the pod
 Now tell the cluster that you would like it to schedule the pod for you. To do so, run the following command:
@@ -38,6 +41,6 @@ The `exec` command helps you in this situation. Adapt & run the following comman
 `kubectl exec -ti <my-pod> bash`
 
 ## Step 5: clean-up
-It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`. As usual adapt the namespace.
+It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`.
 Now you can remove the pod from the cluster by running a `delete` command. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
 Which phases of the pod do you observe in your second shell?
