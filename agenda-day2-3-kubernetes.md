@@ -29,7 +29,6 @@
 * Exercise - make your pod resilient to failure
 * Entities part 3
   * services
-  * overlay network
 * Exercise - add a service and connect to application
 
 ## Storage & configuration
