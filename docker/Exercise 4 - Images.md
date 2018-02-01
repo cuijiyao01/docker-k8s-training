@@ -51,3 +51,11 @@ In case you haven't done it yet, stop your existing container using `docker stop
 ## Step 5: Examining an images history
 
 Use the `docker history` command to examine the history of your custom image. Can you see what the drawback of using `docker commit` is?
+
+## Step 6: Pushing the image to a registry
+
+The computer **pvxka22.wdf.sap.corp** runs a docker registry to which you can push your image.
+
+Use the `docker tag` command to tag your image correctly so that the registry is used. The name of your image should be **evil_nginx** with the name of your training VM as release tag. For instance, if you are working on pvxka07, tag your image like **"\<registry name\>/evil_nginx:pvxka07"**.
+
+Use `docker push` to upload your image to the registry.
