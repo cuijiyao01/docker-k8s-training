@@ -74,6 +74,12 @@ The nginx program by default dumps its logs to `/var/log/nginx/access.log` for i
 
 Use the `RUN` directive to create symlinks to `/dev/stdout` and `/dev/stderr` respectively so that Docker can collect and display the logs.
 
+**Hint:** This can be confusing as the source and the destination of the link might easily get mixed up. Here are the commands:
+```
+ln -sf /dev/stdout /var/log/nginx/access.log
+ls -sf /dev/stderr /var/log/nginx/error.log
+```
+
 ## Step 8: Exposing the port
 
 Since nginx is a webserver, it needs to expose a port which in this case is port 80. Use the `EXPOSE` directive to expose port 80.
