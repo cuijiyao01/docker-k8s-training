@@ -52,7 +52,7 @@ For SSL/TLS to work, we will need an encryption key and a certificate. These hav
 
 The encryption key can be downloaded from http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.key and should end up at `/etc/nginx/ssl/nginx.key`. The certificate can be obtained from http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.crt and should end up at `/etc/nginx/ssl/nginx.crt` inside the image.
 
-**WARNING:** Placing the encryption key for an SSL/TLS certificate on a webserver where it is accessible for everyone is a very bad idea. This is only done for the sake of simplicity during this training and of course, this key-certificate combination is to be considered compromised and insecure. Do not try this at home!
+**Disclaimer/WARNING:** Placing the encryption key for an SSL/TLS certificate on a publicly accessible webserver is a *very bad* idea. This has only been done for the sake of simplicity during this training and of course, this key-certificate combination is to be considered compromised and insecure. Do not try this at home!
 
 ## Step 5: expose the secure HTTP port
 
@@ -64,7 +64,9 @@ Use the `docker build` command to build the image. Make note of the UID of the n
 
 ## Step 7: tag the image
 
-With `docker tag`, give your image a nice name such as _mynginx_ and a release number.
+With `docker tag`, give your image a nice name such as *secure_nginx* and a release number (again, use your hostname as release number). 
+
+If you want to push this image to our registry on **pvxka22.wdf.sap.corp**, tag your image accordingly and use `docker push` to push the image to the registry.
 
 ## Step 8: run a container
 
