@@ -8,7 +8,7 @@ Start a busybox image and connect to it. Try to re-use the busybox.yaml from exe
 
 Alternatively spin up a a temporary deployment with `kubectl run busybox --rm -ti --image=busybox /bin/sh`.
 
-Run `wget --spider --timeout=0 nginx` from within the pod to send an http request to the nginx service.
+Run `wget --spider --timeout=1 nginx` from within the pod to send an http request to the nginx service.
 
 If everything works fine, the result should look like this:
 ```
