@@ -32,7 +32,7 @@ Environment="no_proxy=.wdf.sap.corp"
 
 Tell systemd to reload all of its configuration files with `systemctl daemon-reload` and restart the docker daemon with `systemctl restart docker.service`.
 
-## Step 3: Run your first container... again
+## Step 3: Run your first container
 
 Start the Docker daemon with `systemctl start docker.service`. The command `docker info` will now give you useful information about Docker's configuration.
 
