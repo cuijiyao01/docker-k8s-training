@@ -36,6 +36,8 @@ spec:
     - podSelector:
         matchLabels:
           access: "true"
+    - ipBlock:
+        cidr: 155.56.0.0/16
 ```
 
 Create the resource as usual with `kubectl create -f <your file>.yaml` and check its presence with `kubectl get networkpolicy`
