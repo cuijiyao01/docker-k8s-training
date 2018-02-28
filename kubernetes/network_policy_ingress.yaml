@@ -11,3 +11,5 @@ spec:
     - podSelector:
         matchLabels:
           access: "true"
+    - ipBlock:
+        cidr: 155.56.0.0/16
