@@ -7,7 +7,6 @@ Before you start with this exercise, remove the deployment(s) and service(s) fro
 
 ## Step 1: Create a certificate
 In the first exercises you ran a webserver with plain http. Now you are going to rebuild this setup and add https to your nginx.
-In order for the setup to work, we will use `app: nginx-https` as label/selector for the "secured" nginx.
 
 Start by creating a new certificate:
 
@@ -69,8 +68,54 @@ Run `kubectl create configmap nginxconf --from-file=<path/to/your/>default.conf`
 Verify the configmap exists with `kubectl get configmap`
 
 ## Step 5: Combine everything into a deployment
-Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment.
-Download the yaml file from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_https.yaml) and store it locally.
+Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
+
+Try to complete the snippet by inserting the missing parts (look for `???` blocks). Alternatively download the solution from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_https.yaml) and store it locally.
+
+```
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-https
+  labels:
+    app: nginx-https
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      ???: ???
+  template:
+    metadata:
+      labels:
+        app: nginx-https
+    spec:
+      volumes:
+      - name: content-storage
+        persistentVolumeClaim:
+          claimName: nginx-pvc
+          readOnly: true
+      - name: tls-secret
+        secret:
+          secretName: nginx-sec
+      - name: nginxconf
+        configMap:
+          name: nginxconf
+      containers:
+      - name: nginx
+        image: nginx:1.13.6
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: content-storage
+          readOnly: true
+        - mountPath: /etc/nginx/ssl
+          name: ???
+          readOnly: true
+        - mountPath: /etc/nginx/conf.d
+          name: ???
+```
 
 Verify that the newly created pods use the pvc, configMap and secret by running `kubectl describe pod <pod-name>`.
 
