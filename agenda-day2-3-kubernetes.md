@@ -50,10 +50,13 @@
 ## Administration
 * User management - service accounts
 * Role based authorization (RBAC)
+* Image pull secrets
 * Network policies
+  * Excercise - add a network policy to the nginx deployment
 * Node management
+* Kubernetes Dashboard
 * Scheduling pods on dedicated nodes
-* get your cluster
+* get your own cluster
 
 ## Helm
 * what is helm?
