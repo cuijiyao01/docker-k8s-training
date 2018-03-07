@@ -57,10 +57,22 @@ server {
         location / {
                 try_files $uri $uri/ =404;
         }
+
+        location /healthz {
+          access_log off;
+          return 200 'OK';
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+
 }
 ```
 
 Make sure, the values for `ssl_certificate` and `ssl_certificate_key` match the names of the files within the secret. In this example output the files are named `tls.crt` & `tls.key` in the secret as well as the configuration. The location in the filesystem will be set via the `volmeMount`, when you create your deployment.  
+Also note, that there is a location explicitly defined for a healthcheck. If called, `/healthz` will return a status code `200` to satisfy a liveness probe.
 
 ## Step 4: Upload the configuration to kubernetes
 Run `kubectl create configmap nginxconf --from-file=<path/to/your/>default.conf` to create a configMap resource with the corresponding content from default.conf.
@@ -105,7 +117,15 @@ spec:
         image: nginx:1.13.6
         ports:
         - containerPort: 80
+          name: http
         - containerPort: 443
+          name: https
+        livenessProbe:
+          httpGet:
+            path: ???
+            port: https
+          initialDelaySeconds: 3
+          periodSeconds: 5
         volumeMounts:
         - mountPath: "/usr/share/nginx/html"
           name: content-storage

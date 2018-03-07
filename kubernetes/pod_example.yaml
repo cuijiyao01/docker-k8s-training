@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: liveness-http
+  name: my-first-pod
 spec:
   containers:
   - name: nginx

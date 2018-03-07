@@ -19,6 +19,13 @@ spec:
   - name: nginx    
     ports:
     - containerPort: 80
+      name: http-port
+    livenessProbe:
+      httpGet:
+        path: /
+        port: http-port
+      initialDelaySeconds: 3
+      periodSeconds: 30
 ```
 If it does not work as expected, check the indentation or take a look at the solution on  [github](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_example.yaml)
 
@@ -32,7 +39,7 @@ Experiment with `-o=yaml` to modify the output. Compare the result with your loc
 
 ## Step 3: get the logs
 Use `kubectl` with the `logs` command and get the logs of your pod. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
-If the command returns an empty string, there are probably no logs written yet. Only if the request itself woulde be erroneous, you get an error message.
+You should see the liveness probe requests coming in.
 
 ## Step 4: exec into your pod
 In case `logs` or `describe` or any other of the output generating commands don't help you to get to the root cause of an issue, you may want to take a look yourself.
