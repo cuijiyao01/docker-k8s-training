@@ -36,7 +36,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /healthz
-            port: https
+            port: http
           initialDelaySeconds: 3
           periodSeconds: 5
         volumeMounts:
