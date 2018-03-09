@@ -41,6 +41,8 @@ spec:
         cidr: 155.56.0.0/16
 ```
 
+If you are unsure about the labels, feel free to check the [sample solution](./solutions/network_policy_ingress.yaml).
+
 Create the resource as usual with `kubectl create -f <your file>.yaml` and check its presence with `kubectl get networkpolicy`
 
 ## Step 2: Trying to connect, please wait ...

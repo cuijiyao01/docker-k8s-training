@@ -38,7 +38,7 @@ tls.key:  1708 bytes
 ## Step 3: Create a ngnix configuration
 Once the certificate secret is prepared, create a configuration and store it to kubernetes as well.
 
-Download from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/default.conf) or create a file `default.conf` with the following content:
+Download from [gitHub](./solutions/default.conf) or create a file `default.conf` with the following content:
 
 ```
 server {
@@ -82,7 +82,7 @@ Verify the configmap exists with `kubectl get configmap`
 ## Step 5: Combine everything into a deployment
 Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
 
-Try to complete the snippet by inserting the missing parts (look for `???` blocks). Alternatively download the solution from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_https.yaml) and store it locally.
+Try to complete the snippet by inserting the missing parts (look for `???` blocks). Alternatively download the solution from [gitHub](./solutions/deployment_https.yaml) and store it locally.
 
 ```
 apiVersion: apps/v1beta1
@@ -142,6 +142,6 @@ Verify that the newly created pods use the pvc, configMap and secret by running 
 ## Step 6: create a service
 Finally, you have to create a new service to expose your https-deployment.
 
-Either figure out the ports needed and extend the service.yaml from the previous exercise or download the service_https.yaml from [gitHub](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/service_https.yaml).
+Either figure out the ports needed and extend the service.yaml from the previous exercise or download the service_https.yaml from [gitHub](./solutions/service_https.yaml).
 
 Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject & organization specified in step 1.
