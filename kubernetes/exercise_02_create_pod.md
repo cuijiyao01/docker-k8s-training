@@ -27,18 +27,18 @@ spec:
       initialDelaySeconds: 3
       periodSeconds: 30
 ```
-If it does not work as expected, check the indentation or take a look at the solution on  [github](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/pod_example.yaml)
+If it does not work as expected, check the indentation or take a look at the solution on  [github](./solutions/pod_http_liveness.yaml)
 
 ## Step 1: create the pod
 Now tell the cluster that you would like it to schedule the pod for you. To do so, run the following command:
 `kubectl create -f pod.yaml`
 
 ## Step 2: verify that the pod is running
-Use `kubectl`with the `get` verb, to check, if your pod has been scheduled. It should be up and running after a few seconds. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
+Use `kubectl`with the `get` verb, to check, if your pod has been scheduled. It should be up and running after a few seconds. Check the [cheat-sheet](./cheat-sheet.md) for help.
 Experiment with `-o=yaml` to modify the output. Compare the result with your local `pod.yaml` file. Can you spot the odd/differences?
 
 ## Step 3: get the logs
-Use `kubectl` with the `logs` command and get the logs of your pod. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
+Use `kubectl` with the `logs` command and get the logs of your pod. Check the [cheat-sheet](./cheat-sheet.md) for help.
 You should see the liveness probe requests coming in.
 
 ## Step 4: exec into your pod
@@ -49,5 +49,5 @@ The `exec` command helps you in this situation. Adapt & run the following comman
 
 ## Step 5: clean-up
 It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`.
-Now you can remove the pod from the cluster by running a `delete` command. Check the [cheat-sheet](https://github.wdf.sap.corp/D051945/docker-k8s-training/blob/master/cheat-sheet.md) for help.
+Now you can remove the pod from the cluster by running a `delete` command. Check the [cheat-sheet](./cheat-sheet.md) for help.
 Which phases of the pod do you observe in your second shell?
