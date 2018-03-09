@@ -43,7 +43,7 @@ Firstly, delete the deployment you just created:
 
 Secondly, try to write your own yaml file for a new deployment that creates 3 replicas of an `nginx` image, version 1.13.6.
 
-Below is a skeleton of a deployment, however it is still missing some essential fields. Check the (api reference)[https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#deployment-v1beta2-apps] for details.
+Below is a skeleton of a deployment, however it is still missing some essential fields. Check the [api reference](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#deployment-v1beta2-apps) for details.
 
 * `kind: Deployment`
 * `containers` (check the pod spec from exercise 2 or the deployment created with run)
@@ -66,7 +66,7 @@ spec:
     spec:
 ```
 
-As a reference, you can find a solution on [github](https://github.wdf.sap.corp/raw/D051945/docker-k8s-training/master/kubernetes/deployment_example.yaml).
+As a reference, you can find a solution on [github](./solutions/deployment_example.yaml).
 
 ## Step 5 - optional: deploy(ment)!
 Now create the deployment again. However this time it will be created based on the yaml file:
