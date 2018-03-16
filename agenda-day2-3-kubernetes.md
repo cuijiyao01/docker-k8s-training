@@ -3,7 +3,7 @@
 ## Basics
 * Introduction to Kubernetes
   * Origin, release cycles, ...
-  * Demo
+  * Sock-Shop Demo
 * Core components
   * nodes
   * kubelet
@@ -11,14 +11,15 @@
   * etcd
   * kube-proxy
   * kubectl
-  * yaml & json
+  * yaml & json + basic structure of k8s resources
 * Exercise - kubectl basics
-  * use kubectl to query information
+  * use kubectl to query information about the cluster
 
 ## Core concepts
 * Entities part 1
   * namespaces
   * pods - schedule, describe, logs, exec
+  * liveness & readiness probes
 * Exercise
   * schedule a pod in your own namespace
   * get logs from your pod
@@ -27,16 +28,21 @@
   * labels
   * replica sets, deployments
 * Exercise - make your pod resilient to failure
+  * create a deployment
+  * how to scale
+  * rolling updates
 * Entities part 3
-  * services
-* Exercise - add a service and connect to application
+  * cluster networking
+  * services (clusterIP, NodePort, Loadbalancer)
+  * communication via services
+* Exercise - add a service and expose an application
 
 ## Storage & configuration
 * Entities part 4
   * persistent volume
   * persistent volume claims
   * storage classes
-* Exercise - add storage to your application
+* Exercise - add persistent storage to your application
 * Entities part 5
   * secrets
   * config maps
