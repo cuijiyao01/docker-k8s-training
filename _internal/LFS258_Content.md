@@ -1,6 +1,6 @@
-# Agenda of the Linux Foundation Course for Certified Kubernetes Admin (CKA)
+# Linux Foundation Course for Certified Kubernetes Admin (CKA)
 
-Course key: LFS258  (version 2)
+What does the LFS258 course contain as topics (rough overview)
 
  1. Course Introduction
  2. Basics of Kubernetes
