@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-configmap
+spec:
+  containers:
+    - name: test-container
+      image: busybox
+      command: [ "/bin/sh", "-c", "env" ]
+      env:
+        - name: TEST_TYPE
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: test-config
+              # Specify the key associated with the value
+              key: test.type
+        - name: TEST_EXEC
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: test-config
+              # Specify the key associated with the value
+              key: test.exec
+  restartPolicy: Never
