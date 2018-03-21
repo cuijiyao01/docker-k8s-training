@@ -37,8 +37,16 @@ spec:
     - podSelector:
         matchLabels:
           access: "true"
+# allow access originating from SAP networks
     - ipBlock:
+        # Germany
         cidr: 155.56.0.0/16
+    - ipBlock:
+        # Ireland
+        cidr: 169.145.0.0/16
+    - ipBlock:
+        # US-West/Canada
+        cidr: 84.203.229.0/26        
 ```
 
 If you are unsure about the labels, feel free to check the [sample solution](./solutions/network_policy_ingress.yaml).
