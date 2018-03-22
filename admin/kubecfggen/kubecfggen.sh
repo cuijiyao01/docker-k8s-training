@@ -1,18 +1,18 @@
 #!/bin/bash
 #
-# kubecfggen.sh     A small script that creates namespaces for a Kubernetes training in a cluster, sets up a cluster-role-binding for all
-#                   default service account in each namespace that grant cluster-admin access and creates individual kube.config files
-#                   for each namespace.
+# kubecfggen.sh      A small script for a trainer that creates namespaces for a Kubernetes training in an existing cluster. The local kubectl
+#                    must be configured so that the cluster can be accessed.
 #
-#                   This is meant to provide a unique K8S environment for each training participant that he/she can access with the
-#                   kube.config that was created by this script.
+#                    This script will create dedicated namespaces for each training participant in the cluster, set up a cluster-role-binding
+#                    binds the cluster-admin role to the default service account of each namespace and finally create a unique kube.config
+#                    file that can be distributed to training participants.
 #
-#                   This script requires the configuration file kubecfggen.conf to work.
+#                    This script requires the configuration file kubecfggen.conf to work.
 #
-# Written by:       Thomas Buchner (D044431) <thomas.buchner@sap.com>
-#                   Juergen Heymann (D021619) <juergen.heymann@sap.com>
+# Written by:        Thomas Buchner (D044431) <thomas.buchner@sap.com>
+#                    Juergen Heymann (D021619) <juergen.heymann@sap.com>
 #
-# History:          0.1 - 22-Mar-2018 - Initial release
+# History:           0.1 - 22-Mar-2018 - Initial release
 #
 
 # this is where we expect our configuration file
@@ -30,13 +30,23 @@ if [ ! -r $CONFIG_FILE ]; then
 	echo "Cannot read the configuration file $CONFIG_FILE."
 	exit 1
 fi
+
+# before we continue... there are two absolutely mandatory fields in the configuration file, if they are empty, it makes no sense to go on
 source $CONFIG_FILE
+if [ -z "$CA_CERT" -o -z "$API_SERVER" ]; then
+	echo "ERROR: Make sure the settings for CA_CERT and API_SERVER are properly maintained in the configuration file."
+	exit 2
+fi
+
 GLOBAL_UID=$(get_uid)
 
-# set some pathes and files
+# set some pathes and fields
 # each training (i.e. invokation of this script) gets a separate output dir
-[ -z "$OUTPUT_DIR" ] && OUTPUT_DIR="."
-OUTPUT_DIR=$OUTPUT_DIR/training_$GLOBAL_UID
+if [ -z "$OUTPUT_DIR" ]; then 
+	OUTPUT_DIR="training-$GLOBAL_UID"
+else
+	OUTPUT_DIR="$OUTPUT_DIR/training-$GLOBAL_UID"
+fi
 if [ -d $OUTPUT_DIR ]; then
 	echo "ERROR: The output directory $OUTPUT_DIR already exists. You seem to be very lucky as you managed to hit the small chance of a hash collision."
 	echo "       Please run this script again."
@@ -45,7 +55,7 @@ fi
 mkdir -p $OUTPUT_DIR
 if [ $? -ne 0 ]; then
 	echo "ERROR: Failed to create the output directory $OUTPUT_DIR."
-	exit 2
+	exit 10
 fi
 
 # this is the YAML file to which the cluster resource definitions get written
@@ -78,6 +88,9 @@ if [ -z "$NS_COUNT" -o $NS_COUNT -lt 1 ]; then
 	echo "Please specify how many namespaces you want to create in the config file."
 	exit 5
 fi
+
+# let's start by creating a YAML file that contains the namespace and cluster-role-binding definitions
+echo -e "> Compiling $YAML_FILE...\n"
 
 # Do we have a namespace prefix? If not, we fall back to a default.
 [ -z "$NS_PREFIX" ] && NS_PREFIX="part"
@@ -120,8 +133,6 @@ for ns in $NAMESPACES; do
 __EOF
 done
 
-echo -e "> Creating namespaces and clusterrolebindings on the cluster.\n"
-
 # let's feed this YAML file to our cluster
 echo -e "> Sending $YAML_FILE to the cluster...\n"
 kubectl create -f $YAML_FILE
@@ -129,20 +140,21 @@ RC=$?
 if [ $RC -ne 0 ]; then
 	echo "ERROR: Something went wrong while creating the namespaces and cluster role bindings."
 	echo "       Chech the output of kubectl above."
-	exit 6
+	exit 11
 fi
 
-echo -e "\n> Retrieving access tokens for default service accounts and creating kube.config files."
+
 # now we create the kube.config files
+echo -e "\n> Retrieving access tokens for default service accounts and creating kube.config files."
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
-	KUBE_CONFIG="$OUTPUT_DIR/kube-configs/$NS_UID/kube.config"
-	mkdir -p `dirname $KUBE_CONFIG`
+	KUBE_CONF_DIR="$OUTPUT_DIR/kube-configs/$NS_UID"
+	mkdir -p $KUBE_CONF_DIR
 	echo "  - processing namespace $ns"
 	TOKEN=`kubectl get secret -n $ns -o json | jq '.items[0].data.token' | sed 's/"//g' | base64 --decode`
 	
 	# create kubeconfig
-	cat << __EOF > $KUBE_CONFIG
+	cat << __EOF > $KUBE_CONF_DIR/kube.config
 apiVersion: v1
 kind: Config
 clusters:
@@ -166,7 +178,7 @@ done
 
 FINAL_MESSAGE="\n> Done\n\n
 ------------------------------------------------------------------------------------\n
-Information for you to write down:\n
+Some important pieces of information for you to write down:\n
 ------------------------------------------------------------------------------------\n
   > Unique ID for this training: $GLOBAL_UID\n
   > YAML file with cluster resources: $YAML_FILE\n
