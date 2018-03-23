@@ -1,27 +1,24 @@
 # Exercise 1 - Setup of Docker environment
 
-In this exercise you will set up a basic Docker environment on a plain SLES 12 machine and run your first container on it.
+## Preparations
 
-## Prerequisites
+In this exercise you will set up a basic Docker environment on your Ubuntu VM and run your first container on it. During these exercises, we are going to use Docker on Linux - after all, this is where it all started.
 
-During these exercises, we are going to use Docker on Linux - after all, this is where it all started.
-You can connect to your VM with any SSH client you like, if you do not have one already, we recommend you download and use [PuTTY](https://plx172/K8S_Training/putty.exe).
 
-The VM will be assigned to you at the beginning of the training. Each VM has two users: `training`, who is unprivileged and `root`, who may do everything. The passwords will be given to you at the beginning of the training as well.
+## Step 1: Install docker
 
-## Step 0: log in to your training virtual machine
-
-Using your SSH client, log in to your virtual machine as user training and as user root. With the `id -u` and `whoami` commands, verify that training has a user-ID of 1000 and root has a user-id of 0. For the beginning of this exercise, you will need root privileges.
-
-## Step 1: install docker
+- Open a command window. Type `sudo -i` to switch to `root` and open a sub-shell.
+- Type `apt-get update` to update the apt package manager.
+- Type `apt-get -y install docker-ce` to install the docker engine. 
 
 Using the `zypper search` command, search for the Docker packages. Once you found them, install them with the `zypper install` command. Verify if the packages installed successfully by checking if the files `/usr/bin/docker` and `/usr/bin/dockerd` exist.
 
-Try to run the command `docker info` but don't be surprised if you get an error message in return.
+You can run `docker -v` to check the version.
 
-## Step 2: set up the proxy server
+## Step 2: Set up the proxy server
+Docker also needs to know about the proxy settings to work properly.
 
-Create a systemd drop-in by creating the directory `/etc/systemd/system/docker.service.d`. Create the file `/etc/systemd/system/docker.service.d/proxy.conf` and put this inside:
+- Create a systemd drop-in by creating the directory `/etc/systemd/system/docker.service.d`. Create the file `/etc/systemd/system/docker.service.d/proxy.conf` and put this inside:
 
 ```bash
 [Service]
@@ -30,7 +27,9 @@ Environment="https_proxy=http://proxy.wdf.sap.corp:8080"
 Environment="no_proxy=.wdf.sap.corp"
 ```
 
-Tell systemd to reload all of its configuration files with `systemctl daemon-reload` and restart the docker daemon with `systemctl restart docker.service`.
+- Tell systemd to reload all of its configuration files by running `systemctl daemon-reload` and restart the docker daemon with `systemctl restart docker.service`.
+
+- Type `exit` to exit the root shell and come back to the vagrant user and home directory. 
 
 ## Step 3: Run your first container
 
