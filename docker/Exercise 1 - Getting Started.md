@@ -7,13 +7,12 @@ In this exercise you will set up a basic Docker environment on your Ubuntu VM an
 
 ## Step 1: Install docker
 
-- Open a command window. Type `sudo -i` to switch to `root` and open a sub-shell.
+- Open a command window. 
+- **Switch to root:** Type `sudo -i` to switch to `root` and open a sub-shell.
 - Type `apt-get update` to update the apt package manager.
 - Type `apt-get -y install docker-ce` to install the docker engine. 
 
-Using the `zypper search` command, search for the Docker packages. Once you found them, install them with the `zypper install` command. Verify if the packages installed successfully by checking if the files `/usr/bin/docker` and `/usr/bin/dockerd` exist.
-
-You can run `docker -v` to check the version.
+Verify if the packages installed successfully by checking if the files `/usr/bin/docker` and `/usr/bin/dockerd` exist. You can run `docker -v` to check the version.
 
 ## Step 2: Set up the proxy server
 Docker also needs to know about the proxy settings to work properly.
@@ -29,22 +28,28 @@ Environment="no_proxy=.wdf.sap.corp"
 
 - Tell systemd to reload all of its configuration files by running `systemctl daemon-reload` and restart the docker daemon with `systemctl restart docker.service`.
 
-- Type `exit` to exit the root shell and come back to the vagrant user and home directory. 
+The command `docker info` will now give you useful information about Docker's configuration.
 
 ## Step 3: Run your first container
 
-Start the Docker daemon with `systemctl start docker.service`. The command `docker info` will now give you useful information about Docker's configuration.
-
-Use the `docker run` command to pull and run the [whale-say image](https://hub.docker.com/r/docker/whalesay/) (you will find useful information about how to run this image by following [this link](https://hub.docker.com/r/docker/whalesay/) ).
+Use the `docker run hello-world` command to run your first container and check that docker works correctly. 
 
 ## Step 4: Make sure a non-privileged user can use Docker
 
-Until here, we were working as *root* who may do anything. Since this is dangerous and certainly not what is advisable in a production environment, we will use the user *training* from now on.
+Until here, we were working as *root* who may do anything. Since this is dangerous and certainly not what is advisable in a production environment, we will use the default user of the VM *vagrant* from now on.
 
-Users must be members of the usergroup `docker` for them to able to use docker. Since this is not yet the case for user *training*, issue the following command as root to change that:
+- Users that want to user docker must be members of the usergroup `docker`. Since this is not yet the case for user *vagrant*, issue the following command as root to change that:
 
 ```bash
-usermod -G docker training
+usermod -G docker vagrant
 ```
 
-Log out and log back in as user *training*. From now on, we will continue as user *training* you will no longer need the *root* shell.
+- Type `exit` to exit the root shell and come back to the vagrant user and home directory. 
+- In order for the group assignment to take effect, you must logout (top-right icon --> logout) and log back in as user `vagrant` with password `vagrant` (unless you changed your VM password).
+
+
+## Step 5: Test docker as vagrant user
+
+Type `docker run docker/whalesay` to pull and run the [whalesay image](https://hub.docker.com/r/docker/whalesay/). At first you get no output from the run. You will find useful information about this image and how to run it following [this link](https://hub.docker.com/r/docker/whalesay/) .
+
+
