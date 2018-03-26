@@ -8,6 +8,7 @@ This page describes what you should as prerequisites before taking this course -
 - **bash**: We will occasionally work with shell scripts, bash in particular, or at least have to read them. You can look e.g. look at this [Bash Scripting Tutorial](https://linuxconfig.org/bash-scripting-tutorial). 
 - **vi**: Sometimes you will have to SSH into a container / remote machine where there is only vi available as editor. If you not familiar or rusty with vi, you can check out the [vi cheat sheet](). We highlighted the most important commands.
 - **yaml**: YAML (YAML Ain't Markup Language) is a human-readable data serialization language that is commonly used for configuration files. It is THE notation used in Kubernetes. See the [wikipedia article](https://en.wikipedia.org/wiki/YAML) or this [YAML cheat sheet](https://lzone.de/cheat-sheet/YAML).
+- **small tools to know**: It would be good to know some small tools that we may use: apg-get, curl, ...
 - **networking basics**: 
 
 
@@ -16,5 +17,3 @@ This page describes what you should as prerequisites before taking this course -
 
 In the course you will use a Linux VM (Ubuntu based) that contains all the needed tools so that we lose no time for environment setup.
 Follow the instructions on [this page](https://github.wdf.sap.corp/cloud-native-dev/k8s-training-vm/blob/master/VMImage_GettingStarted.md) to install Virtualbox, download and configure the image.
-
-
