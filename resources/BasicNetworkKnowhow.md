@@ -1,5 +1,20 @@
 # Basic Network Knowhow
 
+## The absolute minimum essence for kubernetes
+General / recap
+- To address 'anything' in TCP/IP you need an **IP address**, e.g. `55.110.12.5` (this is an IP4 address because it uses 4 bytes) and a **port number** (e.g. 8080); together `55.110.12.5:8080`.
+- A **DNS Server** provides the mapping of human-readable / symbolic names to IP addresses so you can write e.g. "google.com" instead of 
+`172.217.16.206`. When your browser or a service / container uses a symbolic name such as "google.com", a request is first routed to the 'nearest DNS server' which returns the right IP address that is then used for the real communication. 
+- In K8S, the unit of deployment is a Pod. A Pod has one IP address. Multiple containers can run on a Pod. They then share the IP address and must be assigned to different ports and can communicate via `localhost` (a 'loopback' address that is for local communication). The address of a Pod is unique within a cluster.
+- A **subnet** is a range of IP addresses that are a subset of the full IP4 address space, e.g. `55.110.34.xxx`. In this subnet you can have theoretically 256 different IP addresses but practically only 254 because 0 and 255 are reserved. Another aspect of a subnet is that you want the *network traffic to stay within the subnet* for (a) reasons of data privacy, and/or (b) to reduce network load and contention. K8S allows most traffic to be within the cluster and to only selectively expose a few addresses (and ports).
+- **CIDR subnet mask notation**: When you see something like this **`55.110.34.0/24`**, it specifies a subnet where all addresses start with `55.110.34` and the last 8 bits / 254 IP addresses are free for use by devices. The number behind the slash denotes the number of bits that are fixed in the address space (see also [CIDR wikipedia](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) 
+- A **cluster** consists of a set of nodes and pods that are all in the same subnet. TODO
+- **Address translation / mapping** : TODO
+
+
+
+# A little deeper ...
+
 ## OSI network stack model
 * Computer networks are generally described in layers.
 * On the bottom you have the physical / electrical layer (what wire, what voltage, what plugs, …), on the top you have application level exchange protocols (e.g. command patterns, document exchange formats etc)
