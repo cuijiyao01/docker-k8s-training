@@ -1,5 +1,5 @@
 # The absolute minimum networking knowhow for kubernetes
-General / recap
+
 - To address 'anything' in TCP/IP you need an **IP address**, e.g. `55.110.12.5` (this is an IP4 address because it uses 4 bytes) and a **port number** (e.g. 8080); together `55.110.12.5:8080`.
 - A **DNS Server** provides the mapping of human-readable / symbolic names to IP addresses so you can write e.g. "google.com" instead of 
 `172.217.16.206`. When your browser or a service / container uses a symbolic name such as "google.com", a request is first routed to the 'nearest DNS server' which returns the right IP address that is then used for the real communication. 
