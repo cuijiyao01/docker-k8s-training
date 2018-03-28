@@ -45,7 +45,7 @@ usermod -G docker vagrant
 ```
 
 - Type `exit` to exit the root shell and come back to the vagrant user and home directory. 
-- In order for the group assignment to take effect, you must logout (top-right icon --> logout) and log back in as user `vagrant` with password `vagrant` (unless you changed your VM password).
+- **In order for the group assignment to take effect, you must logout (top-right icon --> logout) and log back in** (use the same user  `vagrant`) with password `vagrant` (unless you changed your VM password).
 
 
 ## Step 5: Test docker as vagrant user
