@@ -6,12 +6,13 @@
 - In K8S, the unit of deployment is a Pod. A Pod has one IP address. Multiple containers can run on a Pod. They then share the IP address and must be assigned to different ports and can communicate via `localhost` (a 'loopback' address that is for local communication). The address of a Pod is unique within a cluster.
 - A **subnet** is a range of IP addresses that are a subset of the full IP4 address space, e.g. `55.110.34.xxx`. In this subnet you can have theoretically 256 different IP addresses but practically only 254 because 0 and 255 are reserved. Another aspect of a subnet is that you want the *network traffic to stay within the subnet* for (a) reasons of data privacy, and/or (b) to reduce network load and contention. K8S allows most traffic to be within the cluster and to only selectively expose a few addresses (and ports).
 - **CIDR subnet mask notation**: When you see something like this **`55.110.34.0/24`**, it specifies a subnet where all addresses start with `55.110.34` and the last 8 bits / 254 IP addresses are free for use by devices. The number behind the slash denotes the number of bits that are fixed in the address space (see also [CIDR wikipedia](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) 
-- A **cluster** consists of a set of nodes and pods that are all in the same subnet. TODO
-- **Address translation / mapping** : TODO
+- A **cluster** consists of a set of nodes and pods that are all in the same subnet. 
+- **NAT = Network Address Translation** : Network address translation is the process where an *internal address* is used *inside* a subnet and an *external address* is used *outside* of the subnet. For example, a pod can have the address `10.10.10.1` inside a cluster but it is exposed as another IP address, e.g. `155.56.13.04`. The latter address is part of the 'B-class network of SAP'. (see [NAT on wikipedia](https://en.wikipedia.org/wiki/Network_address_translation))
 
 
 
 # A little deeper ...
+
 
 ## OSI network stack model
 * Computer networks are generally described in layers.
