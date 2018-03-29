@@ -29,14 +29,24 @@ TODO: description HOWTO
 
 ### Download your trainer .kube/config 
 
-TODO
+In Gardener
+- Login to gardener (with SSO)
+- Choose your cluster
+- in `kube cluster access` pane, click on on Kubeconfig and copy the yaml 
+
+On your VM / machine
+- Create a directory `.kube` under HOME (e.g. /home/vagrant on VM) and cd into it
+- Create new file `config` and paste the yaml
+
 
 ### Generate the kube configs for the participants
 
 Download or clone this repo into the VM / your machine.
 
-In the directory `admin/kubecfggen`:
+In the directory `admin/kubecfggen` edit the `conf` file: 
 - Get the `CA_CERT` and `API_SERVER` parameters from your own kube config and enter them in the config.
+  - Copy content of `certificate-authority-data` key to `CA_CERT`
+  - Copy content of `server` to the `API_SERVER` field in 
 - Set the number of participants in `NS_COUNT`
 - Run the script `kubecfggen.sh` 
 
