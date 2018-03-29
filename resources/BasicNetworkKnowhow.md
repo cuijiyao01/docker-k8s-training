@@ -14,6 +14,8 @@
 ## Network related topics for Linux
 
 - **`/etc/hosts`**: TODO
+- **`ifconfig`**: TODO
+
 
 
 
