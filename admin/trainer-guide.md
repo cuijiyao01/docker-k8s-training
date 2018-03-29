@@ -33,7 +33,9 @@ TODO
 
 ### Generate the kube configs for the participants
 
-In the directory `kubecfggen`:
+Download or clone this repo into the VM / your machine.
+
+In the directory `admin/kubecfggen`:
 - Get the `CA_CERT` and `API_SERVER` parameters from your own kube config and enter them in the config.
 - Set the number of participants in `NS_COUNT`
 - Run the script `kubecfggen.sh` 
