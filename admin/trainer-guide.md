@@ -48,7 +48,10 @@ In the directory `admin/kubecfggen` edit the `conf` file:
   - Copy content of `certificate-authority-data` key to `CA_CERT`
   - Copy content of `server` to the `API_SERVER` field in 
 - Set the number of participants in `NS_COUNT`
-- Run the script `kubecfggen.sh` 
+
+Run the script `kubecfggen.sh` 
+- This will generate a yaml to create all namespaces etc in the cluster and already execute / apply it. The cluster will then already be set up for the participants.
+- Generates the kubeconfig files for the participants 
 
 ### Copy the configs to the share
 
