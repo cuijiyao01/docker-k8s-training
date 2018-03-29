@@ -1,4 +1,6 @@
-# The absolute minimum networking knowhow for kubernetes
+# Networking knowhow for kubernetes
+
+## The absolute minimum 
 
 - To address 'anything' in TCP/IP you need an **IP address**, e.g. `55.110.12.5` (this is an IP4 address because it uses 4 bytes) and a **port number** (e.g. 8080); together `55.110.12.5:8080`.
 - A **DNS Server** provides the mapping of human-readable / symbolic names to IP addresses so you can write e.g. "google.com" instead of 
@@ -8,6 +10,11 @@
 - **CIDR subnet mask notation**: When you see something like this **`55.110.34.0/24`**, it specifies a subnet where all addresses start with `55.110.34` and the last 8 bits / 254 IP addresses are free for use by devices. The number behind the slash denotes the number of bits that are fixed in the address space (see also [CIDR wikipedia](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation)) 
 - A **cluster** consists of a set of nodes and pods that are all in the same subnet. 
 - **NAT = Network Address Translation** : Network address translation is the process where an *internal address* is used *inside* a subnet and an *external address* is used *outside* of the subnet. For example, a pod can have the address `10.10.10.1` inside a cluster but it is exposed as another IP address, e.g. `155.56.13.04`. The latter address is part of the 'B-class network of SAP'. (see [NAT on wikipedia](https://en.wikipedia.org/wiki/Network_address_translation))
+
+## Network related topics for Linux
+
+- **`/etc/hosts`**: TODO
+
 
 
 
