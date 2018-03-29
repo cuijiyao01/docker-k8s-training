@@ -176,12 +176,33 @@ current-context: k8s-training-$ns
 __EOF
 done
 
-FINAL_MESSAGE="\n> Done\n\n
-------------------------------------------------------------------------------------\n
-Some important pieces of information for you to write down:\n
-------------------------------------------------------------------------------------\n
-  > Unique ID for this training: $GLOBAL_UID\n
-  > YAML file with cluster resources: $YAML_FILE\n
-  > Location of kube.config files: $OUTPUT_DIR/kube-configs\n
--------------------------------------------------------------------------------------"
-echo -e $FINAL_MESSAGE
+
+# create a printable sheet with participant information
+PARTICIPANT_SHEET=$OUTPUT_DIR/participant-sheet.txt
+
+echo "Training ID: $GLOBAL_UID" > $PARTICIPANT_SHEET
+echo "Place the folder $OUTPUT_DIR into the share \\\\$KUBE_CONF_SHARE\\$OUTPUT_DIR." >> $PARTICIPANT_SHEET
+echo -e "\n-----------------------------------------" >> $PARTICIPANT_SHEET
+for ns in $NAMESPACES; do
+	NS_UID=${ns##*-}
+	echo "Your ID: $NS_UID" >> $PARTICIPANT_SHEET
+	echo "Download location for your personal kube.config: " >> $PARTICIPANT_SHEET
+	echo "  $KUBE_CONF_SHARE\\$OUTPUT_DIR\\$NS_UID\\kube.config" >> $PARTICIPANT_SHEET
+	echo "-----------------------------------------" >> $PARTICIPANT_SHEET
+done
+
+
+# print out the final message (yes, I like here-docs)
+cat << __EOF
+
+------------------------------------------------------------------------------------
+Some important pieces of information for you to write down:
+------------------------------------------------------------------------------------
+ > Unique ID for this training: $GLOBAL_UID
+ > YAML file with cluster resources: $YAML_FILE
+ > Location of kube.config files: $OUTPUT_DIR/kube-configs
+  
+ > Print the contents of $PARTICIPANT_SHEET and distribute 
+   them your training participants.
+-------------------------------------------------------------------------------------
+__EOF
