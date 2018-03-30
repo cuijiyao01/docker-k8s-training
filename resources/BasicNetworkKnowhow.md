@@ -11,6 +11,9 @@
 - A **cluster** consists of a set of nodes and pods that are all in the same subnet. 
 - **NAT = Network Address Translation** : Network address translation is the process where an *internal address* is used *inside* a subnet and an *external address* is used *outside* of the subnet. For example, a pod can have the address `10.10.10.1` inside a cluster but it is exposed as another IP address, e.g. `155.56.13.04`. The latter address is part of the 'B-class network of SAP'. (see [NAT on wikipedia](https://en.wikipedia.org/wiki/Network_address_translation))
 
+## More stuff
+- **SSL and certificates**: TODO
+
 ## Network related topics for Linux
 
 - **`/etc/hosts`**: TODO
