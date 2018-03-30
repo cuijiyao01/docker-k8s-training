@@ -13,6 +13,7 @@
 
 ## More stuff
 - **SSL and certificates**: links to: how https works, certificates and keys, CA authorities, why browser warnings, ... How generate certificates for your services 
+- **http**: intro plus links to headers, cookies, http 1.1, 2.0; predefined headers
 
 ## Network related topics for Linux
 
