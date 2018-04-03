@@ -120,7 +120,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cluster-admins
+  name: cluster-admin
 subjects:
 __EOF
 
