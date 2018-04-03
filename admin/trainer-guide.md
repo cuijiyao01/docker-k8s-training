@@ -37,19 +37,14 @@ In Gardener
 On your VM / machine
 - Create a directory `.kube` under HOME (e.g. /home/vagrant on VM) and cd into it
 - Create new file `config` and paste the yaml
+- run `kubectl get nodes` - this command must complete by giving you a short list of nodes in the cluster
 
 
 ### Generate the kube configs for the participants
 
 Download or clone this repo into the VM / your machine.
 
-In the directory `admin/kubecfggen` edit the `conf` file: 
-- Get the `CA_CERT` and `API_SERVER` parameters from your own kube config and enter them in the config.
-  - Copy content of `certificate-authority-data` key to `CA_CERT`
-  - Copy content of `server` to the `API_SERVER` field in 
-- Set the number of participants in `NS_COUNT`
-
-Run the script `kubecfggen.sh` 
+In the directory `admin/kubecfggen` run the script `kubecfggen.sh`. Give it the number of participants/namespaces it should create (e.g. `kubecfggen.sh 10` creates 10 different namespaces for 10 participants).
 - This will generate a yaml to create all namespaces etc in the cluster and already execute / apply it. The cluster will then already be set up for the participants.
 - Generates the kubeconfig files for the participants 
 
