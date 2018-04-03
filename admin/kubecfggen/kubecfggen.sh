@@ -13,6 +13,7 @@
 #                    Juergen Heymann (D021619) <juergen.heymann@sap.com>
 #
 # History:           0.1 - 22-Mar-2018 - Initial release
+#                    0.2 - 03-Apr-2018 - Fields CA_CERT and API_SERVER will be automatically retrieved from current kube context
 #
 
 # this is where we expect our configuration file
@@ -31,11 +32,32 @@ if [ ! -r $CONFIG_FILE ]; then
 	exit 1
 fi
 
-# before we continue... there are two absolutely mandatory fields in the configuration file, if they are empty, it makes no sense to go on
+# check if we have a working kubectl ready
+[ -z "$KUBECTL" ] && KUBECTL=`which kubectl`
+if [ -z "$KUBECTL" -o ! -x $KUBECTL ]; then
+	echo "Cannot find or execute kubectl. Download it from https://kubernetes.io/docs/tasks/tools/install-kubectl/."
+	exit 3
+fi
+
+# try to access the cluster, if it is not working, we exit
+${KUBECTL} get nodes &> /dev/null
+RC=$?
+if [ $RC -ne 0 ]; then
+	echo "ERROR: Unable to get the nodes of your cluster ('kubectl get nodes' returned with RC $RC)."
+	echo "       Check that your kube.config is correct and points to the corrent cluster."
+	exit 4
+fi
+
+# before we continue, we try to figure out the API server and its CA_CERT
 source $CONFIG_FILE
-if [ -z "$CA_CERT" -o -z "$API_SERVER" ]; then
-	echo "ERROR: Make sure the settings for CA_CERT and API_SERVER are properly maintained in the configuration file."
-	exit 2
+if [ -z "$CA_CERT" ]; then
+	echo "> Using API server authentication token from current kube.config"
+	CA_CERT=`${KUBECTL} config view --minify --flatten -o json | jq ".clusters[0].cluster.\"certificate-authority-data\"" | sed -e "s/^\"//g" -e "s/\"$//g"`
+fi
+
+if [ -z "$API_SERVER" ]; then
+	echo "> Using API server address from current kube.config."
+	API_SERVER=`${KUBECTL} config view --minify --flatten -o json | jq ".clusters[0].cluster.server" | sed -e "s/^\"//g" -e "s/\"$//g"`
 fi
 
 GLOBAL_UID=$(get_uid)
@@ -67,23 +89,11 @@ ROLEBINDING_NAME=training-roles-$GLOBAL_UID
 # we store the list of namespaces in this variable
 NAMESPACES=""
 
-# check if we have a working kubectl ready
-[ -z "$KUBECTL" ] && KUBECTL=`which kubectl`
-if [ -z "$KUBECTL" -o ! -x $KUBECTL ]; then
-	echo "Cannot find or execute kubectl. Download it from https://kubernetes.io/docs/tasks/tools/install-kubectl/."
-	exit 3
-fi
-
-# try to access the cluster, if it is not working, we exit
-kubectl get nodes &> /dev/null
-RC=$?
-if [ $RC -ne 0 ]; then
-	echo "ERROR: Unable to get the nodes of your cluster ('kubectl get nodes' returned with RC $RC)."
-	echo "       Check that your kube.config is correct and points to the corrent cluster."
-	exit 4
-fi
-
 # do we even know how many namespaces to create
+if [[ "$1" =~ ^[0-9]+$ ]]; then
+	NS_COUNT=$1
+fi
+
 if [ -z "$NS_COUNT" -o $NS_COUNT -lt 1 ]; then
 	echo "Please specify how many namespaces you want to create in the config file."
 	exit 5
@@ -135,7 +145,7 @@ done
 
 # let's feed this YAML file to our cluster
 echo -e "> Sending $YAML_FILE to the cluster...\n"
-kubectl create -f $YAML_FILE
+${KUBECTL} create -f $YAML_FILE
 RC=$?
 if [ $RC -ne 0 ]; then
 	echo "ERROR: Something went wrong while creating the namespaces and cluster role bindings."
@@ -151,7 +161,7 @@ for ns in $NAMESPACES; do
 	KUBE_CONF_DIR="$OUTPUT_DIR/kube-configs/$NS_UID"
 	mkdir -p $KUBE_CONF_DIR
 	echo "  - processing namespace $ns"
-	TOKEN=`kubectl get secret -n $ns -o json | jq '.items[0].data.token' | sed 's/"//g' | base64 --decode`
+	TOKEN=`${KUBECTL} get secret -n $ns -o json | jq '.items[0].data.token' | sed 's/"//g' | base64 --decode`
 	
 	# create kubeconfig
 	cat << __EOF > $KUBE_CONF_DIR/kube.config
@@ -160,7 +170,7 @@ kind: Config
 clusters:
 - cluster:
     certificate-authority-data: $CA_CERT
-    server: https://$API_SERVER
+    server: $API_SERVER
   name: k8s_training_cluster
 users:
 - name: default
@@ -198,9 +208,10 @@ cat << __EOF
 ------------------------------------------------------------------------------------
 Some important pieces of information for you to write down:
 ------------------------------------------------------------------------------------
- > Unique ID for this training: $GLOBAL_UID
+ > Unique ID for this training:      $GLOBAL_UID
+ > Number of namespaces created:     $NS_COUNT
  > YAML file with cluster resources: $YAML_FILE
- > Location of kube.config files: $OUTPUT_DIR/kube-configs
+ > Location of kube.config files:    $OUTPUT_DIR/kube-configs
   
  > Print the contents of $PARTICIPANT_SHEET and distribute 
    them your training participants.
