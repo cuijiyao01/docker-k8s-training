@@ -8,7 +8,7 @@ In this exercise you will set up a basic Docker environment on your Ubuntu VM an
 ## Step 1: Install docker
 
 - Open a command window. 
-- **Switch to root:** Type `sudo -i` to switch to `root` and open a sub-shell.
+- **Switch to root:** Type `sudo -s` to switch to `root` and open a sub-shell.
 - Type `apt-get update` to update the apt package manager.
 - Type `apt-get -y install docker-ce` to install the docker engine. 
 
