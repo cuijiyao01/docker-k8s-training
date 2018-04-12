@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx
+spec:
+  rules:
+  - host: nginx.ingress.dev01.k8s-train.k8s.sapcloud.io
+    http:
+      paths:
+      - backend:
+          serviceName: mynginx
+          servicePort: 80
+  tls:
+  - hosts:
+    - nginx.ingress.dev01.k8s-train.k8s.sapcloud.io
+    secretName: nginx-ingress-tls
