@@ -1,0 +1,10 @@
+apiVersion: events.training.sap/v1
+kind: Trigger
+metadata:
+    labels:
+        id: "42"
+    name: trigger-example
+spec:
+    training:
+      name: "k8s-fundamentals"
+      participants: 21
