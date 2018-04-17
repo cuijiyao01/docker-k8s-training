@@ -49,9 +49,14 @@
 * Exercise - configure your nginx & add certificates
 
 ## Furhter entities
-* networking
-* workloads
-* administration
+* Overview
+  * networking
+  * workloads
+  * administration
+* ingress
+* controller & custom resources
+* statefulSets and headless services
+* Exercise - deploy a statefulset
 
 ## Administration
 * User management - service accounts
