@@ -24,13 +24,13 @@ You can use the participant VM also for all work as a trainer.
 
 For each training we are using a separate **trial cluster** that you get from [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/). 
 
-TODO: description HOWTO
+**TODO: description HOWTO**
 
 
 ### Download your trainer .kube/config 
 
 In Gardener
-- Login to gardener (with SSO)
+- Login to gardener (with SSO via 'Test the self-service')
 - Choose your cluster
 - in `kube cluster access` pane, click on on Kubeconfig and copy the yaml 
 
