@@ -54,7 +54,9 @@ Now run the script `kubecfggen.sh`. Give it the number of participants/namespace
 
 `kubecfggen` will generate a directory with a unique name (ID) that contains all the kube configs for the participants. 
 
-Copy the whole directory to this location: 
+Create a tar archive with `tar -zcvf training-xxxxxxxx training-xxxxxxxx`. 
+
+Copy the whole directory to this location (drag-and-drop with file manager)
 ```
 \\dwdf212\bst_ecf\X_Public\CloudCurriculum\K8S\k8s-for-developers\kube-configs
 ```
