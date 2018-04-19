@@ -44,7 +44,9 @@ On your VM / machine
 
 Download or clone this repo into the VM / your machine.
 
-In the directory `admin/kubecfggen` run the script `kubecfggen.sh`. Give it the number of participants/namespaces it should create (e.g. `kubecfggen.sh 10` creates 10 different namespaces for 10 participants).
+CD into `./docker-k8s-training/admin/kubecfggen` and there do `chmod 755 kubecfggen.sh`.
+
+Now run the script `kubecfggen.sh`. Give it the number of participants/namespaces it should create (e.g. `kubecfggen.sh 10` creates 10 different namespaces for 10 participants).
 - This will generate a yaml to create all namespaces etc in the cluster and already execute / apply it. The cluster will then already be set up for the participants.
 - Generates the kubeconfig files for the participants 
 
