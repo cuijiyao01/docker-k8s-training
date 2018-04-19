@@ -14,7 +14,11 @@
 #
 # History:           0.1 - 22-Mar-2018 - Initial release
 #                    0.2 - 03-Apr-2018 - Fields CA_CERT and API_SERVER will be automatically retrieved from current kube context
+#                    0.3 - 19-Apr-2018 - Resource quotas and limits will be created per namespace now.
 #
+
+# version tag
+_VERSION=0.3
 
 # this is where we expect our configuration file
 CONFIG_FILE=`dirname $0`/kubecfggen.conf
@@ -64,7 +68,7 @@ GLOBAL_UID=$(get_uid)
 
 # set some pathes and fields
 # each training (i.e. invokation of this script) gets a separate output dir
-if [ -z "$OUTPUT_DIR" ]; then 
+if [ -z "$OUTPUT_DIR" ]; then
 	OUTPUT_DIR="training-$GLOBAL_UID"
 else
 	OUTPUT_DIR="$OUTPUT_DIR/training-$GLOBAL_UID"
@@ -109,7 +113,7 @@ echo -e "> Compiling $YAML_FILE...\n"
 for i in `seq -w 01 1 $NS_COUNT`; do
 	NS_NAME=$NS_PREFIX-$(get_uid)
 	NAMESPACES="$NAMESPACES $NS_NAME"
-	
+
 	cat << __EOF >> $YAML_FILE
 ---
 apiVersion: v1
@@ -143,6 +147,38 @@ for ns in $NAMESPACES; do
 __EOF
 done
 
+# finally, add resource quotas and limits to each namespace
+# max 15 pods per namespace, by default container consume 0.2 cpu & 200 MiB memory
+for ns in $NAMESPACES; do
+	cat << __EOF >> $YAML_FILE
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: resource-containment
+  namespace: $ns
+spec:
+  limits:
+  - default:
+      cpu: 0.5
+      memory: 500Mi
+    defaultRequest:
+      cpu: 0.2
+      memory: 200Mi
+    type: Container
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: pod-demo
+  namespace: $ns
+spec:
+  hard:
+    pods: "15"
+__EOF
+done
+
+
 # let's feed this YAML file to our cluster
 echo -e "> Sending $YAML_FILE to the cluster...\n"
 ${KUBECTL} create -f $YAML_FILE
@@ -162,7 +198,7 @@ for ns in $NAMESPACES; do
 	mkdir -p $KUBE_CONF_DIR
 	echo "  - processing namespace $ns"
 	TOKEN=`${KUBECTL} get secret -n $ns -o json | jq '.items[0].data.token' | sed 's/"//g' | base64 --decode`
-	
+
 	# create kubeconfig
 	cat << __EOF > $KUBE_CONF_DIR/kube.config
 apiVersion: v1
@@ -212,8 +248,8 @@ Some important pieces of information for you to write down:
  > Number of namespaces created:     $NS_COUNT
  > YAML file with cluster resources: $YAML_FILE
  > Location of kube.config files:    $OUTPUT_DIR/kube-configs
-  
- > Print the contents of $PARTICIPANT_SHEET and distribute 
+
+ > Print the contents of $PARTICIPANT_SHEET and distribute
    them your training participants.
 -------------------------------------------------------------------------------------
 __EOF
