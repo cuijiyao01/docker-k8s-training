@@ -54,7 +54,7 @@ Now run the script `kubecfggen.sh`. Give it the number of participants/namespace
 
 ### Copy the configs to the share
 
-Upload the tar file using this Jenkins job: `https://cc-admin.mo.sap.corp/view/K8s/job/upload-k8s-training-namespaces/`.
+Upload the tar file using this Jenkins job: https://cc-admin.mo.sap.corp/view/K8s/job/upload-k8s-training-namespaces/
 
 Participants will download 'their config' using the trainings and participant ID.
 
