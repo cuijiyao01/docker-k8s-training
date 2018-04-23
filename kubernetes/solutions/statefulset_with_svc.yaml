@@ -12,7 +12,7 @@ spec:
   selector:
     app: stateful-nginx
 ---
-apiVersion: apps/v1beta2 #change to apps/v1, when using a cluster with API v1.9 or greater
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: web

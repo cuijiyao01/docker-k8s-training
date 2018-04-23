@@ -23,7 +23,7 @@ apiVersion: v1
 metadata:
   name: nginx-pvc
 spec:
-  storageClassName: standard
+  storageClassName: default
   accessModes:
     - ReadOnlyMany
   resources:
@@ -66,7 +66,7 @@ Navigate to the directory mentioned in the `volumeMounts` section and create a c
 Delete the busybox helper pod, you created earlier: ` kubectl delete pod nginx-storage-pod`
 Then create a new deployment that uses the `nginx-pvc`. However `run nginx` will not work this time, since you need to specify the volume mount. Try to extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as example.
 
-Please note that our storage backend (`standard` storage class based on `gcePersistentDisk`) does not support `readWriteMany` mounts. You can either mount the volume once for write access (like you did in step 2) or several times as readOnly. Since our deployment has 3 replicas and we don't want to modify the `index.html`, mount the `nginx-pvc` by adding `readOnly: true` to both the `volumeMounts` and the `volumes.persistentVolumeClaim` sections.
+Please note that our storage backend (`default` storage class based on `gcePersistentDisk`) does not support `readWriteMany` mounts. You can either mount the volume once for write access (like you did in step 2) or several times as readOnly. Since our deployment has 3 replicas and we don't want to modify the `index.html`, mount the `nginx-pvc` by adding `readOnly: true` to both the `volumeMounts` and the `volumes.persistentVolumeClaim` sections.
 
 In case you need a hint, check the prepared yaml file on [gitHub](./solutions/deployment_pvc.yaml).
 

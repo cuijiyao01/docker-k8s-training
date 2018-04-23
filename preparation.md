@@ -16,4 +16,4 @@ This page describes what you should as prerequisites before taking this course -
 ## Environment setup
 
 In the course you will use a Linux VM (Ubuntu based) that contains all the needed tools so that we lose no time for environment setup.
-Follow the instructions on [this page](https://github.wdf.sap.corp/cloud-native-dev/k8s-training-vm/blob/master/VMImage_GettingStarted.md) to install Virtualbox, download and configure the image.
+Follow the instructions on the [Getting Started with the k8s training VM Image](https://github.wdf.sap.corp/cloud-native-dev/k8s-training-vm/blob/master/VMImage_GettingStarted.md) page to install Virtualbox and download and configure the image.

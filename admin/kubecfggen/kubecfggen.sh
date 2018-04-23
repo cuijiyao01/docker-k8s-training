@@ -15,10 +15,11 @@
 # History:           0.1 - 22-Mar-2018 - Initial release
 #                    0.2 - 03-Apr-2018 - Fields CA_CERT and API_SERVER will be automatically retrieved from current kube context
 #                    0.3 - 19-Apr-2018 - Resource quotas and limits will be created per namespace now.
+#					 0.4 - 19-Apr-2018 - Package generated configs as tar and switch to download from jenkins
 #
 
 # version tag
-_VERSION=0.3
+_VERSION=0.4
 
 # this is where we expect our configuration file
 CONFIG_FILE=`dirname $0`/kubecfggen.conf
@@ -222,20 +223,24 @@ current-context: k8s-training-$ns
 __EOF
 done
 
-
 # create a printable sheet with participant information
 PARTICIPANT_SHEET=$OUTPUT_DIR/participant-sheet.txt
 
+OUTPUT_TAR=${OUTPUT_DIR}.tar.gz
+echo "Trainer: Upload the $OUTPUT_TAR to Jenkins via $KUBE_CONF_BASE" >> $PARTICIPANT_SHEET
 echo "Training ID: $GLOBAL_UID" > $PARTICIPANT_SHEET
-echo "Place the folder $OUTPUT_DIR into the share \\\\$KUBE_CONF_SHARE\\$OUTPUT_DIR." >> $PARTICIPANT_SHEET
 echo -e "\n-----------------------------------------" >> $PARTICIPANT_SHEET
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
-	echo "Your ID: $NS_UID" >> $PARTICIPANT_SHEET
-	echo "Download location for your personal kube.config: " >> $PARTICIPANT_SHEET
-	echo "  $KUBE_CONF_SHARE\\$OUTPUT_DIR\\$NS_UID\\kube.config" >> $PARTICIPANT_SHEET
+	echo "Your ID (namespace): $NS_UID" >> $PARTICIPANT_SHEET
+	echo "Download your personal kube.config by running the script (with args): " >> $PARTICIPANT_SHEET
+	echo "  ~/setup/get_kube_config.sh $GLOBAL_ID $NS_UID" >> $PARTICIPANT_SHEET
 	echo "-----------------------------------------" >> $PARTICIPANT_SHEET
 done
+
+
+# package created training configs in a tar to be uploaded in jenkins
+tar -zcvf ${OUTPUT_TAR} $OUTPUT_DIR
 
 
 # print out the final message (yes, I like here-docs)
