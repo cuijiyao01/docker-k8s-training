@@ -55,14 +55,14 @@ if [ $RC -ne 0 ]; then
 fi
 
 # check if userinput is there
-if [-z $1]; then
+if [-z $1 ]; then
   echo "ERROR: Please specify your Gardener project name as 1st argument."
   echo "       Please specify your Gardener cluster name as 2nd argument"
   echo "       It is required to build the ingress URL"
   exit 5
 fi
 
-if [-z $2]; then
+if [-z $2 ]; then
   echo "ERROR: please specify your Gardener cluster name."
   echo "       It is required to build the ingress URL"
   exit 5
