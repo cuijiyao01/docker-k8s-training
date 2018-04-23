@@ -4,7 +4,7 @@ metadata:
   name: nginx
 spec:
   rules:
-  - host: nginx.ingress.dev01.k8s-train.k8s.sapcloud.io
+  - host: nginx.ingress.dev01.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - backend:
@@ -12,5 +12,5 @@ spec:
           servicePort: 80
   tls:
   - hosts:
-    - nginx.ingress.dev01.k8s-train.k8s.sapcloud.io
+    - nginx.ingress.dev01.k8s-train.shoot.canary.k8s-hana.ondemand.com
     secretName: nginx-ingress-tls

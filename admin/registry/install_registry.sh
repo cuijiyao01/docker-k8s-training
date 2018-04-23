@@ -71,7 +71,7 @@ fi
 # construct ingress hostname string
 GARDENER_PROJECTNAME=$1
 GARDENER_CLUSTERNAME=$2
-INGRESS_HOSTNAME=registry.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.k8s.sapcloud.io
+INGRESS_HOSTNAME=registry.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 # generate a private key & certificate signing request
 cat <<__EOF | $CFSSL genkey - | $CFSSLJSON -bare server
 {
