@@ -50,7 +50,7 @@ Below is a skeleton of a deployment, however it is still missing some essential 
 * values for `matchLabels`
 
 ```
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 metadata:
   name: nginx-deployment
   labels:

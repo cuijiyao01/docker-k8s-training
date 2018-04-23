@@ -85,7 +85,7 @@ Now it is time to combine the persistentVolumeClaim, secret and configMap in a n
 Try to complete the snippet by inserting the missing parts (look for `???` blocks). Alternatively download the solution from [gitHub](./solutions/deployment_https.yaml) and store it locally.
 
 ```
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-https

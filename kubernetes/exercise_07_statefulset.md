@@ -13,7 +13,7 @@ Next, describe your desired state in a yaml file. Use the snippets below to crea
 If you are looking for more info, check the official [api reference](https://kubernetes.io/docs/reference/) for StatefulSets.
 
 ```
-apiVersion: apps/v1beta2 #change to apps/v1, when using a cluster with API v1.9 or greater
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: web
