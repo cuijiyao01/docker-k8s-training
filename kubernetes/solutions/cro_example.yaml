@@ -1,5 +1,5 @@
 apiVersion: events.training.sap/v1
-kind: Trigger
+kind: Course
 metadata:
     labels:
         id: "42"
