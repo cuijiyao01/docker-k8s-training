@@ -113,4 +113,4 @@ If you found your cluster, use the patch command to change the autoScalerMax val
 ## After the course
 
 - Destroy the Gardener trial cluster you used for the training
-- Delete the kube config files you stored for your training at https://cc-admin.mo.sap.corp/view/K8s/job/upload-k8s-training-namespaces/
+- Delete the kube config files you stored for your training at https://cc-admin.mo.sap.corp/userContent/k8s-trainings/
