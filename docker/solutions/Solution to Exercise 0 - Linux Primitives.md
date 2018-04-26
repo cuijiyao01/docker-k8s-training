@@ -48,3 +48,4 @@ and try again:
 ```bash
 chroot .
 ```
+You can leave the chroot session as expected via `exit`.
