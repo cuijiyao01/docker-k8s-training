@@ -38,5 +38,13 @@ Copy them to a `lib` folder:
 
 ```bash
 mkdir $HOME/container/lib
-cp
+cp /lib/x86_64-linux-gnu/libtinfo.so.5 $HOME/container/lib
+cp /lib/x86_64-linux-gnu/libdl.so.2 $HOME/container/lib
+cp /lib/x86_64-linux-gnu/libc.so.6 $HOME/container/lib
+mkdir $HOME/container/lib64
+cp /lib64/ld-linux-x86-64.so.2 $HOME/container/lib64
+```
+and try again:
+```bash
+chroot .
 ```
