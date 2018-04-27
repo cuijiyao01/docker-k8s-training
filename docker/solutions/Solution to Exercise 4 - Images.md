@@ -51,8 +51,8 @@ apt-get update && apt-get -y install wget
 Use the wget download manager to download a custom website into nginx' website directory.
 
 ```bash
-wget -O /usr/share/nginx/html/evil.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.jpg
-wget -O /usr/share/nginx/html/index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.html
+wget --no-check-certificate -O /usr/share/nginx/html/evil.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.jpg
+wget --no-check-certificate -O /usr/share/nginx/html/index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.html
 ```
 
 Reload the webpage in your browser and see how the output changed. Exit from the shell but do not stop the container.
@@ -75,7 +75,7 @@ docker tag evil_nginx:1.0 evil_nginx:latest
 
 ## Step 4: Lauching your custom images
 
-In case you haven't done it yet, stop your existing container using `docker stop`. 
+In case you haven't done it yet, stop your existing container using `docker stop`.
 
 ```bash
 docker stop perly-monkey

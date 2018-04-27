@@ -58,8 +58,8 @@ apt-get -y install nginx wget
 Use the `RUN` directive to call `wget` to download a picture and a custom HTML file into the image.
 
 ```
-wget -O /usr/share/nginx/html/cheers.jpg http://plx172.wdf.sap.corp:1080/K8S_Training/cheers.jpg
-wget -O /usr/share/nginx/html/index.html http://plx172.wdf.sap.corp:1080/K8S_Training/cheers.html
+wget --no-check-certificate -O /usr/share/nginx/html/cheers.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/cheers.html
+wget --no-check-certificate -O /usr/share/nginx/html/index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/cheers.jpg
 ```
 
 ## Step 6: Copy a custom nginx configuration into the image
