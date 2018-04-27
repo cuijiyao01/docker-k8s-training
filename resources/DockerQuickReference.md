@@ -7,25 +7,25 @@ docker --help
 docker <cmd> --help
 docker info
 
-docker images	: list local images
-docker run		: create and run container from image with command (optional)
-      -d      : as deamon
-	    -P      : all exposed ports mapped to host (random high)
-	    -p 80:5000  : map port 5000 (exposed from image) to 80 on host (virtualbox)
-      -rm     : delete container after completion
-      --tmpfs : mount a /tmp file system
-docker ps		  : list running containers
-        -s    : show size used by container on read-write file system; 
-                'virtual' is the read-only shared part     
-        -a    : show all containers, not just running ones
+docker images   : list local images
+docker run      :create and run container from image with command (optional)
+        -d      : as deamon
+	      -P      : all exposed ports mapped to host (random high)
+	      -p 80:5000  : map port 5000 (exposed from image) to 80 on host (virtualbox)
+        -rm     : delete container after completion
+        --tmpfs : mount a /tmp file system
+docker ps		    : list running containers
+        -s      : show size used by container on read-write file system; 
+                 'virtual' is the read-only shared part     
+        -a      : show all containers, not just running ones
 docker logs	[-f]: show log of running container (by name); -f: tail
                   example: docker logs <cont-id> 
-docker top		: look at processes
-docker inspect: internal info on container
-docker stop 	: stop container
-docker rm		  : remove a stopped container
+docker top		  : look at processes
+docker inspect  : internal info on container
+docker stop 	  : stop container
+docker rm		    : remove a stopped container
 
-docker pull <image>   : load a prebuilt image from a remote repo 
+docker pull <image> : load a prebuilt image from a remote repo 
 
 docker commit <container-id> commit-name  : commit changed state to image
 
@@ -81,7 +81,7 @@ This can be a file or more generally a directory and is then mounted. Data Volum
   - Read access of static files shared between all the containers (e.g. static mimes)
   - History and config shared between VMs (needs unique work dirs, e.g. for jenkins)
 - Examples
-  - $ docker run --rm -v test:/opt/test ubuntu bash -c 'echo $HOSTNAME >> /opt/test/hostnames'
+  - `$ docker run --rm -v test:/opt/test ubuntu bash -c 'echo $HOSTNAME >> /opt/test/hostnames'` 
 
 
 
@@ -93,43 +93,34 @@ This can be a file or more generally a directory and is then mounted. Data Volum
 - How much space does an inactive container need?
   - Totally depends on the write space of the file system. 
 - Why keep old containers around and not just the image?
-  - Only if you want to restart them. Otherwise DELETE!
+  - Only if you want to restart them or want to analyze issues, e.g. look at logs. Otherwise DELETE!
 - Why does each statement in a Dockerfile create another layer? 
-  - Why: ...
+  - Why: ... ???
   - What it means: Each layer is totally independent from the others, i.e. they can and will be shared among all containers (in memory)
   - When you do a 'docker pull', each layer of an image is pulled separately and exists only once in the cache.
 - How see hierarchy of layers in an image (with command, date created and size)?
-  - $ docker history <image_id>
+  - `docker history <image_id>`
 - How ssh into a running container so I can 'continue' and try out commands 
-  - docker exec -it ...
+  - `docker exec -it /bin/bash ...`
 - Where are docker files stored? In the host VM. 
   - linux: /var/lib/docker/  .../containers,  .../aufs/layers, ...  
 - Shared data?
   - /data is mounted into each container?
 
 
-## Tricks and Tools
-Standard xterm directory color is dark blue and not readable. (when you docker exec -it into a container)
-- Execute this in container: LS_COLORS=$LS_COLORS:'di=0;36'
-- Standard color profile set in /etc/DIR_COLORS
-
-Run cAdvisor from Google to see what your containers are doing nicely
-- https://github.com/google/cadvisor 
-
-
 
 ### Important scripts & snippets
 
 Show container IDs
-- $ docker ps -q 
+- `$ docker ps -q` 
 
 Clean up all exited containers
-- $ docker rm -v $(docker ps -a -q -f status=exited)
-- $ docker ps -aq | xargs docker rm
+- `$ docker rm -v $(docker ps -a -q -f status=exited)`
+- `$ docker ps -aq | xargs docker rm`
 
 Connect into a running container and start a bash
-- $ docker exec -it <container-id> /bin/bash
+- `$ docker exec -it <container-id> /bin/bash`
 
 Run a docker container to get a result and return code
-- $ docker run <ubuntu-container> /bin/cat/ /etc/passwd 
-- $ echo $? 
+- `$ docker run <ubuntu-container> /bin/cat/ /etc/passwd `
+- `$ echo $? `
