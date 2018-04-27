@@ -2,7 +2,7 @@
 #
 
 if [ $# -ne 2 ]; then
-    echo "Usage: get_cube_config.sh <training_id> <your_ns_id>"
+    echo "Usage: get_kube_config.sh <training_id> <your_ns_id>"
     echo "Pass the IDs given to you in the training."
     exit 1
 fi
