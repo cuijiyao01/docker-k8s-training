@@ -26,6 +26,7 @@ For each training we are using a separate **trial cluster** that you get from [G
 
 **TODO: description HOWTO**
 
+**TODO: describe how to get the kubeconfig for the seed cluster. The config allows you to edit the shoot cluster's yaml file as long as it is not possible via the Gardener UI.**
 
 ### Download your trainer .kube/config
 
@@ -39,7 +40,6 @@ On your VM / machine
 - Create new file `config` and paste the yaml
 - run `kubectl get nodes` - this command must complete by giving you a short list of nodes in the cluster
 
-
 ### Generate the kube configs for the participants
 
 Download or clone this repo into the VM / your linux machine.
@@ -51,6 +51,9 @@ Now run the script `kubecfggen.sh`. Give it the number of participants/namespace
 - Generates a yaml to create all namespaces etc in the cluster and already execute / apply it. The cluster will then already be set up for the participants.
 - Generates the kubeconfig files for the participants in the subdir for the training
 - Packages all files for this training into a tar.
+
+**Please note, the script creates not only the namespaces. It also deploys a ResourceQuota & LimitRange to each namespace.**
+With this abuse of the training cluster should become harder. The ResourceQuota limits the number of pods accepted by each namespace to 15. Any particpant trying to scale a deployment to a hundred pods or more will not harm other participants. The LimitRange assigns default values for memory and CPU requested by a pod. It also give a default limit. If a pod does not specify any of these it will inherit the defaults. In other terms, by specifying a cpu/memory request & limit, the defaults can be overwritten.
 
 ### Copy the configs to the share
 
@@ -74,17 +77,40 @@ You should send a 'preparation mail' to all participants a few days before the c
   https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/preparation.md
 ---------- end -----------
 ```
+Technically it would be possible to run most of the exercises also with Docker on Windows/Mac and a local kubectl. However, we would recommend explicitly exclude support for this setup during the training.
 
 ### Setup a docker registry
 For the docker exercises you need a private docker registry. Participants will upload their custom images to it during the course. Recommendation is to spin up a registry without any persistence in the k8s cluster you use for the training.
 In the admin folder of this repo, you find a registry folder with `install.registry.sh` script. Check the prerequisites and run the script as described [here](./registry/readme.md) to deploy a registry and make it available via an ingress.
 
+### Check the ingress URLs
+Gardener deploys an ingress controller to each cluster and allows you to register custom URLs to a specific subdomain. Since the subdomain contains the name of the Gardener project as well as the cluster, you have to adapt the ingress resources to match with your setup. Changes are neccessary to the [sock-shop](../kubernetes/solutions/sock-shop.yaml) and [ingress](../kubernetes/solutions/ingress.yaml) files.
+
+The URL pattern looks like this: `[custom-endpoint].ingress.[cluster-name].[project-name].shoot.canary.k8s-hana.ondemand.com`
+
+### Check IP address ranges
+Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we would recommend to limit access to whatever you expose in the cluster to traffic originating from a SAP network.
+Check the internal [network inforamation portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml), to figure out the address ranges of the training locations. Configure firewall rules in your respective IaaS account to block traffic that does not originate from these addresses.
+
+Furthermore, we use these ranges for the nework policy exercise. Check the [yaml](../kubernetes/solutions/network_policy_ingress.yaml) file and adapt it, if necessary.
+
 ## During the Course
 
+**TODO: Describe how to get infrastructure support from Gardener team / link to DL**
 
+### Add nodes to K8s cluster
+It might happen that your cluster needs more resources to deal with all the participants pods. As long as the Gardener UI does not support to edit the clusters yaml file, you to make the changes directly in thhe seed cluster where the configuration is stored. You can get a kubeconfig to access this cluster from the Gardener team by request.
 
+You can extract information like namespace, resource type or resource name from the yaml file shown in the Gardener UI.
+Try to run the following commands, to get all your clusters:
+
+`kubectl get shoots -n <your-namespace>`
+
+If you found your cluster, use the patch command to change the autoScalerMax value like in the example below. check the yaml structure and verify the path is correct.
+
+`kubectl patch shoot dub-train --type='json' -p='[{"op": "replace", "path": "/spec/cloud/gcp/workers/0/autoScalerMax", "value":7}]'`
 
 ## After the course
 
 - Destroy the Gardener trial cluster you used for the training
-- Delete the kube config files you stored for your training at `\\dwdf212\bst_ecf\X_Public\CloudCurriculum\K8S\k8s-for-developers\kube-configs`
+- Delete the kube config files you stored for your training at https://cc-admin.mo.sap.corp/userContent/k8s-trainings/

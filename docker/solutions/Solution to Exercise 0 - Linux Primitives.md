@@ -56,3 +56,41 @@ chroot .
 ```
 
 In this new shell, try to look at which files are there and which directories you can see.
+
+## Step 2: use unshare to run a process in a seperate namespace
+
+Make sure you are root for this step.
+
+```bash
+sudo -s
+```
+
+Use the unshare command to run a BASH in a new namespace.
+
+```bash
+unshare --pid --mount-proc --fork /bin/bash
+```
+
+Use the `ps` command to look at the running processes.
+
+```bash
+ps -ef
+```
+
+You should only get a list of two processes: your shell (with PID 1) and the `ps` command itself. The output should look something like this:
+
+```bash
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  2 12:46 pts/6    00:00:00 /bin/bash
+root        41     1  0 12:46 pts/6    00:00:00 ps -ef
+```
+
+## Step 3: combine unshare and chroot to run a container
+
+You can now combine the unshare and the chroot command to run a container with isolated namespaces and an isolated filesystem.
+
+```bash
+unshare --pid --mount-proc --fork chroot $HOME/container /bin/bash
+```
+
+Since we did not populate our container directory with the files required to run the `ps` command, you just have to believe that the process isolation still works.

@@ -233,8 +233,8 @@ echo -e "\n-----------------------------------------" >> $PARTICIPANT_SHEET
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
 	echo "Your ID (namespace): $NS_UID" >> $PARTICIPANT_SHEET
-	echo "Download your personal kube.config by running the script (with args): " >> $PARTICIPANT_SHEET
-	echo "  ~/setup/get_kube_config.sh $GLOBAL_ID $NS_UID" >> $PARTICIPANT_SHEET
+	echo "In your VM: Download your personal kube.config by running the script (with args): " >> $PARTICIPANT_SHEET
+	echo "  ~/setup/get_kube_config.sh $GLOBAL_UID $NS_UID" >> $PARTICIPANT_SHEET
 	echo "-----------------------------------------" >> $PARTICIPANT_SHEET
 done
 

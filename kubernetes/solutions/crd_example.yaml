@@ -7,9 +7,9 @@ spec:
   version: v1
   scope: Namespaced
   names:
-    plural: triggers
-    singular: trigger
-    kind: Trigger
+    plural: courses
+    singular: course
+    kind: Course
   validation:
     openAPIV3Schema:
         properties:
