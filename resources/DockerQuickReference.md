@@ -10,20 +10,20 @@ docker info
 docker images   : list local images
 docker run      :create and run container from image with command (optional)
         -d      : as deamon
-	      -P      : all exposed ports mapped to host (random high)
-	      -p 80:5000  : map port 5000 (exposed from image) to 80 on host (virtualbox)
+        -P      : all exposed ports mapped to host (random high)
+        -p 80:5000  : map port 5000 (exposed from image) to 80 on host (virtualbox)
         -rm     : delete container after completion
         --tmpfs : mount a /tmp file system
-docker ps		    : list running containers
+docker ps       : list running containers
         -s      : show size used by container on read-write file system; 
                  'virtual' is the read-only shared part     
         -a      : show all containers, not just running ones
-docker logs	[-f]: show log of running container (by name); -f: tail
+docker logs [-f]: show log of running container (by name); -f: tail
                   example: docker logs <cont-id> 
-docker top		  : look at processes
+docker top      : look at processes
 docker inspect  : internal info on container
-docker stop 	  : stop container
-docker rm		    : remove a stopped container
+docker stop     : stop container
+docker rm       : remove a stopped container
 
 docker pull <image> : load a prebuilt image from a remote repo 
 
