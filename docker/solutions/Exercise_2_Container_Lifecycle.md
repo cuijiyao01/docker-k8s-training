@@ -20,3 +20,8 @@ When doing `docker ps`, you'll get something like:
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 XXXXXXXXXXXX        busybox             "sh"                5 minutes ago       Up 5 minutes                            silly_name
 ``` 
+
+## Step 2
+Start another shell into the container by doing `docker exec -it <your container ID or Silly_Name> /bin/sh`. (e.g. `docker exec -it 567d71edcab0 /bin/sh`).  
+Perform `ps` or again `top` to see the processes that run in there.  
+Leave `top` by pushing the key `q`, and leave this shell by calling `exit`.  
