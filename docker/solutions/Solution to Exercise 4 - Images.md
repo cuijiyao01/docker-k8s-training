@@ -99,7 +99,7 @@ You will see that you will get the information that some change was comitted to 
 
 ## Step 6: Pushing the image to a registry
 
-Tag the image so that it refers to a remote registry. Give it a name so that it is uniquely identifieable:
+Tag the image so that it refers to a remote registry. Give it a name so that it is uniquely identifieable. For this, replace the 760d7ca6 in the following commands with your training ID:
 
 ```bash
 docker tag evil_nginx:latest registry.ingress.dub-train.k8s-train.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
