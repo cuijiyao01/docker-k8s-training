@@ -63,8 +63,8 @@ COPY index.html /usr/share/nginx/html
 COPY ssl.conf /etc/nginx/conf.d/ssl.conf
 
 # download the SSL key and certificate into the image
-ADD http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.key /etc/nginx/ssl/nginx.key
-ADD http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.crt /etc/nginx/ssl/nginx.crt
+COPY nginx.key /etc/nginx/ssl/nginx.key
+COPY nginx.crt /etc/nginx/ssl/nginx.crt
 
 # expose the https port
 EXPOSE 443
