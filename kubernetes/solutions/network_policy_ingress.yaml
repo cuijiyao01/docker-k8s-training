@@ -14,10 +14,10 @@ spec:
 # allow access originating from SAP networks
     - ipBlock:
         # Germany
-        cidr: 155.56.0.0/16
+        cidr: 155.56.68.208/28
     - ipBlock:
         # Ireland
-        cidr: 169.145.0.0/16
+        cidr: 84.203.229.48/29
     - ipBlock:
         # US-West/Canada
         cidr: 84.203.229.0/26
