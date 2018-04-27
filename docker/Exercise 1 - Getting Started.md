@@ -30,6 +30,14 @@ Environment="https_proxy=http://proxy.wdf.sap.corp:8080"
 Environment="no_proxy=.wdf.sap.corp"
 ```
 
+- On the training VMs, Docker will try to use Google's DNS servers for all containers. This will not work reliably as we are referencing to SAP internal addresses and Google's DNS cannot resolve those of course. To force Docker to use SAP's internal DNS server, we need to create the configuation file `/etc/docker/daemon.json` with the following content:
+
+```json
+{
+    "dns": ["10.17.121.30", "10.17.220.80"]
+}
+```
+
 - Tell systemd to reload all of its configuration files by running `systemctl daemon-reload` and restart the docker daemon with `systemctl restart docker.service`.
 
 The command `docker info` will now give you useful information about Docker's configuration.
