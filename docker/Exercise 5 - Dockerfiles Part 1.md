@@ -54,6 +54,8 @@ For SSL/TLS to work, we will need an encryption key and a certificate. We use Op
 openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days 365 -subj '/CN=`hostname`'
 ```
 
+With the COPY directive, make sure the files `nginx.key` and `nginx.crt` end up inside your image in the directory `/etc/nginx/ssl`.
+
 ## Step 5: expose the secure HTTP port
 
 The default _nginx_ image only exposes port 80 for unencrypted HTTP. Since we want to enable encrypted HTTPS, it is a good idea to expose port 443 as well. Use the `EXPOSE` directive accordingly.
