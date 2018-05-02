@@ -12,6 +12,7 @@
 * Linux features that enable containers
   * namespaces (with demo)
   * netfilter, cgroups, netlink, SELinux, capabilities, seccomp
+* Exercise 0: Create naked containers with Linux primitives
 * Containers
 * Images
 * Layers in images and containers
