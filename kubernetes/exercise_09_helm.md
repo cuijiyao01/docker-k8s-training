@@ -12,7 +12,7 @@ Next locate the `helm` binary in the extracted folder and move it to a directory
 
 Run as user root or with sudo: `mv linux-amd64/helm /usr/local/bin/helm`
 
-Change the permissions of the binary accordingly that also the `training` user can run it.
+Change the permissions of the binary accordingly that also the `vagrant` user can run it.
 
 Run as user root or with sudo: `chmod +x /usr/local/bin/helm`
 
