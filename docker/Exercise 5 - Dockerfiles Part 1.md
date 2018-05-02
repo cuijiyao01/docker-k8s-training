@@ -9,8 +9,8 @@ Create an empty directory on your VM, change into it and create an empty `Docker
 We want to copy a custom (yet very simple) website to the image, so we will download the files into our build context:
 
 ```bash
-wget -O train.jpg http://plx172.wdf.sap.corp:1080/K8S_Training/train.jpg
-wget -O index.html http://plx172.wdf.sap.corp:1080/K8S_Training/train.html
+wget -O train.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/train.jpg
+wget -O index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/train.html
 ```
 
 ## Step 1: extend an existing image
@@ -42,17 +42,19 @@ server {
 }
 ```
 
-**Shortcut:** You can also download this configuration file from http://plx172.wdf.sap.corp:1080/K8S_Training/ssl.conf.
+**Shortcut:** You can also download this configuration file from https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/ssl.conf.
 
 Again, with the help of the `COPY` directive, make sure that this file ends up in your image at `/etc/nginx/conf.d/ssl.conf`.
 
 ## Step 4: add the certificates to image
 
-For SSL/TLS to work, we will need an encryption key and a certificate. These have already been prepared and should be downloaded directly into the image using the `ADD` directive.
+For SSL/TLS to work, we will need an encryption key and a certificate. We use OpenSSL to create a self-signed certificate. Use the following command to create an encryption key and a certificate.
 
-The encryption key can be downloaded from http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.key and should end up at `/etc/nginx/ssl/nginx.key`. The certificate can be obtained from http://plx172.wdf.sap.corp:1080/K8S_Training/key/nginx.crt and should end up at `/etc/nginx/ssl/nginx.crt` inside the image.
+```bash
+openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days 365 -subj '/CN=`hostname`'
+```
 
-**Disclaimer/WARNING:** Placing the encryption key for an SSL/TLS certificate on a publicly accessible webserver is a *very bad* idea. This has only been done for the sake of simplicity during this training and of course, this key-certificate combination is to be considered compromised and insecure. Do not try this at home!
+With the COPY directive, make sure the files `nginx.key` and `nginx.crt` end up inside your image in the directory `/etc/nginx/ssl`.
 
 ## Step 5: expose the secure HTTP port
 
@@ -64,10 +66,10 @@ Use the `docker build` command to build the image. Make note of the UID of the n
 
 ## Step 7: tag the image
 
-With `docker tag`, give your image a nice name such as *secure_nginx* and a release number (again, use your hostname as release number). 
+With `docker tag`, give your image a nice name such as *secure_nginx* and a release number (again, use your hostname as release number).
 
-If you want to push this image to our registry on **pvxka22.wdf.sap.corp**, tag your image accordingly and use `docker push` to push the image to the registry.
+If you want to push this image to our registry on **registry.ingress.dub-train.k8s-train.shoot.canary.k8s-hana.ondemand.com**, tag your image with the name *secure_nginx* and your unique training ID and use `docker push` to push the image to the registry.
 
 ## Step 8: run a container
 
-Create and run a new container from your image. Do not forget to run the container in detached mode. Let Docker automatically assign port forwardings, find out to where the ports have been mapped and use your web browser to connect to them. Use them both, the non-SSL (that gets mapped to port 80) and the SSL port (the one that gets mapped to 443).
+Create and run a new container from your image. Do not forget to run the container in detached mode. Let Docker automatically assign port forwardings, find out to where the ports have been mapped and use your web browser to connect to them. Use them both, the non-SSL (that gets mapped to port 80) and the SSL port (the one that gets mapped to 443). Since we used a self-signed certificate, you will get an error-message from your browser, just ignore it.

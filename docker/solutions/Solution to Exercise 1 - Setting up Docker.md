@@ -1,6 +1,6 @@
 ## Step 1: Install docker
 
-Open a command window. 
+Open a command window.
 
 Run the following commands in order to install Docker:
 
@@ -13,8 +13,8 @@ apt-get install docker-ce
 Run the following commands to verify that the Docker binaries have been installed:
 
 ```bash
-test -x /usr/bin/docker && echo "Docker client is installed and executable." 
-test -x /usr/bin/dockerd && echo "Docker daemon is installed and executable." 
+test -x /usr/bin/docker && echo "Docker client is installed and executable."
+test -x /usr/bin/dockerd && echo "Docker daemon is installed and executable."
 ```
 
 Check the Docker version and get some info about its environment:
@@ -24,7 +24,7 @@ docker -v
 docker info
 ```
 
-## Step 2: Set up the proxy server
+## Step 2: Set up the proxy and DNS server
 
 Open a command window and enter the following commands in order to create a systemd configuration drop-in:
 
@@ -36,6 +36,16 @@ cat << '__EOF' > /etc/systemd/system/docker.service.d/proxy.conf
 Environment="http_proxy=http://proxy.wdf.sap.corp:8080"
 Environment="https_proxy=http://proxy.wdf.sap.corp:8080"
 Environment="no_proxy=.wdf.sap.corp"
+__EOF
+```
+
+Create the Docker configuration file that sets the DNS configuration to SAP's own internal DNS servers:
+
+```bash
+cat << '__EOF' > /etc/docker/daemon.json
+{
+    "dns": ["10.17.121.30", "10.17.220.80"]
+}
 __EOF
 ```
 
@@ -99,9 +109,9 @@ docker run docker/whalesay cowsay "Everything seems to be fine."
 
 The expected output looks like this:
 ```
- ______________________________ 
+ ______________________________
 < Everything seems to be fine. >
- ------------------------------ 
+ ------------------------------
     \
      \
       \     

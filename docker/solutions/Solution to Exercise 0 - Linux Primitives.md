@@ -1,51 +1,82 @@
-## chroot
+## Step 0: chroot
 Call the man page:
 
 ```bash
 man chroot
 ```
 
-Create the `container` directory, change to user `root`, `cd` into it and run `chroot` for the first time:
+Create the `container` directory, `cd` into it, change to user `root` and run `chroot` for the first time:
 
 ```bash
 mkdir -p $HOME/container
-sudo -s
 cd $HOME/container
+sudo -s
 chroot .
 ```
 
-Please note, `$HOME` should still point to `/home/vagrant`. If it does not, please substitute $HOME with the absolute path.
+## Step 1: prepare your chroot environment first
 
-Since `chroot` does not work without a `bash`, copy the binary to `$HOME/container/bin`:
+Since `chroot` does not work without a shell and all the files required to start it, we will need to create the basic directory layout in our container and copy the BASH binary into it.
+
 ```bash
-mkdir $HOME/container/bin
-cp /bin/bash $HOME/container/bin/
+mkdir -p $HOME/container/bin $HOME/container/lib $HOME/container/lib64 $HOME/container/proc
+cp /bin/bash $HOME/container/bin
 ```
 
-Run `chroot .` again.
+Use `ldd` to find out which libraries need to be copied into the container as well.
 
-The executable `bash` needs the following libraries:
 ```bash
-ldd /bin/bash
-       linux-vdso.so.1 =>  (0x00007fffdfe71000)
-       libtinfo.so.5 => /lib/x86_64-linux-gnu/libtinfo.so.5 (0x00007f2a43840000)
-       libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f2a43630000)
-       libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f2a43260000)
-       /lib64/ld-linux-x86-64.so.2 (0x00007f2a43c00000)
+ldd $HOME/container/bin/bash
 ```
 
-Copy them to a `lib` folder:
+Copy the required libraries into the appropriate directories. Note that `ld-linux-x86-64.so.2` goes into the `lib64` directory, the rest goes into `lib`.
 
 ```bash
-mkdir $HOME/container/lib
 cp /lib/x86_64-linux-gnu/libtinfo.so.5 $HOME/container/lib
 cp /lib/x86_64-linux-gnu/libdl.so.2 $HOME/container/lib
 cp /lib/x86_64-linux-gnu/libc.so.6 $HOME/container/lib
-mkdir $HOME/container/lib64
 cp /lib64/ld-linux-x86-64.so.2 $HOME/container/lib64
 ```
-and try again:
+
+In order to have a working `ls` command, we have to copy some more files:
+
 ```bash
+cp /bin/ls $HOME/container/bin
+cp /lib/x86_64-linux-gnu/libselinux.so.1 $HOME/container/lib
+cp /lib/x86_64-linux-gnu/libpcre.so.3 $HOME/container/lib
+cp /lib/x86_64-linux-gnu/libpthread.so.0 $HOME/container/lib
+```
+
+Try to change root again:
+
+```bash
+cd $HOME/container
+sudo -s
 chroot .
 ```
-You can leave the chroot session as expected via `exit`.
+
+In this new shell, try to look at which files are there and which directories you can see.
+
+## Step 2: use unshare to run a process in a seperate namespace
+
+Make sure you are root for this step.
+
+```bash
+sudo -s
+```
+
+Use the unshare command to run a BASH in a new namespace.
+
+```bash
+unshare --pid --mount-proc --fork /bin/bash
+```
+
+Use the `ps` command to look at the running processes.
+
+```bash
+ps -ef
+```
+
+You should only get a list of two processes: your shell (with PID 1) and the `ps` command itself. The output should look something like this:
+
+```bash

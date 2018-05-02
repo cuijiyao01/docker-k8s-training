@@ -30,8 +30,8 @@ apt-get update && apt-get -y install wget
 Use the wget download manager to download a custom website into nginx' website directory.
 
 ```bash
-wget -O /usr/share/nginx/html/evil.jpg http://plx172.wdf.sap.corp:1080/K8S_Training/evil.jpg
-wget -O /usr/share/nginx/html/index.html http://plx172.wdf.sap.corp:1080/K8S_Training/evil.html
+wget --no-check-certificate -O /usr/share/nginx/html/evil.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.jpg
+wget --no-check-certificate -O /usr/share/nginx/html/index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.html
 ```
 
 Reload the webpage in your browser and see how the output changed. Exit from the shell but do not stop the container.
@@ -54,8 +54,8 @@ Use the `docker history` command to examine the history of your custom image. Ca
 
 ## Step 6: Pushing the image to a registry
 
-The computer **pvxka22.wdf.sap.corp** runs a docker registry to which you can push your image.
+The K8s cluster prepared for the training is also serving a docker registry at  **registry.ingress.dub-train.k8s-train.shoot.canary.k8s-hana.ondemand.com** to which you can push your image.
 
-Use the `docker tag` command to tag your image correctly so that the registry is used. The name of your image should be **evil_nginx** with the name of your training VM as release tag. For instance, if you are working on pvxka07, tag your image like **"\<registry name\>/evil_nginx:pvxka07"**.
+Use the `docker tag` command to tag your image correctly so that the registry is used. The name of your image should be **evil_nginx with the ID of your K8s namespace** as release tag. For instance, if you are working on part-760d7ca6, tag your image like **"\<registry name\>/evil_nginx:760d7ca6"**.
 
 Use `docker push` to upload your image to the registry.

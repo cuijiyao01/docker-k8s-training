@@ -1,7 +1,7 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: triggers.events.training.sap
+  name: courses.events.training.sap
 spec:
   group: events.training.sap
   version: v1

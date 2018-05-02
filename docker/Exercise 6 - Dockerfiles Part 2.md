@@ -13,7 +13,7 @@ wget -O rootfs.tar.bz2 http://plx172.wdf.sap.corp:1080/K8S_Training/debian_rootf
 We also want to use a custom nginx configuration inside our image so download it to your build context as well.
 
 ```
-wget -O nginx.conf http://plx172.wdf.sap.corp:1080/K8S_Training/nginx.conf
+wget -O nginx.conf https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/nginx.conf
 ```
 
 ## Step 1: Creating the Dockerfile
@@ -58,8 +58,8 @@ apt-get -y install nginx wget
 Use the `RUN` directive to call `wget` to download a picture and a custom HTML file into the image.
 
 ```
-wget -O /usr/share/nginx/html/cheers.jpg http://plx172.wdf.sap.corp:1080/K8S_Training/cheers.jpg
-wget -O /usr/share/nginx/html/index.html http://plx172.wdf.sap.corp:1080/K8S_Training/cheers.html
+wget --no-check-certificate -O /usr/share/nginx/html/cheers.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/cheers.jpg
+wget --no-check-certificate -O /usr/share/nginx/html/index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/cheers.html
 ```
 
 ## Step 6: Copy a custom nginx configuration into the image
