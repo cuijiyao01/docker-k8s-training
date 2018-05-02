@@ -11,7 +11,20 @@ Official course entry in Successmap Learning System: [Kubernetes for Developers]
 
 Follow the instructions on the page [Prerequisites and Environment Setup](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/preparation.md).
 
+## Course outline
+High level topics are:
 
+#### Docker (day 1)
+- Container basics: Containers vs. VMs
+- Linux foundations: How docker works
+- Using containers; Load, start, stop, inspect, debugging
+- Images: Loading, creating, push/pull, image registries
+- Networking: 
+- Storage / volumes: Assigning and using persistent disks
+- Dockerfiles: Automated creation of docker images
+
+#### Kubernetes (day 2+3)
+- nodes, pods, name spaces, replica sets, deployments, services, cluster networking, storage, secrets, config maps, ingress, stateful sets, roles and permissions, network policies, helm
 
 ## Course developers and Trainers
 
