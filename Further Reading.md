@@ -12,6 +12,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - First of all: SAP offers an internal Kubernetes platform offering that is called Project Gardener. If you need a Kubernetes environment, go here: [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/)
 
+- Do you want to watch Kelsey Hightower, one of the big brains behind Kubernetes play Tetris on the Jumbotron at d-Kom 2018 at SAP Arena? Check out [his keynote](https://broadcast.co.sap.com/event/dkom/2018#!video%2F18106).
+
 - If there was a Container 101 talk at *devX*, there must be a Kubernetes 102 talk as well: [Kubernetes 102](https://video.sap.com/media/t/1_64gue1c2/84675141)
 
 - Interested in the architecture behing Gardener? There was a talk about it at *devX*, too:
@@ -20,6 +22,10 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 - Another talk at *devX* was about resource management in Kubernetes:
 [Inside Kubernetes Resource Management (QoS) – Mechanics and Lessons from the Field](https://video.sap.com/media/t/1_hcnybwp9/84675141)
 
-- The nitty gritty details about the networking in and behind Kubernetes are explained in the final *devX* talk we would like to point you to: [Insights into Kubernetes](https://video.sap.com/media/t/1_8fawa5io/84675141)
+- The nitty gritty details about the networking in and behind Kubernetes are explained in the final *devX* talk we would like to point you to: [Insights into Kubernetes Networking](https://video.sap.com/media/t/1_8fawa5io/84675141)
 
 - The Kubernetes API reference can be found here: [Kubernetes API reference Documentation](https://kubernetes.io/docs/reference/).
+
+## General
+
+- Brendan Burns, Distinguished Engineer at Microsoft and Chief Architect behind the container infrastucture within Azure released one of his books on distributed software design for free: [Designing Distributed Systems](https://azure.microsoft.com/mediahandler/files/resourcefiles/baf44271-3870-454f-868c-23d48e7672cb/Designing_Distributed_Systems.pdf)
