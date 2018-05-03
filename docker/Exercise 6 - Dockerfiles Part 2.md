@@ -77,7 +77,7 @@ Use the `RUN` directive to create symlinks to `/dev/stdout` and `/dev/stderr` re
 **Hint:** This can be confusing as the source and the destination of the link might easily get mixed up. Here are the commands:
 ```
 ln -sf /dev/stdout /var/log/nginx/access.log
-ls -sf /dev/stderr /var/log/nginx/error.log
+ln -sf /dev/stderr /var/log/nginx/error.log
 ```
 
 ## Step 8: Exposing the port
