@@ -10,7 +10,7 @@ Official course entry in Successmap Learning System: [Kubernetes fundamentals fo
 ## Course outline
 High level topics are:
 
-#### Docker (day 1)
+### Docker (day 1)
 - Container basics: Containers vs. VMs
 - Linux foundations: How docker works
 - Using containers; Load, start, stop, inspect, debugging
@@ -19,7 +19,7 @@ High level topics are:
 - Storage / volumes: Assigning and using persistent disks
 - Dockerfiles: Automated creation of docker images
 
-#### Kubernetes (day 2+3)
+### Kubernetes (day 2+3)
 - nodes, pods, name spaces, replica sets, deployments, services, cluster networking, storage, secrets, config maps, ingress, stateful sets, roles and permissions, network policies, helm
 
 ## Preparation and Setup
