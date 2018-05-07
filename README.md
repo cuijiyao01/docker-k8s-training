@@ -1,15 +1,11 @@
-# Docker and Kubernetes course for developers  
-## (UNDER DEVELOPMENT) 
+# Docker and Kubernetes fundamentals  
+#### (UNDER DEVELOPMENT) 
 
-This is the repo for the "kubernetes course for developers". For an overview of topics see the agenda pages on top level.
+This is the repo for the "kubernetes fundamentals course for developers". The focus is on docker and kubernetes as technologies, i.e. learning what they can do and how to use them. For an overview of topics see the agenda pages on top level.
 
 Official course entry in Successmap Learning System: [Kubernetes for Developers](https://performancemanager5.successfactors.eu/sf/learning?destUrl=https%3a%2f%2fsap%2eplateau%2ecom%2flearning%2fuser%2fdeeplink_redirect%2ejsp%3flinkId%3dITEM_DETAILS%26componentID%3dDEV_CC_PA_Kuber_1803_ILT%26componentTypeID%3dCOURSE%26revisionDate%3d1521715320000%26fromSF%3dY&company=SAP&_s.crb=qma6qdESsp4OG5PZUuisLG8Vx4c%253d)
 
 > Part of [Cloud Curriculum](https://jam4.sapjam.com/groups/zAfXdXPcJGlCUrBScXSWKP/overview_page/Y1fECzZLQ8qjIlyCQTRi76)
-
-## Preparation and Setup
-
-Follow the instructions on the page [Prerequisites and Environment Setup](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/preparation.md).
 
 ## Course outline
 High level topics are:
@@ -25,6 +21,10 @@ High level topics are:
 
 #### Kubernetes (day 2+3)
 - nodes, pods, name spaces, replica sets, deployments, services, cluster networking, storage, secrets, config maps, ingress, stateful sets, roles and permissions, network policies, helm
+
+## Preparation and Setup
+
+Follow the instructions on the page [Prerequisites and Environment Setup](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/preparation.md).
 
 ## Course developers and Trainers
 
