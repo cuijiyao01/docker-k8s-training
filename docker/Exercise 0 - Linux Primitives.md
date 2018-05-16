@@ -7,9 +7,7 @@ In this exercise you will use the `chroot` command to create file system isolati
 ## Step 0: chroot into a directory
 What does `chroot` do? Well, take a look at the man-page and find out.
 
-Now that you know, how it works, give it a try. As user `vagrant` create a new directory `container` in your `$HOME`. Change to user `root` and make the `container` directory your new `/` with `chroot`.
-
-Has it worked? If not, try to solve the error reported and if a binary is missing, copy it to your `container` directory. Does it work now?
+Now that you know, how it works, give it a try. As user `vagrant` create a new directory `container` in your `$HOME`. Change to user `root` and make the `container` directory your new `/` with `chroot`. **Do not be surprised if it does not work... yet.**
 
 ## Step 1: prepare your chroot environment first
 
@@ -17,13 +15,13 @@ Since chroot isolates a directory from the rest of the file system, the process 
 
 Create the directories `bin`, `lib`, `lib64` and `proc` in your `container` directory. Copy the binary for BASH into `container/bin`. Use `ldd` to find out, which libraries are needed to run bash and copy them into the appropriate directories inside your container. Note that `ld-linux-x86-64.so.2` goes into the `lib64` directory, the rest goes into `lib`.
 
-Repeat this process for `/bin/ls` and all libraries it needs.
+Repeat this process for `/bin/ls` and all the libraries it needs.
 
 Try to change root into your container directory again and use `ls` and `cd` to navigate around and look at the files and directories that are there.
 
 ## Step 2: use unshare to run a process in a seperate namespace
 
-Make sure you are root for this step.
+Make sure you are `root` for this step.
 
 In order to create run a process in a new namespace, we need to use the command `unshare`. Look at its manpage to find out how to use it. We want to run a BASH in a new PID namespace, so that options that need to be passed to unshare are `--pid`, `--mount-proc` and `--fork`.
 
