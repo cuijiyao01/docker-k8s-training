@@ -98,6 +98,8 @@ root         1     0  2 12:46 pts/6    00:00:00 /bin/bash
 root        41     1  0 12:46 pts/6    00:00:00 ps -ef
 ```
 
+Exit the namespaced shell with `exit`.
+
 ## Step 3: combine unshare and chroot to run a container
 
 You can now combine the unshare and the chroot command to run a container with isolated namespaces and an isolated filesystem.
