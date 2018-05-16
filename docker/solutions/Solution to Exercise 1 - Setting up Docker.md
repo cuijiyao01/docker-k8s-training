@@ -1,3 +1,5 @@
+# Solution to Exercise 1 - Setup of Docker environment
+
 ## Step 1: Install docker
 
 Open a command window.
