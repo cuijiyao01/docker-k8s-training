@@ -1,3 +1,7 @@
+# Solution to Exercise 0 - Linux Primitives
+
+In this exercise you will spin up a process inside a container by using only the Linux primitives that made container environments possible.
+
 ## Step 0: chroot
 Call the man page:
 
@@ -13,6 +17,13 @@ cd $HOME/container
 sudo -s
 chroot .
 ```
+
+**Note:** This will (intentionally) fail with the following error message:
+
+```
+chroot: failed to run command ‘/bin/bash’: No such file or directory
+```
+
 
 ## Step 1: prepare your chroot environment first
 
