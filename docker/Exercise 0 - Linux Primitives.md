@@ -4,6 +4,8 @@ Before you get used to the convenience of the Docker cli, it is important to und
 
 In this exercise you will use the `chroot` command to create file system isolation. You will also learn to isolate the process ID namespace using `unshare`.
 
+In case you need some assistance, there is a [sample solution](./solutions/Solution to Exercise 0 - Linux Primitives.md).
+
 ## Step 0: chroot into a directory
 What does `chroot` do? Well, take a look at the man-page and find out.
 
