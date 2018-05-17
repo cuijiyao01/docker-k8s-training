@@ -1,4 +1,4 @@
-# Container Lifecycle
+# Solution to Exercise 2 - Container lifecycle
 
 ## Step 0: Creating a container
 
