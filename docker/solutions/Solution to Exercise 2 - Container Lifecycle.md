@@ -80,7 +80,7 @@ Perform `docker stop <your container ID or Silly_Name>` (e.g. `docker stop 94cb5
 
 Unless you want to use the command `docker rm $(docker ps -aq)` (which REALLY deletes ALL the containers - and this might be dangerous !), you may also perform: `docker ps -a` to see a list with all the running & exited containers and then delete multiple of them with one command: `docker rm <container1> <container2> <containerN>`.  
 
-**Shortcut:** If you want to remove all stopped containers, you can do it with these commands (use with caution).
+**Shortcut:** If you want to remove all containers, you can do it with these commands (use with caution).
 
 ```bash
 docker container prune
