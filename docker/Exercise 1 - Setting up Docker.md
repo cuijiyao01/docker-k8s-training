@@ -1,5 +1,7 @@
 # Exercise 1 - Setup of Docker environment
 
+Sample solution is [here](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/docker/solutions/Solution%20to%20Exercise%201%20-%20Setting%20up%20Docker.md).
+
 ## Preparations
 
 In this exercise you will set up a basic environment inlcuding Docker on your Ubuntu VM and run your first container on it. During these exercises, we are going to use Docker on Linux - after all, this is where it all started.
