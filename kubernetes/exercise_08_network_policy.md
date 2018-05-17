@@ -49,7 +49,7 @@ spec:
         cidr: 84.203.229.0/26        
 ```
 
-If you are unsure about the labels, feel free to check the [sample solution](./solutions/network_policy_ingress.yaml).
+If you are unsure about the labels, feel free to check the [sample solution](./solutions/08_network_policy_ingress.yaml).
 
 Create the resource as usual with `kubectl create -f <your file>.yaml` and check its presence with `kubectl get networkpolicy`
 

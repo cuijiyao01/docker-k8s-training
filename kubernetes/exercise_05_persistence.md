@@ -15,7 +15,7 @@ Instead of creating a PersistentVolume (PV) first and then bind it to a Persiste
 This is not only convenient, but also helps to avoid confusion. PVC are bound to a namespace, PV resource are not. When there is a fitting PV, it can be bound to any PVC in any namespace. So there is some conflict potential, if your colleagues always claim your PV's :)
 The conecpt of the storage classes overcomes this problem. The tooling masked by the storage class auto-provisions PV's of a defined volume type for each requested PVC.
 
-Download the resource from [gitHub](./solutions/pvc.yaml) or copy the snippet from below to your VM:
+Download the resource from [gitHub](./solutions/05_pvc.yaml) or copy the snippet from below to your VM:
 
 ```
 kind: PersistentVolumeClaim
@@ -34,7 +34,7 @@ spec:
 Create the resource: `kubectl create -f pvc.yaml`. Verify that your respective claim has been created and is bound to a PV.
 
 ## Step 2: Attach the PVC to a pod
-Create a busybox pod with a volume & mount section to get access to your PVC. Use the snippet below or download from [gitHub](./solutions/pod_with_pvc.yaml)
+Create a busybox pod with a volume & mount section to get access to your PVC. Use the snippet below or download from [gitHub](./solutions/05_pod_with_pvc.yaml)
 
 ```
 apiVersion: v1
@@ -68,7 +68,7 @@ Then create a new deployment that uses the `nginx-pvc`. However `run nginx` will
 
 Please note that our storage backend (`default` storage class based on `gcePersistentDisk`) does not support `readWriteMany` mounts. You can either mount the volume once for write access (like you did in step 2) or several times as readOnly. Since our deployment has 3 replicas and we don't want to modify the `index.html`, mount the `nginx-pvc` by adding `readOnly: true` to both the `volumeMounts` and the `volumes.persistentVolumeClaim` sections.
 
-In case you need a hint, check the prepared yaml file on [gitHub](./solutions/deployment_pvc.yaml).
+In case you need a hint, check the prepared yaml file on [gitHub](./solutions/05_deployment_with_pvc.yaml).
 
 Once you successfully created the deployment, check that all replicas are up and running.
 

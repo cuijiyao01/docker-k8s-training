@@ -9,7 +9,7 @@ In this step you are going to describe a pod in a yaml file (`pod.yaml`). Take t
 * `name: nginx` (metadata)
 * `image: nginx:1.7.9`
 
-Check the official [API reference](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#pod-v1-core) of the pod resource for help.
+Check the official [API reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#pod-v1-core) of the pod resource for help.
 
 ```
 apiVersion: v1
@@ -27,7 +27,7 @@ spec:
       initialDelaySeconds: 3
       periodSeconds: 30
 ```
-If it does not work as expected, check the indentation or take a look at the solution on  [github](./solutions/pod_http_liveness.yaml)
+If it does not work as expected, check the indentation or take a look at the solution on  [github](./solutions/02_pod_http_liveness.yaml)
 
 ## Step 1: create the pod
 Now tell the cluster that you would like it to schedule the pod for you. To do so, run the following command:
