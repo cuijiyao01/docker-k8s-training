@@ -6,6 +6,7 @@ This is the repo for the "kubernetes fundamentals course for developers". The fo
 Official course entry in Successmap Learning System: [Kubernetes fundamentals for Developers](https://performancemanager5.successfactors.eu/sf/learning?destUrl=https%3a%2f%2fsap%2eplateau%2ecom%2flearning%2fuser%2fdeeplink_redirect%2ejsp%3flinkId%3dITEM_DETAILS%26componentID%3dDEV_CC_PA_Kuber_1803_ILT%26componentTypeID%3dCOURSE%26revisionDate%3d1521715320000%26fromSF%3dY&company=SAP&_s.crb=qma6qdESsp4OG5PZUuisLG8Vx4c%253d)
 
 > Part of [Cloud Curriculum](https://jam4.sapjam.com/groups/zAfXdXPcJGlCUrBScXSWKP/overview_page/Y1fECzZLQ8qjIlyCQTRi76)
+> For a comparison of SAP CP platforms and when to use what, see the [Platform Guide](https://wiki.wdf.sap.corp/wiki/x/Vwg4bg)
 
 ## Course outline
 High level topics are:
