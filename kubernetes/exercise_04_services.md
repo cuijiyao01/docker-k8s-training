@@ -6,7 +6,7 @@ Now that the application is running and resilient to failure of a single pod, it
 Once again make sure,  everything is up and running. Use `kubectl` and check your deployment + the respective pods.
 
 ## Step 1: create a service
-Kubernetes provides a convenient way to expose applications. Simply run `kubectl expose deployment nginx --type=LoadBalancer --port=80 --target-port=80`.
+Kubernetes provides a convenient way to expose applications. Simply run `kubectl expose deployment <deployment-name> --type=LoadBalancer --port=80 --target-port=80`.
 With `--type=LoadBalancer` you request our training infrastructure (GCP) to provision a public IP address. It will also automatically assign a cluster-IP and a nodePort in the current setup of the cluster. To create a service that gets only a cluster IP and a NodePort, use `--type=NodePort`.
 
 ## Step 2: connect to your service
@@ -15,7 +15,9 @@ Checkout the newly created `service` object in your namespace. Try to get detail
 Next try to access the service via the NodePort. Since the NodePort is opened on any cluster node, all you need, is the IP of a cluster node + the NodePort.
 Run `kubectl get nodes -o wide` to get the IP addresses of all cluster nodes. You can take any of them and combine it with your NodePort.
 
-## Step 3: optional - create a service from a yaml file.
+## Step 3: create a service from a yaml file.
+Before going on, delete the service you created with the `expose` command.
+
 Either try to write your own yaml or download the  [service.yaml](./solutions/04_service.yaml) to your machine.
 Check, that the label selector matches the lables of your deployment/pods and (re-)create the service (`kubectl create -f <your-file>.yaml`).
 

@@ -52,9 +52,9 @@ Below is a skeleton of a deployment, however it is still missing some essential 
 ```
 apiVersion: apps/v1
 metadata:
-  name: nginx
+  name: nginx-deployment
   labels:
-    run: nginx
+    tier: application
 spec:
   replicas: 3
   selector:

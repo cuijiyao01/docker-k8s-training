@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nginx-deployment
   labels:
-    run: nginx
+    tier: application
 spec:
   replicas: 3
   selector:

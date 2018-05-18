@@ -88,9 +88,9 @@ Try to complete the snippet by inserting the missing parts (look for `???` block
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-https
+  name: nginx-https-deplyoment
   labels:
-    app: nginx-https
+    tier: application
 spec:
   replicas: 3
   selector:
