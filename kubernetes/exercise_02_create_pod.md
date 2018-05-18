@@ -6,7 +6,7 @@ In kubernetes all resources have a well-described schema that is documented in t
 
 In this step you are going to describe a pod in a yaml file (`pod.yaml`). Take the skeleton listed below and insert the field/values mentioned below at the right place.
 * `kind: Pod`
-* `name: nginx` (metadata)
+* `name: nginx-liveness-pod` (metadata)
 * `image: nginx:1.7.9`
 
 Check the official [API reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#pod-v1-core) of the pod resource for help.
