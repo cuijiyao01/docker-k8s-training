@@ -45,7 +45,7 @@ __EOF
 For SSL/TLS to work, we will need an encryption key and a certificate. We use OpenSSL to create a self-signed certificate. Use the following command to create an encryption key and a certificate.
 
 ```bash
-openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days 365 -subj '/CN=`hostname`'
+openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days 365 -subj "/CN=`hostname`"
 ```
 
 ## Step 1, 2 & 5: write the Dockerfile
