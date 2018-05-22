@@ -56,8 +56,8 @@ Create a Dockerfile with this content:
 FROM nginx:stable
 
 # copy the custom website into the image
-COPY train.jpg /usr/share/nginx/html
-COPY index.html /usr/share/nginx/html
+COPY train.jpg /usr/share/nginx/html/
+COPY index.html /usr/share/nginx/html/
 
 # copy the SSL configuration file into the image
 COPY ssl.conf /etc/nginx/conf.d/ssl.conf
