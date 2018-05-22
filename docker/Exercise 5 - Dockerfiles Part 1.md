@@ -68,7 +68,7 @@ Use the `docker build` command to build the image. Make note of the UID of the n
 
 With `docker tag`, give your image a nice name such as *secure_nginx* and a release number (again, use your hostname as release number).
 
-If you want to push this image to our registry on **registry.ingress.dub-train.k8s-train.shoot.canary.k8s-hana.ondemand.com**, tag your image with the name *secure_nginx* and your unique training ID and use `docker push` to push the image to the registry.
+If you want to push this image to our registry on **registry.ingress.wdftr01.k8s-train.shoot.canary.k8s-hana.ondemand.com**, tag your image with the name *secure_nginx* and your unique training ID and use `docker push` to push the image to the registry.
 
 ## Step 8: run a container
 
