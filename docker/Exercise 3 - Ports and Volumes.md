@@ -2,7 +2,7 @@
 
 In this exercise, you will run an _nginx_ webserver in a container and server a custom website to the outside world.
 
-The solution to this exercise can be found [here](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/docker/solutions/Solution%20to%20Exercise%203%20-%20Ports%20and%20Volumes.md)
+The solution to this exercise can be found [here](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/docker/solutions/Solution%20to%20Exercise%203%20-%20Ports%20and%20Volumes.md).
 
 ## Step 0: run an NGINX container and connect to it
 
