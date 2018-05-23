@@ -28,4 +28,4 @@ You will probably get an error message concerning missing labels. Solve this by 
 
 Once you are able to access the nginx via the `NodePort`, take a look at the pod and the service. Determine the label as well as the corresponding selectors. Now remove the label from the pod: `kubectl label pod <your-pod> --overwrite <your-label-key>-` and try again to access the nginx via the `NodePort`. Most likely this won't work anymore.
 
-Finally, clean-up and remove the pod as well as the service.
+Finally, clean-up and remove the pod as well as the service you created in step 4.
