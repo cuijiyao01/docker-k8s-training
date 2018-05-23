@@ -102,11 +102,11 @@ You will see that you will get the information that some change was comitted to 
 Tag the image so that it refers to a remote registry. Give it a name so that it is uniquely identifieable. For this, replace the 760d7ca6 in the following commands with your training ID:
 
 ```bash
-docker tag evil_nginx:latest registry.ingress.dub-train.k8s-train.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
+docker tag evil_nginx:latest registry.ingress.wdftr01.k8s-train.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
 ```
 
 Use `docker push` to upload your image to the registry.
 
 ```bash
-docker push registry.ingress.dub-train.k8s-train.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
+docker push registry.ingress.wdftr01.k8s-train.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
 ```

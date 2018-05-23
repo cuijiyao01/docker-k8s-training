@@ -51,10 +51,10 @@ Again, with the help of the `COPY` directive, make sure that this file ends up i
 For SSL/TLS to work, we will need an encryption key and a certificate. We use OpenSSL to create a self-signed certificate. Use the following command to create an encryption key and a certificate.
 
 ```bash
-openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days 365 -subj '/CN=`hostname`'
+openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days 365 -subj "/CN=`hostname`"
 ```
 
-With the COPY directive, make sure the files `nginx.key` and `nginx.crt` end up inside your image in the directory `/etc/nginx/ssl`.
+With the COPY directive, make sure the files `nginx.key` and `nginx.crt` end up inside your image in the directory `/etc/nginx/ssl/`.
 
 ## Step 5: expose the secure HTTP port
 
@@ -68,7 +68,7 @@ Use the `docker build` command to build the image. Make note of the UID of the n
 
 With `docker tag`, give your image a nice name such as *secure_nginx* and a release number (again, use your hostname as release number).
 
-If you want to push this image to our registry on **registry.ingress.dub-train.k8s-train.shoot.canary.k8s-hana.ondemand.com**, tag your image with the name *secure_nginx* and your unique training ID and use `docker push` to push the image to the registry.
+If you want to push this image to our registry on **registry.ingress.wdftr01.k8s-train.shoot.canary.k8s-hana.ondemand.com**, tag your image with the name *secure_nginx* and your unique training ID and use `docker push` to push the image to the registry.
 
 ## Step 8: run a container
 
