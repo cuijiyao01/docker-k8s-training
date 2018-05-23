@@ -16,6 +16,7 @@ jrcs/letsencrypt-nginx-proxy-companion    LetsEncrypt container to use with ngin
 kong                                      Open-source Microservice & API Management ...   187      [OK]
 [...]
 ```
+In this example output, the *nginx* image we are looking for is on the first line.
 
 Pull the image to your computer:
 
