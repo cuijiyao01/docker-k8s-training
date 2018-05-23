@@ -27,7 +27,7 @@ $ docker pull nginx -n
 And run the image in detached mode:
 
 ```bash
-$ docker run --name ex3nginx -d  nginx
+$ docker run -d --name ex3nginx nginx
 ```
 
 Now open a browser in your VM (like Firefox or Chrome) and type in `http://localhost:80` - you will get no reply as the container is not exposed yet.
@@ -70,7 +70,7 @@ $ docker rm ex31nginx
 Start another _nginx_ container but this time, make sure the exposed port of the webserver is forwarded to port 1080 on your host.
 
 ```bash
-$ docker run --name ex32nginx -d -p 1080:80 nginx
+$ docker run -d -p 1080:80 --name ex32nginx nginx
 ```
 
 You can now connect to `http://localhost:1080` with your web browser and see _nginx'_ default landing page.
