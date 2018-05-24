@@ -1,4 +1,4 @@
-# Exercise 6 - ConfigMaps & Secrets
+# Exercise 6 - ConfigMaps and Secrets
 ConfigMaps and secrets bridge the gap between the requirements to build generic images but run them with a specific configuration in an secured environment.
 In this exercise you will move credentials and configuration into the Kubernetes cluster and make them available to your pods.
 
@@ -71,7 +71,7 @@ server {
 }
 ```
 
-Make sure, the values for `ssl_certificate` and `ssl_certificate_key` match the names of the files within the secret. In this example output the files are named `tls.crt` & `tls.key` in the secret as well as the configuration. The location in the filesystem will be set via the `volmeMount`, when you create your deployment.
+Make sure, the values for `ssl_certificate` and `ssl_certificate_key` match the names of the files within the secret. In this example output the files are named `tls.crt` and `tls.key` in the secret as well as the configuration. The location in the filesystem will be set via the `volmeMount`, when you create your deployment.
 Also note, that there is a location explicitly defined for a healthcheck. If called, `/healthz` will return a status code `200` to satisfy a liveness probe.
 
 ## Step 4: Upload the configuration to kubernetes
@@ -144,4 +144,4 @@ Finally, you have to create a new service to expose your https-deployment.
 
 Either figure out the ports needed and extend the service.yaml from the previous exercise or download the service_https.yaml from [gitHub](./solutions/06_service_https.yaml).
 
-Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject & organization specified in step 1.
+Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject and organization specified in step 1.

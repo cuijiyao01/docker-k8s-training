@@ -1,9 +1,9 @@
 # Happy Helming
 Helm is a tool to manage complex deployments of multiple components belonging to the same application stack. In this exercise, you will install the helm client locally and deploy its counterpart, the tiller server, to your own namespace. Once this is working you will deploy your first chart.
-For futher information, visit the official docs pages (https://docs.helm.sh/)
+For further information, visit the official docs pages (https://docs.helm.sh/)
 
 ## Step 0: get the helm tool
-Download & unpack the helm client:
+Download and unpack the helm client:
 ```
 wget -O helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-v2.7.2-linux-amd64.tar.gz
 tar -xzf helm.tar.gz
@@ -17,13 +17,13 @@ Change the permissions of the binary accordingly that also the `vagrant` user ca
 Run as user root or with sudo: `chmod +x /usr/local/bin/helm`
 
 ## Step 1: initialize helm
-The helm client uses the information stored in .kube/config to talk to the kubernetes cluster. But before you set up the tiller-server, you need to specify the namespace to be used. Otherwise, everyone will deploy their tiller-server into the kube-system namespace resulting in an overwrite of what was there before.   
+The helm client uses the information stored in .kube/config to talk to the kubernetes cluster. But before you set up the tiller-server, you need to specify the namespace to be used. Otherwise, everyone will deploy their tiller-server into the kube-system namespace resulting in an overwrite of what was there before.
 
 `helm init --tiller-namespace <your-namespace>`
 
 Verify your installation by running `helm list --tiller-namespace <your-namespace>`. You should also check, if a tiller pod is running in your namespace.
 
-Hint: If you are getting tired of typing in your tiller namespace for every command, you can set an environment variable `TILLER_NAMESPACE` with your tiller server's namespace as value. However for sake of completeness the following code samples will continue to use the `--tiller-namespace` flag where required.  
+Hint: If you are getting tired of typing in your tiller namespace for every command, you can set an environment variable `TILLER_NAMESPACE` with your tiller server's namespace as value. However for sake of completeness the following code samples will continue to use the `--tiller-namespace` flag where required.
 
 ## Step 2: looking for charts?
 Now that helm is able to talk to its tiller in Kubernetes it is time to use it. Helm organizes applications in so called charts, which contain parameters you can set during installation. By default there is a local and an official repository where you can look for charts, but of course you can also add futher repos. Check out the available repos and search for a chaoskube chart
