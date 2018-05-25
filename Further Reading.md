@@ -19,6 +19,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 - Interested in the architecture behing Gardener? There was a talk about it at *devX*, too:
 [Project Gardener: Multicloud Kubernetes Cluster Provisioning at Scale](https://video.sap.com/media/t/1_9ifoaxbx/84675141)
 
+- Gardener's curated [link list](https://github.wdf.sap.corp/pages/kubernetes/gardener/doc/2017/01/16/howto-curated-links.html)
+
 - Another talk at *devX* was about resource management in Kubernetes:
 [Inside Kubernetes Resource Management (QoS) – Mechanics and Lessons from the Field](https://video.sap.com/media/t/1_hcnybwp9/84675141)
 
