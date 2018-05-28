@@ -2,7 +2,7 @@
 
 In this exercise you will add some content to the pods in your deployment.
 
-## Step 0: Prepare & check your environment
+## Step 0: Prepare and check your environment
 Firstly, remove the deployment you created in the earlier exercise. Check the cheat sheet for the respective command.
 
 Next, take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`. Are there already  resources present in the cluster?
@@ -34,7 +34,7 @@ spec:
 Create the resource: `kubectl create -f pvc.yaml`. Verify that your respective claim has been created and is bound to a PV.
 
 ## Step 2: Attach the PVC to a pod
-Create a busybox pod with a volume & mount section to get access to your PVC. Use the snippet below or download from [gitHub](./solutions/05_pod_with_pvc.yaml)
+Create a busybox pod with a volume and mount section to get access to your PVC. Use the snippet below or download from [gitHub](./solutions/05_pod_with_pvc.yaml)
 
 ```
 apiVersion: v1

@@ -7,7 +7,7 @@ To overcome this shortage kubernetes offers a hierachical constructed api. The p
 ## Step 0: deployments - the easy way
 Run the following command and check what happens:
 `kubectl run nginx --image=nginx:1.12.2`
-It should create a new resource of type `deployment` named "nginx". Use `kubectl get deployment nginx -o yaml` and `kubectl describe deployment nginx` to get more detailed information on the deployment you just created. Based on those information, determine the labels & selectors used by your deployment.
+It should create a new resource of type `deployment` named "nginx". Use `kubectl get deployment nginx -o yaml` and `kubectl describe deployment nginx` to get more detailed information on the deployment you just created. Based on those information, determine the labels and selectors used by your deployment.
 
 Can you figure out the name of the pod belonging to your deployment by using the label information? Hint: use the `-l` switch in combination with `kubectl get pods`
 
