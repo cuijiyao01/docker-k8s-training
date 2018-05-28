@@ -30,6 +30,13 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - If you need to gather and combine the logs from several pods belonging to a deployment, you might want to have a look at [kubetail](https://github.com/johanhaleby/kubetail).
 
+## Helm
+- overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
+- offical documentatio: https://docs.helm.sh/
+- Videos from internal events: 
+  - https://video.sap.com/playlist/dedicated/31122632/1_b597m58u/1_910vsh7f
+  - https://video.sap.com/playlist/dedicated/31122632/1_b597m58u/1_hkwlxqmn
+
 ## General
 
 - Brendan Burns, Distinguished Engineer at Microsoft and Chief Architect behind the container infrastucture within Azure released one of his books on distributed software design for free: [Designing Distributed Systems](https://azure.microsoft.com/mediahandler/files/resourcefiles/baf44271-3870-454f-868c-23d48e7672cb/Designing_Distributed_Systems.pdf)
