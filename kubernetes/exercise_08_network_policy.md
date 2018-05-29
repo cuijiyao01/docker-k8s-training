@@ -46,7 +46,7 @@ spec:
         cidr: 84.203.229.48/29
     - ipBlock:
         # US-West/Canada
-        cidr: 84.203.229.0/26        
+        cidr: 84.203.229.0/26
 ```
 
 If you are unsure about the labels, feel free to check the [sample solution](./solutions/08_network_policy_ingress.yaml).

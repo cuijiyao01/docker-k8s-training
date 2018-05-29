@@ -32,7 +32,7 @@ Detailed information can be found [here](https://kubernetes.io/docs/user-guide/k
 
 **Please note, the parameter -n=<namespace> is optional. If not specified all requests will target the `default` namespace or the namesapce specified in your kubeconfig.**
 
-## short cuts
+## shortcuts
 kubectl wants you to reference resources by type. To do so, there are different formats availalbe. Most common is the following `kubect <verb> <resource type> <name>` like `kubectl get deployment nginx`. However it is also possible to connect resource type and name like this `deployment/nginx`.
 
 For several of the resource types there are also shortend identifiers available. For example the type `service` can be referenced by `svc`. A full list is available [here](https://kubernetes.io/docs/user-guide/kubectl-overview/) in section "resource types".

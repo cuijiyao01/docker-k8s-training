@@ -3,7 +3,7 @@
 Now that the application is running and resilient to failure of a single pod, it is time to make it available to other users inside and outside of the cluster.
 
 ## Step 0: prerequisites
-Once again make sure,  everything is up and running. Use `kubectl` and check your deployment + the respective pods.
+Once again make sure,  everything is up and running. Use `kubectl` and check your deployment and the respective pods.
 
 ## Step 1: create a service
 Kubernetes provides a convenient way to expose applications. Simply run `kubectl expose deployment <deployment-name> --type=LoadBalancer --port=80 --target-port=80`.
