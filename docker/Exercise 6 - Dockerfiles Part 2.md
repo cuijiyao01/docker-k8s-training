@@ -4,10 +4,10 @@ In this exercise, you will create your very own _nginx_ image from scratch.
 
 ## Step 0: Setting up your build context
 
-Create an empty directory on your VM that will be your build context. Download the archive that contains an empty Debian root filesystem to it.
+Create an empty directory on your VM that will be your build context. Download the archive that contains the basic Debian root filesystem to it.
 
 ```
-wget -O rootfs.tar.bz2 http://plx172.wdf.sap.corp:1080/K8S_Training/debian_rootfs.tar.bz2
+wget -O rootfs.tar.xz https://github.com/debuerreotype/docker-debian-artifacts/raw/b024a792c752a5c6ccc422152ab0fd7197ae8860/jessie/rootfs.tar.xz
 ```
 
 We also want to use a custom nginx configuration inside our image so download it to your build context as well.
