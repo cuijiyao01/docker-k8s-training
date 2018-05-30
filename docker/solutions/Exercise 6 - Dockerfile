@@ -9,7 +9,7 @@ ENV no_proxy .wdf.sap.corp
 LABEL maintainer="d044431"
 
 # add and unpack an archive that contains a Debian root filesystem
-ADD rootfs.tar.bz2 /
+ADD rootfs.tar.xz /
 
 # use the apt-get package manager to install nginx and wget
 RUN apt-get update && \
