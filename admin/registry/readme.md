@@ -51,16 +51,3 @@ The script will
   * deploy the chart `stable/docker-registry` into the new namespace
 
 Finally, test your registry by opening `[ingress.url]/v2/_catalog`
-
-## troubleshooting / workarounds
-
-In case https://github.com/gardener/gardener/issues/188 is not yet fixed, you need to hack the ingress controller in kube-system namespace :( . The issue is about the size of a request body, which is to small to push docker image layers.
-
-In order for the registry to work, try the following workaround:
- *   exec into the ingress-controller pod in kube-system namespace (e.g.  `kubectl exec -ti -n kube-system addons-nginx-ingress-controller-67b9555bdc-24tns /bin/bash`)
- * check if `vim` is installed and if not, install it with `apt-get update && apt-get install vim`
- * edit the nginx configuration `/etc/nginx/nginx.conf` and go to the entry for the registry. There is a server configuration for each ingress resource in your cluster.
- * change the value of the parameter `client_max_body_size` to `400m` and change the file
- * reload the nginx config with `nginx -s reload`
-
-**Important: the changes you make to `/etc/nginx/nginx.conf` are only temporary. As soon as the pod goes down or a new ingress resource is posted to the cluster, the nginx controller will overwrite your changes!**
