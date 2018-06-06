@@ -64,7 +64,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: simple-nginx.ingress.<cluster-name>.<cluster-name>.shoot.canary.k8s-hana.ondemand.com
+  - host: simple-nginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - path: /my-app
