@@ -3,6 +3,7 @@
 __Please note this is an optional exercise. It has an increased level of difficulty.__
 
 Ingress resources allow us to expose services through a URL. In addition, it is possible to configure an Ingress so that traffic can be directed to different services, depending on the URL that is used for a request. In this exercise, you will set up a simple Ingress resource first and enhance it to eventually serve two different services.
+
 In addition to all that, you will use Init-Containers to initialize your nginx deployment and load the application's content.
 
 ## Step 0 - obtain necessary detail information
