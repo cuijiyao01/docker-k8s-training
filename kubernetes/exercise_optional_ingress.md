@@ -2,6 +2,8 @@
 
 __Please note this is an optional exercise. It has an increased level of difficulty.__
 
+Ingress resources allow us to expose services through a URL. I addition, it is possible to configure an Ingress so that traffic can be directed to different services, depending on the URL this is used for a request. In this exercise, you will set up a simple Ingress resource first enhance it to eventually serve two different services.
+
 ## Step 0 - obtain necessary detail information
 Since the ingress controller is specific to the cluster, you need a few information to get started with this exercise.
 
