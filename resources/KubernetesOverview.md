@@ -1,5 +1,9 @@
 # Kubernetes High-Level Concept Overview
 
+Here a diagram with the most important objects / concepts of Kubernetes and how they relate to each other. See below for a description of the elements.
+
+![](./images/K8S_HL_Overview.png)
+
 ## Key Concepts within a Cluster
 
 Concept | Purpose | Defines / controls / has feature 
