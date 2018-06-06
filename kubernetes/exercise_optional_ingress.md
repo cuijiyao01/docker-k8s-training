@@ -14,7 +14,7 @@ You will need these info to construct a valid URL processable by the controller.
 ## Step 1 - init: prepare pods and services
 For this exercise you can either re-use already existing deployments, pods and services or create them from scratch. Please continue to use an nginx webserver as backend application. For sake of resource consumption, please use `replica: 1` for new resources.
 
-When you create a new deployment, you can try to add an init container. The init container should write a string like the hostname or "hello world" to and `index.html` on an emptyDir volume. Use this volume in the nginx container as well to get a customized `index.html` page.
+When you create a new deployment, you can try to add an [init container](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/). The init container should write a string like the hostname or "hello world" to and `index.html` on an emptyDir volume. Use this volume in the nginx container as well to get a customized `index.html` page.
 
 The snippet below might give an idea, how to pass the parameters to a busybox running as init container.
 
