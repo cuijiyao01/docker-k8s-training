@@ -2,7 +2,7 @@
 
 __Please note this is an optional exercise. It has an increased level of difficulty.__
 
-Ingress resources allow us to expose services through a URL. I addition, it is possible to configure an Ingress so that traffic can be directed to different services, depending on the URL this is used for a request. In this exercise, you will set up a simple Ingress resource first enhance it to eventually serve two different services.
+Ingress resources allow us to expose services through a URL. In addition, it is possible to configure an Ingress so that traffic can be directed to different services, depending on the URL that is used for a request. In this exercise, you will set up a simple Ingress resource first and enhance it to eventually serve two different services.
 
 ## Step 0 - obtain necessary detail information
 Since the ingress controller is specific to the cluster, you need a few information to get started with this exercise.
@@ -50,6 +50,6 @@ So let's assume, you want to change the timeout behaviour of the nginx exposed v
 ## even more optional step 4 - rewrite target
 Now that you know how an annotation works and how it affects your ingress, lets move on the fanout scenario. Assume you want your ingress to serve something different at its root level `/` and you want to move your application to `/my-app`. Your URL would look like this `<your-custom-endpoint>.ingress.<GARDENER-CLUSTER-NAME>.<GARDENER-PROJECT-NAME>.shoot.canary.k8s-hana.ondemand.com/my-app`.
 
-In a first step, you need to add `path: /my-app` to your backend configuration within the ingress. Take a look at the [fanout demo](./demo/09), if you need inspiration. Once you applied your the change, go to your URL and test the different paths. But don't be surprised, if you don't see the expected pages.
+In a first step, you need to add `path: /my-app` to your backend configuration within the ingress. Take a look at the [fanout demo](./demo/09_fanout_and_virtual_host_ingress.yaml), if you need inspiration. Once you applied your the change, go to your URL and test the different paths. But don't be surprised, if you don't see the expected pages.
 
-The ingress is forwarding traffic to `/my-app` also to `/my-app` at the backend. So unless you configured your nginx pods to serve at `/my-app` there is no valid endpoint available. You can solve the issue by rewriting the target to `/` of the backend pods. Check the `rewrite-target` for details and apply it accordingly.
+The ingress is forwarding traffic to `/my-app` also to `/my-app` at the backend. So unless you configured your nginx pods to serve at `/my-app` there is no valid endpoint available. You can solve the issue by rewriting the target to `/` of the backend pods. Check the `rewrite-target` [annotation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#rewrite) for details and apply it accordingly.
