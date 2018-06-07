@@ -16,6 +16,7 @@ TYPE_SPEED=50
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W $ "
 
 CGROUP_NAME=mydemocpugroup
+CGEXEC_GRP=/mysandbox
 
 # clean up to have a green field
 if [ -d /sys/fs/cgroup/cpu/$CGROUP_NAME ]; then
@@ -59,14 +60,32 @@ for i in `pidof dd`; do
         [ $k -eq 2 ] && break
 done
 
-p "# we can even control further how many CPU shares these processes get by altering the value in cpu.shares"
+p "# we can even control how many CPU shares these processes get by altering the value in cpu.shares"
 pe "cat cpu.shares"
 p "# watch how the following command affects the CPU consumption of our dd's"
 pe "sudo echo 10 > cpu.shares"
-p "# this is used to resource limit to individual processes or process groups - very useful for containers"
+p "# this is used to limit resources to individual processes or process groups - very useful for containers"
 p "# before we finish, we better stop those dd's..."
 pe "killall dd"
 
+sleep 5
+echo -e "\n\n"
+
+p "# of course, there are special tools to deal with cgroups"
+p "# with cgcreate we can create a new cgroup called ${CGEXEC_GRP} that governs cpu, block I/O, memory, devices and pids"
+pe "sudo cgcreate -g cpu,blkio,memory,devices,pids:${CGEXEC_GRP}"
+p "# with cgget, we can read individual settings from that cgroup such as CPU shares"
+pe "sudo cgget -r cpu.shares ${CGEXEC_GRP}"
+p "# with cgset, we can write those settings"
+pe "sudo cgset -r cpu.shares=100 ${CGEXEC_GRP}"
+p "# and with cgexec, we can start a new process in a cgroup"
+pe "sudo cgexec -g cpu,blkio,memory,devices,pids:${CGEXEC_GRP} dd if=/dev/zero of=/dev/null bs=1M &"
+p "# and this dd process now runs in a cgroup"
+p "# better get rid of it again"
+pe "sudo killall dd"
+p "# and of course with cgdelete, we can remove our cgroup again"
+pe "sudo cgdelete -g cpu,blkio,memory,devices,pids:${CGEXEC_GRP}"
+p "# so much about cgroups"
 
 # now clean up the mess
 sudo rmdir /sys/fs/cgroup/cpu/$CGROUP_NAME 
