@@ -102,3 +102,4 @@ p "# and that's it about Linux namespaces"
 # now clean up the mess
 rm -f /tmp/_demo-02-unshare-1.sh
 rm -f /tmp/_demo-02-unshare-2.sh
+cd ~

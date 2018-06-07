@@ -16,11 +16,13 @@ TYPE_SPEED=50
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W $ "
 
 CGROUP_NAME=mydemocpugroup
+CGEXEC_GOV="cpu,blkio,memory,devices,pids"
 CGEXEC_GRP=/mysandbox
 
 # clean up to have a green field
 if [ -d /sys/fs/cgroup/cpu/$CGROUP_NAME ]; then
 	sudo rmdir /sys/fs/cgroup/cpu/$CGROUP_NAME
+	sudo cgdelete -g ${CGEXEC_GOV}:${CGEXEC_GRP}
 fi
 clear
 
@@ -73,20 +75,21 @@ echo -e "\n\n"
 
 p "# of course, there are special tools to deal with cgroups"
 p "# with cgcreate we can create a new cgroup called ${CGEXEC_GRP} that governs cpu, block I/O, memory, devices and pids"
-pe "sudo cgcreate -g cpu,blkio,memory,devices,pids:${CGEXEC_GRP}"
+pe "sudo cgcreate -g ${CGEXEC_GOV}:${CGEXEC_GRP}"
 p "# with cgget, we can read individual settings from that cgroup such as CPU shares"
 pe "sudo cgget -r cpu.shares ${CGEXEC_GRP}"
 p "# with cgset, we can write those settings"
 pe "sudo cgset -r cpu.shares=100 ${CGEXEC_GRP}"
 p "# and with cgexec, we can start a new process in a cgroup"
-pe "sudo cgexec -g cpu,blkio,memory,devices,pids:${CGEXEC_GRP} dd if=/dev/zero of=/dev/null bs=1M &"
+pe "sudo cgexec -g ${CGEXEC_GOV}:${CGEXEC_GRP} dd if=/dev/zero of=/dev/null bs=1M &"
 p "# and this dd process now runs in a cgroup"
 p "# better get rid of it again"
 pe "sudo killall dd"
 p "# and of course with cgdelete, we can remove our cgroup again"
-pe "sudo cgdelete -g cpu,blkio,memory,devices,pids:${CGEXEC_GRP}"
+pe "sudo cgdelete -g ${CGEXEC_GOV}:${CGEXEC_GRP}"
 p "# so much about cgroups"
 
 # now clean up the mess
 sudo rmdir /sys/fs/cgroup/cpu/$CGROUP_NAME 
+sudo cgdelete -g ${CGEXEC_GOV}:${CGEXEC_GRP} > /dev/null 2>&1
 cd ~
