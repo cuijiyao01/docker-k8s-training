@@ -33,7 +33,9 @@ fi
 DOCKER_IMG="centos:7-demo-1"
 
 # clean up to have a green field
+docker rm cap-demo1 cap-demo2
 docker image rm $DOCKER_IMG
+[ -d ${dir}/dbuild ] && rm -rf ${dir}/dbuild
 clear
 
 # do some preparation
