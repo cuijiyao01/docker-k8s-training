@@ -12,7 +12,7 @@ dir=$(realpath $(dirname $0))
 PATH=$PATH:$dir/magic
 source $dir/magic/demo-magic.sh -w2
 
-TYPE_SPEED=500
+TYPE_SPEED=50
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W $ "
 
 # clean up to have a green field
