@@ -19,3 +19,6 @@ In this step of the exercise, you will send an http request directly to the clus
 To figure out, how `kubectl` converts your query into http requests, run the command from step 1 again and add a `-v=9` flag to it. This increases the verbosity of `kubectl` drastically, showing you all the information you need. Find the right request and send it yourself using curl.
 
 Hint: if the output is not as readable as you expect it, consider changing the accepted return format to `application/yaml`.
+
+## optional Step 4 - learn some tricks
+There is a forum-like page hosted by K8s with lots of information around `kubectl` and how to use it best. If you are curious, take a look at https://discuss.kubernetes.io/t/kubectl-tips-and-tricks/.

@@ -16,7 +16,7 @@ if [ -z "$PROJECT" -o -z "$CLUSTER" ]; then
         exit 1
 fi
 
-URL="nginx.ingress.${CLUSTER}.${PROJECT}.shoot.canary.k8s-hana.ondemand.com"
+URL="simple-nginx.ingress.${CLUSTER}.${PROJECT}.shoot.canary.k8s-hana.ondemand.com"
 
 cat << _EOF > ca-config.json
 {
@@ -77,3 +77,5 @@ rm -f ca.csr ca-csr.json server.csr server-csr.json
 echo -e "\n\nThe files you are looking for right now:"
 echo "    server-key.pem  - TLS private key"
 echo "    server.pem      - TLS certificate"
+echo "\n upload them into a tls secret:"
+echo "    kubectl create secret tls simple-nginx-ingress-tls --key=server-key.pem --cert=server.pem"

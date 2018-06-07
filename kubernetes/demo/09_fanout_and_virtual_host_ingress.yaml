@@ -1,0 +1,151 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mynginx
+  labels:
+    tier: application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mynginx
+  template:
+    metadata:
+      labels:
+        app: mynginx
+    spec:
+      volumes:
+      - name: index-html
+        emptyDir: {}
+      initContainers:
+      - name: setup
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - echo This is MY nginx! > /work-dir/index.html
+        volumeMounts:
+        - name: index-html
+          mountPath: "/work-dir"
+      containers:
+      - name: nginx
+        image: nginx:mainline
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: index-html
+          mountPath: /usr/share/nginx/html
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yournginx
+  labels:
+    tier: application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yournginx
+  template:
+    metadata:
+      labels:
+        app: yournginx
+    spec:
+      volumes:
+      - name: index-html
+        emptyDir: {}
+      initContainers:
+      - name: setup
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - echo This is YOUR nginx! > /work-dir/index.html
+        volumeMounts:
+        - name: index-html
+          mountPath: "/work-dir"
+      containers:
+      - name: nginx
+        image: nginx:mainline
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: index-html
+          mountPath: /usr/share/nginx/html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mynginx-service
+  labels:
+    tier: networking
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: mynginx
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yournginx-service
+  labels:
+    tier: networking
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: yournginx
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: fanout-nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: fanout-nginx.ingress.<cluster-name>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+    http:
+      paths:
+      - path: /my
+        backend:
+          serviceName: mynginx-service
+          servicePort: 80
+      - path: /your
+        backend:
+          serviceName: yournginx-service
+          servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vh-nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: mynginx.ingress.<cluster-name>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: mynginx-service
+          servicePort: 80
+  - host: yournginx.ingress.<cluster-name>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: yournginx-service
+          servicePort: 80
+---

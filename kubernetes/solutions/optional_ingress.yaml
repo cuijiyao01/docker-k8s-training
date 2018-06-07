@@ -1,0 +1,73 @@
+#########################################################
+## adapt the cluster and project name before deploying ##
+#########################################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-nginx
+  labels:
+    tier: application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-nginx
+  template:
+    metadata:
+      labels:
+        app: simple-nginx
+    spec:
+      volumes:
+      - name: index-html
+        emptyDir: {}
+      initContainers:
+      - name: setup
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - echo This is a simple nginx! > /work-dir/index.html
+        volumeMounts:
+        - name: index-html
+          mountPath: "/work-dir"
+      containers:
+      - name: nginx
+        image: nginx:mainline
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: index-html
+          mountPath: /usr/share/nginx/html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-nginx-service
+  labels:
+    tier: networking
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: simple-nginx
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: simple-nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: 60s
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: simple-nginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
+    http:
+      paths:
+      - path: /my-app
+        backend:
+          serviceName: simple-nginx-service
+          servicePort: 80
