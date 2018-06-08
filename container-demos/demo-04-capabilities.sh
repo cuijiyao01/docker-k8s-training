@@ -30,23 +30,22 @@ if [ $? -ne 0 -o -z "$_DOCKERINFO" ]; then
 	exit 1
 fi
 
-DOCKER_IMG="centos:7-demo-1"
+DOCKER_IMG="debian:8-demo-1"
 
 # clean up to have a green field
-docker rm cap-demo1 cap-demo2
 docker image rm $DOCKER_IMG
 [ -d ${dir}/dbuild ] && rm -rf ${dir}/dbuild
 clear
 
 # do some preparation
-echo -e "${GREEN}for this demo, we will need to prepare some Docker images"
-echo "Please wait a moment..."
+echo -e "\033[1;32mfor this demo, we will need to prepare some Docker images"
+echo -e "Please wait a moment...$COLOR_RESET\n"
 
 mkdir ${dir}/dbuild
-cp $dir/magic/pv-centos ${dir}/dbuild/pv
+cp /usr/bin/pv ${dir}/dbuild
 cp $dir/magic/demo-magic.sh ${dir}/dbuild
 
-cat << _EOF > ${dir}/dbuild/_demo01.sh
+cat << '_EOF' > ${dir}/dbuild/_demo01.sh
 #!/bin/bash
 
 source /bin/demo-magic.sh -w2
@@ -72,14 +71,14 @@ pe "hostname kuala-lumpur"
 sleep 2
 p "# what? we ARE root, aren't we?"
 sleep 2
-p "# Docker by default deprives root of his capability to change hostnames, date/time, etc."
+p "# Docker by default deprives root of his ability to change hostnames, date/time, etc."
 sleep 2
 p "# so yes, we are root but we no longer can do everything"
 sleep 2
 pe "exit"
 _EOF
 
-cat << _EOF > ${dir}/dbuild/_demo02.sh
+cat << '_EOF' > ${dir}/dbuild/_demo02.sh
 #!/bin/bash
 
 source /bin/demo-magic.sh -w2
@@ -92,14 +91,15 @@ p "# what is our hostname this time?"
 sleep 2
 pe "hostname"
 sleep 2
-p "# let's change it... again"
+p "# still not great, let's try and change it again"
 sleep 2
 pe "hostname kuala-lumpur"
 sleep 2
-p "# oh, no error... did it work?"
+p "# no error, so did it work?"
 sleep 2
 pe "hostname"
 sleep 2
+p "# it did indeed work"
 p "# so with CAP_SYS_ADMIN, root got one of his super-powers back"
 sleep 2
 pe "exit"
@@ -107,8 +107,8 @@ _EOF
 
 chmod +x ${dir}/dbuild/_demo*.sh
 
-cat << _EOF > ${dir}/dbuild/Dockerfile
-FROM centos:7
+cat << '_EOF' > ${dir}/dbuild/Dockerfile
+FROM debian:jessie
 COPY demo-magic.sh /bin
 COPY pv /bin
 COPY _demo01.sh /bin
@@ -121,11 +121,11 @@ clear
 # let the fun begin
 
 p "# we all know: root can do everything, non-root may do nothing"
-p "# so we will have a look at capabilities, for that we spin up a container with Centos 7 in it"
-p "docker run centos:7"
+p "# to have a look at capabilities, we spin up a container with Debian 8.1 in it"
+p "docker run debian:jessie"
 docker run --name cap-demo1 $DOCKER_IMG /bin/_demo01.sh
 p "# so now we start the container again but this time adding a capability"
-p "docker run --cap-add=SYS_ADMIN centos:7"
+p "docker run --cap-add=SYS_ADMIN debian:jessie"
 docker run --name cap-demo2 --cap-add=SYS_ADMIN $DOCKER_IMG /bin/_demo02.sh
 p "# if you need to know more about capabilities: man capabilities"
 
