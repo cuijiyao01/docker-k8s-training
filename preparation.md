@@ -9,7 +9,7 @@ This page describes what you should as prerequisites before taking this course -
 - **vi**: Sometimes you will have to SSH into a container / remote machine where there is only vi available as editor. If you not familiar or rusty with vi, you can check out the [vi cheat sheet](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/resources/vi_cheat_sheet.pdf). We highlighted the most important commands.
 - **yaml**: YAML (YAML Ain't Markup Language) is a human-readable data serialization language that is commonly used for configuration files. It is THE notation used in Kubernetes. See the [wikipedia article](https://en.wikipedia.org/wiki/YAML) or this [YAML cheat sheet](https://lzone.de/cheat-sheet/YAML).
 - **small tools to know**: It would be good to know some small tools that we may use: apt-get, curl, wget, ...
-- **networking basics**: You should know what IP addresses are, how subnetting works, what routes are good for and what happens if you forward a port.
+- **networking basics**: You should know what IP addresses are, how subnetting works, what routes are good for and what happens if you forward a port. We started to prepare an overview [here](./resources/BasicNetworkKnowhow.md).
 
 ## Environment setup
 
