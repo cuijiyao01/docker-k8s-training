@@ -8,6 +8,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - The Dockerfile reference can be found on Docker's website: [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/)
 
+- Docker architecture - read about [containerd](https://containerd.io/) and how it [relates](https://hackernoon.com/docker-containerd-standalone-runtimes-heres-what-you-should-know-b834ef155426?gi=c8140ae48de2) to the docker universe.
+
 ## Kubernetes
 
 - First of all: SAP offers an internal Kubernetes platform offering that is called Project Gardener. If you need a Kubernetes environment, this is the place to go: [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/)
@@ -35,7 +37,7 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
 - offical documentatio: https://docs.helm.sh/
-- Videos from internal events: 
+- Videos from internal events:
   - https://video.sap.com/playlist/dedicated/31122632/1_b597m58u/1_910vsh7f
   - https://video.sap.com/playlist/dedicated/31122632/1_b597m58u/1_hkwlxqmn
 
