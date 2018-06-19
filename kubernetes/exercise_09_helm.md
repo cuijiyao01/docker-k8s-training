@@ -5,7 +5,7 @@ For further information, visit the official docs pages (https://docs.helm.sh/)
 ## Step 0: get the helm tool
 Download and unpack the helm client:
 ```
-wget -O helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-v2.7.2-linux-amd64.tar.gz
+wget -O helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz
 tar -xzf helm.tar.gz
 ```
 Next locate the `helm` binary in the extracted folder and move it to a directory in your `PATH`.
