@@ -21,3 +21,18 @@ spec:
     - ipBlock:
         # US-West/Canada
         cidr: 84.203.229.0/26
+    - ipBlock:
+        # BLR
+        cidr: 203.13.146.0/24
+    - ipBlock:
+        # BLR
+        cidr: 125.16.22.176/28
+    - ipBlock:
+        # BLR
+        cidr: 123.63.99.32/28
+    - ipBlock:
+        # BLR
+        cidr: 121.244.154.220/30
+    - ipBlock:
+        # BLR
+        cidr: 14.142.206.80/28
