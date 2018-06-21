@@ -15,13 +15,15 @@ You can use the participant VM also for all work as a trainer.
 
 ## Course preparation
 
-### Create a Gardener Trial Cluster for the training
+Contact the K8s training organization team to ge Gardner Cluster for the training.
 
-For each training we are using a separate **trial cluster** that you get from [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/).
+~~### Create a Gardener Trial Cluster for the training
 
-**TODO: description HOWTO**
+~~For each training we are using a separate **trial cluster** that you get from [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/).
 
-**TODO: describe how to get the kubeconfig for the seed cluster. The config allows you to edit the shoot cluster's yaml file as long as it is not possible via the Gardener UI.**
+~~**TODO: description HOWTO**
+
+~~**TODO: describe how to get the kubeconfig for the seed cluster. The config allows you to edit the shoot cluster's yaml file as long as it is not possible via the Gardener UI.**
 
 ### Download your trainer .kube/config
 
