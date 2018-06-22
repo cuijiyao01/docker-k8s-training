@@ -10,7 +10,7 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - Docker architecture - read about [containerd](https://containerd.io/) and how it [relates](https://hackernoon.com/docker-containerd-standalone-runtimes-heres-what-you-should-know-b834ef155426?gi=c8140ae48de2) to the docker universe.
 
-- You have to be careful about which Docker images you download - [this is why](https://arstechnica.com/information-technology/2018/06/backdoored-images-downloaded-5-million-times-finally-removed-from-docker-hub/).
+- You have to be careful about which Docker images you download - [this is why](https://kromtech.com/blog/security-center/cryptojacking-invades-cloud-how-modern-containerization-trend-is-exploited-by-attackers).
 
 ## Kubernetes
 
