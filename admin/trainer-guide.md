@@ -15,7 +15,12 @@ You can use the participant VM also for all work as a trainer.
 
 ## Course preparation
 
-Contact the K8s training organization team to ge Gardner Cluster for the training.
+### K8s cluster in Gardener
+
+- **Contact the Cloud Curriculum K8s Trainings DevOps Team** (ToDO: Add DL here) **to get a Gardener K8s Cluster** for the training, in case you want to use the Cloud Curriculum Resources in Gardener (incl. Google Account).
+
+- In case you have already a Gardener K8s cluster, you can take this cluster for the training.
+**Hint: The K8s cluster has to be a Gardener K8s cluster !**
 
 ~~### Create a Gardener Trial Cluster for the training~~
 
