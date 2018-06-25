@@ -17,7 +17,7 @@ You can use the participant VM also for all work as a trainer.
 
 ### K8s cluster in Gardener
 
-- **Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20&%20K8s%20 fundamentals%20training]%20Request%20for%20trainings%20cluster) to get a Gardener K8s Cluster** for the training, in case you want to use the Cloud Curriculum Resources in [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/) (incl. Google Account).
+- **Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster) to get a Gardener K8s Cluster** for the training, in case you want to use the Cloud Curriculum Resources in [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/) (incl. Google Account).
 
 - In case you have already a Gardener K8s cluster, you can take this cluster for the training.
 
