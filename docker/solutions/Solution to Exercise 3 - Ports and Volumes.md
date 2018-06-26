@@ -21,7 +21,7 @@ In this example output, the *nginx* image we are looking for is on the first lin
 Pull the image to your computer:
 
 ```bash
-$ docker pull nginx -n 
+$ docker pull nginx
 ```
 
 And run the image in detached mode:
