@@ -20,8 +20,8 @@ In order for you to set up your Docker environment so that it can connect to sai
 
 Verify if the packages installed successfully by checking if the files `/usr/bin/docker` and `/usr/bin/dockerd` exist. You can run `docker -v` to check the version.
 
-## Step 2: Set up the proxy server
-SAP is slowly becoming proxy-less, i.e. the explicit proxy server that you all probably know gets replaced by a transparent proxy which you won't even notice it is there. However, this does not apply to all SAP locations and SAP datacenters yet, therefore, we will let  Docker know about the proxy settings to work properly.
+## Step 2: Set up the proxy and DNS server
+SAP is slowly becoming proxy-less, i.e. the explicit proxy server that you all probably know gets replaced by a transparent proxy which you won't even notice it is there. Bangalore is already proxy-less so we do not have to think about this right now. 
 
 - On the training VMs, Docker will try to use Google's DNS servers for all containers. This will not work reliably as we are referencing to SAP internal addresses and Google's DNS cannot resolve those. To force Docker to use SAP's internal DNS server, we need to create the configuation file `/etc/docker/daemon.json` with the following content:
 
