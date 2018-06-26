@@ -9,7 +9,7 @@ In this exercise you will set up a basic environment inlcuding Docker on your Ub
 ## Step 0: Prepare your VM
 During this training you will use this VM not only to run Docker on it, but also to connect to the K8s cluster. Even though we are not dealing with Kubernetes right now (that will tomorrow's topic), we are going to use a Docker registry that we deployed to a Kubernetes cluster.
 
-In order for you to set up your Docker environment so that it can connect to said registry, it is necessary to import some TLS certificates into your VM. Your trainer has given you information, how to get the kubeconfig and now it's time to download it to your VM. Place the file named config in /home/vagrant/.kube/. Finally, run the [trust-registry.sh](./trust-registry.sh) script to complete the setup.
+In order for you to set up your Docker environment so that it can connect to said registry, it is necessary to import some TLS certificates into your VM. Your trainer has given you information, how to get the kubeconfig and now it's time to download it to your VM. Run the script located at `~/setup/get_kube_config.sh`and hand over the IDs.
 
 ## Step 1: Install docker
 
@@ -22,15 +22,6 @@ Verify if the packages installed successfully by checking if the files `/usr/bin
 
 ## Step 2: Set up the proxy server
 SAP is slowly becoming proxy-less, i.e. the explicit proxy server that you all probably know gets replaced by a transparent proxy which you won't even notice it is there. However, this does not apply to all SAP locations and SAP datacenters yet, therefore, we will let  Docker know about the proxy settings to work properly.
-
-- Create a systemd drop-in by creating the directory `/etc/systemd/system/docker.service.d`. Create the file `/etc/systemd/system/docker.service.d/proxy.conf` and put this inside:
-
-```bash
-[Service]
-Environment="http_proxy=http://proxy.wdf.sap.corp:8080"
-Environment="https_proxy=http://proxy.wdf.sap.corp:8080"
-Environment="no_proxy=.wdf.sap.corp"
-```
 
 - On the training VMs, Docker will try to use Google's DNS servers for all containers. This will not work reliably as we are referencing to SAP internal addresses and Google's DNS cannot resolve those. To force Docker to use SAP's internal DNS server, we need to create the configuation file `/etc/docker/daemon.json` with the following content:
 
