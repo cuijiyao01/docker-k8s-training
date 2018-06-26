@@ -12,6 +12,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - You have to be careful about which Docker images you download - [this is why](https://kromtech.com/blog/security-center/cryptojacking-invades-cloud-how-modern-containerization-trend-is-exploited-by-attackers).
 
+- resource management with Docker - [how to limit a container's resources](https://docs.docker.com/config/containers/resource_constraints)
+
 ## Kubernetes
 
 - First of all: SAP offers an internal Kubernetes platform offering that is called Project Gardener. If you need a Kubernetes environment, this is the place to go: [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/)
