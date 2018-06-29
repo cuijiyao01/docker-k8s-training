@@ -11,15 +11,11 @@ spec:
         - name: TEST_TYPE
           valueFrom:
             configMapKeyRef:
-              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
               name: test-config
-              # Specify the key associated with the value
               key: test.type
         - name: TEST_EXEC
           valueFrom:
             configMapKeyRef:
-              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
               name: test-config
-              # Specify the key associated with the value
               key: test.exec
   restartPolicy: Never
