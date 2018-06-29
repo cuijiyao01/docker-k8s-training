@@ -54,8 +54,12 @@ Use the `docker history` command to examine the history of your custom image. Ca
 
 ## Step 6: Pushing the image to a registry
 
-The K8s cluster prepared for the training is also serving a docker registry at  **registry.ingress.blrtr1.k8s-train.shoot.canary.k8s-hana.ondemand.com** to which you can push your image.
+The K8s cluster prepared for the training is also serving a docker registry at  **registry.ingress.blrtr2.k8s-train.shoot.canary.k8s-hana.ondemand.com** to which you can push your image.
 
 Use the `docker tag` command to tag your image correctly so that the registry is used. The name of your image should be **evil_nginx with the ID of your K8s namespace** as release tag. For instance, if you are working on part-760d7ca6, tag your image like **"\<registry name\>/evil_nginx:760d7ca6"**.
 
 Use `docker push` to upload your image to the registry.
+
+If the push succeeded, open the registry in a browser: **registry.ingress.blrtr2.k8s-train.shoot.canary.k8s-hana.ondemand.com/v2/_catalog**
+
+Ideally you would see an "evil_nginx" repository there. Instead of **/v2/_catalog you coud** use **/v2/<repo-name>/tags/list** to inspect the tags pushed to that repo. The repo name should be *evil_nginx*.
