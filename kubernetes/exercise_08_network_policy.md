@@ -54,11 +54,11 @@ If you are unsure about the labels, feel free to check the [sample solution](./s
 Create the resource as usual with `kubectl create -f <your file>.yaml` and check its presence with `kubectl get networkpolicy`
 
 ## Step 2: Trying to connect, please wait ...
-Again, connect to the busybox pod you used in step 0 or spin up a new one. Run the same `wget` command and check the output. I
+Again, connect to the busybox pod you used in step 0 or spin up a new one. Run the same `wget` command and check the output. 
 
 As the network policy is in place now, it should report a timeout: `wget: download timed out`
 
 ## Step 3: Regain access
-To regain access you need to add the corresponding label to the pod from which you want to access the nginx service. The label has to math the `spec.ingress.from.podSelector.matchLabels` key-value pair specified in the network policy.
+To regain access you need to add the corresponding label to the pod from which you want to access the nginx service. The label has to match the `spec.ingress.from.podSelector.matchLabels` key-value pair specified in the network policy.
 
 Use `kubectl label ...` or add a `-l <key>=<value>` to the `run` command. Then connect again to the pod and run `wget`. It should give you the same result as in step 0.
