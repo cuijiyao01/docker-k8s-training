@@ -69,8 +69,13 @@ Fork the central [training repo](https://github.wdf.sap.corp/slvi/docker-k8s-tra
 
 Clone your forked repo to your VM. There are demo scripts/files for the container, docker and kubernetes parts.
 
-### Check the ingress URLs
-Gardener deploys an ingress controller to each cluster and allows you to register custom URLs to a specific subdomain. Since the subdomain contains the name of the Gardener project as well as the cluster, you have to adapt the ingress resources to match with your setup. Changes are neccessary to the [sock-shop](../kubernetes/solutions/sock-shop.yaml) and [ingress](../kubernetes/solutions/ingress.yaml) files.
+### Check the (ingress) URLs
+Gardener deploys an ingress controller to each cluster and allows you to register custom URLs to a specific subdomain. Since the subdomain contains the name of the Gardener project as well as the cluster, you have to adapt the ingress resources to match with your setup.
+
+Changes are neccessary to:
+* [sock-shop](../kubernetes/demo/00_sock-shop.yaml)
+* [simple ingress with tls](../kubernetes/demo/09_tls_ingress.yaml)
+* [fanout & virtual host ingress](../kubernetes/demo/09_fanout_and_virtual_host_ingress.yaml)
 
 The URL pattern looks like this: `[custom-endpoint].ingress.[cluster-name].[project-name].shoot.canary.k8s-hana.ondemand.com`
 
@@ -78,11 +83,16 @@ The URL pattern looks like this: `[custom-endpoint].ingress.[cluster-name].[proj
 Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we would recommend to limit access to whatever you expose in the cluster to traffic originating from a SAP network.
 Check the internal [network inforamation portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml), to figure out the address ranges of the training locations. Configure firewall rules in your respective IaaS account to block traffic that does not originate from these addresses.
 
-Furthermore, we use these ranges for the nework policy exercise. Check the [yaml](../kubernetes/solutions/network_policy_ingress.yaml) file and adapt it, if necessary.
+Furthermore, we use these ranges for the nework policy exercise. Check the yaml files in the [demo]((../kubernetes/demo/11_network_policy_ingress.yaml)) and [solutions]((../kubernetes/solutions/08_network_policy_ingress.yaml)) folder and adapt it, if necessary.
 
 ### Setup a docker registry (~1 day before course starts)
 For the docker exercises you need a private docker registry. Participants will upload their custom images to it during the course. Recommendation is to spin up a registry without any persistence in the k8s cluster you use for the training.
 In the admin folder of this repo, you find a registry folder with `install.registry.sh` script. Check the prerequisites and run the script as described [here](./registry/readme.md) to deploy a registry and make it available via an ingress.
+
+Additionally, you have to update the URL for the registry in the exercise & solution:
+* [exercise 4 - images](../docker/Exercise%204%20-%20Images.md)
+* [exercise 5 - dockerfiles part 1](../docker/Exercise%205%20-%20Dockerfiles%20Part%201.md)
+* [solution to exercise 4](../docker/solutions/Solution%20to%20Exercise%204%20-%20Images.md)
 
 ## Sending the preparation mail to participants
 
