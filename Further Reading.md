@@ -38,6 +38,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - If you need to gather and combine the logs from several pods belonging to a deployment, you might want to have a look at [kubetail](https://github.com/johanhaleby/kubetail).
 
+- Cluster federation / multi cluster: if you want to join several clusters into a federation and run your workloads, here is your entrypoint into this (alpha) topic: https://kubernetes.io/docs/tasks/administer-federation/cluster/
+
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
 - offical documentatio: https://docs.helm.sh/
