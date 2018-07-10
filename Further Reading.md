@@ -40,6 +40,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - Cluster federation / multi cluster: if you want to join several clusters into a federation and run your workloads, here is your entrypoint into this (alpha) topic: https://kubernetes.io/docs/tasks/administer-federation/cluster/
 
+- with the introduction of the `horizontal pod autoscaler`, k8s is capable of auto scaling. Check the [documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) and [tutorial](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for further details.
+
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
 - offical documentatio: https://docs.helm.sh/
