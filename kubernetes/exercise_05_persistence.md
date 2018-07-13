@@ -34,7 +34,7 @@ spec:
 Create the resource: `kubectl create -f pvc.yaml`. Verify that your respective claim has been created and is bound to a PV.
 
 ## Step 2: Attach the PVC to a pod
-Create a busybox pod with a volume and mount section to get access to your PVC. Use the snippet below or download from [gitHub](./solutions/05_pod_with_pvc.yaml)
+Create a busybox pod with a volume and mount section to get access to your PVC. The snippet below is not complete, so fill in the `???` with the corresponding values.
 
 ```
 apiVersion: v1
@@ -45,7 +45,7 @@ spec:
   volumes:
     - name: content-storage
       persistentVolumeClaim:
-       claimName: nginx-pvc
+       claimName: ???
   containers:
   - name: busybox
     image: busybox
@@ -54,7 +54,7 @@ spec:
     - "1000"
     volumeMounts:
     - mountPath: "/usr/share/nginx/html"
-      name: content-storage
+      name: ???
 ```
 
 ### Step 3: create custom content
@@ -64,11 +64,9 @@ Navigate to the directory mentioned in the `volumeMounts` section and create a c
 
 ### Step 4: Remove and re-attach the storage
 Delete the busybox helper pod, you created earlier: ` kubectl delete pod nginx-storage-pod`
-Then create a new deployment that uses the `nginx-pvc`. However `run nginx` will not work this time, since you need to specify the volume mount. Try to extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as example.
+Then create a new deployment that uses the `nginx-pvc`. However `run nginx` will not work this time, since you need to specify the volume mount. Extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as an example.
 
 Please note that our storage backend (`default` storage class based on `gcePersistentDisk`) does not support `readWriteMany` mounts. You can either mount the volume once for write access (like you did in step 2) or several times as readOnly. Since our deployment has 3 replicas and we don't want to modify the `index.html`, mount the `nginx-pvc` by adding `readOnly: true` to both the `volumeMounts` and the `volumes.persistentVolumeClaim` sections.
-
-In case you need a hint, check the prepared yaml file on [gitHub](./solutions/05_deployment_with_pvc.yaml).
 
 Once you successfully created the deployment, check that all replicas are up and running.
 

@@ -49,12 +49,12 @@ spec:
         cidr: 84.203.229.0/26
 ```
 
-If you are unsure about the labels, feel free to check the [sample solution](./solutions/08_network_policy_ingress.yaml).
+If you are unsure about the labels, run the queries you are about to implement manually - e.g. `kubectl get pods -l <my-ke>=<my-value>`. This way you can check, if the results match your intention.
 
 Create the resource as usual with `kubectl create -f <your file>.yaml` and check its presence with `kubectl get networkpolicy`
 
 ## Step 2: Trying to connect, please wait ...
-Again, connect to the busybox pod you used in step 0 or spin up a new one. Run the same `wget` command and check the output. 
+Again, connect to the busybox pod you used in step 0 or spin up a new one. Run the same `wget` command and check the output.
 
 As the network policy is in place now, it should report a timeout: `wget: download timed out`
 

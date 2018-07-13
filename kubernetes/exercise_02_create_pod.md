@@ -27,7 +27,7 @@ spec:
       initialDelaySeconds: 3
       periodSeconds: 30
 ```
-If it does not work as expected, check the indentation or take a look at the solution on  [github](./solutions/02_pod_http_liveness.yaml)
+If it does not work as expected, check the indentation and consult the API reference linked above.
 
 ## Step 1: create the pod
 Now tell the cluster that you would like it to schedule the pod for you. To do so, run the following command:

@@ -16,9 +16,7 @@ Next try to access the service via the NodePort. Since the NodePort is opened on
 Run `kubectl get nodes -o wide` to get the IP addresses of all cluster nodes. You can take any of them and combine it with your NodePort.
 
 ## Step 3: create a service from a yaml file.
-Before going on, delete the service you created with the `expose` command.
-
-Either try to write your own yaml or download the  [service.yaml](./solutions/04_service.yaml) to your machine.
+Before going on, delete the service you created with the `expose` command. Now write your own yaml to define the service.
 Check, that the label selector matches the lables of your deployment/pods and (re-)create the service (`kubectl create -f <your-file>.yaml`).
 
 ## Step 4: optional/advanced - learn how to label

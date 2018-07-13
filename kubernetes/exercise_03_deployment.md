@@ -66,8 +66,6 @@ spec:
     spec:
 ```
 
-As a reference, you can find a solution on [github](./solutions/03_deployment.yaml).
-
 ## Step 5 - optional: deploy(ment)!
 Now create the deployment again. However this time it will be created based on the yaml file:
 `kubectl create -f <your-file>.yaml`

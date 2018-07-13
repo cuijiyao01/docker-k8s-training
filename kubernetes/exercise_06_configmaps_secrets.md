@@ -82,7 +82,7 @@ Verify the configmap exists with `kubectl get configmap`
 ## Step 5: Combine everything into a deployment
 Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
 
-Try to complete the snippet by inserting the missing parts (look for `???` blocks). Alternatively download the solution from [gitHub](./solutions/06_deployment_https.yaml) and store it locally.
+Complete the snippet below by inserting the missing parts (look for `???` blocks):
 
 ```
 apiVersion: apps/v1
@@ -142,6 +142,6 @@ Verify that the newly created pods use the pvc, configMap and secret by running 
 ## Step 6: create a service
 Finally, you have to create a new service to expose your https-deployment.
 
-Either figure out the ports needed and extend the service.yaml from the previous exercise or download the service_https.yaml from [gitHub](./solutions/06_service_https.yaml).
+Derive the ports you have to exposeand extend the service.yaml from the previous exercise.
 
 Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject and organization specified in step 1.
