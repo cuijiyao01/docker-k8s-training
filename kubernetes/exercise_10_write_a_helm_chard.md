@@ -61,7 +61,24 @@ If everything looks as expected, finally install your chart. Try to run the comm
 
 Don't forget to query information about your release with `helm list`.
 
-## Update
+## Extend the chart to create a pod that uses the config map
+
+Go to the `templates` folder and create a file `pod.yaml`. Create a pod that runs a busybox and mounts the config map as a volume. Set the restart policy to `Never`. The pod, once it runs should print the contents of all files of the mounted config map and exit. 
+
+You could simply write a static pod specification but with helm, we can make this a lot more configurable. So using the `values.yaml` file, make the following properties of the pod adjustable:
+- image repository
+- image tag
+- mount point directory to where the config map gets mounted
+
+In order to have pod print out the contents of the config map, use the following snippet in the containers section of the pod specification. The `.Values.pod.mount` is the mount point directory of the config map, so make sure that it gets mounted to the same place.
+
+```yaml
+command: [ "/bin/sh", "-c", "for i in $(ls -1 {{ .Values.pod.mount }}/*); do echo -e \"\\nContent of $i: \"; cat $i; done; echo -e \n\n" ]
+```
+
+Use `helm lint` to check if your templates and values are syntactically correct and that they can be interpreted by Tiller. If everything worked so far, you can either do another installation of this chart with `helm install` or you can try to do an...
+
+## Upgrade
 The last step in this exercise is to perform various updates on your release.
 Use the `helm upgrade` command to bring your release to a new version. As part of an upgrade you can change the structure of the chart (**be very careful with this**) or simply change the values the chart is working with.
 
