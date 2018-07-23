@@ -2,8 +2,6 @@
 
 In this exercise, you will experience the container lifecycle, connect to running container instances and check log files for potential problems.
 
-Sample Solution is [here](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/docker/solutions/Solution%20to%20Exercise%202%20-%20Container%20Lifecycle.md).
-
 ## Step 0: Creating a container
 
 Create and run a new [busybox](https://hub.docker.com/_/busybox/) container. Make sure you let this container run interactively and connect a pseudo terminal to it.
