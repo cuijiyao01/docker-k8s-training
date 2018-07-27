@@ -27,7 +27,7 @@ spec:
           name: nginxconf
       containers:
       - name: nginx
-        image: nginx:1.13.6
+        image: nginx:mainline
         ports:
         - containerPort: 80
           name: http
