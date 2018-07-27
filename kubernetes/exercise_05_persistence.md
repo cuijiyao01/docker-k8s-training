@@ -47,8 +47,8 @@ spec:
       persistentVolumeClaim:
        claimName: ???
   containers:
-  - name: busybox
-    image: busybox
+  - name: helper
+    image: alpine:3.8
     args:
     - sleep
     - "1000"
@@ -58,12 +58,12 @@ spec:
 ```
 
 ### Step 3: create custom content
-Locate the busybox pod and open a shell session into it: `kubectl exec -ti nginx-storage-pod ash`
-Busybox has no `bash` binary, `ash` is actually correct :wink:
+Locate the alpine pod and open a shell session into it: `kubectl exec -ti nginx-storage-pod ash`
+Alpine Linux has no `bash` binary, `ash` is actually correct :wink:
 Navigate to the directory mentioned in the `volumeMounts` section and create a custom `index.html`. You can re-use the code you used in the docker exercises the other day. Once you are done, disconnect from the pod and close the shell session.
 
 ### Step 4: Remove and re-attach the storage
-Delete the busybox helper pod, you created earlier: ` kubectl delete pod nginx-storage-pod`
+Delete the alpine helper pod, you created earlier: ` kubectl delete pod nginx-storage-pod`
 Then create a new deployment that uses the `nginx-pvc`. However `run nginx` will not work this time, since you need to specify the volume mount. Extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as an example.
 
 Please note that our storage backend (`default` storage class based on `gcePersistentDisk`) does not support `readWriteMany` mounts. You can either mount the volume once for write access (like you did in step 2) or several times as readOnly. Since our deployment has 3 replicas and we don't want to modify the `index.html`, mount the `nginx-pvc` by adding `readOnly: true` to both the `volumeMounts` and the `volumes.persistentVolumeClaim` sections.
@@ -72,3 +72,5 @@ Once you successfully created the deployment, check that all replicas are up and
 
 ### Step 5: Check the content
 Remember the service from the previous exercise? Since the labels where not changed, the service will route incoming traffic to the new pods with the attached storage volume. Open a web browser and verfiy that your custom index.html page is displayed properly.
+
+**Important: do not delete the deployment,service or PVC**

@@ -8,8 +8,8 @@ spec:
       persistentVolumeClaim:
        claimName: nginx-pvc
   containers:
-  - name: busybox
-    image: busybox
+  - name: helper
+    image: alpine:3.8
     args:
     - sleep
     - "1000"
