@@ -12,21 +12,28 @@ Official course information: [Docker and Kubernetes Fundamentals](https://jam4.s
 High level topics are:
 
 ### [Docker](./docker) (day 1)
-- Container basics: Linux primitives, Containers vs. VMs ([slides](./docker/01_Basics_of_containers.pptx), [demo](./container-demos), [exercise](./docker/Exercise%200%20-%20Linux%20Primitives.md))
-- Linux foundations: How docker works
-- Using containers; Load, start, stop, inspect, debugging
-- Images: Loading, creating, push/pull, image registries
-- Storage / volumes: Assigning and using persistent disks
-- Dockerfiles: Automated creation of docker images
+- Intro: Container basics, Containers vs. VMs ([slides](./docker/01_Basics_of_containers.pptx))
+- Linux foundations: Containers under the hood and how docker works ([slides](./docker/02_Members_of_docker_universe.pptx), [exercise 0](./docker/Exercise%200%20-%20Linux%20Primitives.md) & [exercise 1](./docker/Exercise%201%20-%20Setting%20up%20Docker.md))
+- Using containers; Load, start, stop, inspect, debugging ([slides](./docker/03_Working_with_containers.pptx) & [exercise 2](./docker/Exercise%202%20-%20Container%20Lifecycle.md))
+- Ports and volumes: Docker networking, persisting data ([slides](./docker/03_Working_with_containers.pptx) & [exercise 3](./docker/Exercise%203%20-%20Ports%20and%20Volumes.md))
+- Images: Loading, creating, push/pull, image registries ([slides](./docker/04_Images.pptx) & [exercise 4](./docker/Exercise%204%20-%20Images.md))
+- Dockerfiles: Automated creation of docker images ([slides](./docker/05_Dockerfiles.pptx), [exercise 5](./docker/Exercise%205%20-%20Dockerfiles%20Part%201.md) & [optional exercise 6](./docker/Exercise%206%20-%20Dockerfiles%20Part%202.md))
 
 ### [Kubernetes](./kubernetes) (day 2+3)
-- components of a K8s cluster
-- scheduling of workloads with pods & deployments or statefulSets
-- networking in k8s with services and ingress
-- storage API in k8s
-- configure applications with config maps and secrets
-- manage a cluster with namespaces, role based authorization and network policies
-- deploy packaged applications with helm
+- Introduction ([slides](./kubernetes/00_intro.pptx))
+- components of a K8s cluster ([slides](./kubernetes/01_k8s_core_components.pptx) & [exercise 1](./kubernetes/exercise_01_kubectl_basics.md))
+- scheduling of workloads with
+    - pods ([slides](./kubernetes/02_namespaces_pods.pptx) & [exercise 2](./kubernetes/exercise_02_create_pod.md))
+    - deployments  ([slides](./kubernetes/03_labels_and_deployments.pptx) & [exercise 3](./kubernetes/exercise_03_deployment.md))
+- networking in k8s with services ([slides](./kubernetes/04_networking_services.pptx) & [exercise 4](./kubernetes/exercise_04_services.md))
+- storage API in k8s ([slides](./kubernetes/05_persistence.pptx) & [exercise 5](./kubernetes/exercise_05_persistence.md))
+- basic trouble-shooting ([slides](./kubernetes/06_troubleshooting.pptx))
+- configure applications with config maps and secrets ([slides](./kubernetes/07_configmap_secrets.pptx) & [exercise 6](./kubernetes/exercise_06_configmaps_secret.md))
+- an incomplete object map & further entities in K8s ([slides](./kubernetes/08_further_entities.pptx))
+- expose applications via ingress ([slides](./kubernetes/09_ingress.pptx) & [optional exercise](./kubernetes/exercise_optional_ingress.md))
+- run stateful applications with stateful sets ([slides](./kubernetes/10_statefulset.pptx) & [exercise 7](./kubernetes/exercise_07_statefulset.md))
+- manage a cluster with namespaces, role based authorization and network policies ([slides](./kubernetes/11_administration.pptx) & [exercise 8](./kubernetes/exercise_08_network_policy.md))
+- deploy packaged applications with helm ([slides](./kubernetes/12_helm.pptx) & [exercise 9](./kubernetes/exercise_09_helm.md))
 
 ## Preparation and Setup
 
