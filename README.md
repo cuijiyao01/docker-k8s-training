@@ -12,14 +12,14 @@ Official course information: [Docker and Kubernetes Fundamentals](https://jam4.s
 High level topics are:
 
 ### [Docker](./docker) (day 1)
-- Container basics: Linux primitives, Containers vs. VMs ([slides](./docker/01_Basics_of_containers.pptx), [demo](./container-demos), [exercise](./docker/Exercise/Exercise%200%20-%20Linux%20Primitives.md))
-- Linux foundations: How docker works 
+- Container basics: Linux primitives, Containers vs. VMs ([slides](./docker/01_Basics_of_containers.pptx), [demo](./container-demos), [exercise](./docker/Exercise%200%20-%20Linux%20Primitives.md))
+- Linux foundations: How docker works
 - Using containers; Load, start, stop, inspect, debugging
 - Images: Loading, creating, push/pull, image registries
 - Storage / volumes: Assigning and using persistent disks
 - Dockerfiles: Automated creation of docker images
 
-### [Kubernetes](.kubernetes) (day 2+3)
+### [Kubernetes](./kubernetes) (day 2+3)
 - components of a K8s cluster
 - scheduling of workloads with pods & deployments or statefulSets
 - networking in k8s with services and ingress
