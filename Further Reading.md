@@ -34,6 +34,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - The nitty gritty details about the networking in and behind Kubernetes are explained in the final *devX* talk we would like to point you to: [Insights into Kubernetes Networking](https://video.sap.com/media/t/1_8fawa5io/84675141)
 
+- If you are more into reading - here is a very good [blog post](https://sookocheff.com/post/kubernetes/understanding-kubernetes-networking-model/) about networking in Kubernetes context.
+
 - The Kubernetes API reference can be found here: [Kubernetes API reference Documentation](https://kubernetes.io/docs/reference/).
 
 - If you need to gather and combine the logs from several pods belonging to a deployment, you might want to have a look at [kubetail](https://github.com/johanhaleby/kubetail).

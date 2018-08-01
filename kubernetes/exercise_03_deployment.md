@@ -29,7 +29,7 @@ Checkout the ReplicaSet created by your deployment:
 
 But a deplyoment can do more than managing replicasets in order to scale. It also allows you to perform a rolling update. Run `watch kubectl rollout status deployment/nginx` to monitor the process of updating. Now trigger the  update with the following command:
 
-`kubectl set image deployment/nginx nginx=nginx:1.13.6`
+`kubectl set image deployment/nginx nginx=nginx:mainline`
 
 Once finished, check the deplyoment, pods and ReplicaSets available in your namespace. By now there should be two ReplicaSets - one scaled to 0 and one scaled to 3 (or whatever number of replicas you had before the update).
 
@@ -69,3 +69,6 @@ spec:
 ## Step 5 - optional: deploy(ment)!
 Now create the deployment again. However this time it will be created based on the yaml file:
 `kubectl create -f <your-file>.yaml`
+
+
+## Finally, do not delete the latest version of your deployment. It will be used throughout the following exercises.

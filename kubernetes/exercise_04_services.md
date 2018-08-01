@@ -19,6 +19,8 @@ Run `kubectl get nodes -o wide` to get the IP addresses of all cluster nodes. Yo
 Before going on, delete the service you created with the `expose` command. Now write your own yaml to define the service.
 Check, that the label selector matches the lables of your deployment/pods and (re-)create the service (`kubectl create -f <your-file>.yaml`).
 
+**Important: don't delete this service, you will need it during the following exercises.**
+
 ## Step 4: optional/advanced - learn how to label
 In this last step you will expose another pod through a service. Simply create the pod from the 2nd exercise again and try to expose it as `NodePort` with `kubectl expose pod ...`.
 

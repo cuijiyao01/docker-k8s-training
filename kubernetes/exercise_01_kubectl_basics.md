@@ -12,11 +12,18 @@ Use the `kubectl get nodes` command to get the basic information about the clust
 ## Step 2: get detailed information about a node
 Now that you know the cluster's node names, query more information about a specific node by running `kubectl describe node <node-name>`. What is the `kubelet` version running on this node and which pods are running on this node?
 
+## Step 3: kubectl proxy
+The `kubectl proxy` command allows you to open a tunnel to the API server and make it available locally - usually on `localhost:8001` / `127.0.0.1:8001`. When you want to explore the API, this is an easy way to gain access.
+
+Run the proxy command in a new terminal window and open `localhost:8001` in your VM's browser. Traverse through the `api/v1/` and search for the cluster nodes.  
+
 ## Step 3: advanced - talk to kubernetes like an application
 If you access kubernetes as an application rather than an administrator, you cannot use the the convenient syntax of `kubectl`. Instead you have to send http requests to the cluster. Though there are client libraries available, in the end everything boils down to an http request.
-In this step of the exercise, you will send an http request directly to the cluster asking for the available nodes. Instead of `kubectl` you can use the program `curl` to talk to the cluster and send requests.
+In this step of the exercise, you will send an http request directly to the cluster asking for the available nodes. Instead of `kubectl` you can use the program `curl`.
 
-To figure out, how `kubectl` converts your query into http requests, run the command from step 1 again and add a `-v=9` flag to it. This increases the verbosity of `kubectl` drastically, showing you all the information you need. Find the right request and send it yourself using curl.
+To figure out, how `kubectl` converts your query into http requests, run the command from step 1 again and add a `-v=9` flag to it. This increases the verbosity of `kubectl` drastically, showing you all the information you need. Go through the command's output and find the correct curl request.
+
+Before you continue, make sure `kubectl proxy` is running and serving on `localhost:8001`. Now modify the request to be send via the proxy. Since the proxy has already taken care of authentication, you can omit the bearer token in your request.
 
 Hint: if the output is not as readable as you expect it, consider changing the accepted return format to `application/yaml`.
 

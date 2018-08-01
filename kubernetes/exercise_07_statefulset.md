@@ -39,7 +39,7 @@ spec:
 spec:
   containers:
   - name: nginx
-    image: nginx:1.13.6
+    image: nginx:mainline
     ports:
     - containerPort: 80
       name: ???
@@ -70,7 +70,7 @@ Quickly connect to your pods and check the hostnames (change the loop's range he
 
 Additionally you should find new `PVC` resources in your namespace.
 
-Quickly spin up a temporary deployment of a busybox and directly connect to it: `kubectl run -i --tty --image busybox dns-test --restart=Never --rm /bin/sh`
+Quickly spin up a temporary pod and directly connect to it: `kubectl run -i --tty --image alpine:3.8 dns-test --restart=Never --rm /bin/sh`
 Within this context, run `nslookup [pod-name].[service-name]` to check, if your individual pods are accessible via the service. You can also use `wget [pod-name].[service-name]` to download the index.html page from the nginx pod and look into it with `cat` or anything else.
 
 ## Step 3: Persist some data
