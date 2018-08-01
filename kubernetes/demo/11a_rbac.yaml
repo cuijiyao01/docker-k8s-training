@@ -1,0 +1,45 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-master
+rules:
+- apiGroups:
+  - "" 
+  resources: 
+  - configmaps
+  verbs: 
+  - get
+  - watch
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - log
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-master
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-master
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role 
+  name: pod-master
+subjects:
+- kind: ServiceAccount
+  name: pod-master
