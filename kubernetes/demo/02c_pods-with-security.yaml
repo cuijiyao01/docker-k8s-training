@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: regular-pod
+spec:
+  restartPolicy: Never
+  containers:
+  - name: suse
+    image: opensuse:latest
+    command: [ "/bin/bash", "-c", "id -u; rm -f /lib64/libc.so.6; ls -al /lib64/libc.so.6" ]
+    securityContext:
+      capabilities:
+        add: ["NET_ADMIN", "SYS_TIME"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: non-root-pod
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsUser: 1000
+  containers:
+  - name: suse
+    image: opensuse:latest
+    command: [ "/bin/bash", "-c", "id -u; rm -f /lib64/libc.so.6; ls -al /lib64/libc.so.6" ]
+    securityContext:
+      capabilities:
+        add: ["NET_ADMIN", "SYS_TIME"]
