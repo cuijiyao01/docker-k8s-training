@@ -4,7 +4,7 @@
 
 #### Course Prep steps
 These are the logical steps for a trainer to prep for a course (details below):
-- Create a Gardener trial cluster for your training
+- Get/ create a Gardener cluster for your training
 - Download your trainer .kube/config from Gardener that lets you control the cluster
 - On your VM, run the script to generate the kube configs for the participants
 - Copy the generated configs to the config share of this course
