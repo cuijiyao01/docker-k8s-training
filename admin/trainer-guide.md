@@ -24,16 +24,11 @@ You can use the participant VM also for all work as a trainer.
   **Hint: The K8s cluster has to be a Gardener K8s cluster !**
 
 
-### Download your trainer .kube/config
-
-In Gardener
-- Login to gardener (with SSO via 'Test the self-service')
-- Choose your cluster
-- in `kube cluster access` pane, click on on Kubeconfig and copy the yaml
+### Create your trainer .kube/config
 
 On your VM / machine
 - Create a directory `.kube` under HOME (e.g. /home/vagrant on VM) and cd into it
-- Create new file `config` and paste the yaml
+- Create new file `config` and paste the kubeconfig yaml, you have got from [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) for your training.
 - run `kubectl get nodes` - this command must complete by giving you a short list of nodes in the cluster
 
 ### Generate the kube configs for the participants
@@ -80,10 +75,9 @@ Changes are neccessary to:
 The URL pattern looks like this: `[custom-endpoint].ingress.[cluster-name].[project-name].shoot.canary.k8s-hana.ondemand.com`
 
 ### Check IP address ranges
-Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we would recommend to limit access to whatever you expose in the cluster to traffic originating from a SAP network.
-Check the internal [network inforamation portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml), to figure out the address ranges of the training locations. Configure firewall rules in your respective IaaS account to block traffic that does not originate from these addresses.
+Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we/[Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) have limited the access to whatever you expose in the cluster to traffic originating from the SAP network at your training location. Therefor we have configured the firewall rules to block traffic, that does not originate from these addresses.
 
-Furthermore, we use these ranges for the nework policy exercise. Check the yaml files in the [demo]((../kubernetes/demo/11_network_policy_ingress.yaml)) and [solutions]((../kubernetes/solutions/08_network_policy_ingress.yaml)) folder and adapt it, if necessary.
+Furthermore, while the training these ranges will be used for the nework policy exercise. Check the yaml files in the [demo]((../kubernetes/demo/11_network_policy_ingress.yaml)) and [solutions]((../kubernetes/solutions/08_network_policy_ingress.yaml)) folder and adapt it, if necessary.
 
 ### Setup a docker registry (~1 day before course starts)
 For the docker exercises you need a private docker registry. Participants will upload their custom images to it during the course. Recommendation is to spin up a registry without any persistence in the k8s cluster you use for the training.
