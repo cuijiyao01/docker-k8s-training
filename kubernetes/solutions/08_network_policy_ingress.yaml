@@ -36,3 +36,6 @@ spec:
     - ipBlock:
         # BLR
         cidr: 14.142.206.80/28
+    - ipBlock:
+        # SOF
+        cidr: 193.57.20.0/24
