@@ -2,6 +2,7 @@
 
 # this is where we expect our helm values file
 CONFIG_FILE=`dirname $0`/helm-docker-reg-values.yaml
+MYHOME=$(dirname $0)
 # read the configuration file
 if [ ! -r $CONFIG_FILE ]; then
 	echo "Cannot read the configuration file $CONFIG_FILE."
@@ -10,22 +11,26 @@ if [ ! -r $CONFIG_FILE ]; then
 fi
 
 # check if cfssl is available
-[ -z "$CFSSL"] && CFSSL=`which cfssl`
-if [ -z "$CFSSL" -o ! -x $CFSSL ]; then
-	echo "Cannot find or execute cfssl. Download it from https://pkg.cfssl.org/."
-	exit 3
+[ -z "$CFSSL" ] && CFSSL=$(which cfssl 2> /dev/null)
+if [ -z "$CFSSL" -o ! -x "$CFSSL" ]; then
+	echo "cfssl could not be found, downloading it from from https://pkg.cfssl.org..."
+	curl --progress-bar -o $MYHOME/cfssl https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+	chmod 755 $MYHOME/cfssl
+	CFSSL=$MYHOME/cfssl
 fi
 # check if cfssl-json is available
-[ -z "$CFSSLJSON"] && CFSSLJSON=`which cfssljson`
-if [ -z "$CFSSLJSON" -o ! -x $CFSSLJSON ]; then
-	echo "Cannot find or execute cfssljson. Download it from https://pkg.cfssl.org/."
-	exit 3
+[ -z "$CFSSLJSON" ] && CFSSLJSON=$(which cfssljson 2> /dev/null)
+if [ -z "$CFSSLJSON" -o ! -x "$CFSSLJSON" ]; then
+	echo "cfssljson could not be found, downloading it from from https://pkg.cfssl.org..."
+	curl --progress-bar -o $MYHOME/cfssljson https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+	chmod 755 $MYHOME/cfssljson
+	CFSSLJSON=$MYHOME/cfssljson
 fi
 
 # check if we have a working kubectl ready
-[ -z "$KUBECTL" ] && KUBECTL=`which kubectl`
-if [ -z "$KUBECTL" -o ! -x $KUBECTL ]; then
-	echo "Cannot find or execute kubectl. Download it from https://kubernetes.io/docs/tasks/tools/install-kubectl/."
+[ -z "$KUBECTL" ] && KUBECTL=$(which kubectl 2> /dev/null)
+if [ -z "$KUBECTL" -o ! -x "$KUBECTL" ]; then
+	echo "kubectl could not be found, download it from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-binary-via-curl"
 	exit 3
 fi
 
@@ -40,7 +45,7 @@ fi
 
 # check if we have a working helm ready
 [ -z "$HELM" ] && HELM=`which helm`
-if [ -z "$HELM" -o ! -x $HELM ]; then
+if [ -z "$HELM" -o ! -x "$HELM" ]; then
 	echo "Cannot find or execute helm. Download it from https://github.com/kubernetes/helm#install."
 	exit 3
 fi
