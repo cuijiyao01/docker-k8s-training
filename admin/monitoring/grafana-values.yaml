@@ -11,7 +11,7 @@ datasources:
     datasources:
     - name: Prometheus
       type: prometheus
-      url: http://prometheus-prometheus-server
+      url: http://prometheus-server
       access: proxy
       isDefault: true
 ingress:
@@ -25,6 +25,4 @@ ingress:
     - INGRESS_HOSTNAME
 sidecar:
   dashboards:
-    enabled: true
-  datasources:
     enabled: true

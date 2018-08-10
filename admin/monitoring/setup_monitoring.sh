@@ -9,7 +9,7 @@ if [ $# -lt 2 ]; then
   exit 5
 fi
 
-NAMESPACE="prom-test"
+NAMESPACE="monitoring"
 
 # this is where we expect our helm values file
 MYHOME=$(dirname $0)
@@ -83,7 +83,7 @@ ${HELM} install --namespace $NAMESPACE -n prometheus stable/prometheus --set net
 # construct ingress hostname string
 GARDENER_PROJECTNAME=$1
 GARDENER_CLUSTERNAME=$2
-INGRESS_HOSTNAME=monitoring.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
+INGRESS_HOSTNAME=test-monitoring.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 
 # generate a private key & certificate signing request
 cat <<__EOF | $CFSSL genkey - | $CFSSLJSON -bare server
@@ -139,7 +139,4 @@ ${HELM} install --namespace $NAMESPACE -n grafana stable/grafana -f $CONFIG_FILE
 rm server.csr server.crt server-key.pem
 
 ## print some help
-echo "Grafana has been exposed via an ingress. To get the URL, run:"
-echo "  kubectl -n monitoring get ingress"
-echo "To get the admin password to grafana, run:"
-echo '  kubectl -n monitoring get secret grafana-grafana -o jsonpath="{.data.admin-password}" |base64 -d; echo '
+echo "To access grafana, follow the instructions above."
