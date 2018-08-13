@@ -50,6 +50,8 @@ With this abuse of the training cluster should become harder. The ResourceQuota 
 
 Upload the tar file using this Jenkins job: https://cc-admin.mo.sap.corp/view/K8s/job/upload-k8s-training-namespaces/
 
+You will need to log in to that Jenkins with your D-/I-User and your global domain password. Use the "Build with arguments" button to upload the tarball with the config files.
+
 Participants will download 'their config' using the trainings and participant ID.
 
 
@@ -77,7 +79,7 @@ The URL pattern looks like this: `[custom-endpoint].ingress.[cluster-name].[proj
 ### Check IP address ranges
 Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we/[Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) have limited the access to whatever you expose in the cluster to traffic originating from the SAP network at your training location. Therefor we have configured the firewall rules to block traffic, that does not originate from these addresses.
 
-Furthermore, while the training these ranges will be used for the nework policy exercise. Check the yaml files in the [demo]((../kubernetes/demo/11_network_policy_ingress.yaml)) and [solutions]((../kubernetes/solutions/08_network_policy_ingress.yaml)) folder and adapt it, if necessary.
+Furthermore, while the training these ranges will be used for the nework policy exercise. Check the yaml files in the [demo](../kubernetes/demo/11c_network_policy_ingress.yaml) and [solutions](../kubernetes/solutions/08_network_policy_ingress.yaml) folder and adapt it, if necessary.
 
 ### Setup a docker registry (~1 day before course starts)
 For the docker exercises you need a private docker registry. Participants will upload their custom images to it during the course. Recommendation is to spin up a registry without any persistence in the k8s cluster you use for the training.
