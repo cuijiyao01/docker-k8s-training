@@ -1,0 +1,28 @@
+---
+persistence:
+  enabled: true
+  storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server
+      access: proxy
+      isDefault: true
+ingress:
+  enabled: true
+  path: /
+  hosts:
+    - INGRESS_HOSTNAME
+  tls:
+  - secretName: grafana-tls
+    hosts:
+    - INGRESS_HOSTNAME
+sidecar:
+  dashboards:
+    enabled: true
