@@ -69,8 +69,8 @@ Gardener deploys an ingress controller to each cluster and allows you to registe
 
 Changes are neccessary to:
 * [sock-shop](../kubernetes/demo/00_sock-shop.yaml)
-* [simple ingress with tls](../kubernetes/demo/09_tls_ingress.yaml)
-* [fanout & virtual host ingress](../kubernetes/demo/09_fanout_and_virtual_host_ingress.yaml)
+* [simple ingress with tls](../kubernetes/demo/09b_tls_ingress.yaml)
+* [fanout & virtual host ingress](../kubernetes/demo/09a_fanout_and_virtual_host_ingress.yaml)
 
 The URL pattern looks like this: `[custom-endpoint].ingress.[cluster-name].[project-name].shoot.canary.k8s-hana.ondemand.com`
 
