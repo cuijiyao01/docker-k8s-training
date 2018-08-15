@@ -4,3 +4,5 @@ kubectl apply -f ads-db-configmap-init.yaml
 kubectl apply -f ads-db-configmap.yaml 
 kubectl apply -f ads-db-secret.yaml 
 kubectl apply -f ads-db-service.yaml 
+
+test
