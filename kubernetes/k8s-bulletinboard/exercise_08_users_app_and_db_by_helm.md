@@ -2,10 +2,7 @@
 
 
 ## Scope
-
-Increase security and establish a network policy for ads DB
-
-kubectl apply -f ads-db-networkpolicy.yaml 
+Create users app and DB with helm chart (provided)
 
 img src="images/xxx.png" width="800" />
 
@@ -21,4 +18,3 @@ xxx
 
 ## Step 3: xxx
 xx
-
