@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ads-db
+  labels:
+    component: ads
+    module: db
+spec:
+  serviceName: "ads-db-headless"
+  replicas: 1
+  selector:
+    matchLabels:
+      component: ads
+      module: db
+  template:
+    metadata:
+      labels:
+        component: ads
+        module: db
+    spec:
+      volumes:
+      - name: init
+        configMap:
+          name: ads-db-init
+      containers:
+      - name: ads-db
+        image: postgres:9.6
+        ports:
+        - containerPort: 5432
+          name: ads-db
+        volumeMounts:
+        - name: ads-db-volume
+          mountPath: /var/lib/postgresql/data/pgdata
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: PGDATA
+          valueFrom:
+            configMapKeyRef:
+              name: ads-db-config
+              key: PGDATA
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ads-db-secrets
+              key: PG_PASSWORD
+  volumeClaimTemplates:
+  - metadata:
+      name: ads-db-volume
+      labels:
+        component: ads
+        module: db
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

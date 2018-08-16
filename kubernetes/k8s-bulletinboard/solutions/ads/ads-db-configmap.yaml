@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ads-db-config
+  labels:
+    component: ads
+    module: db
+data:
+  PGDATA: /var/lib/postgres/data/pgdata

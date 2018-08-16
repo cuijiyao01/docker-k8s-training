@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ads-app-config
+data:
+  vcap_services: |
+    {"postgresql":[{"credentials":{"dbname":"ads","hostname":"ads-db-0.ads-db-headless","password":"initial","port":"5432","uri":"postgres://adsuser:initial@ads-db-0.ads-db-headless:5432/postgres","username":"adsuser"},"label":"postgresql","name":"postgres-bulletinboard-ads","plan":"v9.6-dev","tags":["postgresql","relational"]}]}
+  user_route: http://users-service/bulletinboard-users-service
