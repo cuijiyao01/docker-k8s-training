@@ -15,7 +15,7 @@ xxx
 - x
 - y
 
-## Helm chart for Ads DB + Ads App
+## Optional - Helm chart for Ads DB + Ads App
 - x
 - y
 
