@@ -107,9 +107,7 @@ Technically it would be possible to run most of the exercises also with Docker o
 **TODO: Describe how to get infrastructure support from Gardener team / link to DL**
 
 ### Add nodes to K8s cluster
-It might happen that your cluster needs more resources to deal with all the participants pods. In order to scale the cluster up, go to the Gardener landing page and open the details view for your cluster. Switch to the `yaml`tab to view the current configuraiton.
-
-By now, there is an 'edit' button that allows you to modify the shoot yaml (representing the desired state of your cluster). Increase `autScalerMax` for the worker group to add further nodes to the cluster (decrease it to dismantle nodes).
+In exceptional cases it might happen that your cluster needs more resources to deal with all the participants pods because autoscaler configuration is not sufficient high. In order to scale the cluster up, get in contact with [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>).
 
 ## After the course
 
