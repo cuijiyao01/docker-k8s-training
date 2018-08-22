@@ -17,7 +17,7 @@ You can use the participant VM also for all work as a trainer.
 
 ### K8s cluster in Gardener
 
-- **Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) to get a Gardener K8s Cluster** for the training (~ 2 weeks in advance to the training), in case you want to use the Cloud Curriculum Resources in [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/) (incl. Cloud Curriculum Google Account).
+- **Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) to get a Gardener K8s Cluster** for the training (~ 2 weeks in advance to the training), in case you want to use the Cloud Curriculum Resources in [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/) (incl. Cloud Curriculum Google Account). In the email body please refer to the corresponding event in the [Cloud Curriculum Event Calendar](https://jam4.sapjam.com/groups/zAfXdXPcJGlCUrBScXSWKP/events) (e.g. link/ URL of event).
 
 - In case you have already a Gardener K8s cluster, you can take this cluster for the training.
 
@@ -104,14 +104,13 @@ Technically it would be possible to run most of the exercises also with Docker o
 
 ## During the Course
 
-**TODO: Describe how to get infrastructure support from Gardener team / link to DL**
+### Get support from Gardener Team
+- Raise your question via email in the [kubernetes-users Mailinglist](https://listserv.sap.corp/mailman/listinfo/kubernetes-users) or in the [K8s CaaS in SAP Cloud Platform Jam Group](https://jam4.sapjam.com/groups/Niq7TSBxLlzgb3nroBZJVx/overview_page/e9uqTDxXBRFbk7FJXEA4Cd).
 
 ### Add nodes to K8s cluster
-It might happen that your cluster needs more resources to deal with all the participants pods. In order to scale the cluster up, go to the Gardener landing page and open the details view for your cluster. Switch to the `yaml`tab to view the current configuraiton.
-
-By now, there is an 'edit' button that allows you to modify the shoot yaml (representing the desired state of your cluster). Increase `autScalerMax` for the worker group to add further nodes to the cluster (decrease it to dismantle nodes).
+In exceptional cases it might happen that your cluster needs more resources to deal with all the participants pods because autoscaler configuration is not sufficient high. In order to scale the cluster up, get in contact with [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>).
 
 ## After the course
 
-- Destroy the Gardener trial cluster you used for the training
-- Delete the kube config files you stored for your training at https://cc-admin.mo.sap.corp/userContent/k8s-trainings/
+- Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) to let destroy the Gardener cluster, you used for the training. If needed you can request to keep the cluster for one additional week, so participants can rework on their exercises.
+- As well request to delete the kube config files, you stored for your training at https://cc-admin.mo.sap.corp/userContent/k8s-trainings/
