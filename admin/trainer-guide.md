@@ -113,5 +113,5 @@ By now, there is an 'edit' button that allows you to modify the shoot yaml (repr
 
 ## After the course
 
-- Destroy the Gardener trial cluster you used for the training
-- Delete the kube config files you stored for your training at https://cc-admin.mo.sap.corp/userContent/k8s-trainings/
+- Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) to let destroy the Gardener cluster, you used for the training. If needed you can request to keep the cluster for one additional week, so participants can rework on their exercises.
+- As well request to delete the kube config files, you stored for your training at https://cc-admin.mo.sap.corp/userContent/k8s-trainings/
