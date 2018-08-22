@@ -13,7 +13,15 @@ These are the logical steps for a trainer to prep for a course (details below):
 All artifacts / scripts / info needed as trainer is in this admin folder.
 You can use the participant VM also for all work as a trainer.
 
+
 ## Course preparation
+
+### Planning
+- Make sure the training is officially requested ([Team Request Template](https://jam4.sapjam.com/wiki/show/H8gZq0zBgHoRfttFe6TDyt?_lightbox=true)) and scheduled in SuccessMap Learning.
+
+- If it is done this way, then our Global Coordinator from Cloud Curriculum (Bilyana Kalyonska) will check the utilization of our Cluster and also organizes/help to organize the room and send the calendar entry to the participants, so you don't have to worry about that. 
+
+- The event will then also appear in the [event calendar on the Cloud Curriculum Jam page](https://jam4.sapjam.com/groups/zAfXdXPcJGlCUrBScXSWKP/events).
 
 ### K8s cluster in Gardener
 
