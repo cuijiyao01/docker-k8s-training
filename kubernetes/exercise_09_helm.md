@@ -21,7 +21,7 @@ The helm client uses the information stored in .kube/config to talk to the kuber
 
 `helm init --tiller-namespace <your-namespace>`
 
-Verify your installation by running `helm list --tiller-namespace <your-namespace>`. You should also check, if a tiller pod is running in your namespace.
+Verify your installation by running `helm version --tiller-connection-timeout=5 --tiller-namespace <your-namespace>`. The command should return a version for the client as well as the server. In case the server does not respond properly, you can check, if the `tiller`pod is already up and running. 
 
 Hint: If you are getting tired of typing in your tiller namespace for every command, you can set an environment variable `TILLER_NAMESPACE` with your tiller server's namespace as value. However for sake of completeness the following code samples will continue to use the `--tiller-namespace` flag where required.
 
