@@ -7,6 +7,8 @@ Create a statefull set for the ads DB
 
 kubectl apply -f ads-db.yaml 
 
+https://hub.docker.com/_/postgres/
+
 
 img src="images/xxx.png" width="800" />
 
