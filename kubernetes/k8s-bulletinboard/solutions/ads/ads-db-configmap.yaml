@@ -7,4 +7,4 @@ metadata:
     component: ads
     module: db
 data:
-  PGDATA: /var/lib/postgres/data/pgdata
+  PGDATA: /var/lib/postgresql/data/pgdata
