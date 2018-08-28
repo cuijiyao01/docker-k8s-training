@@ -1,0 +1,23 @@
+Subject: Training: Cloud Curriculum, 'Docker & K8s Fundamentals'
+
+!!!TODO TRAINER!!! before sending this mail: adapt the <<place-holders>> accordingly - and then remove this TODO ;-)
+
+Dear colleagues,
+
+
+we’re preparing the last bits and pieces of content for next week’s training on Docker & K8s Fundamentals. 
+To make sure, we’re ready to start, we would like to share a few information upfront and ask you for some preparation as well.
+
+Though we have some PowerPoint slide decks prepared, this is meant to be a hands-on training. To make this as easy as possible, we prepared a VM image for VMWare Player. It contains everything you need during the training. From a technical perspective it should be possible to do the exercises also with a combination of Docker for Windows (hyper-V based Linux VM) or Mac (based on virtualBox). But as these setups are highly customizable & heterogenous, we don’t give support during the training for it.
+
+For the Kubernetes exercises we will use a cluster running on the latest Gardener canary landscape, backed by GCP VMs. For the exercises we will grant you access to it during the training. 
+
+To have a smooth start, please:
+-	bring your laptop along. We will be working with the local Linux VM (Ubuntu).
+-	install VMWare Player & download the VM image as described here: https://github.wdf.sap.corp/cloud-native-dev/k8s-training-vm/blob/master/VMImage_GettingStarted.md
+-	[optional] take a look at the links here: <<coursematerial base URL, potentially your fork, otherwise https://github.wdf.sap.corp/slvi/docker-k8s-training >> /blob/master/preparation.md 
+
+We’re looking forward to meeting you next week.
+
+Best regards,
+<< trainers >>
