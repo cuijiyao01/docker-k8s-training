@@ -1,0 +1,18 @@
+Subject:	Training: Cloud Curriculum, 'Docker & K8s Fundamentals'
+
+!!!TODO TRAINER!!! before sending this mail: adapt the <<place-holders>> accordingly - and then remove this TODO ;-)
+
+Hello colleagues,
+
+
+Please ensure the following preparation is done by you in advance to the upcoming 'Docker & K8s Fundamentals training from <<start date>> to <<end date>>:
+<<coursematerial base URL, potentially your fork, otherwise https://github.wdf.sap.corp/slvi/docker-k8s-training >> /blob/master/preparation.md
+
+In case of issues with preparation just get in contact with us/me immediately, so we can solve it in advance to the training !
+
+The course material including agenda (topics per day) can be found here: 
+<<coursematerial base URL, potentially your fork, otherwise https://github.wdf.sap.corp/slvi/docker-k8s-training#course-outline >>/blob/master/README.md#course-outline
+
+
+Regards
+<<trainer>>
