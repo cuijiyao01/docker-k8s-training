@@ -39,7 +39,7 @@ High level topics are:
 
 Follow the instructions on the page [Prerequisites and Environment Setup](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/preparation.md).
 
-## Course developers and Trainers
+## Trainers and Course developers
 
+* As trainer please check out the [Trainer Guide](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/admin/trainer-guide.md) in advance to the training.
 * The VM to be used by participants is built here: https://github.wdf.sap.corp/cloud-native-dev/k8s-training-vm
-* See also the [Trainer Guide](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/admin/trainer-guide.md)
