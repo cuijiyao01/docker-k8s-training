@@ -8,7 +8,9 @@ Hello colleagues,
 Please ensure the following preparation is done by you in advance to the upcoming 'Docker & K8s Fundamentals training from <<start date>> to <<end date>>:
 <<coursematerial base URL, potentially your fork, otherwise https://github.wdf.sap.corp/slvi/docker-k8s-training >> /blob/master/preparation.md
 
-In case of issues with preparation just get in contact with us/me immediately, so we can solve it in advance to the training !
+We have prepared a Virtual Machine (VM) image with Ubuntu Linux, that contains all needed tools and settings for the course. With this you will conduct the exercises completely on that VM. You need your own notebook and install VMware and import the VM image. In total it should not take more than 30 mins.
+
+In case of issues with preparation/ environment setup, just get in contact with us/me immediately, so we can solve it in advance to the training !
 
 The course material including agenda (topics per day) can be found here: 
 <<coursematerial base URL, potentially your fork, otherwise https://github.wdf.sap.corp/slvi/docker-k8s-training#course-outline >>/blob/master/README.md#course-outline
