@@ -89,7 +89,7 @@ spec:
     targetPort: 80
   selector:
     app: mynginx
-  type: NodePort
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -104,7 +104,7 @@ spec:
     targetPort: 80
   selector:
     app: yournginx
-  type: NodePort
+  type: ClusterIP
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
