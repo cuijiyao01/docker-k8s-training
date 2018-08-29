@@ -38,7 +38,7 @@ For `<your-custom-endpoint>` it is recommended to use your generated participant
 
 Check the [help section](https://github.wdf.sap.corp/pages/kubernetes/gardener/doc/2017/01/16/howto-service-access.html) to get more information.
 
-Write the ingress yaml file and reference to your service. Check the [kubernetes API reference](https://kubernetes.io/docs/reference/) for details and further info. You can also look into the [demo example](./demo/09_tls_ingress.yaml) (but don't include TLS for now) or the Gardener page linked above.
+Write the ingress yaml file and reference to your service. Check the [kubernetes API reference](https://kubernetes.io/docs/reference/) for details and further info. You can also look into the [demo example](./demo/09a_tls_ingress.yaml) (but don't include TLS for now) or the Gardener page linked above.
 Finally, deploy your ingress and test the URL.
 
 ## Step 3 - annotate!
