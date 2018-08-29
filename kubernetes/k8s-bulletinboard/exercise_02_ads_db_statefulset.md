@@ -1,7 +1,7 @@
 # Exercise: xxx
 
 
-<img src="images/k8s-bulletinboard-target-picture-ads-db.png" width="800" />
+<img src="images/k8s-bulletinboard-target-picture-ads-db-2.png" width="800" />
 
 ## Scope
 
