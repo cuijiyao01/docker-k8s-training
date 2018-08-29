@@ -1,6 +1,8 @@
 xxx
 
 
+img src="images/bulletinbaord-target-picture-detail.png" width="800" />
+
 ## Ads DB
 - Create all required entities for ads DB: configmap-init, configmap, secret and service
 - Create a statefull set for the ads DB
