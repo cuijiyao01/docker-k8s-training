@@ -5,7 +5,7 @@
 
 Create all required entities for ads DB: configmap-init, configmap, secret and service
 
-<img src="images/k8s-bulletinboard-target-picture-ads-db.png" width="800" />
+<img src="images/k8s-bulletinboard-target-picture-ads-db-2.png" width="800" />
 
 
 ## Step 1: Configmap-init
