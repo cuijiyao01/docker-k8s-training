@@ -1,6 +1,8 @@
 # Exercise: xxx
 
 
+<img src="images/k8s-bulletinboard-target-picture-ads-db.png" width="800" />
+
 ## Scope
 
 Create a statefull set for the ads DB 
