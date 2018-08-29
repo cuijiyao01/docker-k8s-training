@@ -1,11 +1,6 @@
 xxx
 
-
-<<<<<<< HEAD
-img src="images/bulletinbaord-target-picture-detail-2.png" width="800" />
-=======
-<img src="images/k8s-bulletinboard-target-picture-detail.png" width="800" />
->>>>>>> b15edcea9a96e2eaeab810304568c5fd6ac20051
+<img src="images/bulletinbaord-target-picture-detail-2.png" width="800" />
 
 ## Ads DB
 - Create all required entities for ads DB: configmap-init, configmap, secret and service
