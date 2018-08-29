@@ -1,7 +1,7 @@
 xxx
 
 
-img src="images/bulletinbaord-target-picture-detail.png" width="800" />
+img src="images/k8s-bulletinboard-target-picture-detail.png" width="800" />
 
 ## Ads DB
 - Create all required entities for ads DB: configmap-init, configmap, secret and service
