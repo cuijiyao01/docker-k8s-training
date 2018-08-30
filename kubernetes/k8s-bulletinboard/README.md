@@ -1,4 +1,6 @@
-# Overview Exercises for Bulletinboard into K8s
+# Exercises on How to bring a microservice based Application into Kubernetes, based on the Cloud Curriculum Sample Applcuation Bulletinboard
+- xx
+- yy
 
 <img src="images/k8s-bulletinboard-target-picture-detail-3.png" width="800" />
 
