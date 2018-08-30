@@ -17,7 +17,7 @@ The `kubectl proxy` command allows you to open a tunnel to the API server and ma
 
 Run the proxy command in a new terminal window and open `localhost:8001` in your VM's browser. Traverse through the `api/v1/` and search for the cluster nodes.  
 
-## Step 3: advanced - talk to kubernetes like an application
+## Step 4: talk to kubernetes like an application
 If you access kubernetes as an application rather than an administrator, you cannot use the the convenient syntax of `kubectl`. Instead you have to send http requests to the cluster. Though there are client libraries available, in the end everything boils down to an http request.
 In this step of the exercise, you will send an http request directly to the cluster asking for the available nodes. Instead of `kubectl` you can use the program `curl`.
 
@@ -27,5 +27,11 @@ Before you continue, make sure `kubectl proxy` is running and serving on `localh
 
 Hint: if the output is not as readable as you expect it, consider changing the accepted return format to `application/yaml`.
 
-## optional Step 4 - learn some tricks
+## Step 5: api-versions & api-resources
+Dealing with the API directly can be cumbersome. Therefore `kubectl` offers the `api-versions` command. Give it a try and compare the output with results from step 4.
+
+With kubernetes version 1.11 the `kubectl` binary was extend with an `api-resources` function. It lets you discover resources available in your cluster.
+Run the command and search for the short name for the `nodes` resource. Can you `describe` a node using the short name notation?  
+
+## optional Step 6 - learn some tricks
 There is a forum-like page hosted by K8s with lots of information around `kubectl` and how to use it best. If you are curious, take a look at https://discuss.kubernetes.io/t/kubectl-tips-and-tricks/.

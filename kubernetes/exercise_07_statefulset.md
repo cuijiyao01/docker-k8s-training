@@ -9,7 +9,8 @@ And don't forget to deploy the service to the cluster ;)
 ## Step 1: Build a StatefulSet
 Now that you have the service, you meet the prerequisite to create a StatefulSet.
 
-Next, describe your desired state in a yaml file. Use the snippets below to create a valid yaml file for a StatefulSet resource. Also fill in the blanks (marked with `???`) with values.
+Next, describe your desired state in a yaml file. Use the snippets below to create a valid yaml file for a StatefulSet resource. Also fill in the blanks (marked with `???`) with values. Note that during the run of the `initContainer` the current host name will be written into the `index.html` file every time the pod is started.
+
 If you are looking for more info, check the official [api reference](https://kubernetes.io/docs/reference/) for StatefulSets.
 
 ```
@@ -37,6 +38,16 @@ spec:
 
 ```
 spec:
+  initContainers:
+  - name: setup
+    image: alpine:3.8
+    command:
+    - /bin/sh
+    - -c
+    - echo $(hostname) > /work-dir/index.html
+    volumeMounts:
+    - name: ???
+      mountPath: /work-dir      
   containers:
   - name: nginx
     image: nginx:mainline
@@ -66,20 +77,18 @@ template:
 Before you create the StatefulSet, open a 2nd terminal and start to watch the pods in you namespace: `watch kubectl get pods`
 
 Now post your yaml file to the API server and monitor the upcoming new pods. You should observe the ordered creation of pods (by their ordinal index). Note that the pod name does not have any randomly generated string, but consists of the statefulset's name + the index.
-Quickly connect to your pods and check the hostnames (change the loop's range here and in all following snippets, if you have more or less than 2 replicas): `for i in 0 1; do kubectl exec web-$i -- sh -c 'hostname'; done`
 
 Additionally you should find new `PVC` resources in your namespace.
 
 Quickly spin up a temporary pod and directly connect to it: `kubectl run -i --tty --image alpine:3.8 dns-test --restart=Never --rm /bin/sh`
-Within this context, run `nslookup [pod-name].[service-name]` to check, if your individual pods are accessible via the service. You can also use `wget [pod-name].[service-name]` to download the index.html page from the nginx pod and look into it with `cat` or anything else.
+Within this context, run `nslookup [pod-name].[service-name]` to check, if your individual pods are accessible via the service. Also download the `index.html` page of each instance using `wget [pod-name].[service-name]`. When looking into it (with something like `cat` or `less`), you should get the corresponding host name that was written by the `initContainer`.
 
-## Step 3: Persist some data
-To add some data to the attached storage, write the pod's hostname to the index.html page:
-`for i in 0 1; do kubectl exec web-$i -- sh -c 'echo $(hostname) > /usr/share/nginx/html/index.html'; done`
+## Step 3: Stable hostnames
+StatefulSets guarantee stable/reliable names. Since the pod name is also the hostname, it won't change over time - even when the pod gets killed and re-created.
 
-Next, delete the pods of your StatefulSet while `watch`ing the pods in you namespace. Observe, how the pods will be re-created with the exact same names.
+Delete the pods of your StatefulSet while `watch`ing the pods in you namespace. Observe, how the pods will be re-created with the exact same names.
 
-Again, spin up a temporary deployment of a busybox and directly connect to it. If you re-run `nslookup`, notice the IP addresses might have changed. Since you wrote the hostname to the index.html page, download it with `wget` and check for the expected content.
+Again, spin up a temporary deployment of a busybox and directly connect to it. If you re-run `nslookup`, notice the IP addresses probably have changed. Since the `initContainer` wrote the "new" hostname to the index.html page, download it with `wget` and check for the expected content.
 
 ## Step 4 (optional): rolling update with canary
 Statefulsets support advanced mechanisms to update to a new version (i.e. of the used container image). For this exercise, you will add an update strategy to your StatefulSet and perform an update with one pod serving as canary before moving all of your replicas to the new version.
