@@ -23,7 +23,7 @@
 - Create Users DB and Users Ads via existing helm chart
 
 
-## OPTIONAL - [Exercise: "Create Helm chart for Bulletinboard-Ads Application and -DB"](/exercise_20_ads_helm_chart.md)
+## Optional - [Exercise: "Create Helm chart for Bulletinboard-Ads Appl. and -DB"](/exercise_20_ads_helm_chart.md)
 - Develop a Helm chart for Ads Db and Ads App
 
 
