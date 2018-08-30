@@ -14,12 +14,12 @@
 - Publish ads via service and ingress
 - Check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
-## [Exercise: "Increase security via Networkpolicies & TLS for Bulletinboard-Ads and -DB"](/exercise_05_ads_db_networkpolicy.md)
+## [Exercise: "Networkpolicies & TLS for Bulletinboard-Ads and -DB"](/exercise_05_ads_db_networkpolicy.md)
 - Increase security and establish a network policy for
   - Ads DB
   - Ads
 
-## [Exercise: "Using Users Helm-chart to setup Bulletinboard-Users Application and -Database](/exercise_08_users_app_and_db_by_helm.md)
+## [Exercise: "Using Helm-chart to setup Bulletinboard-Users Application and -DB](/exercise_08_users_app_and_db_by_helm.md)
 - Create Users DB and Users Ads via existing helm chart
 
 
