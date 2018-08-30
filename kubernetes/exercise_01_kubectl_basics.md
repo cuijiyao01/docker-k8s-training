@@ -31,7 +31,7 @@ Hint: if the output is not as readable as you expect it, consider changing the a
 Dealing with the API directly can be cumbersome. Therefore `kubectl` offers the `api-versions` command. Give it a try and compare the output with results from step 4.
 
 With kubernetes version 1.11 the `kubectl` binary was extend with an `api-resources` function. It lets you discover resources available in your cluster.
-Run the command and search for the short name for the `nodes` resource. Can you `describe` a node using the short name notation?  
+Firstly, check your `kubectl version`. If it is 1.11.x or higher, run the `api-resources` command and search for the short name for the `nodes` resource. Can you `describe` a node using the short name notation?  
 
 ## optional Step 6 - learn some tricks
 There is a forum-like page hosted by K8s with lots of information around `kubectl` and how to use it best. If you are curious, take a look at https://discuss.kubernetes.io/t/kubectl-tips-and-tricks/.
