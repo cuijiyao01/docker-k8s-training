@@ -1,4 +1,4 @@
-# Exercises on How to bring a microservice based Application into Kubernetes, based on the Cloud Curriculum Sample Applcuation Bulletinboard
+# Microservice based Application in Kubernetes using Cloud Curriculum Sample Application "Bulletinboard"
 - xx
 - yy
 
