@@ -60,7 +60,7 @@ metadata:
   name: simple-nginx-ingress
 spec:
   rules:
-  - host: simple-nginx.ingress.<cluster-name>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: simple-nginx.ingress.cpcw36.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - backend:
