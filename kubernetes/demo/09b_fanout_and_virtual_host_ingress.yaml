@@ -134,14 +134,14 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: mynginx.ingress.<cluster-name>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: mynginx.ingress.cpcw36.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - path: /*
         backend:
           serviceName: mynginx-service
           servicePort: 80
-  - host: yournginx.ingress.<cluster-name>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: yournginx.ingress.cpcw36.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - path: /*
