@@ -16,8 +16,9 @@ In order for you to set up your Docker environment so that it can connect to sai
 Install docker like this:
 ```bash
 sudo -s
+rm -f /etc/resolv.conf
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
-rm /etc/apt/apt.conf.d/01proxy
+rm -f /etc/apt/apt.conf.d/01proxy
 export http_proxy=""
 export https_proxy=""
 apt-get install docker-ce
