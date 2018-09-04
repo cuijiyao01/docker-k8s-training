@@ -15,7 +15,7 @@
 
 - As well we can run any **initdb scripts**, which we will use to create a new database with a specific user and password (Not using the default user postgres).
 
-- To make available the Bulletinboard-Ads Database **Pod** from "outside" we have to provide use a **"headless" Service**.
+- To make available the Bulletinboard-Ads Database **Pod** from "outside" we have to provide a **"headless" Service**.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-detail.png" width="800" />
 
@@ -40,15 +40,16 @@
 - Now call `kubectl apply -f ads-db-configmap-init.yaml` to create the **Configmap**.
 
 
-## Step 2: Configmap
-Purpose: Specify en environment variable PGDATA for the location of the Postgresql database files
-https://hub.docker.com/_/postgres/
+## Step 2: Create a Configmap with location of Postgres database files
 
-kubectl apply -f ads-db-configmap.yaml 
+- Create a **Configmap** `ads-db-configmap` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml`. Don not forget proper labels for component and module !
+
+- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
 
-## Step 3: Secret
-Purpose: Superuser password for PostgreSQL (default user: postgres)
+## Step 3: Create a Secret with password for Postgres superuser
+
+- Create a **Secret** `ads-db-secrets` of type `opaque` with an environment variable `PG_PASSWORD`, value `ajZia0U0TXdtY3hmdk9UdWU0eVpYaHQK`.
 
 kubectl apply -f ads-db-secret.yaml 
 
