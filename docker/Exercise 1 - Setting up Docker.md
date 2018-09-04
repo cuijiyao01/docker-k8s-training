@@ -11,6 +11,18 @@ In order for you to set up your Docker environment so that it can connect to sai
 
 ## Step 1: Install docker
 
+**EMERGENCY SOLUTION FOR DNS OUTAGE AT SAP**
+Install docker like this:
+```bash
+sudo -s
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+rm /etc/apt/apt.conf.d/01proxy
+export http_proxy=""
+export https_proxy=""
+apt-get install docker-ce
+exit
+```
+
 - Open a command window.
 - **Switch to root:** Type `sudo -s` to switch to `root` and open a sub-shell.
 - Type `apt-get update` to update the apt package manager.
