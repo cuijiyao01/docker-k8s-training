@@ -30,8 +30,8 @@ apt-get update && apt-get -y install wget
 Use the wget download manager to download a custom website into nginx' website directory.
 
 ```bash
-wget --no-check-certificate -O /usr/share/nginx/html/evil.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.jpg
-wget --no-check-certificate -O /usr/share/nginx/html/index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.html
+wget --no-check-certificate -O /usr/share/nginx/html/evil.jpg https://10.67.76.20/raw/slvi/docker-k8s-training/master/docker/res/evil.jpg
+wget --no-check-certificate -O /usr/share/nginx/html/index.html https://10.67.76.20/raw/slvi/docker-k8s-training/master/docker/res/evil.html
 ```
 
 Reload the webpage in your browser and see how the output changed. Exit from the shell but do not stop the container.
