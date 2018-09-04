@@ -9,8 +9,8 @@ Create an empty directory on your VM, change into it and create an empty `Docker
 We want to copy a custom (yet very simple) website to the image, so we will download the files into our build context:
 
 ```bash
-wget -O train.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/train.jpg
-wget -O index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/train.html
+wget -O train.jpg https://10.67.76.20/raw/slvi/docker-k8s-training/master/docker/res/train.jpg
+wget -O index.html https://10.67.76.20/raw/slvi/docker-k8s-training/master/docker/res/train.html
 ```
 
 ## Step 1: extend an existing image
