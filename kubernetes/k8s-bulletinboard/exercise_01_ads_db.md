@@ -4,16 +4,16 @@
 ## Scope
 
 - In this first exercise we will focus on the setup of Bulletinboard-Ads Database, where the Bulletinboard-Ads Microservice can store the advertisements.
+
+<img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
+
 - As we do not need horizontal scaling for the database we will use a statefulset (instead of a deloyment) with only one instance.
 
 Create all required entities for ads DB: configmap-init, configmap, secret and service
 - Create a statefull set for the ads DB
 
-<img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
-xxx
-
 <img src="images/k8s-bulletinboard-target-picture-ads-db-detail.png" width="800" />
-xxx
+
 
 ## Step 1: Configmap-init
 Purpose: 
