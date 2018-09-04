@@ -3,7 +3,10 @@
 
 ## Scope
 
-Increase security and establish a network policy for ads DB
+- Increase security and establish a network policy for
+  - Ads DB
+  - Ads
+
 
 kubectl apply -f ads-db-networkpolicy.yaml 
 
