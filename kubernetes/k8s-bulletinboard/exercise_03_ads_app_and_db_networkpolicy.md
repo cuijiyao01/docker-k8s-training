@@ -1,4 +1,4 @@
-# Exercise: xxx
+# Exercise: Networkpolicies & TLS for Bulletinboard-Ads and -Database
 
 
 ## Scope
