@@ -7,20 +7,38 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
 
-- As we do not need horizontal scaling for the database we will use a statefulset (instead of a deloyment) with only one instance.
+- As we do not need horizontal scaling for the database we will use a K8s statefulset (instead of a K8s deployment) with only one instance (replicaset=1).
 
-Create all required entities for ads DB: configmap-init, configmap, secret and service
-- Create a statefull set for the ads DB
+- As database we will use Postgresql, where on Docker hub we can find a well suiting offical [Postgresql Docker image](https://hub.docker.com/_/postgres/).
+
+- The Postgresql Docker image gives us the possibility to override the default values via **environment variables** for e.g. the location for the database files (`PGDATA`) and the superuser password (`POSTGRES_PASSWORD`).
+
+- As well we can run any **initdb scripts**, which we will use to create a new database (`adsuser`) with a specific user (`adsuser`) and password (Not using the default user postgres).
+
+- To make available the Bulletinboard-Ads Database Pod from "outside" we have to provide use a "headless" Service.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-detail.png" width="800" />
 
 
-## Step 1: Configmap-init
-Purpose: 
-- Create a new DB for the Ads app to store the advertisements. 
-- As well create a specific user with password (Not to use the default Postgesql user/ password.
+## Step 1: Create a Configmap to initialize the database
 
-kubectl apply -f ads-db-configmap-init.yaml 
+- Use the following sql script to create a new database `adsuser`, a specific user `adsuser` with password `initial` (Not to use the default postgres user/ password).
+
+ ```
+ -- This is a postgres initialization script for the postgres container. Execute it with psql as:
+ -- $> psql postgres -f initdb.sql
+ CREATE ROLE adsuser WITH LOGIN PASSWORD 'initial' INHERIT CREATEDB;
+ CREATE DATABASE ads WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
+ GRANT ALL PRIVILEGES ON DATABASE ads TO adsuser;
+ CREATE SCHEMA ads AUTHORIZATION adsuser;
+ -- ALTER DATABASE ads SET search_path TO 'ads';
+ ALTER DATABASE ads OWNER TO adsuser;
+ - Store that script within a K8s Configmap called `ads-db-init`.
+```
+
+- Create a configmap 'ads-db-init' (incl. proper labels for component and module) and store above sql script under the data section with name `initdb.sql` and save the configmap spec under the filename `ads-db-configmap-init.yaml`.
+
+- Now call `kubectl apply -f ads-db-configmap-init.yaml` to create the configmap.
 
 
 ## Step 2: Configmap
