@@ -10,6 +10,8 @@
 
 kubectl apply -f ads-db-networkpolicy.yaml 
 
+kubectl apply -f ads-app-networkpolicy.yaml
+
 img src="images/xxx.png" width="800" />
 
 ## Step 0: prerequisites
