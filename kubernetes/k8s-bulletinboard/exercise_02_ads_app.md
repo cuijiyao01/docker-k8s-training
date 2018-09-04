@@ -1,4 +1,4 @@
-# Exercise: xxx
+# Exercise: Setup Bulletinboard-Ads Microservice/ Application
 
 
 ## Scope
@@ -10,36 +10,24 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app.png" width="800" />
 
-Create required configmap and deployment for ads
+
+## Step 1: Configmap
+Purpose: 
+- xx 
+- xx
 
 kubectl apply -f ads-app-configmap.yaml 
 
+
+## Step 2: Deployment
+Purpose: 
+- xx
+
 kubectl apply -f ads-app.yaml 
 
-
-## Step 1: Configmap-init
+## Step 3: Service & Ingress
 Purpose: 
-- Create a new DB for the Ads app to store the advertisements. 
-- As well create a specific user with password (Not to use the default Postgesql user/ password.
+- Publish ads via service and ingress
 
-kubectl apply -f ads-db-configmap-init.yaml 
-
-
-## Step 2: Configmap
-Purpose: Specify en environment variable PGDATA for the location of the Postgresql database files
-https://hub.docker.com/_/postgres/
-
-kubectl apply -f ads-db-configmap.yaml 
-
-
-## Step 3: Secret
-Purpose: Superuser password for PostgreSQL (default user: postgres)
-
-kubectl apply -f ads-db-secret.yaml 
-
-
-## Step 3: "Headless" Service
-Purpose: Create the "headless" service, required to access to the pod created by the statefulset.
-
-kubectl apply -f ads-db-service.yaml 
-
+kubectl apply -f ads-app-service.yaml 
+kubectl apply -f ads-app-ingress.yaml
