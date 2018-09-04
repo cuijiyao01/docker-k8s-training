@@ -35,29 +35,33 @@
  ALTER DATABASE ads OWNER TO adsuser;
 ```
 
-- Create a **Configmap** 'ads-db-init' (incl. proper labels for component and module) and store above sql script under the data section with name `initdb.sql` and save the **Configmap** spec under the filename `ads-db-configmap-init.yaml`.
+- Specify a **Configmap** 'ads-db-init' (incl. proper labels for component and module) and store above sql script under the data section with name `initdb.sql` and save the **Configmap** spec under the filename `ads-db-configmap-init.yaml`.
 
 - Now call `kubectl apply -f ads-db-configmap-init.yaml` to create the **Configmap**.
 
 
 ## Step 2: Create a Configmap with location of Postgres database files
 
-- Create a **Configmap** `ads-db-configmap` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml`. Do not forget to specify proper labels for component and module !
+- Specify a **Configmap** `ads-db-configmap` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
 
-## Step 3: Create a Secret with password for Postgres superuser
+## Step 3: Secret
 
-- Create a **Secret** `ads-db-secrets` of type `opaque` with an environment variable `PG_PASSWORD`, with a random value e.g. `ajZia0U0TXdtY3hmdk9UdWU0eVpYaHQK`. ToDO: tool/ command ? Ask Hendrik/ Thomas ? and save the **Secret** under the filename `ads-db-secrets.yaml`. Do not forget to specify proper labels for component and module !
+Purpose: Create a Secret with password for Postgres superuser
+
+- Specify a **Secret** `ads-db-secrets` of type `opaque` with an environment variable `PG_PASSWORD`, with a random value e.g. `ajZia0U0TXdtY3hmdk9UdWU0eVpYaHQK`. ToDO: tool/ command ? Ask Hendrik/ Thomas ? and save the **Secret** under the filename `ads-db-secrets.yaml`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-secret.yaml` to create the **Secret**.
 
 
 ## Step 4: "Headless" Service
-Purpose: Create the "headless" service, required to access to the pod created by the statefulset.
+Purpose: Create the **"headless" Service**, required to access the pod, created by the statefulset.
 
-kubectl apply -f ads-db-service.yaml 
+- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for component and module. Use the default port, given by the Docker image, make shure you are using a named port and save it under the filename `ads-db-service.yaml`.
+
+- Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless"Service**.
 
 ## Step 5: Statefulset
 Purpose: Create the statefulset, based on Configmap-Init, Configmap, Secret and Headless service (defined in steps 1-4).
