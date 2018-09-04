@@ -1,7 +1,7 @@
 # Exercise: Users Service with Helm
 
 ## Scope
-The User Service (App) will be installed with a provided helm chart. You only have to provide a few values and work on the post-install-job which we will use to intialize the DB with some data.  
+The User Service (App) will be installed with a provided helm chart. You only have to edit/insert a few values and work on the post-install-job which we will use to intialize the DB with some data.  
 After the Service is running we will adapt our Ads deployment to provide the user route and enable the checking of the user service. 
 
 <img src="images/k8s-bulletinboard-target-picture-users-app-and-db-helm.png" width="800" />
@@ -19,7 +19,7 @@ UserData is e.g.: `{"id" : "42", "premiumUser" : true, "email" : "john.doe@sampl
 
 
 ## Step 0: prerequisites
-If you did not do the helm exercise install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`.
+If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`.
 
 ## Step 1: helm
 Before you can install the helm chart, open the *values.yaml* file. We left out the value of a few entries, you have to fill them out yourself. 
@@ -44,5 +44,9 @@ Again you can check the user service with:
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`, now you should get the user which our job put in. 
 
 ## Step 3: Adapt Ads
-Todo.
+
+Up till now your Ads was not asking a User Service for information on a certain user. The ads app we use has a flag with which we can turn this on. To work the app needs 2 more environment variables: 
+- `POST_USER_CHECK = true`: turns the checking of users on.
+- `USER_ROUTE = <route to users>`: contains the route to the user service app, without the api/v1.0/users ending. 
+Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started. Test that you now need a header `User-id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement. 
 
