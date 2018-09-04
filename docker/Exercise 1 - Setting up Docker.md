@@ -12,6 +12,7 @@ In order for you to set up your Docker environment so that it can connect to sai
 ## Step 1: Install docker
 
 **EMERGENCY SOLUTION FOR DNS OUTAGE AT SAP**
+
 Install docker like this:
 ```bash
 sudo -s
@@ -22,6 +23,9 @@ export https_proxy=""
 apt-get install docker-ce
 exit
 ```
+
+**END OF EMERGENCY SOLUTION FOR DNS OUTAGE AT SAP**
+
 
 - Open a command window.
 - **Switch to root:** Type `sudo -s` to switch to `root` and open a sub-shell.
@@ -37,7 +41,7 @@ SAP is slowly becoming proxy-less, i.e. the explicit proxy server that you all p
 
 ```json
 {
-    "dns": ["10.17.121.30", "10.17.220.80"]
+    "dns": ["8.8.8.8"]
 }
 ```
 
