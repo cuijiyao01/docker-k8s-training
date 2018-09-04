@@ -42,16 +42,16 @@
 
 ## Step 2: Create a Configmap with location of Postgres database files
 
-- Create a **Configmap** `ads-db-configmap` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml`. Don not forget proper labels for component and module !
+- Create a **Configmap** `ads-db-configmap` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
 
 ## Step 3: Create a Secret with password for Postgres superuser
 
-- Create a **Secret** `ads-db-secrets` of type `opaque` with an environment variable `PG_PASSWORD`, value `ajZia0U0TXdtY3hmdk9UdWU0eVpYaHQK`.
+- Create a **Secret** `ads-db-secrets` of type `opaque` with an environment variable `PG_PASSWORD`, with a random value e.g. `ajZia0U0TXdtY3hmdk9UdWU0eVpYaHQK`. ToDO: tool/ command ? Ask Hendrik/ Thomas ? and save the **Secret** under the filename `ads-db-secrets.yaml`. Do not forget to specify proper labels for component and module !
 
-kubectl apply -f ads-db-secret.yaml 
+- Now call `kubectl apply -f ads-db-secret.yaml` to create the **Secret**.
 
 
 ## Step 4: "Headless" Service
