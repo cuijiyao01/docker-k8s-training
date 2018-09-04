@@ -34,7 +34,7 @@ With this you have a running users service and a way to fill the DB with users.
 ## Step 2: Job to fill DB
 Now you added a premiumUser to the DB by hand, which we now want to automate.
 
-In the bulletinboard-users/templates subfolder there is a `post-install-job.yaml`, this is almost complete, only the command to fill the DB is missing. Currently there is an `echo "hello k8s trainee"` executed where we want the command to put a user in the DB. Change this echo to the curl above, and think about how to handle the single and double quotes. (In a yaml, if you want to use a ' in a single quoted string use ''.) After you adapted the file you can activated it in the chart by setting the value `InitPostJobEnabled: true`. 
+In the bulletinboard-users/templates subfolder there is a `post-install-job.yaml`, this is almost complete, only the command to fill the DB is missing. Currently there is an `echo "hello k8s trainee"` executed where we want the command to put a user in the DB. Change this echo to the curl above, and think about how to handle the single and double quotes. (In a yaml, if you want to use a ' in a single quoted string use ''.) After you adapted the file you can activated it in the chart by setting the value `InitPostJobEnabled: true` (in `values.yaml`).  
 Now delete the old helm chart, and be sure that also the presisted volume of the user db gets removed. Use `helm list` to get the name of the installed chart and then do `helm delete <name of installed bulletinboard>`. 
 
 After it is gone you can execute again `helm install bulletinboard-users`. 
