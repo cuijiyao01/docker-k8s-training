@@ -21,6 +21,7 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 rm -f /etc/apt/apt.conf.d/01proxy
 export http_proxy=""
 export https_proxy=""
+apt-get update
 apt-get install docker-ce
 exit
 ```
