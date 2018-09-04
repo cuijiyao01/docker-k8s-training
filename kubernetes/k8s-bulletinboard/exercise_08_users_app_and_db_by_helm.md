@@ -32,7 +32,7 @@ If you did not do the helm exercise, install the tiller service to enable helm i
 
 ## Step 1: helm
 
-_Purpose: Get familar with the provided template files and the user service._
+__Purpose: Get familar with the provided template files and the user service.__
 
 Before you can install the helm chart, open the *values.yaml* file. We left out the value of a few entries, you have to fill them out yourself.  
 Now do `helm install bulletinboard-users`. In the current state the user-service will run, but there will be no data in the database. 
@@ -46,7 +46,7 @@ With this you have a running users service and a way to fill the DB with users.
 ## Step 2: Job to fill DB
 Now you added a premiumUser to the DB by hand, which we now want to automate.
 
-_Purpose: Learn how to use a *job* and a bit more about *strings* in yamls_
+__Purpose: Learn how to use a *job* and a bit more about *strings* in yamls__
 
 In the bulletinboard-users/templates subfolder there is a `post-install-job.yaml`, this is almost complete, only the command to fill the DB is missing. Currently there is an `echo "hello k8s trainee"` executed where we want the command to put a user in the DB. Change this echo to the curl above, and think about how to handle the single and double quotes. (In a yaml, if you want to use a ' in a single quoted string use ''.) After you adapted the file you can activated it in the chart by setting the value `InitPostJobEnabled: true` (in `values.yaml`).  
 Now delete the old helm chart, and be sure that also the presisted volume of the user db gets removed. Use `helm list` to get the name of the installed chart and then do `helm delete <name of installed bulletinboard>`. 
@@ -59,7 +59,7 @@ Again you can check the user service with:
 
 ## Step 3: Adapt Ads
 
-_Purpose: communication between apps through a service; finsish bulletinboard_
+__Purpose: communication between apps through a service; finsish bulletinboard__
 
 Up till now your Ads was not asking a User Service for information on a certain user. The ads app we use has a flag with which we can turn this on. To work the app needs 2 more environment variables: 
 - `POST_USER_CHECK = true`: turns the checking of users on.
