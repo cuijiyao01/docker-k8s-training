@@ -64,7 +64,10 @@ Purpose: Create the **"headless" Service**, required to access the pod, created 
 - Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless"Service**.
 
 ## Step 5: Statefulset
-Purpose: Create the statefulset, based on Configmap-Init, Configmap, Secret and Headless service (defined in steps 1-4).
+
+Purpose: Create the **Statefulset**, based on àbove created `ads-db-configmap-init`, Configmap, Secret and headless service (defined in steps 1-4).
+
+- Specify a **Statefulset** for the Postgres Database Pod with 
 
 kubectl apply -f ads-db.yaml 
 
