@@ -1,14 +1,23 @@
 # Exercise: Users Service with Helm
 
 ## Scope
-The User Service (App) will be installed with a provided helm chart. You only have to edit/insert a few values and work on the post-install-job which we will use to intialize the DB with some data.  
+The User Service (App) will be installed with a provided helm chart. You only have to edit/insert a few values and work on the post-install-job which we will use to intialize the DB with some data. 
 After the Service is running we will adapt our Ads deployment to provide the user route and enable the checking of the user service. 
 
 <img src="images/k8s-bulletinboard-target-picture-users-app-and-db-helm.png" width="800" />
 
-## Docker image
+## Purpose:
 
-We provide a Docker image with Tomcat and user.war: `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users:v4.0`. 
+We provide a helm chart first for you to work with a bit more complex one compared to the helm exercise. Also it gives us an easy way to setup the user service without you having to write all the yamls again. 
+
+## The helm chart
+
+We provide a almost complete helm chart for the User Service: <LINK TO CHART>
+In it we use 2 images, first, like for ads, a postgres docker image to persist data and second the user service image described in detail below. The structure of the K8s entities is similar to the one you just created for ads. 
+
+## User Service Docker image
+
+We provide a Docker image with Tomcat and user.war which is used in the helm chart: `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users:v4.0`. 
 The version of the user service user here only needs a postgresql db to store the user data and has no other dependencies.
 The following endpoints are given: 
 - `/`: gives a 'Users: OK' string and 200 code.
@@ -22,9 +31,12 @@ UserData is e.g.: `{"id" : "42", "premiumUser" : true, "email" : "john.doe@sampl
 If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`.
 
 ## Step 1: helm
-Before you can install the helm chart, open the *values.yaml* file. We left out the value of a few entries, you have to fill them out yourself. 
+
+_Purpose: Get familar with the provided template files and the user service._
+
+Before you can install the helm chart, open the *values.yaml* file. We left out the value of a few entries, you have to fill them out yourself.  
 Now do `helm install bulletinboard-users`. In the current state the user-service will run, but there will be no data in the database. 
-You can test that the user-service is runing by doing: 
+You can test that the user-service is runing by doing:  
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`: this terminal is blocked by the open connection to the pod, either put it in the background (`crtl + z` + `bg`) or open a second terminal (`crtl + shift + t`)
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`
 - post a user: `curl -i -X POST localhost:8081/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data '{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'`
@@ -33,6 +45,8 @@ With this you have a running users service and a way to fill the DB with users.
 
 ## Step 2: Job to fill DB
 Now you added a premiumUser to the DB by hand, which we now want to automate.
+
+_Purpose: Learn how to use a *job* and a bit more about *strings* in yamls_
 
 In the bulletinboard-users/templates subfolder there is a `post-install-job.yaml`, this is almost complete, only the command to fill the DB is missing. Currently there is an `echo "hello k8s trainee"` executed where we want the command to put a user in the DB. Change this echo to the curl above, and think about how to handle the single and double quotes. (In a yaml, if you want to use a ' in a single quoted string use ''.) After you adapted the file you can activated it in the chart by setting the value `InitPostJobEnabled: true` (in `values.yaml`).  
 Now delete the old helm chart, and be sure that also the presisted volume of the user db gets removed. Use `helm list` to get the name of the installed chart and then do `helm delete <name of installed bulletinboard>`. 
@@ -44,6 +58,8 @@ Again you can check the user service with:
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`, now you should get the user which our job put in. 
 
 ## Step 3: Adapt Ads
+
+_Purpose: communication between apps through a service; finsish bulletinboard_
 
 Up till now your Ads was not asking a User Service for information on a certain user. The ads app we use has a flag with which we can turn this on. To work the app needs 2 more environment variables: 
 - `POST_USER_CHECK = true`: turns the checking of users on.
