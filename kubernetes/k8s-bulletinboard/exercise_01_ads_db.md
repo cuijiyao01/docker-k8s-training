@@ -3,7 +3,8 @@
 
 ## Scope
 
-Create all required entities for ads DB: configmap-init, configmap, secret and service
+- Create all required entities for ads DB: configmap-init, configmap, secret and service
+- Create a statefull set for the ads DB
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
 
