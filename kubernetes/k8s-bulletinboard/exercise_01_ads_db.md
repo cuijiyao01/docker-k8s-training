@@ -22,7 +22,7 @@
 
 ## Step 1: Create a Configmap to initialize the database
 
-- Use the following sql script to create a new database `adsuser`, a specific user `adsuser` with password `initial`.
+- Use the following sql script to create a new database `adsuser` and a specific user `adsuser` with password `initial`.
 
  ```
  -- This is a postgres initialization script for the postgres container. Execute it with psql as:
@@ -33,7 +33,6 @@
  CREATE SCHEMA ads AUTHORIZATION adsuser;
  -- ALTER DATABASE ads SET search_path TO 'ads';
  ALTER DATABASE ads OWNER TO adsuser;
- - Store that script within a K8s Configmap called `ads-db-init`.
 ```
 
 - Create a **Configmap** 'ads-db-init' (incl. proper labels for component and module) and store above sql script under the data section with name `initdb.sql` and save the **Configmap** spec under the filename `ads-db-configmap-init.yaml`.
