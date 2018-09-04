@@ -8,7 +8,7 @@ After the Service is running we will adapt our Ads deployment to provide the use
 
 ### Overall purpose:
 
-We provide a helm chart first for you to work with a bit more complex one compared to the helm exercise. Also it gives us an easy way to setup the user service without you having to write all the yamls again. 
+Get experience with a bit more complex one compared to the helm exercise. Also it gives us an easy way to setup the user service without you having to write all the yamls again. 
 
 ## The helm chart
 
