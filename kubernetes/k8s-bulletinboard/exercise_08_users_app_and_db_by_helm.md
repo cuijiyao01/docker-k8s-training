@@ -6,14 +6,15 @@ After the Service is running we will adapt our Ads deployment to provide the use
 
 <img src="images/k8s-bulletinboard-target-picture-users-app-and-db-helm.png" width="800" />
 
-## Purpose:
+### Overall purpose:
 
 We provide a helm chart first for you to work with a bit more complex one compared to the helm exercise. Also it gives us an easy way to setup the user service without you having to write all the yamls again. 
 
 ## The helm chart
 
 We provide a almost complete helm chart for the User Service: <LINK TO CHART>
-In it we use 2 images, first, like for ads, a postgres docker image to persist data and second the user service image described in detail below. The structure of the K8s entities is similar to the one you just created for ads. 
+In it we use 2 images:  
+First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below. The structure of the K8s entities in this chart is similar to the ones you created for ads. 
 
 ## User Service Docker image
 
