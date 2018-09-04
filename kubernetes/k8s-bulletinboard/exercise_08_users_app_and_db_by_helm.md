@@ -60,7 +60,7 @@ Again you can check the user service with:
 
 ## Step 3: Adapt Ads
 
-__Purpose: communication between apps through a service; finsish bulletinboard__
+__Purpose: show communication between apps through a service; finsish bulletinboard__
 
 Up till now your Ads was not asking a User Service for information on a certain user. The ads app we use has a flag with which we can turn this on. To work the app needs 2 more environment variables: 
 - `POST_USER_CHECK = true`: turns the checking of users on.
