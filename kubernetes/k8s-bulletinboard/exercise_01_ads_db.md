@@ -7,7 +7,10 @@
 - Create a statefull set for the ads DB
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
+xxx
 
+<img src="images/k8s-bulletinboard-target-picture-ads-db-detail.png" width="800" />
+xxx
 
 ## Step 1: Configmap-init
 Purpose: 
