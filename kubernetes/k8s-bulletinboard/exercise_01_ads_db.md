@@ -67,7 +67,8 @@ Purpose: Create the **"headless" Service**, required to access the pod, created 
 
 Purpose: Create the **Statefulset**, based on both Configmaps, the Secret and the "headless" Service, created in step 1-4.
 
-- In the following sections we provide you snippets of the yaml file
+_Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders <...> by proper values !_
+
 - Specify a **Statefulset** for the Postgres Database Pod with name `ads-db` with proper labels and selector for component and module. 
 
 ```
@@ -81,7 +82,7 @@ metadata:
     module: <name-of-module>
 ```
 
-- Refer to the "headless" service and make shure that only one DB pod gets created. 
+- Refer to the "headless" service, created earlier and make shure that only one DB pod gets created. 
 - Additional refer under `volumes` to the configmap with database initialization script and refer to the configmap and secret when exposing Postgres environment variables in the Docker container.
 
 ```
@@ -126,6 +127,8 @@ spec:
               key: <name-of-data-specified-in-secret>
 ```
 
+- For the creation of the PVC we are using the volumeClaimTemplates mechanism. Here just make shure you are using proper labels for component and module. 
+
 ```
   volumeClaimTemplates:
   - metadata:
@@ -140,7 +143,7 @@ spec:
           storage: 1Gi
 ```
 
-kubectl apply -f ads-db.yaml 
+- When you are ready with the yaml file with specification save it under the filename `ads-db.yaml` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset**`ads-db`.
 
 
 
