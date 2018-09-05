@@ -65,7 +65,9 @@ Purpose: Create the **"headless" Service**, required to access the pod, created 
 
 ## Step 5: Statefulset
 
-Purpose: Create the **Statefulset**, based on both Configmaps, the Secret and the "headless" Service, created in step 1-4.
+Purpose: Create the **Statefulset**, which is dependend on both Configmaps, the Secret and the "headless" Service, created in step 1-4.
+
+<img src="images/k8s-bulletinboard-target-picture-ads-db-statefulset.png" width="300" />
 
 _Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders <...> by proper values !_
 
