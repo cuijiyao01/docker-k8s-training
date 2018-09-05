@@ -68,6 +68,6 @@ spec:
           servicePort: 80
   tls:
   - hosts:
-    - simple-nginx.ingress.<cluster-name>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+    - simple-nginx.ingress.cpcw36.k8s-train.shoot.canary.k8s-hana.ondemand.com
     secretName: simple-nginx-ingress-tls
 ---

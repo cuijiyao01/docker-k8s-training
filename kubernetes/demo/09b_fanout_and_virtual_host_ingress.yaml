@@ -114,7 +114,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: fanout-nginx.ingress.<cluster-name>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: fanout-nginx.ingress.cpcw36.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - path: /my
