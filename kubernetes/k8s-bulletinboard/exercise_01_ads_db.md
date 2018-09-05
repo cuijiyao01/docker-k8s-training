@@ -65,12 +65,11 @@ Purpose: Create the **"headless" Service**, required to access the pod, created 
 
 ## Step 5: Statefulset
 
-Purpose: Create the **Statefulset** `ads-db`, based on both Configmaps, the Secret and the "headless" Service, created in step 1-4.
+Purpose: Create the **Statefulset**, based on both Configmaps, the Secret and the "headless" Service, created in step 1-4.
 
-- Specify a **Statefulset** for the Postgres Database Pod with 
+- In the following sections we provide you snippets of the yaml file
+- Specify a **Statefulset** for the Postgres Database Pod with name `ads-db` with proper labels and selector for component and module. 
 
-- tbd
-- xxx
 ```
 ---
 apiVersion: apps/v1
@@ -82,9 +81,12 @@ metadata:
     module: <name-of-module>
 ```
 
+- Refer to the "headless" service and make shure that only one DB pod gets created. 
+- Additional refer under `volumes` to the configmap with database initialization script and refer to the configmap and secret when exposing Postgres environment variables in the Docker container.
+
 ```
 spec:
-  serviceName: "ads-db-headless"
+  serviceName: <name-of-headless-service
   replicas: <#-of-DB-pods>
   selector:
     matchLabels:
