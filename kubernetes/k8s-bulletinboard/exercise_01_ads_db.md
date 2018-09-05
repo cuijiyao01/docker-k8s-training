@@ -23,7 +23,7 @@
 ## Step 0: Preparation
 
 - Create a folder `k8s-bulletinboard` in your home directory for the various yaml-files, you will create in the exercises.
-- Create as sub-folder `ads` for all yaml-files, related to **Bulletinboard-Ads** (App/Microservice + DB).
+- Create a sub-folder `ads` for all yaml-files, related to **Bulletinboard-Ads** (App/Microservice + DB).
 
 ## Step 1: Create a Configmap to initialize the database
 
@@ -40,14 +40,14 @@
  ALTER DATABASE ads OWNER TO adsuser;
 ```
 
-- Specify a **Configmap** 'ads-db-init' (incl. proper labels for component and module) and store above sql script under the data section with name `initdb.sql` and save the **Configmap** spec under the filename `ads-db-configmap-init.yaml`.
+- Specify a **Configmap** 'ads-db-init' (incl. proper labels for component and module) and store above sql script under the data section with name `initdb.sql` and save the **Configmap** spec under the filename `ads-db-configmap-init.yaml` in folder `k8s-bulletinboard/ads`.
 
 - Now call `kubectl apply -f ads-db-configmap-init.yaml` to create the **Configmap**.
 
 
 ## Step 2: Create a Configmap with location of Postgres database files
 
-- Specify a **Configmap** `ads-db-configmap` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml`. Do not forget to specify proper labels for component and module !
+- Specify a **Configmap** `ads-db-configmap` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
@@ -56,7 +56,7 @@
 
 Purpose: Create a Secret with password for Postgres superuser
 
-- Specify a **Secret** `ads-db-secrets` of type `opaque` with an environment variable `PG_PASSWORD`, with a random value e.g. `ajZia0U0TXdtY3hmdk9UdWU0eVpYaHQK`. ToDO: tool/ command ? Ask Hendrik/ Thomas ? and save the **Secret** under the filename `ads-db-secrets.yaml`. Do not forget to specify proper labels for component and module !
+- Specify a **Secret** `ads-db-secrets` of type `opaque` with an environment variable `PG_PASSWORD`, with a random value e.g. `ajZia0U0TXdtY3hmdk9UdWU0eVpYaHQK`. ToDO: tool/ command ? Ask Hendrik/ Thomas ? and save the **Secret** under the filename `ads-db-secrets.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-secret.yaml` to create the **Secret**.
 
@@ -64,7 +64,7 @@ Purpose: Create a Secret with password for Postgres superuser
 ## Step 4: "Headless" Service
 Purpose: Create the **"headless" Service**, required to access the pod, created by the statefulset.
 
-- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for component and module. Use the default port, given by the Docker image, make shure you are using a named port and save it under the filename `ads-db-service.yaml`.
+- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for component and module. Use the default port, given by the Docker image, make shure you are using a named port and save it under the filename `ads-db-service.yaml` in folder `k8s-bulletinboard/ads`.
 
 - Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless"Service**.
 
@@ -150,7 +150,7 @@ spec:
           storage: 1Gi
 ```
 
-- When you are ready with the specification of the **Statefulset** save it under the filename `ads-db.yaml` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset** `ads-db`.
+- When you are ready with the specification of the **Statefulset** save it under the filename `ads-db.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset** `ads-db`.
 
 - After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-0` got created properly the Database is ready to be connected via `kubectl get ads-db-0` or in more detail via `kubectl describe pod ads-db-0`. 
 
