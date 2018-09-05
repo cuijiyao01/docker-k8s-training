@@ -65,12 +65,78 @@ Purpose: Create the **"headless" Service**, required to access the pod, created 
 
 ## Step 5: Statefulset
 
-Purpose: Create the **Statefulset**, based on both Configmaps, the Secret and the "headless" Service, created in step 1-4.
+Purpose: Create the **Statefulset** `ads-db`, based on both Configmaps, the Secret and the "headless" Service, created in step 1-4.
 
 - Specify a **Statefulset** for the Postgres Database Pod with 
 
 - tbd
 - xxx
+```
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: <name-of-statefulset>
+  labels:
+    component: <name-of-component>
+    module: <name-of-module>
+```
+
+```
+spec:
+  serviceName: "ads-db-headless"
+  replicas: <#-of-DB-pods>
+  selector:
+    matchLabels:
+      component: <name-of-component>
+      module: <name-of-module>
+  template:
+    metadata:
+      labels:
+        component: <name-of-component>
+        module: <name-of-module>
+    spec:
+      volumes:
+      - name: init
+        configMap:
+          name: <name-of-configmap-init>
+      containers:
+      - name: ads-db
+        image: postgres:9.6
+        ports:
+        - containerPort: 5432
+          name: ads-db
+        volumeMounts:
+        - name: ads-db-volume
+          mountPath: /var/lib/postgresql/data/
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: <postgres-environment-variable-for-path-of-datebase-files>
+          valueFrom:
+            configMapKeyRef:
+              name: <name-of-configmap>
+              key: PGDATA_VALUE
+        - name: <postgres-environment-variable-for-superuser-password>
+          valueFrom:
+            secretKeyRef:
+              name: <name-of-secret>
+              key: POSTGRESS_PASSWORD_VALUE
+```
+
+```
+  volumeClaimTemplates:
+  - metadata:
+      name: ads-db-volume
+      labels:
+        component: <name-of-component>
+        module: <name-of-module>
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+```
 
 kubectl apply -f ads-db.yaml 
 
