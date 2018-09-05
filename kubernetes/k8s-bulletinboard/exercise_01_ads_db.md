@@ -116,12 +116,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: <name-of-configmap>
-              key: PGDATA_VALUE
+              key: <name-of-data-specified-in-configmap>
         - name: <postgres-environment-variable-for-superuser-password>
           valueFrom:
             secretKeyRef:
               name: <name-of-secret>
-              key: POSTGRESS_PASSWORD_VALUE
+              key: <name-of-data-specified-in-secret>
 ```
 
 ```
