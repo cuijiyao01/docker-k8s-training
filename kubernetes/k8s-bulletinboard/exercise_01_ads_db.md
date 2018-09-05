@@ -152,7 +152,7 @@ spec:
 
 ## Optional- Step 6: Detailled Check wether Pod with postgres DB is running properly
 - ToDO ...
-- xxx
+- Local Port-Forwarding + PGAdmin tool to check database and user available
 
 
 
