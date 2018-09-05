@@ -145,5 +145,9 @@ spec:
 
 - When you are ready with the yaml file with specification of the **Statefulset** save it under the filename `ads-db.yaml` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset** `ads-db`.
 
+## Step 6: Check Pod with postgres DB is running properly
+- ToDO ...
+- xxx
+
 
 
