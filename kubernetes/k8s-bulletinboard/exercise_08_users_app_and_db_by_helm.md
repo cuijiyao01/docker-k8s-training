@@ -63,9 +63,12 @@ Now delete the old helm chart, and be sure that also the presisted volume of the
 
 After it is gone you can execute again `helm install bulletinboard-users`. 
 Now there should also be a job with a corresponding pod, which runs once and stops after it is done. 
+You can check this with `kubectl get jobs` and `kubectl logs <name of job pod>` to what the job did.
 Again you can check the user service with:
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`, now you should get the user which our job put in. 
+
+There is one line commented out: `#    "helm.sh/hook-delete-policy": hook-succeeded`. If you activate it, the job will be deleted after it run successfully. Helps keep your namespace clean, yet you can't review the logs. 
 
 ## Step 3: Adapt Ads
 
