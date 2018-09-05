@@ -10,7 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: $hostname.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: ads.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - backend:
