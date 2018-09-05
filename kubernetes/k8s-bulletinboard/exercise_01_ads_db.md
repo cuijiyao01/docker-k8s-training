@@ -3,7 +3,7 @@
 
 ## Scope
 
-- In this first exercise we will focus on the setup of Bulletinboard-Ads Database, where the Bulletinboard-Ads Microservice can store the advertisements.
+- In this first exercise we will focus on the **setup of Bulletinboard-Ads Database**, where the Bulletinboard-Ads Microservice can store the advertisements.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
 
