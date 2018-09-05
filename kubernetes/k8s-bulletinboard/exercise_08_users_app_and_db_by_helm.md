@@ -25,8 +25,8 @@ The following endpoints are given:
 - `/api/v1.0/users`: takes GET/POST to read or post user data
 - `/api/v1.0/users/{id}`: GET/PUT/DELETE to read,change or delete a certian user. 
 
-UserData is e.g.: `{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org" }`, here permiumUser determines if the user can post ads or not. This is the attribute tested in the Ads-service.
-The Tomcat itself runs on `port: 8080` and the user service is exposed under `/bulletinboard-users-service/`
+UserData is e.g.: `{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org" }`, here permiumUser determines if the user can post ads or not. This is the attribute tested in the Ads-service.  
+The Tomcat itself runs on `port: 8080` and the user service is exposed under `/bulletinboard-users-service/`.  
 We also use the cloud-foundary based way to pass to the user service the info about how to connect to the DB, namely we set an environment veriable `VCAP_SERVICES` with the right information. 
 
 ## Step 0: prerequisites
