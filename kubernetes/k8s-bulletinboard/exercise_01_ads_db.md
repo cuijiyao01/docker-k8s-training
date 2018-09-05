@@ -70,6 +70,7 @@ Purpose: Create the **Statefulset**, based on both Configmaps, the Secret and th
 - Specify a **Statefulset** for the Postgres Database Pod with 
 
 - tbd
+- xxx
 
 kubectl apply -f ads-db.yaml 
 
