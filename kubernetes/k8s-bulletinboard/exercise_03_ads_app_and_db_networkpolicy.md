@@ -18,7 +18,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/nginx.key -out 
 kubectl create secret tls ingress-tls-sec --cert=nginx.crt --key=nginx.key --dry-run -o yaml > tls.yaml
 kubectl apply -f tls.yaml
 ``` 
-change spec of ingress to:
+Change spec of ingress to the following and apply the change:
 ```
 spec:
   rules:
@@ -31,7 +31,8 @@ spec:
   tls:
   - secretName: ingress-tls-sec
 ```
-
+Now you have enabled https connection for the ingress and therefore also for the ads service behind the ingress.
+Open `https://<firstpart of url>.ingress.<clustername>.k8s-train.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
 
 ## Step 2: xxx
 xxx
