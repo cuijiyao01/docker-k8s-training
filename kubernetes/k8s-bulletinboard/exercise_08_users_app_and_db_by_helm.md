@@ -8,18 +8,18 @@ After the Service is running we will adapt our Ads deployment to provide the use
 
 ### Overall purpose:
 
-Get experience with a bit more complex one compared to the helm exercise. Also it gives us an easy way to setup the user service without you having to write all the yamls again. 
+Get experience with a bit more complex helm chart compared to the helm exercise. Also it gives us an easy way to setup the user service without you having to write all the yamls again. 
 
 ## The helm chart
 
 We provide a almost complete helm chart for the User Service: <LINK TO CHART>
-In it we make use of 2 images:  
-First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below. The structure of the K8s entities in this chart is similar to the ones you created for ads. Just that all yaml for one part are put into a single template file. There is `templates/users-db.yaml` for the database and `templates/users-app.yaml` for the user service itself. Finally there is also a network policies template to control who can access what. 
+In it we make use of 2 images: First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below.  
+The structure of the K8s entities in this chart is similar to the ones you created for ads. Just that all yaml for one part are put into a single template file. There is `templates/users-db.yaml` for the database and `templates/users-app.yaml` for the user service itself. Finally there is also a network policies template to control who can access what and a yaml for a post-install-job (more on this in step 2). 
 
 ## User Service Docker image
 
-We provide a Docker image with Tomcat and user.war which is used in the helm chart: `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users:v4.0`. 
-The version of the user service user here only needs a postgresql db to store the user data and has no other dependencies.
+We created a Docker image with Tomcat and "user.war" which is used in the helm chart: `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users:v4.0`. 
+The version of the user service used here only needs a postgresql db to store the user data and has no other dependencies.
 The following endpoints are given: 
 - `/`: gives a 'Users: OK' string and 200 code.
 - `/api/v1.0/users`: takes GET/POST to read or post user data
