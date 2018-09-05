@@ -20,6 +20,11 @@
 <img src="images/k8s-bulletinboard-target-picture-ads-db-detail.png" width="800" />
 
 
+## Step 0: Preparation
+
+- Create a folder `k8s-bulletinboard` in your home directory for the various yaml-files, you will create in the exercises.
+- Create as sub-folder `ads` for all yaml-files, related to **Bulletinboard-Ads** (App/Microservice + DB).
+
 ## Step 1: Create a Configmap to initialize the database
 
 - Use the following sql script to create a new database `adsuser` and a specific user `adsuser` with password `initial`.
