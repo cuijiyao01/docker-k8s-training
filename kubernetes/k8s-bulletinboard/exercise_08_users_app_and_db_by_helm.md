@@ -27,7 +27,7 @@ The following endpoints are given:
 
 UserData is e.g.: `{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org" }`, here permiumUser determines if the user can post ads or not. This is the attribute tested in the Ads-service.  
 The Tomcat itself runs on `port: 8080` and the user service is exposed under `/bulletinboard-users-service/`.  
-We also use the cloud-foundary based way to pass to the user service the info about how to connect to the DB, namely we set an environment veriable `VCAP_SERVICES` with the right information. 
+We also use the cloud-foundary based way to pass to the user service the info about how to connect to the DB, namely we set an environment veriable `VCAP_SERVICES` with the right information. In ads we used an application.yml file to do this.
 
 ## Step 0: prerequisites
 If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`.
