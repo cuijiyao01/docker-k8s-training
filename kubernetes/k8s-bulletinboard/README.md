@@ -16,7 +16,7 @@
 - Publish ads via service and ingress
 - Check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
-### [Exercise: "Networkpolicies & TLS for Bulletinboard-Ads and -DB"](exercise_03_ads_and_db_networkpolicy.md)
+### [Exercise: "Networkpolicies & TLS for Bulletinboard-Ads and -DB"](exercise_03_ads_app_and_db_networkpolicy.md)
 - Increase security and establish a network policy for
   - Ads DB
   - Ads
