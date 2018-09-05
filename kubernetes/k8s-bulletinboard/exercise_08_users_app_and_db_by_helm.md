@@ -45,6 +45,10 @@ You can test that the user-service is runing by doing:
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`
 - post a user: `curl -i -X POST localhost:8081/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data '{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'`
 
+If you do a "get-curl" request again you should now get the user back. It should look something like this: 
+```vagrant@vagrant:~$ curl localhost:8081/bulletinboard-users-service/api/v1.0/users
+[{"createdAt":1536141529412,"updatedAt":null,"version":1,"id":"42","email":"john.doe@sample.org","premiumUser":true}]
+``` 
 With this you have a running users service and a way to fill the DB with users.
 
 ## Step 2: Job to fill DB
