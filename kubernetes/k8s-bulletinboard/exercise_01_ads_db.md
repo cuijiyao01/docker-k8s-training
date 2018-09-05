@@ -143,7 +143,7 @@ spec:
           storage: 1Gi
 ```
 
-- When you are ready with the yaml file with specification save it under the filename `ads-db.yaml` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset**`ads-db`.
+- When you are ready with the yaml file with specification of the **Statefulset** save it under the filename `ads-db.yaml` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset** `ads-db`.
 
 
 
