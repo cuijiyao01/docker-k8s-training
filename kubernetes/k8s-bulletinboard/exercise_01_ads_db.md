@@ -3,7 +3,7 @@
 
 ## Scope
 
-- In this first exercise we will focus on the setup of Bulletinboard-Ads Database, where the Bulletinboard-Ads Microservice can store the advertisements.
+- In this first exercise we will focus on the **setup of Bulletinboard-Ads Database**, where the Bulletinboard-Ads Microservice can store the advertisements (See picture below).
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
 
@@ -65,14 +65,94 @@ Purpose: Create the **"headless" Service**, required to access the pod, created 
 
 ## Step 5: Statefulset
 
-Purpose: Create the **Statefulset**, based on both Configmaps, the Secret and the "headless" Service, created in step 1-4.
+Purpose: Create the **Statefulset**, which is dependend on both Configmaps, the Secret and the "headless" Service, created in step 1-4 (Creation of Statefulset will fail, if those entities are not yet available !).
 
-- Specify a **Statefulset** for the Postgres Database Pod with 
+<img src="images/k8s-bulletinboard-target-picture-ads-db-statefulset.png" width="300" />
 
-- tbd
-- xxx
+_Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders <...> by proper values !_
 
-kubectl apply -f ads-db.yaml 
+- Specify a **Statefulset** for the Postgres Database Pod with name `ads-db` with proper labels and selector for component and module. 
+
+```
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: <name-of-statefulset>
+  labels:
+    component: <name-of-component>
+    module: <name-of-module>
+```
+
+- Refer to the "headless" service, created earlier and make shure that only one DB pod gets created. 
+- Additional refer under `volumes` to the configmap with database initialization script and refer to the configmap and secret when exposing Postgres environment variables in the Docker container.
+
+```
+spec:
+  serviceName: <name-of-headless-service
+  replicas: <#-of-DB-pods>
+  selector:
+    matchLabels:
+      component: <name-of-component>
+      module: <name-of-module>
+  template:
+    metadata:
+      labels:
+        component: <name-of-component>
+        module: <name-of-module>
+    spec:
+      volumes:
+      - name: init
+        configMap:
+          name: <name-of-configmap-init>
+      containers:
+      - name: ads-db
+        image: postgres:9.6
+        ports:
+        - containerPort: 5432
+          name: ads-db
+        volumeMounts:
+        - name: ads-db-volume
+          mountPath: /var/lib/postgresql/data/
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: <postgres-environment-variable-for-path-of-datebase-files>
+          valueFrom:
+            configMapKeyRef:
+              name: <name-of-configmap>
+              key: <name-of-data-specified-in-configmap>
+        - name: <postgres-environment-variable-for-superuser-password>
+          valueFrom:
+            secretKeyRef:
+              name: <name-of-secret>
+              key: <name-of-data-specified-in-secret>
+```
+
+- For the creation of the PVC we are using the volumeClaimTemplates mechanism. Here just make shure you are using proper labels for component and module. 
+
+```
+  volumeClaimTemplates:
+  - metadata:
+      name: ads-db-volume
+      labels:
+        component: <name-of-component>
+        module: <name-of-module>
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+```
+
+- When you are ready with the specification of the **Statefulset** save it under the filename `ads-db.yaml` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset** `ads-db`.
+
+- After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-0` got created properly the Database is ready to be connected via `kubectl get ads-db-0` or in more detail via `kubectl describe pod ads-db-0`. 
+
+
+## Optional- Step 6: Detailled Check wether Pod with postgres DB is running properly
+- ToDO ...
+- Local Port-Forwarding + PGAdmin tool to check database and user available
 
 
 
