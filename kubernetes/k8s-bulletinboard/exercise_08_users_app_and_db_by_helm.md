@@ -13,8 +13,8 @@ Get experience with a bit more complex one compared to the helm exercise. Also i
 ## The helm chart
 
 We provide a almost complete helm chart for the User Service: <LINK TO CHART>
-In it we use 2 images:  
-First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below. The structure of the K8s entities in this chart is similar to the ones you created for ads. 
+In it we make use of 2 images:  
+First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below. The structure of the K8s entities in this chart is similar to the ones you created for ads. Just that all yaml for one part are put into a single template file. There is `templates/users-db.yaml` for the database and `templates/users-app.yaml` for the user service itself. Finally there is also a network policies template to control who can access what. 
 
 ## User Service Docker image
 
@@ -26,7 +26,8 @@ The following endpoints are given:
 - `/api/v1.0/users/{id}`: GET/PUT/DELETE to read,change or delete a certian user. 
 
 UserData is e.g.: `{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org" }`, here permiumUser determines if the user can post ads or not. This is the attribute tested in the Ads-service.
-
+The Tomcat itself runs on `port: 8080` and the user service is exposed under `/bulletinboard-users-service/`
+We also use the cloud-foundary based way to pass to the user service the info about how to connect to the DB, namely we set an environment veriable `VCAP_SERVICES` with the right information. 
 
 ## Step 0: prerequisites
 If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`.
@@ -35,7 +36,9 @@ If you did not do the helm exercise, install the tiller service to enable helm i
 
 __Purpose: Get familar with the provided template files and the user service.__
 
-Before you can install the helm chart, open the *values.yaml* file. We left out the value of a few entries, you have to fill them out yourself.  
+Before you can install the helm chart, open the *values.yaml* file. We left out the values of a few entries, you have to fill them out yourself.
+For the password you can choose any string, if you want to generate one, you can do so by executing in an termial e.g. `openssl rand -base64 32` ([here are a few more ways](https://www.howtogeek.com/howto/30184/10-ways-to-generate-a-random-password-from-the-command-line/)) 
+
 Now do `helm install bulletinboard-users`. In the current state the user-service will run, but there will be no data in the database. 
 You can test that the user-service is runing by doing:  
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`: this terminal is blocked by the open connection to the pod, either put it in the background (`crtl + z` + `bg`) or open a second terminal (`crtl + shift + t`)
