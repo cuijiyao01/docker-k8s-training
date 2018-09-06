@@ -12,6 +12,10 @@
 
 - A specific version of **Bulletinboard-Ads**, slighty adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in **SAP Artifactory in DMZ**.
 
+- **Bulletinboard-Ads** is a **Spring Boot** application and can read configuration from various courses. The Docker Image of **Bulletinboard-Ads** is reading the configuration from "external" as Application properties file with name `application-k8s.yml`.
+
+- Additional we can configure **Bulletinboard-Ads** via environment variables for de-/activation of a check against **Bulletinboard-Users** App when creating an advertisement (`POST_USER_CHECK`), the Ingress-URL to the ** Bulletinboard-Users** App (`USER_ROUTE`) and the (`SPRING_PROFILES_ACTIVE`).
+
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-detail.png" width="800" />
 
