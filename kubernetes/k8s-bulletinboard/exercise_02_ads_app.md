@@ -141,7 +141,12 @@ spec:
           name: ads-app-properties    
 ```
 
-kubectl apply -f ads-app.yaml 
+
+
+- When you are ready with the specification of the **Deployment** save it under the filename `ads-app.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app.yaml` to create the **Deployment** `ads-app`.
+
+- After successful creation of the **Deployment** check, wether **3** Pods got created properly via `kubectl get pods`. The names of the 3 pods should be something like `ads-app-xx-yx`, `ads-app-xx-yy` and `ads-app-xx-yz`.
+
 
 ## Step 4: Service & Ingress
 
