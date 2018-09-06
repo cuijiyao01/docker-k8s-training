@@ -3,7 +3,7 @@
 
 ## Scope
 
-Increase security and establish a network policy for ads DB
+Increase security and establish a network policy for ads DB and enable TLS (https) for the ingress. 
 
 kubectl apply -f ads-db-networkpolicy.yaml 
 
@@ -12,7 +12,15 @@ img src="images/xxx.png" width="800" />
 ## Step 0: prerequisites
 xxx
 
-## Step 1: TLS
+
+## Step 1: Network policy for DB
+We want only that ads:app is allowed to talk to ads:db. Configure a network policy accordingly. 
+
+
+## Step 2: Network policy for Ads
+xxx
+
+## Step 3: TLS
 ```
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/nginx.key -out /tmp/nginx.crt -subj "/CN=nginxsvc/O=nginxsvc"
 kubectl create secret tls ingress-tls-sec --cert=nginx.crt --key=nginx.key --dry-run -o yaml > tls.yaml
@@ -34,10 +42,7 @@ spec:
 Now you have enabled https connection for the ingress and therefore also for the ads service behind the ingress.
 Open `https://<firstpart of url>.ingress.<clustername>.k8s-train.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
 
-## Step 2: xxx
-xxx
 
 
-## Step 3: xxx
-xx
+
 
