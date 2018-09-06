@@ -14,7 +14,7 @@
 
 - **Bulletinboard-Ads** is a **Spring Boot** application and can read configuration from various courses. The Docker Image of **Bulletinboard-Ads** is reading the configuration from "external" as Application properties file with name `application-k8s.yml`.
 
-- Additional we can configure **Bulletinboard-Ads** via environment variables for de-/activation of a check against **Bulletinboard-Users** App when creating an advertisement (`POST_USER_CHECK`), the Ingress-URL to the ** Bulletinboard-Users** App (`USER_ROUTE`) and the (`SPRING_PROFILES_ACTIVE`).
+- Additional we can configure **Bulletinboard-Ads** via environment variables for de-/activation of a check against **Bulletinboard-Users** App when creating an advertisement (`POST_USER_CHECK`), the Ingress-URL to the ** Bulletinboard-Users** App (`USER_ROUTE`) and the [Active Spring Profile](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html#howto-set-active-spring-profiles)(`SPRING_PROFILES_ACTIVE`).
 
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-detail.png" width="800" />
