@@ -60,9 +60,9 @@ application-k8s.yml: "---\nspring:\n  datasource:\n    url: jdbc:postgresql://<n
 - Now call `kubectl apply -f ads-app-configmap-files.yaml` to create the **Configmap**.
 
 
-## Step 2: Configmap for Environment variables
+## Step 2: Configmap for Environment variable
 
-Purpose: Create a **Configmap** for environment variables, we want to "pass" to **Bulletinboard-Ads**.
+Purpose: Create a **Configmap** for environment variable `SPRING_PROFILES_ACTIVE`, we want to "pass" to **Bulletinboard-Ads**.
 
 - Specify a **Configmap** `ads-app-config-envs` with data entry `spring_profiles_active_value` and value `k8s` for the **Active Spring Profile**.
 
