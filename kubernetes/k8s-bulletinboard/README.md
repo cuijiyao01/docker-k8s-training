@@ -21,11 +21,11 @@
   - Ads DB
   - Ads
 
-### [Exercise: "Using Helm-chart to setup Bulletinboard-Users Application and -DB](exercise_08_users_app_and_db_by_helm.md)
+### [Exercise: "Using Helm-chart to setup Bulletinboard-Users Application and -DB](exercise_04_users_app_and_db_by_helm.md)
 - Create Users DB and Users Ads via existing helm chart
 
 
-### [Optional - Exercise: "Create Helm chart for Bulletinboard-Ads Appl. and -DB"](exercise_20_ads_helm_chart.md)
+### [Optional - Exercise: "Create Helm chart for Bulletinboard-Ads Appl. and -DB"](exercise_05_ads_helm_chart.md)
 - Develop a Helm chart for Ads Db and Ads App
 
 
