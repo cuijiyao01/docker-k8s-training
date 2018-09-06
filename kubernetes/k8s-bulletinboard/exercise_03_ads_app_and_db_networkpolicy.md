@@ -8,6 +8,7 @@ Increase security and establish a network policy for ads DB and enable TLS (http
 There will be PICTURES here.
 
 ## Step 0: prerequisites
+xxx
 
 Currently none.
 

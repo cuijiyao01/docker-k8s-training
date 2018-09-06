@@ -7,7 +7,7 @@ metadata:
     component: ads
     module: db
 spec:
-  serviceName: "ads-db-headless"
+  serviceName: ads-db-headless
   replicas: 1
   selector:
     matchLabels:
@@ -39,12 +39,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: ads-db-config
-              key: PGDATA
+              key: PGDATA_VALUE
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ads-db-secrets
-              key: PG_PASSWORD
+              name: ads-db-secret
+              key: POSTGRESS_PASSWORD_VALUE
   volumeClaimTemplates:
   - metadata:
       name: ads-db-volume

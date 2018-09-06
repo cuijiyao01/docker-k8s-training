@@ -18,10 +18,6 @@ spec:
         component: ads
         module: app
     spec:
-      volumes:
-      - name: ads-app-properties
-        configMap:
-          name: ads-app-config-files
       imagePullSecrets:
       - name: artifactory
       containers:
@@ -31,21 +27,13 @@ spec:
         - containerPort: 8080
           name: ads-app
         env:
+        - name: VCAP_SERVICES
+          valueFrom:
+            configMapKeyRef:
+              key: vcap_services
+              name: ads-app-config
         - name: USER_ROUTE
           valueFrom:
             configMapKeyRef:
-              key: user_route_value
-              name: ads-app-config-envs
-        - name: SPRING_PROFILES_ACTIVE
-          valueFrom:
-            configMapKeyRef:
-              key: spring_profiles_active_value
-              name: ads-app-config-envs
-        - name: POST_USER_CHECK
-          valueFrom:
-            configMapKeyRef:
-              key: post_user_check_value
-              name: ads-app-config-envs 
-        volumeMounts:
-        - mountPath: /config/
-          name: ads-app-properties    
+              key: user_route
+              name: ads-app-config
