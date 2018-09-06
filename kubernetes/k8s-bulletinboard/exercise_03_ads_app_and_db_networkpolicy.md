@@ -8,13 +8,13 @@ Increase security and establish a network policy for ads DB and enable TLS (http
 There will be PICTURES here.
 
 ## Step 0: prerequisites
-xxx
 
 Currently none.
 
 ## Step 1: Network policy for DB
-We want only that  __ads:db__ only takes to messages from __ads:app__. Configure a network policy in a file named `ads-db-networkpolicy.yaml` accordingly. 
-You can check the network policy exercise and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy. 
+We want only that  __ads:db__ only takes messages from __ads:app__. Configure a network policy in a file named `ads-db-networkpolicy.yaml` accordingly. 
+You can check the [network policy exercise](../exercise_08_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy. 
+
 
 ## Step 2: Network policy for Ads
 We want that __ads:app__ only takes messages from the ingress. 
@@ -27,8 +27,7 @@ origin: gardener
 Futher we can also allow  __ads:app__ to send traffic only to certian pods. This would currently be __ads:db__ and the dns server in our cluster. This dns server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`. 
 
 Configure a network policy in a file named `ads-app-networkpolicy.yaml` accordingly.  
-Hints: [this example](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/07-allow-traffic-from-some-pods-in-another-namespace.md) and the egress rules. (see above reference and [here](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#networkpolicyspec-v1-networking-k8s-io)). 
-
+Hints: [this example](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/07-allow-traffic-from-some-pods-in-another-namespace.md) and the egress rules. (See above reference and [here](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#networkpolicyspec-v1-networking-k8s-io)). 
 
 ## Step 3: TLS
 
