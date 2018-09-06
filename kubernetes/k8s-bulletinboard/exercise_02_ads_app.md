@@ -62,19 +62,15 @@ application-k8s.yml: "---\nspring:\n  datasource:\n    url: jdbc:postgresql://<n
 
 ## Step 2: Configmap for Environment variables
 
-Purpose: Create a **Configmap** for environment variables we want to "pass" to **Bulletinboard-Ads**.
+Purpose: Create a **Configmap** for environment variables, we want to "pass" to **Bulletinboard-Ads**.
 
-- Specify a **Configmap** `ads-app-config-envs` with an environment variable `spring_profiles_active_value``and value `k8s` for the Active Spring Profile.
+- Specify a **Configmap** `ads-app-config-envs` with data entry `spring_profiles_active_value` and value `k8s` for the **Active Spring Profile**.
 
-for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+- By default **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 03]()). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
-- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
-- xx 
-- xx
+- Save the **Configmap** spec under the filename `ads-app-configmap-envs.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
-kubectl apply -f ads-app-configmap-envs.yaml 
-kubectl apply -f ads-app-configmap-files.yaml 
-
+- Now call `kubectl apply -f ads-db-configmap-envs.yaml` to create the **Configmap**.
 
 
 ## Step 3: Deployment
