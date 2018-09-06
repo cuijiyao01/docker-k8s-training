@@ -47,7 +47,7 @@
 
 ## Step 2: Create a Configmap with location of Postgres database files
 
-- Specify a **Configmap** `ads-db-configmap` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+- Specify a **Configmap** `ads-db-config` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
