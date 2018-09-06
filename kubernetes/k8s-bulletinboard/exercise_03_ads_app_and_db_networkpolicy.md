@@ -5,20 +5,21 @@
 
 Increase security and establish a network policy for ads DB and enable TLS (https) for the ingress. 
 
-kubectl apply -f ads-db-networkpolicy.yaml 
-
-img src="images/xxx.png" width="800" />
-
 ## Step 0: prerequisites
-xxx
 
+Currently none.
 
 ## Step 1: Network policy for DB
-We want only that ads:app is allowed to talk to ads:db. Configure a network policy in a file named `ads-db-networkpolicy` accordingly. 
+We want only that __ads:app__ is allowed to talk to __ads:db__. Configure a network policy in a file named `ads-db-networkpolicy` accordingly. 
 You can check the network policy exercise and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy. 
 
 ## Step 2: Network policy for Ads
-Currently we only want ads to be able to talk to the db. Also again like in the network exercise we also want only a certain range of ip addresses to be able to talk to the app. If you are in Walldorf, Germany, the range is `cidr: 155.56.0.0/16`.
+Currently we want __ads:app__ to be able to only talk to the db. And we want that __ads:app__ only takes messages from the ingress. 
+The ingress controller is in the `kube-system` namespace and has the following labels you can use: ```
+app: nginx-ingress 
+component: controller 
+origin: gardener
+```
 
 ## Step 3: TLS
 ```
