@@ -27,6 +27,9 @@ Purpose: Create a **Configmap** for the **Application properties file**.
 - Specify a **Configmap** `ads-app-config-files` for the **Application properties file** with name `application-k8s.yml`.
 
 The content of the file - finally created at the filesystem of the Docker Container (ToDO: better Pod ? or PV or PVC ?)- should look like the following:
+
+_Hint: Just substitute the place holders below <...> by proper values !_
+
 ```
 ---
 spring: 
@@ -38,7 +41,9 @@ spring:
     driver-class-name: org.postgresql.Driver
 ```
 
-application-k8s.yml: "---\nspring:\n  datasource:\n    url: jdbc:postgresql://ads-db-0.ads-db-headless:5432/ads\n    username: adsuser\n    password: initial\n    driverClassName: org.postgresql.Driver\n    driver-class-name: org.postgresql.Driver\n"
+`
+application-k8s.yml: "---\nspring:\n  datasource:\n    url: jdbc:postgresql://<name-of-ads-db-pod>.<name-of-ads-db-headless-service>:5432/ads\n    username: <name-of-ads-db-postgres-user>\n    password: <password-of-ads-db-postgres-user>\n    driverClassName: org.postgresql.Driver\n    driver-class-name: org.postgresql.Driver\n"
+`
 
 for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
