@@ -91,8 +91,8 @@ kind: Deployment
 metadata:
   name: ads-app
   labels:
-    component: ads
-    module: app
+    component: <name-of-component>
+    module: <name-of-module>
 ```
 
 ```
@@ -100,13 +100,13 @@ spec:
   replicas: <#-of-instances>
   selector:
     matchLabels:
-      component: ads
-      module: app
+      component: <name-of-component>
+      module: <name-of-module>
   template:
     metadata:
       labels:
-        component: ads
-        module: app
+        component: <name-of-component>
+        module: <name-of-module>
     spec:
       volumes:
       - name: ads-app-properties
