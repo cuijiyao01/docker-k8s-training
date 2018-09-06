@@ -3,17 +3,26 @@
 
 ## Scope
 
-
-- Create required configmap and deployment for ads
-- Publish ads via service and ingress
-- Check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
+- In this second exercise we will focus on the setup of **Bulletinboard-Ads Application/Microservice** itself (See picture below) and make it available within the K8s cluster via **Service** and publish externally via an **Ingress**.
+- Finally we will check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app.png" width="800" />
+
+- As we need horizontal scaling for the Ads app we will use a **Deployment** with 3 instances (replicaset=3).
+
+- A slighty for this training adjusted version of Bulletinboard-Ads is available as Docker Image in SAP Artifactory in DMZ: [bulletinboard-ads]().
+
+
+<img src="images/k8s-bulletinboard-target-picture-ads-app-detail.png" width="800" />
 
 
 ## Step 1: Configmaps Environment variables + Application profile
 
 Purpose: 
+- Create required configmap and deployment for ads
+- Publish ads via service and ingress
+- Check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
+
 - xx 
 - xx
 
