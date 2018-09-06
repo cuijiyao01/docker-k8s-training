@@ -15,7 +15,8 @@ You can check the network policy exercise and [this reference](https://kubernete
 
 ## Step 2: Network policy for Ads
 Currently we want __ads:app__ to be able to only talk to the db. And we want that __ads:app__ only takes messages from the ingress. 
-The ingress controller is in the `kube-system` namespace and has the following labels you can use: ```  
+The ingress controller is in the `kube-system` namespace and has the following labels you can use: 
+```
 app: nginx-ingress 
 component: controller 
 origin: gardener
