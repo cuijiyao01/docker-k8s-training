@@ -34,17 +34,17 @@ spec:
         - name: USER_ROUTE
           valueFrom:
             configMapKeyRef:
-              key: user_route
+              key: user_route_value
               name: ads-app-config-envs
         - name: SPRING_PROFILES_ACTIVE
           valueFrom:
             configMapKeyRef:
-              key: profile
+              key: spring_profiles_active_value
               name: ads-app-config-envs
         - name: POST_USER_CHECK
           valueFrom:
             configMapKeyRef:
-              key: post_user_check
+              key: post_user_check_value
               name: ads-app-config-envs 
         volumeMounts:
         - mountPath: /config/
