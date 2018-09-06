@@ -14,11 +14,11 @@ xxx
 
 
 ## Step 1: Network policy for DB
-We want only that ads:app is allowed to talk to ads:db. Configure a network policy accordingly. 
-
+We want only that ads:app is allowed to talk to ads:db. Configure a network policy in a file named `ads-db-networkpolicy` accordingly. 
+You can check the network policy exercise and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy. 
 
 ## Step 2: Network policy for Ads
-xxx
+Currently we only want ads to be able to talk to the db. Also again like in the network exercise we also want only a certain range of ip addresses to be able to talk to the app. If you are in Walldorf, Germany, the range is `cidr: 155.56.0.0/16`.
 
 ## Step 3: TLS
 ```
