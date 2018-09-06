@@ -5,6 +5,8 @@
 
 Increase security and establish a network policy for ads DB and enable TLS (https) for the ingress. 
 
+There will be PICTURES here.
+
 ## Step 0: prerequisites
 
 Currently none.
