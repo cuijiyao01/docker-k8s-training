@@ -75,8 +75,71 @@ Purpose: Create a **Configmap** for environment variable `SPRING_PROFILES_ACTIVE
 
 ## Step 3: Deployment
 
-Purpose: 
-- xx
+Purpose: Create the **Deployment**, which is dependend on both Configmaps, created in step 1-2 (Creation of Deployment will fail, if those entities are not yet available !).
+
+<img src="images/k8s-bulletinboard-target-picture-ads-app-deployment.png" width="300" />
+
+_Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders <...> by proper values !_
+
+
+- Specify a **Deployment** for the **Bulletinboard Ads** with 3 instances, with name `ads-app` and with proper labels and selector for component and module. 
+
+```
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ads-app
+  labels:
+    component: ads
+    module: app
+```
+
+```
+spec:
+  replicas: <#-of-instances>
+  selector:
+    matchLabels:
+      component: ads
+      module: app
+  template:
+    metadata:
+      labels:
+        component: ads
+        module: app
+    spec:
+      volumes:
+      - name: ads-app-properties
+        configMap:
+          name: ads-app-config-files
+      imagePullSecrets:
+      - name: artifactory
+      containers:
+      - name: ads
+        image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
+        ports:
+        - containerPort: 8080
+          name: ads-app
+        env:
+        - name: USER_ROUTE
+          valueFrom:
+            configMapKeyRef:
+              key: user_route_value
+              name: ads-app-config-envs
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            configMapKeyRef:
+              key: spring_profiles_active_value
+              name: ads-app-config-envs
+        - name: POST_USER_CHECK
+          valueFrom:
+            configMapKeyRef:
+              key: post_user_check_value
+              name: ads-app-config-envs 
+        volumeMounts:
+        - mountPath: /config/
+          name: ads-app-properties    
+```
 
 kubectl apply -f ads-app.yaml 
 
