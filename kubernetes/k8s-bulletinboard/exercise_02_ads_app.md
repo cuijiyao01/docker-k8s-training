@@ -20,18 +20,36 @@
 <img src="images/k8s-bulletinboard-target-picture-ads-app-detail.png" width="800" />
 
 
-## Step 1: Configmaps Environment variables + Application profile
+## Step 1: Configmap for Application properties file
 
-Purpose: 
-- Create required configmap and deployment for ads
-- Publish ads via service and ingress
-- Check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
+Purpose: Create a **Configmap** for the **Application properties file**.
 
+- Specify a **Configmap** `ads-app-config-files` for the **Application properties file** with name `application-k8s.yml`.
+
+for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+
+- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 - xx 
 - xx
 
 kubectl apply -f ads-app-configmap-envs.yaml 
 kubectl apply -f ads-app-configmap-files.yaml 
+
+## Step 1: Configmap for Environment variables
+
+Purpose: Create a **Configmap** for environment variables we want to "pass" to **Bulletinboard-Ads**.
+
+- Specify a **Configmap** `ads-app-config-envs` with an environment variable `spring_profiles_active_value``and value `k8s` for the Active Spring Profile.
+
+for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+
+- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
+- xx 
+- xx
+
+kubectl apply -f ads-app-configmap-envs.yaml 
+kubectl apply -f ads-app-configmap-files.yaml 
+
 
 
 ## Step 2: Deployment
@@ -55,4 +73,7 @@ Purpose:
 
 - xxx
 
+
+- Publish ads via service and ingress
+- Check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
