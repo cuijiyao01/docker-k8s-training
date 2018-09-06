@@ -55,14 +55,10 @@ application-k8s.yml: "---\nspring:\n  datasource:\n    url: jdbc:postgresql://<n
 
 **_Hint: Please substitute the place holders below <...> by proper values !_**
 
-for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+- Save the **Configmap** spec under the filename `ads-app-configmap-files.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
-- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
-- xx 
-- xx
+- Now call `kubectl apply -f ads-app-configmap-files.yaml` to create the **Configmap**.
 
-kubectl apply -f ads-app-configmap-envs.yaml 
-kubectl apply -f ads-app-configmap-files.yaml 
 
 ## Step 2: Configmap for Environment variables
 
