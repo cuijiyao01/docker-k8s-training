@@ -74,7 +74,7 @@ Purpose: Create the **Statefulset**, which is dependend on both Configmaps, the 
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-statefulset.png" width="300" />
 
-_Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders <...> by proper values !_
+_Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders `<...>` by proper values !_
 
 - Specify a **Statefulset** for the Postgres Database Pod with name `ads-db` with proper labels and selector for component and module. 
 
