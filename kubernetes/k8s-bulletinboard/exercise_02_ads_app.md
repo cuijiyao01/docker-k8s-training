@@ -206,27 +206,8 @@ spec:
 - When you are ready with the specification of the **Ingress** save it under the filename `ads-app-ingress.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-ingress.yaml` to create the **Ingress** `ads-app-ingress`.
 
 
-## Step 5: Check proper working ads app with ads DB
+## Step 5: Check proper working Ads app with Ads DB
 
-Purpose:
+Purpose: Check Ads App running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
-- xxx
-
-
-- Publish ads via service and ingress
-- Check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
-
-ToDO/ LeftOver
-
-```
-        - name: USER_ROUTE
-          valueFrom:
-            configMapKeyRef:
-              key: user_route_value<name-of-configmap>
-              name: ads-app-config-envs<name-of-data-specified-in-configmap>
-        - name: POST_USER_CHECK
-          valueFrom:
-            configMapKeyRef:
-              key: post_user_check_value<name-of-configmap>
-              name: ads-app-config-envs<name-of-data-specified-in-configmap> 
-```
+- ToDO
