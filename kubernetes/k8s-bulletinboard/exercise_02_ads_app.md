@@ -95,6 +95,8 @@ metadata:
     module: <name-of-module>
 ```
 
+`cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest`
+
 ```
 spec:
   replicas: <#-of-instances>
@@ -116,32 +118,33 @@ spec:
       - name: artifactory
       containers:
       - name: ads
-        image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
+        image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest<bulletinboard-ads-docker-image>
         ports:
         - containerPort: 8080
           name: ads-app
         env:
-        - name: USER_ROUTE
-          valueFrom:
-            configMapKeyRef:
-              key: user_route_value
-              name: ads-app-config-envs
         - name: SPRING_PROFILES_ACTIVE
           valueFrom:
             configMapKeyRef:
-              key: spring_profiles_active_value
-              name: ads-app-config-envs
-        - name: POST_USER_CHECK
-          valueFrom:
-            configMapKeyRef:
-              key: post_user_check_value
-              name: ads-app-config-envs 
+              key: spring_profiles_active_value<name-of-configmap>
+              name: ads-app-config-envs<name-of-data-specified-in-configmap>
         volumeMounts:
         - mountPath: /config/
           name: ads-app-properties    
 ```
 
-
+```
+        - name: USER_ROUTE
+          valueFrom:
+            configMapKeyRef:
+              key: user_route_value<name-of-configmap>
+              name: ads-app-config-envs<name-of-data-specified-in-configmap>
+        - name: POST_USER_CHECK
+          valueFrom:
+            configMapKeyRef:
+              key: post_user_check_value<name-of-configmap>
+              name: ads-app-config-envs<name-of-data-specified-in-configmap> 
+```
 
 - When you are ready with the specification of the **Deployment** save it under the filename `ads-app.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app.yaml` to create the **Deployment** `ads-app`.
 
