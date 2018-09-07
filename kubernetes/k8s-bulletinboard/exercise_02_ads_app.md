@@ -101,7 +101,7 @@ spec:
       module: <name-of-module>
 ```
 
-- Assign to the volume `ads-app-properties` the **Configmap** for the **Applicaton Properties file** choose as container the **Bulletinboard-Ads** Docker Image `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest`.
+- Assign to the volume `ads-app-properties` the **Configmap** for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest`.
 
 - Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
 
@@ -135,19 +135,6 @@ spec:
           name: ads-app-properties    
 ```
 
-```
-        - name: USER_ROUTE
-          valueFrom:
-            configMapKeyRef:
-              key: user_route_value<name-of-configmap>
-              name: ads-app-config-envs<name-of-data-specified-in-configmap>
-        - name: POST_USER_CHECK
-          valueFrom:
-            configMapKeyRef:
-              key: post_user_check_value<name-of-configmap>
-              name: ads-app-config-envs<name-of-data-specified-in-configmap> 
-```
-
 - When you are ready with the specification of the **Deployment** save it under the filename `ads-app.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app.yaml` to create the **Deployment** `ads-app`.
 
 - After successful creation of the **Deployment** check, wether **3** Pods got created properly via `kubectl get pods`. The names of the 3 pods should be something like `ads-app-xx-yx`, `ads-app-xx-yy` and `ads-app-xx-yz`.
@@ -171,3 +158,17 @@ Purpose:
 - Publish ads via service and ingress
 - Check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
+ToDO/ LeftOver
+
+```
+        - name: USER_ROUTE
+          valueFrom:
+            configMapKeyRef:
+              key: user_route_value<name-of-configmap>
+              name: ads-app-config-envs<name-of-data-specified-in-configmap>
+        - name: POST_USER_CHECK
+          valueFrom:
+            configMapKeyRef:
+              key: post_user_check_value<name-of-configmap>
+              name: ads-app-config-envs<name-of-data-specified-in-configmap> 
+```
