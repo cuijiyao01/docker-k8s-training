@@ -145,8 +145,12 @@ spec:
 
 ## Step 4: Service & Ingress
 
-Purpose: 
-- Publish ads via service and ingress
+Purpose: Make **Bulletinboard-Ads** available within your K8s Cluster via **Service** and "publish" externally into the Internet via a **Ingress**.
+
+_Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
+
+- Specify a **Service** for the **Bulletinboard Ads**, with name `ads-app-service`, a named targetPort `ads-app` and with proper labels and selector for component and module. 
+
 
 ```
 ---
@@ -155,18 +159,24 @@ kind: Service
 metadata:
   name: ads-service
   labels:
-    component: ads
-    module: app
+    component: <name-of-component>
+    module: <name-of-module>
 spec:
   ports:
   - port: 8080
     protocol: TCP
     targetPort: ads-app
   selector:
-    component: ads
-    module: app
+    component: <name-of-component>
+    module: <name-of-module>
 type: ClusterIP
 ```
+
+- Additional specify an **Ingress** for the **Bulletinboard Ads**, with name `ads-app-ingress` and with proper labels and selector for component and module. 
+
+- As the host URL has to be unique across the whole K8s Cluster, add `--<name-of-your-namespace>` to the hostname 'bulletinboard'and 
+
+- Refer to the above created **Service**
 
 ```
 ---
@@ -175,18 +185,18 @@ kind: Ingress
 metadata:
   name: ads-app-ingress
   labels:
-    component: ads
-    module: app
+    component: <name-of-component>
+    module: <name-of-module>
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: ads.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: bulletinboard--<your-name-space>.ingress.<trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
-      paths:
+      paths: /ads
       - backend:
           serviceName: ads-service
-servicePort: ads-app
+          servicePort: ads-app
 ```
 
 kubectl apply -f ads-app-service.yaml 
