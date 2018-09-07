@@ -205,7 +205,11 @@ spec:
 ```
 - When you are ready with the specification of the **Ingress** save it under the filename `ads-app-ingress.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-ingress.yaml` to create the **Ingress** `ads-app-ingress`.
 
-- Check wether the **Ingress** is properly created via `kubectl get ingress ads-app-ingress` and wether you can call your **Bulletinboard-Ads** on the `/health` Endpoint via the **Ingress** Url of `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/health`.
+- Check wether the **Ingress** is properly created via `kubectl get ingress ads-app-ingress`.
+
+-Additional check wether you can call your **Bulletinboard-Ads** on the `/health` endpoint via the **Ingress** Url of `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/health`.
+
+- If all works properly you should get the following result: `{"status":"UP"}`
 
 
 ## Step 5: Check proper working Ads app with Ads DB
