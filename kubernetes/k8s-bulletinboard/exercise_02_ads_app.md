@@ -149,6 +149,8 @@ Purpose: Make **Bulletinboard-Ads** available within your K8s Cluster via **Serv
 
 _Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
 
+### Service
+
 - Specify a **Service** for the **Bulletinboard Ads**, with name `ads-app-service`, a named targetPort `ads-app` and with proper labels and selector for component and module. 
 
 
@@ -169,15 +171,17 @@ spec:
   selector:
     component: <name-of-component>
     module: <name-of-module>
-type: ClusterIP
+  type: ClusterIP
 ```
+- When you are ready with the specification of the **Service** save it under the filename `ads-app-service.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-service.yaml` to create the **Service** `ads-app-service`.
+
+### Ingress
 
 - Additional specify an **Ingress** for the **Bulletinboard Ads**, with name `ads-app-ingress` and with proper labels and selector for component and module. 
 
-- Refer to the above created **Service**
-
 - As the host URL has to be unique across the whole K8s Cluster, add `--<name-of-your-namespace>` as suffix to the hostname 'bulletinboard', so the host URL would look like: `bulletinboard--part-40a86f44.ingress.wdfcw43.k8s-train.shoot.canary.k8s-hana.ondemand.com`.
 
+- Refer to the above created **Service** `ads-app-service` in field `serviceName` and `servicePort` (Section '- backend').
 
 ```
 ---
@@ -199,9 +203,8 @@ spec:
           serviceName: <name-of-ads-service>
           servicePort: <name-of-ads-port>
 ```
+- When you are ready with the specification of the **Ingress** save it under the filename `ads-app-ingress.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-ingress.yaml` to create the **Ingress** `ads-app-ingress`.
 
-kubectl apply -f ads-app-service.yaml 
-kubectl apply -f ads-app-ingress.yaml
 
 ## Step 5: Check proper working ads app with ads DB
 
