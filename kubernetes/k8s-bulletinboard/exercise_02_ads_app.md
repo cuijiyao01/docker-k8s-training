@@ -207,9 +207,11 @@ spec:
 
 - Check wether the **Ingress** is properly created via `kubectl get ingress ads-app-ingress`.
 
--Additional check wether you can call your **Bulletinboard-Ads** on the `/health` endpoint via the **Ingress** Url of `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/health`.
+- Additional check wether you can call your **Bulletinboard-Ads** on the `/health` endpoint via the **Ingress** Url with the following **cURL** command:
 
-- If all works properly you should get the following result: `{"status":"UP"}`
+`curl http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/health`.
+
+- If all works fine, you should get the following result: `{"status":"UP"}`
 
 
 ## Step 5: Check proper working Ads app with Ads DB
