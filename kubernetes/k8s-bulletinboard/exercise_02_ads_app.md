@@ -20,6 +20,7 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-labels-1.png" width="800" />
 
+ToDO: Secret for Artifactory_DMZ access ???
 
 
 ## Step 1: Configmap for Application properties file
