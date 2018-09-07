@@ -17,8 +17,6 @@
 
 - To make available the Bulletinboard-Ads Database **Pod** from "outside" we have to provide a **"headless" Service**.
 
-<img src="images/k8s-bulletinboard-target-picture-ads-db-detail.png" width="800" />
-
 - The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-labels-1.png" width="800" />
