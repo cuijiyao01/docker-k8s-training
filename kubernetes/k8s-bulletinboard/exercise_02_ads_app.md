@@ -79,7 +79,7 @@ Purpose: Create the **Deployment**, which is dependend on both Configmaps, creat
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-deployment.png" width="300" />
 
-_Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders <...> by proper values !_
+_Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
 
 
 - Specify a **Deployment** for the **Bulletinboard Ads** with 3 instances, with name `ads-app` and with proper labels and selector for component and module. 
@@ -93,17 +93,19 @@ metadata:
   labels:
     component: <name-of-component>
     module: <name-of-module>
-```
-
-`cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest`
-
-```
 spec:
   replicas: <#-of-instances>
   selector:
     matchLabels:
       component: <name-of-component>
       module: <name-of-module>
+```
+
+- Assign to the volume `ads-app-properties` the **Configmap** for the **Applicaton Properties file** choose as container the **Bulletinboard-Ads** Docker Image `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest`.
+
+- Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
+
+```  
   template:
     metadata:
       labels:
@@ -113,12 +115,12 @@ spec:
       volumes:
       - name: ads-app-properties
         configMap:
-          name: ads-app-config-files
+          name: <name-of-configmap-application-properties-file>
       imagePullSecrets:
       - name: artifactory
       containers:
       - name: ads
-        image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest<bulletinboard-ads-docker-image>
+        image: <bulletinboard-ads-docker-image>
         ports:
         - containerPort: 8080
           name: ads-app
