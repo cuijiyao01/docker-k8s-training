@@ -131,8 +131,8 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           valueFrom:
             configMapKeyRef:
-              key: spring_profiles_active_value<name-of-configmap>
-              name: ads-app-config-envs<name-of-data-specified-in-configmap>
+              key: <name-of-data-specified-in-configmap>
+              name: <name-of-configmap>
         volumeMounts:
         - mountPath: /config/
           name: ads-app-properties    
