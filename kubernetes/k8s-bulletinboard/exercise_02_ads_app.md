@@ -147,6 +147,47 @@ spec:
 Purpose: 
 - Publish ads via service and ingress
 
+```
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ads-service
+  labels:
+    component: ads
+    module: app
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: ads-app
+  selector:
+    component: ads
+    module: app
+type: ClusterIP
+```
+
+```
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ads-app-ingress
+  labels:
+    component: ads
+    module: app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: ads.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com
+    http:
+      paths:
+      - backend:
+          serviceName: ads-service
+servicePort: ads-app
+```
+
 kubectl apply -f ads-app-service.yaml 
 kubectl apply -f ads-app-ingress.yaml
 
