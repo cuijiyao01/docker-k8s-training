@@ -17,7 +17,9 @@
 
 - To make available the Bulletinboard-Ads Database **Pod** from "outside" we have to provide a **"headless" Service**.
 
-<img src="images/k8s-bulletinboard-target-picture-ads-db-detail.png" width="800" />
+- The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
+
+<img src="images/k8s-bulletinboard-target-picture-ads-db-labels-1.png" width="800" />
 
 
 ## Step 0: Preparation
@@ -74,7 +76,7 @@ Purpose: Create the **Statefulset**, which is dependend on both Configmaps, the 
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-statefulset.png" width="300" />
 
-_Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders <...> by proper values !_
+_Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders `<...>` by proper values !_
 
 - Specify a **Statefulset** for the Postgres Database Pod with name `ads-db` with proper labels and selector for component and module. 
 

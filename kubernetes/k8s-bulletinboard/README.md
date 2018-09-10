@@ -5,6 +5,8 @@
 
 <img src="images/k8s-bulletinboard-target-picture-detail-3.png" width="800" />
 
+_Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap, `sec`: Secret_
+
 ## Exercises
 ### [Exercise: "Setup Bulletinboard-Ads Database"](exercise_01_ads_db.md)
 - Create all required entities for statefulset ads DB: configmap-init, configmap, secret and service
