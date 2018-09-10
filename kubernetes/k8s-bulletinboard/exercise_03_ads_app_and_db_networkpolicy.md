@@ -49,6 +49,8 @@ Futher we can also allow  __ads:app__ to send traffic only to certian pods. This
 Configure a network policy in a file named `ads-app-networkpolicy.yaml` accordingly.  
 Hints: [this example](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/07-allow-traffic-from-some-pods-in-another-namespace.md) and the egress rules. (See above reference and [here](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#networkpolicyspec-v1-networking-k8s-io)). 
 
+Again test the policy, first by restarting ads, and then creating an ads with the UI or Postman/curl to the ingress address. 
+
 ## Step 3: TLS
 
 We also want to enable TSL for our communication with ads. Therefore we activate TLS on our ingress service. 
