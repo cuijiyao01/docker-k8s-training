@@ -17,7 +17,3 @@ spec:
         backend:
           serviceName: ads-service
           servicePort: ads-app
-      - path: /test
-        backend2:
-          serviceName: ads-service
-          servicePort: ads-app
