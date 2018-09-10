@@ -3,15 +3,28 @@ kind: NetworkPolicy
 metadata:
   name: ads-app-access
   labels:
-    component: users
+    component: ads
     module: app
 spec:
   podSelector:
     matchLabels:
-      component: users
+      component: ads
       module: app
+  policyTypes:
+  - Ingress
+  - Egress
   ingress:
   - from:
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress 
+          component: controller 
+          origin: gardener
+      namespaceSelector:
+        matchLabels:
+          name: kube-system  
+  egress:
+  - to:
     - podSelector:
         matchLabels:
           component: ads
@@ -20,6 +33,10 @@ spec:
         matchLabels:
           component: users
           module: app
-    - ipBlock:
-        # Germany
-        cidr: 155.56.0.0/16
+    - podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+      namespaceSelector:
+        matchLabels:
+          name: kube-system
+
