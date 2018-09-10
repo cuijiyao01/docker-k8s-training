@@ -12,7 +12,7 @@ Get experience with a bit more complex helm chart compared to the helm exercise.
 
 ## The helm chart
 
-We provide a almost complete helm chart for the User Service: [bulletinboard-users.tar.gz](bulletinboard-users.tar.gz)  
+We provide an almost complete helm chart for the User Service: [bulletinboard-users.tar.gz](bulletinboard-users.tar.gz)  
 In it we make use of 2 images: First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below.  
 The structure of the K8s entities in this chart is similar to the ones you created for ads. Just that all yaml for one part are put into a single template file. There is `templates/users-db.yaml` for the database and `templates/users-app.yaml` for the user service itself. Finally there is also a network policies template to control who can access what and a yaml for a post-install-job (more on this in step 2). 
 
@@ -59,10 +59,10 @@ If you do a "get-curl" request again you should now get the user back. It should
 ```vagrant@vagrant:~$ curl localhost:8081/bulletinboard-users-service/api/v1.0/users
 [{"createdAt":1536141529412,"updatedAt":null,"version":1,"id":"42","email":"john.doe@sample.org","premiumUser":true}]
 ``` 
-With this you have a running users service and a way to fill the DB with users.
+With this you have a running users service and now know a way to fill the DB with users.
 
 ## Step 2: Job to fill DB
-Now you added a premiumUser to the DB by hand, which we now want to automate.
+In step 1 you added a premiumUser to the DB by hand, which we'll automate in this exercise.
 
 __Purpose: Learn how to use a *job* and a bit more about *strings* in yamls__
 
