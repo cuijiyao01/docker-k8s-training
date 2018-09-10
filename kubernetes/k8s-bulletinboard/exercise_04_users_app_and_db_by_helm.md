@@ -89,5 +89,5 @@ Up till now your Ads was not asking a User Service for information on a certain 
 Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started.
 - Also adjust your network policy for __ads:app__ to allow traffic to (egress) __users:app__. 
 
-After this test that you now need a header `User-id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement. 
+After this, please test that you now need a header `User-id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement. The UI itself already has this field in its requests to the ads-service therefore using it does not test this. 
 
