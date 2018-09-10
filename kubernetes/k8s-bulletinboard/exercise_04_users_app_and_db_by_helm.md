@@ -1,7 +1,7 @@
 # Exercise: Users Service with Helm
 
 ## Scope
-The User Service (App) will be installed with a provided helm chart. You only have to edit/insert a few values and work on the post-install-job which we will use to intialize the DB with some data. 
+The User Service (Application) will be installed with a provided helm chart. You only have to edit/insert a few values and work on the post-install-job which we will use to intialize the DB with some data. 
 After the Service is running we will adapt our Ads deployment to provide the user route and enable the checking of the user service. 
 
 <img src="images/k8s-bulletinboard-target-picture-users-app-and-db-helm.png" width="800" />
@@ -12,7 +12,7 @@ Get experience with a bit more complex helm chart compared to the helm exercise.
 
 ## The helm chart
 
-We provide a almost complete helm chart for the User Service: [bulletinboard-users.tar.gz](bulletinboard-users.tar.gz)  
+We provide an almost complete helm chart for the User Service: [bulletinboard-users.tar.gz](bulletinboard-users.tar.gz)  
 In it we make use of 2 images: First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below.  
 The structure of the K8s entities in this chart is similar to the ones you created for ads. Just that all yaml for one part are put into a single template file. There is `templates/users-db.yaml` for the database and `templates/users-app.yaml` for the user service itself. Finally there is also a network policies template to control who can access what and a yaml for a post-install-job (more on this in step 2). 
 
@@ -31,6 +31,14 @@ We also use the cloud-foundary based way to pass to the user service the info ab
 
 ## Step 0: prerequisites
 If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`.
+Go to your project base folder `k8s-bulletinboard`, which you created at the beginning of exercise 1, and create a sub-folder `users`.
+Download the chart into that subfolder and extract it: 
+```
+cd users
+wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/k8s-bulletinboard/kubernetes/k8s-bulletinboard/bulletinboard-users.tar.gz
+tar -xvzf bulletinboard-users.tar.gz
+cd bulletinboard-users
+```
 
 ## Step 1: helm
 
@@ -51,25 +59,25 @@ If you do a "get-curl" request again you should now get the user back. It should
 ```vagrant@vagrant:~$ curl localhost:8081/bulletinboard-users-service/api/v1.0/users
 [{"createdAt":1536141529412,"updatedAt":null,"version":1,"id":"42","email":"john.doe@sample.org","premiumUser":true}]
 ``` 
-With this you have a running users service and a way to fill the DB with users.
+With this you have a running users service and now know a way to fill the DB with users.
 
 ## Step 2: Job to fill DB
-Now you added a premiumUser to the DB by hand, which we now want to automate.
+In step 1 you added a premiumUser to the DB by hand, which we'll automate in this exercise.
 
 __Purpose: Learn how to use a *job* and a bit more about *strings* in yamls__
 
 In the bulletinboard-users/templates subfolder there is a `post-install-job.yaml`, this is almost complete, only the command to fill the DB is missing. Currently there is an `echo "hello k8s trainee"` executed where we want the command to put a user in the DB. Change this echo to the __"POST" curl__ you did by hand in step 1. Of course the address of the curl for this job is not `localhost:8081`. Also think about how to handle the single and double quotes in the data part of the curl. You can read about [strings in yaml](http://blogs.perl.org/users/tinita/2018/03/strings-in-yaml---to-quote-or-not-to-quote.html) here. (Tip: In a yaml, if you want to use a ' in a single quoted string use ''.)  
-After you adapted the file you can activated it in the chart by setting the value `InitPostJobEnabled: true` (in `values.yaml`).  
+After you adapted the file you can activated the job in the chart by setting the value `InitPostJobEnabled: true` (in `values.yaml`).  
 Now delete the old helm chart. Use `helm list` to get the name of the installed chart and then do `helm delete <name of installed bulletinboard>`. Be aware that the persisted volume claim created during install does not get deleted by this. You can removed it yourself. 
 
 After it is gone you can execute again `helm install bulletinboard-users`. 
 Now there should also be a job with a corresponding pod, which runs once and stops after it is done. 
-You can check this with `kubectl get jobs` and `kubectl logs <name of job pod>` to what the job did.
+You can check this with `kubectl get jobs` and `kubectl logs <name of job pod>` to see what the job did.
 Again you can check the user service with:
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`, now you should get the user which our job put in. 
 
-There is one line commented out: `#    "helm.sh/hook-delete-policy": hook-succeeded`. If you activate it, the job will be deleted after it run successfully. Helps keep your namespace clean, yet you can't review the logs. 
+There is one line commented out in the `post-install-job.yaml` file: `#    "helm.sh/hook-delete-policy": hook-succeeded`. If you comment it in, the job will be deleted after it run successfully. Helps keep your namespace clean, yet you can't review the logs of the successful job. 
 
 ## Step 3: Adapt Ads
 
@@ -78,5 +86,8 @@ __Purpose: show communication between apps through a service; finsish bulletinbo
 Up till now your Ads was not asking a User Service for information on a certain user. The ads app we use has a flag with which we can turn this on. To work the app needs 2 more environment variables: 
 - `POST_USER_CHECK = true`: turns the checking of users on.
 - `USER_ROUTE = <route to users>`: contains the route to the user service app, without the api/v1.0/users ending. 
-Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started. Test that you now need a header `User-id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement. 
+Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started.
+- Also adjust your network policy for __ads:app__ to allow traffic to (egress) __users:app__. 
+
+After this, please test that you now need a header `User-id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement. The UI itself already has this field in its requests to the ads-service therefore using it does not test this. 
 
