@@ -39,12 +39,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: ads-db-config
-              key: PGDATA_VALUE
+              key: pgdata_value
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: ads-db-secret
-              key: POSTGRESS_PASSWORD_VALUE
+              key: postgres_password_value
   volumeClaimTemplates:
   - metadata:
       name: ads-db-volume
