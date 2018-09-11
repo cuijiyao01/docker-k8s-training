@@ -62,7 +62,7 @@ application-k8s.yml: "---\nspring:\n  datasource:\n    url: jdbc:postgresql://<n
 
 - Now call `kubectl apply -f ads-app-configmap-files.yaml` to create the **Configmap**.
 
-_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)
+_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
 
 
 ## Step 2: Configmap for Environment variable
@@ -77,7 +77,7 @@ Purpose: Create a **Configmap** for environment variable `SPRING_PROFILES_ACTIVE
 
 - Now call `kubectl apply -f ads-db-configmap-envs.yaml` to create the **Configmap**.
 
-_Further informations on [Configmap and Container Environment Variables] (https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
+_Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
 
 
 ## Step 3: Deployment
