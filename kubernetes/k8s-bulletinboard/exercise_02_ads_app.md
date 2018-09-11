@@ -226,7 +226,7 @@ Purpose: Check **Bulletinboard-Ads** App running properly together with **Bullet
 
 ### Postman
 
-- List and create advertisements with [Postman](exercise_02_ads_app_postman.md)
+- List and create advertisements with [Postman](helper_ads_app_postman.md)
 
 ### Browser/ Web-UI
 
