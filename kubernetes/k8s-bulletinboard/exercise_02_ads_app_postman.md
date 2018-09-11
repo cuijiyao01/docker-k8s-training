@@ -1,20 +1,4 @@
-# Exercise: Bulletinboard
-After completing this exercise you should
-- understand the bulletin board domain incl. the role of a "premium user"
-- know how to call the "Advertisements" microservice with the [REST](https://de.wikipedia.org/wiki/Representational_State_Transfer
-) client
-
-## Step 1: Push Application
-You will now push the application to your dev space.
-
-- If you have not yet pushed the app to your dev space, you need to do this first
-  - **Hint:** you can look this up in the [Cloud Foundry CLI exercise](/General/Cloud_Basics/Exercise-CF_CLI.md)
-- If the app has been successfully pushed, open a terminal and execute `cf apps`
-  - **Hint:** make sure you are logged in targeting your dev space
-- Copy the URL (route) to your app to the clipboard
-<img src="images/cf_apps.png" />
-
-## Step 2: Call App With Postman (REST Client)
+## Step 2: Call Ads App With Postman (REST Client)
 
 Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly GUI for constructing requests and reading responses.
 
@@ -34,7 +18,7 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
   <img src="images/postman_get_rooturl.png" />
 
 ### Step 2.2: Get All Advertisements
-- In Postman, extend the URL of your app with `/api/v1.0/ads/`
+- In Postman, extend the URL of your app with `/ads/api/v1.0/ads/`
 - Send the request. As response an empty array should be returned. **Remark**: We do not have created any advertisements so far - so there are no ones
 
 ### Step 2.3: Create New Advertisement
@@ -47,7 +31,10 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
     - **Hint:** Replace `<place-holder>` accordingly
 ```
 {
-    "title" : "new-advertisement-from-<your-user-id>"
+	"title":"new-advertisement-from-<your-user-id>-<number>",
+	"price": "140",
+	"contact": "sepp@seppderdepp.com",
+	"currency" : "EUR"
 }
 ```
 - Send the request - it should fail with an error message telling you are not authorized
