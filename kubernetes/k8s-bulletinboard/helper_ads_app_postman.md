@@ -41,10 +41,8 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
 - Send the request, it should succeed.
   - As response you should get the created advertisement
     <img src="images/postman_post_response.png" />
-- Create another advertisement with a different title, e.g. "new-advertisement-from-<your-userid>-2"
+- Create another advertisement with a different title, e.g. `"new-advertisement-from-<your-userid>-2`"
 
 ## Step 4: Get All Advertisements
 - In Postman, switch back to `GET` as request method
 - Send the request and check whether your advertisements are returned
-
-ToDO: UU issue with endpoint `/ads`
