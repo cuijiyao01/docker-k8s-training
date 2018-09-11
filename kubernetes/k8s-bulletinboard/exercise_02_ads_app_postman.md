@@ -1,10 +1,10 @@
-## Step 2: Call Ads App With Postman (REST Client)
+# Call Bulletinboard-Ads App With Postman (REST Client)
 
 Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly GUI for constructing requests and reading responses.
 
 <img src="images/postman_overview.png" width="700" />
 
-### Step 2.1: Open Postman
+## Step 1: Open Postman
 - Open Chromium browser
 - Open a new tab
 - Click "Apps"
@@ -17,12 +17,12 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
 - Send the request. As response `{"status":"UP"}` should be returned.
   <img src="images/postman_get_rooturl.png" />
 
-### Step 2.2: Get All Advertisements
+## Step 2: Get All Advertisements
 - In Postman, extend the URL of your app with `/ads/api/v1/ads/` to `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads`.
 
 - Send the request. As response an empty array should be returned. **Remark**: We do not have created any advertisements so far - so there are no ones
 
-### Step 2.3: Create New Advertisement
+## Step 3: Create New Advertisement
 - In Postman, select `POST` instead of `GET` as request method
 - On tab `Body`
   - Select the radio button `raw`
@@ -43,11 +43,12 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
     <img src="images/postman_post_response.png" />
 - Create another advertisement with a different title, e.g. "new-advertisement-from-<your-userid>-2"
 
-### Step 2.4: Get All Advertisements
+## Step 4: Get All Advertisements
 - In Postman, switch back to `GET` as request method
 - Send the request and check whether your advertisements are returned
 
-## Step 3: Access App With Browser
+
+## Step 5: Access App With Browser
 Now, access the application using the browser.
 - Open Chromium browser
 - Open a new tab
