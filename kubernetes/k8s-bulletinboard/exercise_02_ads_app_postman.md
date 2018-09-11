@@ -13,12 +13,13 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
 - Click "Postman"
   - **Hint:** if this your first startup you will be asked to register - just skip this
     <img src="images/postman_signup.png" width="700" />
-- Select `GET` and paste the URL to your app (**Hint**: You must use the HTTPS protocol)
-- Send the request. As response `OK` should be returned
+- Select `GET` and paste the URL to the `/health` endpoint of your **Bulletinboard-Ads** App. (**Hint**: You must use the HTTP protocol).
+- Send the request. As response `{"status":"UP"}` should be returned.
   <img src="images/postman_get_rooturl.png" />
 
 ### Step 2.2: Get All Advertisements
-- In Postman, extend the URL of your app with `/ads/api/v1.0/ads/`
+- In Postman, extend the URL of your app with `/ads/api/v1/ads/` to `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads` (e.g.`bulletinboard--part-40a86f44.ingress.wdfcw43.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads`).
+
 - Send the request. As response an empty array should be returned. **Remark**: We do not have created any advertisements so far - so there are no ones
 
 ### Step 2.3: Create New Advertisement
