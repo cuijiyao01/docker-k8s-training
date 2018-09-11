@@ -220,8 +220,6 @@ spec:
 
 ## Step 5: Check proper working Ads App with Ads DB
 
-- ToDO: first we need to check, how own endpoint `/ads` will work with UI. Currently it does not work.
-
 Purpose: Check **Bulletinboard-Ads** App running properly together with **Bulletinboard-Ads** database with Postman and Browser/ Web-UI
 
 ### Postman
