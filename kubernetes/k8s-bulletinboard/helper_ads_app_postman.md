@@ -47,14 +47,4 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
 - In Postman, switch back to `GET` as request method
 - Send the request and check whether your advertisements are returned
 
-
-## Step 5: Access App With Browser
-Now, access the application using the browser.
-- Open Chromium browser
-- Open a new tab
-- Paste the following URLs into the adress field and check the results.
-  - REST API, Get All: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads`
-  - REST API, Get Single: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads/<advertisement-id>`
-  - UI: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads`
-
 ToDO: UU issue with endpoint `/ads`
