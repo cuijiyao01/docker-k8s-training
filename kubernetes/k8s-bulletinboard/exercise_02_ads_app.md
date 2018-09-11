@@ -222,4 +222,4 @@ spec:
 
 Purpose: Check Ads App running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
-- ToDO
+- ToDO: first we need to check, how own endpoint `/ads` will work with UI. Currently it does not work.
