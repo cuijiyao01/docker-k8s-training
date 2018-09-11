@@ -18,7 +18,7 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
   <img src="images/postman_get_rooturl.png" />
 
 ### Step 2.2: Get All Advertisements
-- In Postman, extend the URL of your app with `/ads/api/v1/ads/` to `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads` (e.g.`bulletinboard--part-40a86f44.ingress.wdfcw43.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads`).
+- In Postman, extend the URL of your app with `/ads/api/v1/ads/` to `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads`.
 
 - Send the request. As response an empty array should be returned. **Remark**: We do not have created any advertisements so far - so there are no ones
 
@@ -32,23 +32,16 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
     - **Hint:** Replace `<place-holder>` accordingly
 ```
 {
-	"title":"new-advertisement-from-<your-user-id>-<number>",
+	"title":"new-advertisement-from-<your-user-id>-1",
 	"price": "140",
-	"contact": "sepp@seppderdepp.com",
+	"contact": "test@sepp.com",
 	"currency" : "EUR"
 }
 ```
-- Send the request - it should fail with an error message telling you are not authorized
-  - The reason is that only premium users are allowed to create new advertisements
-  - As you remember, your ads microservice is using a central, shared users microservice that already has a premium user configured
-- Select the tab `Headers`
-  - Insert `User-Id` as `Header` and `42` as `Value` as new entry
-  - **Hint:** The user with id 42 already exists in the central users microservice as premium user
-    <img src="images/postman_post_headers.png" />
-- Send the request, it should now succeed
+- Send the request, it should succeed.
   - As response you should get the created advertisement
     <img src="images/postman_post_response.png" />
-- Create another advertisement with a different title, e.g. "new-advertisement-from-2-<your-userid>"
+- Create another advertisement with a different title, e.g. "new-advertisement-from-<your-userid>-2"
 
 ### Step 2.4: Get All Advertisements
 - In Postman, switch back to `GET` as request method
@@ -59,6 +52,8 @@ Now, access the application using the browser.
 - Open Chromium browser
 - Open a new tab
 - Paste the following URLs into the adress field and check the results.
-  - REST API, Get All: `https://bulletinboard-ads-dev-<your-user-id>.cfapps.sap.hana.ondemand.com/api/v1.0/ads/`
-  - REST API, Get Single: `https://bulletinboard-ads-dev-<your-user-id>.cfapps.sap.hana.ondemand.com/api/v1.0/ads/<advertisement-id>`
-  - UI: `https://bulletinboard-ads-dev-<your-user-id>.cfapps.sap.hana.ondemand.com/static/index.html`
+  - REST API, Get All: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads`
+  - REST API, Get Single: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads/<advertisement-id>`
+  - UI: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads`
+
+ToDO: UU issue with endpoint `/ads`
