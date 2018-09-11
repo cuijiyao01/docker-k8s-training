@@ -220,8 +220,15 @@ spec:
 
 ## Step 5: Check proper working Ads app with Ads DB
 
-Purpose: Check Ads App running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
+- ToDO: first we need to check, how own endpoint `/ads` will work with UI. Currently it does not work.
 
+Purpose: Check **Bulletinboard-Ad**s App running properly together with **Bulletinboard-Ads** database with Postman and Web-UI in Browser.
+
+- List and create advertisements with/in
+
+### Postman
 - [Check with Postman](exercise_02_ads_app_postman.md)
 
-- ToDO: first we need to check, how own endpoint `/ads` will work with UI. Currently it does not work.
+### Web-UI/ Browser
+- 
+
