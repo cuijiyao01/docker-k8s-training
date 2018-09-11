@@ -31,7 +31,7 @@ spec:
         command: ['sh', '-c', 'for i in $(seq 1 200); do nc -z -w3 {{ template "app-fullname" . }} {{ .Values.App.ServicePort }} && exit 0 || sleep 3; done; exit 1']
       containers:
       - name: post-install-job
-        image: "{{ .Values.App.Image }}:{{ .Values.App.ImageTag }}"
+        image: "appropriate/curl:latest"
         command: ['sh', '-c', 'curl -i -X POST http://{{ template "app-fullname" . }}:{{ .Values.App.ServicePort }}/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data ''{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'' ']
       imagePullSecrets:
         - name: {{ .Values.App.ImageSecret }}
