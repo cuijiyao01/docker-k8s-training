@@ -62,6 +62,8 @@ application-k8s.yml: "---\nspring:\n  datasource:\n    url: jdbc:postgresql://<n
 
 - Now call `kubectl apply -f ads-app-configmap-files.yaml` to create the **Configmap**.
 
+_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
+
 
 ## Step 2: Configmap for Environment variable
 
@@ -74,6 +76,8 @@ Purpose: Create a **Configmap** for environment variable `SPRING_PROFILES_ACTIVE
 - Save the **Configmap** spec under the filename `ads-app-configmap-envs.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-configmap-envs.yaml` to create the **Configmap**.
+
+_Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
 
 
 ## Step 3: Deployment
@@ -209,13 +213,29 @@ spec:
 
 - Additional check wether you can call your **Bulletinboard-Ads** on the `/health` endpoint via the **Ingress** Url with the following **cURL** command:
 
-`curl http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/health`.
+`curl http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/health`.
 
 - If all works fine, you should get the following result: `{"status":"UP"}`
 
 
-## Step 5: Check proper working Ads app with Ads DB
+## Step 5: Check proper working Ads App with Ads DB
 
-Purpose: Check Ads App running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
+- ToDO: first we need to check, how own endpoint `/ads` will work with UI. Currently it does not work.
 
-- ToDO
+Purpose: Check **Bulletinboard-Ads** App running properly together with **Bulletinboard-Ads** database with Postman and Browser/ Web-UI
+
+### Postman
+
+- List and create advertisements with [Postman](helper_ads_app_postman.md)
+
+### Browser/ Web-UI
+
+Now, access the application using the browser.
+- Open Chromium browser
+- Open a new tab
+- Paste the following URLs into the adress field and check the results.
+  - **REST API, Get All**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads`
+  - **REST API, Get Single**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads/<advertisement-id>`
+  - **Web-UI**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads`
+
+
