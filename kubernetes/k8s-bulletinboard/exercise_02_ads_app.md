@@ -224,11 +224,17 @@ spec:
 
 Purpose: Check **Bulletinboard-Ad**s App running properly together with **Bulletinboard-Ads** database with Postman and Web-UI in Browser.
 
-- List and create advertisements with/in
-
 ### Postman
-- [Check with Postman](exercise_02_ads_app_postman.md)
+- - List and create advertisements with [Postman](exercise_02_ads_app_postman.md)
 
 ### Web-UI/ Browser
-- 
+
+Now, access the application using the browser.
+- Open Chromium browser
+- Open a new tab
+- Paste the following URLs into the adress field and check the results.
+  - REST API, Get All: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads`
+  - REST API, Get Single: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads/<advertisement-id>`
+  - UI: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads`
+
 
