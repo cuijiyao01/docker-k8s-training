@@ -10,9 +10,14 @@ spec:
     matchLabels:
       component: ads
       module: db
+  policyTypes:
+  - Ingress
+  - Egress
   ingress:
   - from:
     - podSelector:
         matchLabels:
           component: ads
           module: app
+  egress: []
+

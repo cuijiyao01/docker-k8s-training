@@ -1,0 +1,12 @@
+name: bulletinboard-users
+version: 0.1.0
+appVersion: "1.0"
+description: The bulletinboard users service used in the CC reference application
+home: https://github.wdf.sap.corp/cloud-native-dev/k8s-bulletinboard
+icon: https://github.wdf.sap.corp/avatars/u/26308?s=200
+sources:
+  - https://github.wdf.sap.corp/cloud-native-dev/k8s-bulletinboard/tree/master/users/helm
+  - https://github.wdf.sap.corp/cc-refapp/cc-bulletinboard-users
+maintainers:
+  - name: Haralambie Dumistracel
+    email: haralambie.dumistracel@sap.com
