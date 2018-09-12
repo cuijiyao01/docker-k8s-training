@@ -7,7 +7,7 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
 
-- As we do not need horizontal scaling for the database (by our assumned requirements) we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replicaset=1).
+- As we do not need horizontal scaling for the database we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replicaset=1).
 
 - As database we will use Postgresql, where on Docker hub we can find a well suiting offical [Postgresql Docker image](https://hub.docker.com/_/postgres/).
 
@@ -17,8 +17,7 @@
 
 - To make available the Bulletinboard-Ads Database **Pod** from "outside" we have to provide a **"headless" Service**.
 
-- The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.  
-Sometimes during the following exercises we will use this to short the name of a pod(s) by just giving __"component":"module"__, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
+- The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-labels-1.png" width="800" />
 
@@ -67,13 +66,13 @@ Purpose: Create a Secret with password for Postgres superuser
 ## Step 4: "Headless" Service
 Purpose: Create the **"headless" Service**, required to access the pod, created by the statefulset.
 
-- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for component and module. Use the default port, given by the Docker image, make shure you are using a named port and save it under the filename `ads-db-service.yaml` in folder `k8s-bulletinboard/ads`.
+- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for component and module. Use the default port, given by the Docker image (port 5432 as depicted by the description on [Docker Hub](https://hub.docker.com/_/postgres/)), make sure you are using a named port and save it under the filename `ads-db-service.yaml` in folder `k8s-bulletinboard/ads`.
 
-- Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless"Service**.
+- Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless" Service**.
 
 ## Step 5: Statefulset
 
-Purpose: Create the **Statefulset**, which is dependend on both Configmaps, the Secret and the "headless" Service, created in step 1-4 (Creation of Statefulset will fail, if those entities are not yet available !).
+Purpose: Create the **Statefulset**, which uses both Configmaps, the Secret and the "headless" Service, created in step 1-4 (Creation of Statefulset will fail, if those entities are not yet available !).
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-statefulset.png" width="300" />
 
