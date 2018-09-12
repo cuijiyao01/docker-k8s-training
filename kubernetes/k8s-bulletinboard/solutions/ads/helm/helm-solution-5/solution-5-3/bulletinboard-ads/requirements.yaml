@@ -1,0 +1,4 @@
+dependencies:
+- name: bulletinboard-users
+  version: "0.1.0"
+  repository: "file://../../../users/helm/bulletinboard-users"

@@ -4,21 +4,17 @@
 ## Scope
 Create a helm chart for ads (app and db)
 
-See contribution of Carlos:
-https://github.wdf.sap.corp/cloud-native-dev/k8s-bulletinboard/tree/master/ads/helm
-
 img src="images/xxx.png" width="800" />
 
-## Step 0: prerequisites
-xxx
-
-## Step 1: xxx
-xx
-
-## Step 2: xxx
-xxx
+## Step 0: [Getting started - my first chart](exercise_05_ads_helm_chart_0_GettingStarted.md)
 
 
-## Step 3: xxx
-xx
+## Step 1: [Author the chart to include the Ads DB](exercise_05_ads_helm_chart_1_Database.md)
+
+
+## Step 2: [Author the chart to include the Ads App](exercise_05_ads_helm_chart_2_Application.md)
+
+
+## Step 3: [Author the chart to include dependency to the Users Chart](exercise_05_ads_helm_chart_3_Advanced.md)
+
 

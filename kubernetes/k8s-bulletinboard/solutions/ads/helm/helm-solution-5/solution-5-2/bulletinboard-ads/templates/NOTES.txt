@@ -1,0 +1,5 @@
+1. Access the database by running these commands:
+
+ export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "component={{ .Release.Name }}-{{ .Values.Db.Component }},module={{ .Release.Name }}-{{ .Values.Db.Module }}" -o jsonpath="{.items[0].metadata.name}")
+ echo "Connect to localhost:55432 with your favorite Database tool (SquirelSQL, DBWeaver, DBVisualiser, etc.)"
+ kubectl port-forward $POD_NAME 55432:5432
