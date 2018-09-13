@@ -1,4 +1,4 @@
-# Optional - Exercise: xxx
+# Optional - Exercise: "Create Helm chart for Bulletinboard-Ads App and -Database"
 
 
 ## Scope
