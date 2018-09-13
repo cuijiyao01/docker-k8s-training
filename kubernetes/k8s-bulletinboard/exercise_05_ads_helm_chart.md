@@ -1,10 +1,12 @@
+# - D R A F T/ Under Construction !
+
 # Optional - Exercise: "Create Helm chart for Bulletinboard-Ads App and -Database"
 
 
 ## Scope
 Create a helm chart for ads (app and db)
 
-img src="images/xxx.png" width="800" />
+<img src="images/k8s-bulletinboard-target-picture-ads-app-and-db-helm.png" width="800" />
 
 ## Step 0: [Getting started - my first chart](exercise_05_ads_helm_chart_0_GettingStarted.md)
 
