@@ -4,7 +4,7 @@ In this exercise, you will run a specific version of an image, modify its conten
 
 ## Step 0: Pulling a specific image
 
-Search on [Docker Hub](https://hub.docker.com) for the _nginx_ image in version 1.13 in it and pull it to your computer.
+Search on [Docker Hub](https://hub.docker.com) for the _nginx_ image in version 1.15.3 and pull it to your computer.
 
 **Bonus question:** There are three ways to get the image, which are those?
 
