@@ -160,8 +160,11 @@ spec:
 
 
 ## Optional- Step 6: Detailled Check wether Pod with postgres DB is running properly
-- ToDO ...
-- Local Port-Forwarding + PGAdmin tool to check database and user available
 
+Purpose: check wether the database is running and accepting connections. Use the pgadmin tool for that.
 
+- Install pgadmin locally on your virtual machine. For the training virtual machine, use the following command to install the software: `sudo apt install pgadmin3`
 
+- Use `kubectl port-forward` to forward the database port from the database pod of your statefiulset to your local virtual machine. 
+
+- With pgadmin, connect to the forwarded database port on your `localhost` and supply the credentials for the user that got created on the database by the initialization script. If the login succeeds, your database is up and running and this part of the exercise is complete.
