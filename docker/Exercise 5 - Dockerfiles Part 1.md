@@ -9,13 +9,13 @@ Create an empty directory on your VM, change into it and create an empty `Docker
 We want to copy a custom (yet very simple) website to the image, so we will download the files into our build context:
 
 ```bash
-wget -O train.jpg https://10.67.76.20/raw/slvi/docker-k8s-training/master/docker/res/train.jpg
-wget -O index.html https://10.67.76.20/raw/slvi/docker-k8s-training/master/docker/res/train.html
+wget -O train.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/train.jpg
+wget -O index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/train.html
 ```
 
 ## Step 1: extend an existing image
 
-As we want to extend an existing _nginx_ image, we need to come `FROM` it. It is a good idea to also specify the release number of the image you want to extend, **stable** is normally a good idea.
+As we want to extend an existing _nginx_ image, we need to come `FROM` it. It is a good idea to also specify the release number of the image you want to extend, but **mainline** is a good idea too.
 
 ## Step 2: copy a new default website into the image
 
@@ -51,7 +51,7 @@ Again, with the help of the `COPY` directive, make sure that this file ends up i
 For SSL/TLS to work, we will need an encryption key and a certificate. We use OpenSSL to create a self-signed certificate. Use the following command to create an encryption key and a certificate.
 
 ```bash
-openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days 365 -subj "/CN=`hostname`"
+openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days 365 -subj "/CN=$(hostname)"
 ```
 
 With the COPY directive, make sure the files `nginx.key` and `nginx.crt` end up inside your image in the directory `/etc/nginx/ssl/`.
@@ -66,9 +66,9 @@ Use the `docker build` command to build the image. Make note of the UID of the n
 
 ## Step 7: tag the image
 
-With `docker tag`, give your image a nice name such as *secure_nginx* and a release number (again, use your hostname as release number).
+With `docker tag`, give your image a nice name such as *secure_nginx* and a release number (again, use your participant's ID as release number).
 
-If you want to push this image to our registry on **registry.ingress.cpcw36.k8s-train.shoot.canary.k8s-hana.ondemand.com**, tag your image with the name *secure_nginx* and your unique training ID and use `docker push` to push the image to the registry.
+If you want to push this image to our registry on **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com**, tag your image with the name *secure_nginx* and your unique training ID and use `docker push` to push the image to the registry. The values you need to substitute *\<cluster-name\>* and *\<project-name\>* with have been given to you by your trainer.
 
 ## Step 8: run a container
 
