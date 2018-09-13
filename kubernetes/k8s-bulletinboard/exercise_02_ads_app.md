@@ -23,7 +23,8 @@
 ## Step 0: Create ImagePullSecret for SAP artifactory repo cc-k8s-course
 
 The Dockerimage for Bulletinboard-ads is pushed to the SAP artifactory. To retrieve it from there you need to create a docker-registry secret named _artifactory_ by executing the command below:
-``` kubectl create secret docker-registry artifactory --docker-server=cc-k8s-course.docker.repositories.sap.ondemand.com --docker-username=cc-k8s-course-r1 --docker-password=oQHCMaS05Z1i
+```
+kubectl create secret docker-registry artifactory --docker-server=cc-k8s-course.docker.repositories.sap.ondemand.com --docker-username=cc-k8s-course-r1 --docker-password=oQHCMaS05Z1i
 ```
 We will uses the name to identify in the deployment what ImagePullSecret to use.
 
