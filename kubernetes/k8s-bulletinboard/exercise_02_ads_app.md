@@ -3,7 +3,7 @@
 
 ## Scope
 
-- In this second exercise we will focus on the setup of **Bulletinboard-Ads Application/Microservice** itself (See picture below) and make it available within the K8s cluster via **Service** and publish externally via an **Ingress**.
+- In this second exercise we will focus on the setup of **Bulletinboard-Ads Application/Microservice** itself (See picture below) and make it available within the K8s cluster via a **Service** and publish externally via an **Ingress**.
 - Finally we will check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app.png" width="800" />
