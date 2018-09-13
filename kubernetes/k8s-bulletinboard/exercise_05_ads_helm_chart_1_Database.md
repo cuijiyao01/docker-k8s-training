@@ -1,0 +1,324 @@
+Exercise 2: Authoring the chart to include the Database required by the ads application
+====================================================
+
+## Learning Goal
+Create all DB related Kubernetes objects with the help of a Helm chart
+
+## Prerequisite
+
+- Uninstall chart installed in Excercise 1
+```bash
+$ helm delete <release_name>                   
+release "<release_name>" deleted
+ 
+``` 
+- remove contents in the file `templates/NOTES.txt`
+
+- remove contents in the file `values.yaml`
+
+
+## Step 1: Replace all default Kubernetes manifest files with the `ads-db-*.yaml` files
+
+
+Now the contents of the `templates` directory should look like this:
+```
+templates
+  ads-db-configmap-init.yaml 
+  ads-db-configmap.yaml      
+  ads-db-networkpolicy.yaml  
+  ads-db-secret.yaml         
+  ads-db-service.yaml
+  ads-db.yaml
+
+``` 
+
+> **Tip**: Do not delete the manifest files created by `helm create` - you can use them as an example for the next steps 
+
+
+## Step 2: Check the chart
+```bash
+$ helm install bulletinboard-ads 
+```
+
+Inspect installation
+```bash
+$ helm list
+NAME           	REVISION	UPDATED                 	STATUS  	CHART                  	NAMESPACE         
+<release_name>	2       	Fri Aug  3 10:07:42 2018	DEPLOYED	bulletinboard-ads-0.1.0	<your_namespace>
+
+$ kubectl get po,svc,deployment,statefulset,job,pv,pvc,configmap,networkpolicy,secret
+NAME                                READY     STATUS    RESTARTS   AGE
+pod/ads-db-0                        0/1       Pending   0          6s
+
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+service/ads-db-headless   ClusterIP   None            <none>        5432/TCP    6s
+
+NAME                      DESIRED   CURRENT   AGE
+statefulset.apps/ads-db   1         1         6s
+
+NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                                                           STORAGECLASS   REASON    AGE
+persistentvolume/pvc-b818fa26-96f9-11e8-a881-528f19d9068b   2G         RWO            Delete           Bound     bulletinboard-helm/ads-db-volume-ads-db-0                       default                  3s
+
+NAME                                                               STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/ads-db-volume-ads-db-0                       Bound     pvc-b818fa26-96f9-11e8-a881-528f19d9068b   2G         RWO            default        6s
+
+NAME                           DATA      AGE
+configmap/ads-db-config        1         6s
+configmap/ads-db-init          1         6s
+
+NAME                                     POD-SELECTOR              AGE
+networkpolicy.extensions/ads-db-access   component=ads,module=db   6s
+
+NAME                         TYPE                                  DATA      AGE
+secret/ads-db-secrets        Opaque                                1         6s
+
+
+```
+
+What do you notice? Does everything looks like before, when you created all Kubernetes objects individually?
+
+Uninstall the chart
+
+```bash
+$ helm delete <release_name> 
+```
+
+What do you notice?
+
+Everything is removed at once or is there still something there? Why?
+
+
+
+## Step 3: Parameterize the DB kubernetes manifest files
+
+> **IMPORTANT: Uninstall chart first**
+
+### Values - `values.yaml`
+
+```yaml
+Db:
+  ConfigName: ads-db-config
+  InitConfigName: ads-db-init
+  CredentialName: ads-db-cred
+  ServiceName: ads-db-service
+  SSetName: ads-db-sset
+  AccessName: ads-db-access
+  Component: ads-database
+  Module: ads-db
+```
+
+### Metadata Names
+
+- `_helpers.tpl` - add fully qualified names for all kubernetes objects, for example for the database configmap:
+```
+{{/*
+Create fully qualified name for DB config map.
+*/}}
+{{- define "db-config-fullname" -}}
+{{- $name := default .Chart.Name .Values.Db.ConfigName -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+```    
+
+##### Change names in all kubernetes manifest files:
+
+|File         | Name      | 
+| ------------- |-----------| 
+| `ads-db-configmap.yaml`| `metadata:  `<br/>`  name: {{ template "db-config-fullname" . }}`|
+| `ads-db-configmap-init.yaml`| `metadata:  `<br/>`  name: {{ template "db-init-config-fullname" . }}`|
+| `ads-db-secret.yaml`| `metadata:  `<br/>`  name: {{ template "db-credential-fullname" . }}`|
+| `ads-db-service.yaml`| `metadata:  `<br/>`  name: {{ template "db-service-fullname" . }}`|
+| `ads-db.yaml`| `metadata:  `<br/>`  name: {{ template "db-sset-fullname" . }}`|
+| `ads-db-networkpolicy.yaml`| `metadata:  `<br/>`  name: {{ template "db-fullname" . }}`|
+
+
+
+##### Updated references in `ads-db.yaml'
+
+```yaml
+[...]
+
+spec:
+  serviceName: {{ template "db-service-fullname" . }}
+
+[...]
+
+      - name: init
+        configMap:
+          name: {{ template "db-init-config-fullname" . }}
+
+ [...]
+
+            configMapKeyRef:
+              name: {{ template "db-config-fullname" . }}
+
+[...]
+            secretKeyRef:
+              name: {{ template "db-credential-fullname" . }}
+  
+```    
+
+
+### Labels
+
+##### Change all metadata labels to:
+```yaml
+metadata:
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+
+```
+
+##### Replace all match labels and selectors:
+
+|Old         | New      | 
+| ------------- |-----------| 
+| ` component: ads`| `component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"`|
+| ` module: db`| `module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"`|
+
+
+```yaml
+    matchLabels:
+      component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+      module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+
+  selector:
+    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+
+```
+
+>  **Warning**: Do not change the ` ingress / from/ podSelector / matchLabels` 
+in `ads-db-networkpolicy.yaml` as this is defining the labels for accessing the database service (for the application latedr)
+
+## Step 3: Parameterize PostgreSQL
+
+### Introduce following values - `values.yaml`
+
+```yaml
+Db:
+  Postgres:
+    Image: postgres
+    ImageTag: 9.6
+    MountPath: /var/lib/postgres/data
+    RootPassword: I2hKVFdVMjAlejBk
+    Database: users
+    Schema: users
+    User: users_user
+    Password: initial
+    Port: 5432
+```
+
+##### Update Mount path in `ads-db-configmap.yaml`
+```yaml
+data:
+  PGDATA: "{{ .Values.Db.Postgres.MountPath }}/pgdata"
+```
+
+#### Update database coordinates and credentials in `ads-db-configmap-init.yaml`
+```yaml
+data:
+  initdb.sql: |
+      -- This is a postgres initialization script for the postgres container. Execute it with psql as:
+      -- $> psql postgres -f initdb.sql
+      CREATE ROLE {{ .Values.Db.Postgres.User }} WITH CREATEDB LOGIN PASSWORD '{{ .Values.Db.Postgres.Password }}';
+      CREATE DATABASE {{ .Values.Db.Postgres.Database }} WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
+      GRANT ALL PRIVILEGES ON DATABASE {{ .Values.Db.Postgres.Database }} TO {{ .Values.Db.Postgres.User}};
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
+      \c {{ .Values.Db.Postgres.Database }};
+      CREATE SCHEMA {{ .Values.Db.Postgres.Schema }} AUTHORIZATION {{ .Values.Db.Postgres.User }};
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
+```
+
+#### Update database admin password `ads-db-secret.yaml`
+```yaml
+data:
+  PG_PASSWORD: {{ .Values.Db.Postgres.RootPassword }}
+```
+
+#### Update port for the service in `ads-db-service.yaml`
+```yaml
+spec:
+  ports:
+  - port: {{ .Values.Db.Postgres.Port }}
+```
+
+#### Update stateful set specification in `ads-db.yaml`
+```yaml
+    spec:
+      containers:
+        image: "{{ .Values.Db.Postgres.Image }}:{{ .Values.Db.Postgres.ImageTag }}"
+        ports:
+        - containerPort: {{ .Values.Db.Postgres.Port }}
+          name: users-db
+        volumeMounts:
+        - name: users-db-volume
+          mountPath: {{ .Values.Db.Postgres.MountPath }}
+```
+
+## Step 4: Install the Chart
+
+```bash
+$ helm install bulletinboard-ads 
+```
+
+Inspect installation
+```bash
+$ helm list
+NAME           	REVISION	UPDATED                 	STATUS  	CHART                  	NAMESPACE         
+<release_name>	2       	Fri Aug  3 10:07:42 2018	DEPLOYED	bulletinboard-ads-0.1.0	<your_namespace>
+
+$ kubectl get po,svc,deployment,statefulset,job,pv,pvc,configmap,networkpolicy,secret
+NAME                                READY     STATUS    RESTARTS   AGE
+pod/<release_name>-ads-db-sset-0   1/1       Running   0          30s
+
+NAME                                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+service/<release_name>-ads-db-service   ClusterIP   None            <none>        5432/TCP    23m
+service/tiller-deploy                    ClusterIP   100.65.132.84   <none>        44134/TCP   30m
+
+NAME                                           DESIRED   CURRENT   AGE
+statefulset.apps/<release_name>-ads-db-sset   1         1         23m
+
+NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                                                            STORAGECLASS   REASON    AGE
+persistentvolume/pvc-264615f2-96f1-11e8-a881-528f19d9068b   2G         RWO            Delete           Bound     <your_namespace>/ads-db-volume-<release_name>-ads-db-sset-0   default                  23m
+
+NAME                                                                STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/ads-db-volume-<release_name>-ads-db-sset-0   Bound     pvc-264615f2-96f1-11e8-a881-528f19d9068b   2G         RWO            default        23m
+
+NAME                                      DATA      AGE
+configmap/<release_name>-ads-db-config   1         23m
+configmap/<release_name>-ads-db-init     1         23m
+
+NAME                                                     POD-SELECTOR                                                                  AGE
+networkpolicy.extensions/<release_name>-ads-db-access   component=<release_name>-bulletinboard-ads,module=<release_name>-database   23m
+
+NAME                                 TYPE                                  DATA      AGE
+secret/<release_name>-ads-db-cred   Opaque                                1         23m
+
+
+```
+
+## Step 5: Connect to the database (optional)
+
+Execute following command:
+
+```bash
+
+ kubectl port-forward <pod_name>  55432:5432
+
+
+```
+
+Then use your DB tool of choice to connect to localhost on port 55432
+
+![Connect to DB using DBVisualiser](images/db-connection.png)
+
+
+## Step 6: Further parameterization (optional)
+
+Make storage and replicaCount also configurable.

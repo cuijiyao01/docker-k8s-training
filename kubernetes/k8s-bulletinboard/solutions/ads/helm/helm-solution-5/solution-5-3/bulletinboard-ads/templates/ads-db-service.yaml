@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "db-service-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+spec:
+  ports:
+  - port: 5432
+    name: ads-db
+  clusterIP: None
+  selector:
+    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"

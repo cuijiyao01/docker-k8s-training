@@ -1,0 +1,26 @@
+# Default values for bulletinboard-ads.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Db:
+  ConfigName: ads-db-config
+  InitConfigName: ads-db-init
+  CredentialName: ads-db-cred
+  ServiceName: ads-db-service
+  SSetName: ads-db-sset
+  AccessName: ads-db-access
+  Component: bulletinboard-ads
+  Module: database
+  Postgres:
+    Image: postgres
+    ImageTag: 9.6
+    MountPath: /var/lib/postgres/data
+    RootPassword: I2hKVFdVMjAlejBk
+    Database: ads
+    Schema: ads
+    User: adsuser
+    Password: initial
+    Port: 5432
+
+
+

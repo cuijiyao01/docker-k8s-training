@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "db-init-config-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+data:
+  initdb.sql: |
+      -- This is a postgres initialization script for the postgres container. Execute it with psql as:
+      -- $> psql postgres -f initdb.sql
+      CREATE ROLE {{ .Values.Db.Postgres.User }} WITH CREATEDB LOGIN PASSWORD '{{ .Values.Db.Postgres.Password }}';
+      CREATE DATABASE {{ .Values.Db.Postgres.Database }} WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
+      GRANT ALL PRIVILEGES ON DATABASE {{ .Values.Db.Postgres.Database }} TO {{ .Values.Db.Postgres.User}};
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
+      \c {{ .Values.Db.Postgres.Database }};
+      CREATE SCHEMA {{ .Values.Db.Postgres.Schema }} AUTHORIZATION {{ .Values.Db.Postgres.User }};
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
