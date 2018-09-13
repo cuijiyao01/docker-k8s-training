@@ -11,23 +11,7 @@ In order for you to set up your Docker environment so that it can connect to sai
 
 ## Step 1: Install docker
 
-**EMERGENCY SOLUTION FOR DNS OUTAGE AT SAP**
-
-Install docker like this:
-```bash
-sudo -s
-rm -f /etc/resolv.conf
-echo "nameserver 8.8.8.8" > /etc/resolv.conf
-rm -f /etc/apt/apt.conf.d/01proxy
-export http_proxy=""
-export https_proxy=""
-apt-get update
-apt-get install docker-ce
-exit
-```
-
-**END OF EMERGENCY SOLUTION FOR DNS OUTAGE AT SAP**
-
+Install Docker on your VM like this:
 
 - Open a command window.
 - **Switch to root:** Type `sudo -s` to switch to `root` and open a sub-shell.
@@ -37,13 +21,22 @@ exit
 Verify if the packages installed successfully by checking if the files `/usr/bin/docker` and `/usr/bin/dockerd` exist. You can run `docker -v` to check the version.
 
 ## Step 2: Set up the proxy and DNS server
-SAP is slowly becoming proxy-less, i.e. the explicit proxy server that you all probably know gets replaced by a transparent proxy which you won't even notice it is there. Bangalore is already proxy-less so we do not have to think about this right now. 
+SAP is slowly becoming proxy-less, i.e. the explicit proxy server that you all probably know gets replaced by a transparent proxy which you won't even notice it is there. Your trainer will tell you wether or not you will require a proxy server for this part of the training.
+
+- **Skip this step if you do not require a proxy server.**  If a proxy server is required, creae a systemd drop-in by first creating the directory `/etc/systemd/system/docker.service.d`. Create the file `/etc/systemd/system/docker.service.d/proxy.conf` and put this inside:
+
+```
+[Service]
+Environment="http_proxy=http://proxy.wdf.sap.corp:8080"
+Environment="https_proxy=http://proxy.wdf.sap.corp:8080"
+Environment="no_proxy=.wdf.sap.corp"
+```
 
 - On the training VMs, Docker will try to use Google's DNS servers for all containers. This will not work reliably as we are referencing to SAP internal addresses and Google's DNS cannot resolve those. To force Docker to use SAP's internal DNS server, we need to create the configuation file `/etc/docker/daemon.json` with the following content:
 
 ```json
 {
-    "dns": ["8.8.8.8"]
+    "dns": ["10.17.220.80"]
 }
 ```
 
