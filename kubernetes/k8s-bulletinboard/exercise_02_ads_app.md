@@ -16,12 +16,16 @@
 
 - Additional we can configure **Bulletinboard-Ads** via environment variables for de-/activation of a check against **Bulletinboard-Users** when creating an advertisement (`POST_USER_CHECK`), the Service-URL to the **Bulletinboard-Users** (`USER_ROUTE`) and the [Active Spring Profile](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html#howto-set-active-spring-profiles) (`SPRING_PROFILES_ACTIVE`).
 
-- The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
+- The structure for **Labels** (and with this for **Selectors**) has 2 levels as in exercice 1: To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-labels-1.png" width="800" />
 
-ToDO: Secret for Artifactory_DMZ access ???
+## Step 0: Create ImagePullSecret for SAP artifactory repo cc-k8s-course
 
+The Dockerimage for Bulletinboard-ads is pushed to the SAP artifactory. To retrieve it from there you need to create a docker-registry secret named _artifactory_ by executing the command below:
+``` kubectl create secret docker-registry artifactory --docker-server=cc-k8s-course.docker.repositories.sap.ondemand.com --docker-username=cc-k8s-course-r1 --docker-password=oQHCMaS05Z1i
+```
+We will uses the name to identify in the deployment what ImagePullSecret to use.
 
 ## Step 1: Configmap for Application properties file
 
