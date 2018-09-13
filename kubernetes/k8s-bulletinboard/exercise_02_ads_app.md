@@ -30,12 +30,14 @@ We will uses the name to identify in the deployment what ImagePullSecret to use.
 
 ## Step 1: Configmap for Application properties file
 
-Purpose: Create a **Configmap** for the **Application properties file**.
+Purpose: Create a single **Configmap** for the external (outside the docker image) configuration  of **ads:app**.
 
-- Specify a **Configmap** `ads-app-config-files` for the **Application properties file** with name `application-k8s.yml`.
+Contrary to what we did for __ads:db__ where we used two configmaps, one for the environment variables and one for the initdb.sql file/script, will will only use one CM for both files and environment variables.
 
-- The content of the file - finally created at the filesystem of the Docker Container (ToDO: better Pod ? or PV or PVC ?)- should look like the following:
+- Create a file `ads-app-configmap.yaml` in folder `k8s-bulletinboard/ads` where we will specify a **Configmap** `ads-app-config` for all the external configuration information for Bulletinboard Ads App. Do not forget to specify proper labels for component and module !
 
+- First part of the information is the content of the **Application properties file** - finally created at the filesystem of the Docker Container - with name `application-k8s.yml`. You can store its content under a key `application-k8s` in the configMap. The content should look like the following:  
+**_Hint: Please substitute the place holders below <...> by proper values !_**
 ```
 ---
 spring: 
@@ -46,44 +48,16 @@ spring:
     driverClassName: org.postgresql.Driver
     driver-class-name: org.postgresql.Driver
 ```
+You can use the same way as for `initdb.sql` script string.
 
-- The specification in the **Configmap** should look like following. Please be aware, that you have to build up a proper yaml structure with new lines and correct indends. New lines can be done with `\n` and indends with ` `:
-```
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ads-app-config-files
-  labels:
-    component: <name-of-component>
-    module: <name-of-module>
-data:
-application-k8s.yml: "---\nspring:\n  datasource:\n    url: jdbc:postgresql://<name-of-ads-db-pod>.<name-of-ads-db-headless-service>:5432/ads\n    username: <name-of-ads-db-postgres-user>\n    password: <password-of-ads-db-postgres-user>\n    driverClassName: org.postgresql.Driver\n    driver-class-name: org.postgresql.Driver\n"
-```
-
-**_Hint: Please substitute the place holders below <...> by proper values !_**
-
-- Save the **Configmap** spec under the filename `ads-app-configmap-files.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
-
-- Now call `kubectl apply -f ads-app-configmap-files.yaml` to create the **Configmap**.
-
-_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
-
-
-## Step 2: Configmap for Environment variable
-
-Purpose: Create a **Configmap** for environment variable `SPRING_PROFILES_ACTIVE`, we want to "pass" to **Bulletinboard-Ads**.
-
-- Specify a **Configmap** `ads-app-config-envs` with data entry `spring_profiles_active_value` and value `k8s` for the **Active Spring Profile**.
+- The second information the app needs it to specify which profile spring should use. We will uses the name __k8s__ for the profile (thus the name application-__k8s__.yml). You do the specification by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. So the 2nd data key will be `SPRING_PROFILES_ACTIVE_VALUE` with the value `k8s`.
 
 - By default **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
-- Save the **Configmap** spec under the filename `ads-app-configmap-envs.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
-
-- Now call `kubectl apply -f ads-db-configmap-envs.yaml` to create the **Configmap**.
+- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
 _Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
-
+_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
 
 ## Step 3: Deployment
 
