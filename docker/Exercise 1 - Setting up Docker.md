@@ -36,7 +36,7 @@ Environment="no_proxy=.wdf.sap.corp"
 
 ```json
 {
-    "dns": ["10.17.220.80"]
+    "dns": ["10.17.121.30", "10.17.220.80"]
 }
 ```
 
