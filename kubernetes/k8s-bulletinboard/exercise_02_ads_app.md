@@ -38,7 +38,7 @@ Contrary to what we did for __ads:db__ where we used two configmaps, one for the
 
 - Create a file `ads-app-configmap.yaml` in folder `k8s-bulletinboard/ads` where we will specify a **Configmap** `ads-app-config` for all the external configuration information for Bulletinboard Ads App. Do not forget to specify proper labels for component and module !
 
-- First part of the information is the content of the **Application properties file** - finally created at the filesystem of the Docker Container - with name `application-k8s.yml`. You can store its content under a key `application-k8s` in the configMap. The content should look like the following:  
+- First part of the data is the content of the **Application properties file** - finally created at the filesystem of the Docker Container - with name `application-k8s.yml`. You can store its content under a key `application-k8s` in the configMap. The content should look like the following:  
 **_Hint: Please substitute the place holders below <...> by proper values !_**
 ```
 ---
@@ -50,9 +50,9 @@ spring:
     driverClassName: org.postgresql.Driver
     driver-class-name: org.postgresql.Driver
 ```
-You can use the same way as for `initdb.sql` script string.
+You can use the same way to store it as for `initdb.sql` script string. Please keep the indents, we store a yaml.
 
-- The second information the app needs it to specify which profile spring should use. We will uses the name __k8s__ for the profile (thus the name application-__k8s__.yml). You do the specification by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. So the 2nd data key will be `SPRING_PROFILES_ACTIVE_VALUE` with the value `k8s`.
+- The second information the app needs to specify is which profile spring should use. We will uses the name __k8s__ for the profile (thus the name application-__k8s__.yml). One way Spring gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. So the 2nd data key will be `SPRING_PROFILES_ACTIVE_VALUE` with the value `k8s`.
 
 - By default **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
@@ -61,14 +61,13 @@ You can use the same way as for `initdb.sql` script string.
 _Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
 _Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
 
-## Step 3: Deployment
+## Step 2: Deployment
 
-Purpose: Create the **Deployment**, which is dependend on both Configmaps, created in step 1-2 (Creation of Deployment will fail, if those entities are not yet available !).
+Purpose: Create the **Deployment**, which is dependend on the Configmap, created in step 1 (Creation of Deployment will fail, if it is not yet available !). Also the `artifactory` secret is needed to pull the image.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-deployment.png" width="300" />
 
 _Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
-
 
 - Specify a **Deployment** for the **Bulletinboard Ads** with 3 instances, with name `ads-app` and with proper labels and selector for component and module. 
 
@@ -89,12 +88,11 @@ spec:
       module: <name-of-module>
 ```
 
-- Assign to the volume `ads-app-properties` the **Configmap** for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:  
+- Assign to the volume `ads-app-properties` from the **Configmap** the key for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:  
 ```
 cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
 ```
-
-- Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
+Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
 
 ```  
   template:
@@ -106,7 +104,10 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
       volumes:
       - name: ads-app-properties
         configMap:
-          name: <name-of-configmap-application-properties-file>
+          name: <name-of-configmap>
+          items:
+          - key: <name-of-the-key-with-the-file-content> 
+            path: application-k8s.yml
       imagePullSecrets:
       - name: artifactory
       containers:
@@ -203,7 +204,7 @@ spec:
 - If all works fine, you should get the following result: `{"status":"UP"}`
 
 
-## Step 5: Check proper working Ads App with Ads DB
+## Step 4: Check proper working Ads App with Ads DB
 
 Purpose: Check **Bulletinboard-Ads** App running properly together with **Bulletinboard-Ads** database with Postman and Browser/ Web-UI
 
