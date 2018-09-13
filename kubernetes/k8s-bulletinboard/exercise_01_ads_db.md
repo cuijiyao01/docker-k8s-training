@@ -58,7 +58,8 @@
 
 Purpose: Create a Secret with password for Postgres superuser
 
-- Specify a **Secret** `ads-db-secrets` of type `opaque` with an element whose key is `PG_PASSWORD` and with a value of your choice which will become the PostgreSQL master password. You will have to base64 encode the password before entering it into the YAML file. Save the **Secret** under the filename `ads-db-secrets.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module!
+- Specify a **Secret** `ads-db-secrets` of type `opaque` with an element whose key is `PG_PASSWORD` and with a value of your choice which will become the PostgreSQL master password. You will have to base64 encode the password before entering it into the YAML file. Save the **Secret** under the filename `ads-db-secrets.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module!  
+To can take any String as a master password, but if you want a random string you could do e.g. `openssl rand -base64 15 | base64` which will already give you a random password base64 encoded. 
 
 - Now call `kubectl apply -f ads-db-secret.yaml` to create the **Secret**.
 
