@@ -8,7 +8,7 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app.png" width="800" />
 
-- As we need horizontal scaling for the Ads app we will use a **Deployment** with 3 instances (replicaset=3).
+- We decided our initial demand requires at least 2 instances of our app. Therefore we need horizontal scaling for the Ads app we will use a **Deployment**  with 2 instances (replicaset=3).
 
 - A specific version of **Bulletinboard-Ads**, slighty adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in **SAP Artifactory in DMZ**.
 
