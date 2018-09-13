@@ -4,27 +4,27 @@ In this exercise, you will run a specific version of an image, modify its conten
 
 ## Step 0: Pulling a specific image
 
-Search on [Docker Hub](https://hub.docker.com) for the _nginx_ image in version 1.12.2 that has Perl in it and pull it to your computer.
+Search on [Docker Hub](https://hub.docker.com) for the _nginx_ image in version 1.15.3 and pull it to your computer.
 Run the following command to pull the image to your Docker installation.
 
 ```bash
-docker pull nginx:1.12.2-perl
+docker pull nginx:1.15.3
 ```
 
 **Bonus question:** There are three ways to get the image, which are those?
 
-The image is available with the tags nginx:1.12.2-perl, nginx:stable-perl and nginx:1.12-perl, so the following three commands will yield equal results:
+The image is available with the tags nginx:1.153, nginx:mainline and nginx:1.15, so the following three commands will yield equal results:
 
 ```bash
-docker pull nginx:1.12.2-perl
-docker pull nginx:stable-perl
-docker pull nginx:1.12-perl
+docker pull nginx:1.15.3
+docker pull nginx:mainline
+docker pull nginx:1.15
 ```
 
 Use the image to start a new container in detached mode - do not forget to have a port assigned to the container. Use your web browser to connect to the webserver in your container - you should see a banner page.
 
 ```bash
-docker run -d -p 1080:80 --name perly-monkey nginx:1.12.2-perl
+docker run -d -p 1080:80 --name perly-monkey nginx:1.15.3
 ```
 
 ## Step 1: Enhancing the container
@@ -39,10 +39,14 @@ docker exec -it perly-monkey /bin/bash
 
 As the _nginx_ image is built upon Debian, you can use the apt package manager to download and install wget. Use these commands to get you started:
 
+- **Only if proxy server is required:**
 ```bash
 export http_proxy=http://proxy.wdf.sap.corp:8080
 export https_proxy=http://proxy.wdf.sap.corp:8080
 export no_proxy=.wdf.sap.corp
+```
+- Install wget:
+```bash
 apt-get update && apt-get -y install wget
 ```
 
@@ -99,14 +103,14 @@ You will see that you will get the information that some change was comitted to 
 
 ## Step 6: Pushing the image to a registry
 
-Tag the image so that it refers to a remote registry. Give it a name so that it is uniquely identifieable. For this, replace the 760d7ca6 in the following commands with your training ID:
+Tag the image so that it refers to a remote registry. Give it a name so that it is uniquely identifieable. For this, replace the 760d7ca6 in the following commands with your training ID. Again, substiture *cluster-name* and *project-name* with the values given to you by your trainer.
 
 ```bash
-docker tag evil_nginx:latest registry.ingress.cpcw36.k8s-train.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
+docker tag evil_nginx:latest registry.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
 ```
 
 Use `docker push` to upload your image to the registry.
 
 ```bash
-docker push registry.ingress.cpcw36.k8s-train.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
+docker push registry.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com/evil_nginx:760d7ca6
 ```
