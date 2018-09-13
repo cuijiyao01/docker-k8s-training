@@ -108,7 +108,10 @@ spec:
       module: <name-of-module>
 ```
 
-- Assign to the volume `ads-app-properties` the **Configmap** for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest`.
+- Assign to the volume `ads-app-properties` the **Configmap** for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:  
+```
+cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
+```.
 
 - Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
 
