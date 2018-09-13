@@ -7,7 +7,7 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
 
-- As we do not need horizontal scaling for the database we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replicaset=1).
+- As we do not need horizontal scaling for the database (by our assumned requirements) we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replicaset=1).
 
 - As database we will use Postgresql, where on Docker hub we can find a well suiting offical [Postgresql Docker image](https://hub.docker.com/_/postgres/).
 
@@ -17,7 +17,8 @@
 
 - To make available the Bulletinboard-Ads Database **Pod** from "outside" we have to provide a **"headless" Service**.
 
-- The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
+- The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.  
+Sometimes during the following exercises we will use this to short the name of a pod(s) by just giving __"component":"module"__, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-labels-1.png" width="800" />
 
