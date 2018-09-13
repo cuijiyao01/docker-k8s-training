@@ -1,3 +1,5 @@
+# - D R A F T/ Under Construction !
+
 # Microservice based Application in Kubernetes using Cloud Curriculum Sample Application "Bulletinboard"
 - In the following **5 exercises** you will learn how to make available a microservice based business application in Kubernetes. 
 - As sample application we are using a slightly adapted version of **Bulletinboard from the Cloud Curriculum**. The Bulletinboard is build up by two individual microservices - Bulletinboard-Ads and Bulletinboard-Users, which communicate across each others to list, create and delete Advertisements. Both have an own database to store data.
