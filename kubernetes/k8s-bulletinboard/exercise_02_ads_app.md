@@ -202,8 +202,9 @@ spec:
   rules:
   - host: bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
-      paths: /ads
-      - backend:
+      paths: 
+      - path: /ads
+        backend:
           serviceName: <name-of-ads-service>
           servicePort: <name-of-ads-port>
 ```
