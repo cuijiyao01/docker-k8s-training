@@ -27,7 +27,7 @@ Basically you could also achieve all the previous steps with a so called Replica
 Checkout the ReplicaSet created by your deployment:
 `kubectl get replicaset`, try also `-o yaml` to see its full configuration.
 
-But a deplyoment can do more than managing replicasets in order to scale. It also allows you to perform a rolling update. Run `watch kubectl rollout status deployment/nginx` to monitor the process of updating. Now trigger the  update with the following command:
+But a deployment can do more than managing replicasets in order to scale. It also allows you to perform a rolling update. Run `watch kubectl rollout status deployment/nginx` to monitor the process of updating. Now trigger the  update with the following command:
 
 `kubectl set image deployment/nginx nginx=nginx:mainline`
 
