@@ -69,7 +69,7 @@ Purpose: Create the **Deployment**, which is dependend on the Configmap, created
 
 _Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
 
-- Specify a **Deployment** for the **Bulletinboard Ads** with 3 instances, with name `ads-app` and with proper labels and selector for component and module. 
+- Specify a **Deployment** for the **Bulletinboard Ads** with 2 instances, with name `ads-app` and with proper labels and selector for component and module. 
 
 ```
 ---
@@ -129,7 +129,7 @@ Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corres
 
 - When you are ready with the specification of the **Deployment** save it under the filename `ads-app.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app.yaml` to create the **Deployment** `ads-app`.
 
-- After successful creation of the **Deployment** check, wether **3** Pods got created properly via `kubectl get pods`. The names of the 3 pods should be something like `ads-app-xx-yx`, `ads-app-xx-yy` and `ads-app-xx-yz`.
+- After successful creation of the **Deployment** check, wether **2** Pods got created properly via `kubectl get pods`. The names of the 2 pods should be something like `ads-app-xx-yx`, `ads-app-xx-yy` and `ads-app-xx-yz`.
 
 
 ## Step 4: Service & Ingress
