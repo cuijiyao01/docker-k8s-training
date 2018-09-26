@@ -16,7 +16,7 @@ Get experience with a bit more complex helm chart compared to the helm exercise.
 
 We provide an almost complete helm chart for the User Service: [bulletinboard-users.tar.gz](bulletinboard-users.tar.gz)  
 In it we make use of 2 images: First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below.  
-The structure of the K8s entities in this chart is similar to the ones you created for ads. Just that all yaml for one part are put into a single template file. There is `templates/users-db.yaml` for the database and `templates/users-app.yaml` for the user service itself. Finally there is also a network policies template to control who can access what and a yaml for a post-install-job (more on this in step 2). 
+The structure of the K8s entities in this chart is similar to the ones you created for ads. Just that all yaml for one module are put into a single template file. There is `templates/users-db.yaml` for the database and `templates/users-app.yaml` for the user service itself. Finally there is also a network policies template to control who can access what and a yaml for a post-install-job (more on this in step 2). 
 
 ## User Service Docker image
 
@@ -47,7 +47,7 @@ cd bulletinboard-users
 __Purpose: Get familar with the provided template files and the user service.__
 
 Before you can install the helm chart, open the *values.yaml* file. We left out the values of a few entries, you have to fill them out yourself:
-- What some of the values should be is mentioned above.
+- The values for e.g. Image and Version are mentioned above.
 - For the password you can choose any string, if you want to generate one, you can do so by executing in an termial e.g. `openssl rand -base64 32` ([here are a few more ways](https://www.howtogeek.com/howto/30184/10-ways-to-generate-a-random-password-from-the-command-line/)). 
 - ServicePort can be any port (e.g. 80 or 8080), you will need this one later to configure the route used by ads.
 
