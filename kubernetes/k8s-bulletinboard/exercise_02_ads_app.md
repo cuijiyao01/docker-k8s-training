@@ -204,7 +204,7 @@ spec:
 - If all works fine, you should get the following result: `{"status":"UP"}`
 
 
-## Step 4: Check proper working Ads App with Ads DB
+## Step 5: Check proper working Ads App with Ads DB
 
 Purpose: Check **Bulletinboard-Ads** App running properly together with **Bulletinboard-Ads** database with Postman and Browser/ Web-UI
 
