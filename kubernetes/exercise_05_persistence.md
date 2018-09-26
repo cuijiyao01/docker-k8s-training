@@ -13,7 +13,7 @@ By the way, you don't have to type `PersistentVolume` all the time. You can abbr
 ## Step 1: Create a PersistentVolume and a corresponding claim
 Instead of creating a PersistentVolume (PV) first and then bind it to a PersistentVolumeClaim (PVC), you will directly request storage via a PVC using the default storage class.
 This is not only convenient, but also helps to avoid confusion. PVC are bound to a namespace, PV resource are not. When there is a fitting PV, it can be bound to any PVC in any namespace. So there is some conflict potential, if your colleagues always claim your PV's :)
-The conecpt of the storage classes overcomes this problem. The tooling masked by the storage class auto-provisions PV's of a defined volume type for each requested PVC.
+The concept of the storage classes overcomes this problem. The tooling masked by the storage class auto-provisions PV's of a defined volume type for each requested PVC.
 
 Download the resource from [gitHub](./solutions/05_pvc.yaml) or copy the snippet from below to your VM:
 
