@@ -142,7 +142,7 @@ Verify that the newly created pods use the pvc, configMap and secret by running 
 ## Step 6: create a service
 Finally, you have to create a new service to expose your https-deployment.
 
-Derive the ports you have to exposeand extend the service.yaml from the previous exercise.
+Derive the ports you have to expose and extend the service.yaml from the previous exercise.
 
 Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject and organization specified in step 1.
 
