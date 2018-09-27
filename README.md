@@ -11,6 +11,8 @@ Official course information: [Docker and Kubernetes Fundamentals](https://jam4.s
 ## Course outline
 High level topics are:
 
+### [Why Docker & Kubernetes?](./00_why_docker_k8s.pptx)
+
 ### [Docker](./docker) (day 1)
 - Intro: Container basics, Containers vs. VMs ([slides](./docker/01_Basics_of_containers.pptx))
 - Linux foundations: Containers under the hood and how docker works ([slides](./docker/02_Members_of_docker_universe.pptx), [exercise 0](./docker/Exercise%200%20-%20Linux%20Primitives.md) & [exercise 1](./docker/Exercise%201%20-%20Setting%20up%20Docker.md))
