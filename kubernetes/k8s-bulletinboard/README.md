@@ -11,7 +11,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 
 ## Exercises
 ### [Exercise: "Setup Bulletinboard-Ads Database"](exercise_01_ads_db.md)
-- Create all required entities for statefulset ads DB: configmap-init, configmap, secret and service
+- Database will run as a statefulset: Create prerequisites and configuration entities: configmap-init, init-secret, secret and service
 - Create a statefulset for the ads DB, based on above entities.
 
 
@@ -25,6 +25,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 - Increase security and establish a network policy for
   - Ads DB
   - Ads App
+- Enable https connection by adding TLS certificates to ingress
 
 ### [Exercise: "Using Helm-chart to setup Bulletinboard-Users Application and -DB](exercise_04_users_app_and_db_by_helm.md)
 - Create Users DB and Users App via existing helm chart
