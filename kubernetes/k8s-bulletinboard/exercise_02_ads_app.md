@@ -50,7 +50,14 @@ spring:
     driverClassName: org.postgresql.Driver
     driver-class-name: org.postgresql.Driver
 ```
-You can use the same way to store it as for `initdb.sql` script string. Please keep the indents, we store a yaml.
+The content above is itself a yaml, to make this readable also in the configmap yaml we suggest to store it as a text block using the literal block scalar: `|` .
+```
+Example: |
+  a block of
+  text in more
+    than a line.
+```
+Please keep the indent stucture above also in the text block, they are crucial for yamls. If you want to learn more about [strings in yamls you can read it here.](http://blogs.perl.org/users/tinita/2018/03/strings-in-yaml---to-quote-or-not-to-quote.html). 
 
 - The second information the app needs to specify is which profile spring should use. We will uses the name __k8s__ for the profile (thus the name application-__k8s__.yml). One way Spring gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. So the 2nd data key will be `SPRING_PROFILES_ACTIVE_VALUE` with the value `k8s`.
 
@@ -185,7 +192,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.<your-project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths: 
       - path: /ads
@@ -193,6 +200,9 @@ spec:
           serviceName: <name-of-ads-service>
           servicePort: <name-of-ads-port>
 ```
+  In the examble above the namespace would be `part-40a86f44`, cluster name would be `wdfcw43` and project name would be `k8s-train`.
+  You can find out what your cluster and project name is by looking into the config: `kubectl config view`. Here `clusters.cluster.server` contains the api url, which contains both cluster and project name. 
+
 - When you are ready with the specification of the **Ingress** save it under the filename `ads-app-ingress.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-ingress.yaml` to create the **Ingress** `ads-app-ingress`.
 
 - Check wether the **Ingress** is properly created via `kubectl get ingress ads-app-ingress`.
