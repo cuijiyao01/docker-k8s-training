@@ -9,7 +9,7 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
 
-- As we do not need horizontal scaling for the database (by our assumned requirements) we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replicaset=1).
+- As we do not need horizontal scaling for the database (by our assumned requirements) we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replica count=1).
 
 - As database we will use Postgresql, where on Docker hub we can find a well suiting offical [Postgresql Docker image](https://hub.docker.com/_/postgres/).
 
@@ -17,10 +17,10 @@
 
 - As well we can run any **initdb scripts**, which we will use to create a new database with a specific user and password (Not using the default user postgres).
 
-- To make available the Bulletinboard-Ads Database **Pod** from "outside" we have to provide a **"headless" Service**.
+- To make available the Bulletinboard-Ads Database **Pod** from we setup a **"headless" service** to allow the app to talk to the database.
 
 - The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.  
-Sometimes during the following exercises we will use this to short the name of a pod(s) by just giving __"component":"module"__, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
+To shorten names, entities will be references by their component & module values, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-labels-1.png" width="800" />
 
@@ -75,7 +75,7 @@ To can take any String as a master password, but if you want a random string you
 ## Step 4: "Headless" Service
 Purpose: Create the **"headless" Service**, required to access the pod, created by the statefulset.
 
-- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for component and module. Use the default port, given by the Docker image (port 5432 as depicted by the description on [Docker Hub](https://hub.docker.com/_/postgres/)), make sure you are using a named port and save it under the filename `ads-db-service.yaml` in folder `k8s-bulletinboard/ads`.
+- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for component and module. Use the default port, given by the Docker image (port 5432 as depicted by the description on [Docker Hub](https://hub.docker.com/_/postgres/)) and make sure you are using a named port. Save the service under the filename `ads-db-service.yaml` in folder `k8s-bulletinboard/ads`.
 
 - Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless" Service**.
 
@@ -101,7 +101,7 @@ metadata:
 ```
 
 - Refer to the "headless" service, created earlier and make shure that only one DB pod gets created. 
-- Additional refer under `volumes` to the configmap with database initialization script and refer to the configmap and secret when exposing Postgres environment variables in the Docker container.
+- Additional refer under `volumes` to the secret with database initialization script and refer to the configmap and secret when setting up Postgres environment variables in the Docker container.
 
 ```
 spec:
@@ -163,7 +163,7 @@ spec:
 
 - When you are ready with the specification of the **Statefulset** save it under the filename `ads-db.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset** `ads-db`.
 
-- After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-0` got created properly and the Database is ready to be connected via `kubectl get pod ads-db-0 -o yaml` or in more detail via `kubectl describe pod ads-db-0` or via `kubectl logs ads-db-0`. 
+- After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-0` got created properly  via `kubectl get pod ads-db-0 -o yaml` or in more detail via `kubectl describe pod ads-db-0` . Also check wether the Database is ready to be connected via `kubectl logs ads-db-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
 
 
 ## Optional- Step 6: Detailled Check wether Pod with postgres DB is running properly
