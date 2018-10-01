@@ -21,6 +21,34 @@ We want only that  __ads:db__ only takes messages from __ads:app__. Configure a 
 You can check the [network policy exercise](../exercise_08_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy.  
 Also we want to block all outgoing traffic by denying all egress traffic. You can see [here how to do so](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/11-deny-egress-traffic-from-an-application.md).
 
+<details> <summary>If you need further hints here is a skelton network policy!</summary>
+<p>
+
+```yaml
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ads-db-networkpolicy
+  labels:
+    <proper-component-module-labels>
+spec:
+  podSelector:
+    matchLabels:
+      <labels-for-targeted-entities>
+  policyTypes:
+  - Ingress
+  - Egress  
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+        <incoming pods labels>
+  egress: []
+```
+
+</p>
+</details>
+
 ### Testing of the implemented policy
 
 To test the ingress rule, restart your __ads:app__ pod (delete it, the deployment will create a new one). If it comes up the app can still connect to the DB. 
