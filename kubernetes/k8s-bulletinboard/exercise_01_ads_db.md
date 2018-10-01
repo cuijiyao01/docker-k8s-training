@@ -30,13 +30,20 @@ Sometimes during the following exercises we will use this to short the name of a
 - Create a folder `k8s-bulletinboard` in your home directory for the various yaml-files, you will create in the exercises.
 - Create a sub-folder `ads` for all yaml-files, related to **Bulletinboard-Ads** (App/Microservice + DB).
 
-## Step 1: Create a Configmap to initialize the database
+## Step 1: Create a Configmap with location of Postgres database files
 
-- Use the following sql script to create a new database `adsuser` and a specific user `adsuser` with password `initial`.
+- Specify a **Configmap** `ads-db-config` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+
+- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
+
+## Step 2: Create a Secret to initialize the database
+
+- Use the following sql script to create a new database `adsuser` and a specific user `adsuser` with password `initial`.  
+  Since the file contains censitive data like password, we will store it as a generic **secret**. First save this script in an `initdb.sql` named file.
 
  ```
- -- This is a postgres initialization script for the postgres container. Execute it with psql as:
- -- $> psql postgres -f initdb.sql
+ -- This is a postgres initialization script for the postgres container. 
+ -- Will be executed during container initialization ($> psql postgres -f initdb.sql)
  CREATE ROLE adsuser WITH LOGIN PASSWORD 'initial' INHERIT CREATEDB;
  CREATE DATABASE ads WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
  GRANT ALL PRIVILEGES ON DATABASE ads TO adsuser;
@@ -45,19 +52,17 @@ Sometimes during the following exercises we will use this to short the name of a
  ALTER DATABASE ads OWNER TO adsuser;
 ```
 
-- Specify a **Configmap** 'ads-db-init' (incl. proper labels for component and module) and store above sql script under the data section with name `initdb.sql` and save the **Configmap** spec under the filename `ads-db-configmap-init.yaml` in folder `k8s-bulletinboard/ads`.
+- Because the data in a secret is base64 encoded we will use *kubectl* itself to generate the yaml: 
+```
+ kubectl create secret generic ads-db-init-secret --from-file initdb.sql --dry-run -o yaml > ads-db-init-secret.yaml
+```
+  Because of the `--dry-run` parameter this will only generate a yaml and does not create the secret itself. 
 
-- Now call `kubectl apply -f ads-db-configmap-init.yaml` to create the **Configmap**.
+- Now open the `ads-db-init-secret.yaml` and add thie proper labels for component and modul, also the `creationTimestamp` can be removed. Save the changes. 
 
+- Now call `kubectl apply -f ads-db-init-secret.yaml` to create the **Secret**.
 
-## Step 2: Create a Configmap with location of Postgres database files
-
-- Specify a **Configmap** `ads-db-config` with an environment variable `PGDATA` for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
-
-- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
-
-
-## Step 3: Secret
+## Step 3: Secret for Postgres Superuser Password
 
 Purpose: Create a Secret with password for Postgres superuser
 
@@ -114,8 +119,8 @@ spec:
     spec:
       volumes:
       - name: init
-        configMap:
-          name: <name-of-configmap-init>
+        secret:
+          secretName: <name-of-init-secret>
       containers:
       - name: ads-db
         image: postgres:9.6
