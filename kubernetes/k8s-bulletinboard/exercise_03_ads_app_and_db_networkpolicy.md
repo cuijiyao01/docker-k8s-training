@@ -56,7 +56,7 @@ You can also test it by creating a temporary pod with psql installed (e.g. a pos
 A promt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
 `psql -h ads-db-0.ads-db-headless -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial`). After this you should connect to the ads db, a promt `ads=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
 
-<div style="text-align:center"><img src="images/successful_psql_connection.png"></div>
+<p align="center"><img src="images/successful_psql_connection.png"></p>
 
 To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above: `kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash`. Again you should get a root promt, execute `psql -h ads-db-0 -p 5432 -U adsuser -W ads` which, after you entered the password, should return with a timeout after 5 seconds.
 
@@ -66,7 +66,7 @@ To test the egress `kubectl exec -it ads-db-0 bash` and try to ping any page/pod
 
 __Purpose: control traffic to and from *ads:app* pod, learn how to select a pod in a different namespace in your policy__ 
 
-<img src="images/bulletinboard-networkpolicy-ads.png" width="800"/>
+<p align="center"><img src="images/bulletinboard-networkpolicy-ads.png" width="800"/></p>
 
 We want that __ads:app__ only takes messages from the ingress. 
 The ingress controller is in the `kube-system` namespace and has the following labels you can use: 
@@ -119,7 +119,7 @@ spec:
 Now we have enabled https connection for the ingress and therefore also for the ads service behind the ingress.
 Open `https://<firstpart of url>.ingress.<clustername>.<projectname>.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
 To check that everything worked check out the certificate you get when opening the url, it should look like this:  
-<div style="text-align:center"><img src="images/Snag_1a2fb848.png" width="300"/></div>
+<p align="center"><img src="images/Snag_1a2fb848.png" width="300"/></p>
 
 
 
