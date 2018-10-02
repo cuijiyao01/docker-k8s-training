@@ -84,18 +84,30 @@ Again test the policy, first by restarting ads, and then creating an ads with th
 
 ## Step 3: TLS
 
-We also want to enable TSL for our communication with ads. Therefore we activate TLS on our ingress service. 
-We follow the steps of the [configmap and secrets](../exercise_06_configmaps_secrets.md) exercise to optain the key and certificate files and create the tls-secret.
+We also want to enable TLS for our communication with ads. Therefore we activate TLS on our ingress service. 
+Because we use the ingress we can not just follow the steps of the [configmap and secrets](../exercise_06_configmaps_secrets.md) exercise to optain the key and certificate files and create the tls-secret. The certificate has to have the url in it, and it is to long to just put it in the CN (63 Char limit) field. 
+Create a `tls` subfolder in the `ads` folder: `mkdir tls; cd tls`
+We will first create our own Root certificate:
 ```
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/nginx.key -out /tmp/nginx.crt -subj "/CN=nginxsvc/O=nginxsvc"
-kubectl create secret tls ingress-tls-sec --cert=nginx.crt --key=nginx.key --dry-run -o yaml > tls.yaml
+openssl genrsa -out ca.key 2048
+openssl req -new -x509 -days 365 -key ca.key -subj "/C=DE/L=Walldorf/O=SAP/CN=SAP Fake Root CA" -out ca.crt
+```
+Now use this ca.crt to sign the server certificate: Please change the `/CN` field to fit your namespace, also add the complete ingress url at `<THE INGRESS ULR>`. You can change the `/C` and `/L` to fit your location if you want.
+```
+openssl req -newkey rsa:2048 -nodes -keyout server.key -subj "/C=DE/L=Walldorf/O=SAP/CN=bulletinboard--<namespace>" -out server.csr
+openssl x509 -req -extfile <(printf "subjectAltName=DNS:<THE INGRESS URL>") -days 365 -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt
+```
+Finally create the tls secret yaml, move it into the ads folder and apply it:
+```
+kubectl create secret tls ingress-tls-sec --cert=server.crt --key=server.key --dry-run -o yaml > tls.yaml
+cd ..; mv tls/tls.yaml .
 kubectl apply -f tls.yaml
 ``` 
-With this we can change `spec:` of ingress in the yaml to the following and apply the change:
+With this we can change `spec:` of ingress in the yaml to the following (added the last 2 lines) and apply the change:
 ```
 spec:
   rules:
-  - host: ads--bulletinboard-integration.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: <THE INGRESS URL>
     http:
       paths:
       - backend:
@@ -105,7 +117,7 @@ spec:
   - secretName: ingress-tls-sec
 ```
 Now we have enabled https connection for the ingress and therefore also for the ads service behind the ingress.
-Open `https://<firstpart of url>.ingress.<clustername>.k8s-train.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
+Open `https://<firstpart of url>.ingress.<clustername>.<projectname>.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
 
 
 
