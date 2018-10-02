@@ -15,7 +15,7 @@ Currently none.
 
 __Purpose: control traffic to and from *ads:db* pod__ 
 
-<div style="text-align:center"><img src="images/bulletinboard-networkpolicy-db.png" width="800"/></div>
+<p align="center"><img src="images/bulletinboard-networkpolicy-db.png" width="800"/></p>
 
 We want only that  __ads:db__ only takes messages from __ads:app__. Configure a network policy in a file named `ads-db-networkpolicy.yaml` accordingly. 
 You can check the [network policy exercise](../exercise_08_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy.  
