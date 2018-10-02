@@ -15,7 +15,7 @@ Currently none.
 
 __Purpose: control traffic to and from *ads:db* pod__ 
 
-<img src="images/bulletinboard-networkpolicy-db.png" width="800"/>
+<div style="text-align:center"><img src="images/bulletinboard-networkpolicy-db.png" width="800"/></div>
 
 We want only that  __ads:db__ only takes messages from __ads:app__. Configure a network policy in a file named `ads-db-networkpolicy.yaml` accordingly. 
 You can check the [network policy exercise](../exercise_08_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy.  
@@ -56,7 +56,7 @@ You can also test it by creating a temporary pod with psql installed (e.g. a pos
 A promt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
 `psql -h ads-db-0.ads-db-headless -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial`). After this you should connect to the ads db, a promt `ads=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
 
-<img src="images/successful_psql_connection.png">
+<div style="text-align:center"><img src="images/successful_psql_connection.png"></div>
 
 To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above: `kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash`. Again you should get a root promt, execute `psql -h ads-db-0 -p 5432 -U adsuser -W ads` which, after you entered the password, should return with a timeout after 5 seconds.
 
@@ -119,7 +119,7 @@ spec:
 Now we have enabled https connection for the ingress and therefore also for the ads service behind the ingress.
 Open `https://<firstpart of url>.ingress.<clustername>.<projectname>.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
 To check that everything worked check out the certificate you get when opening the url, it should look like this:  
-<img src="images/Snag_1a2fb848.png" width="300" align="center"/>
+<div style="text-align:center"><img src="images/Snag_1a2fb848.png" width="300"/></div>
 
 
 
