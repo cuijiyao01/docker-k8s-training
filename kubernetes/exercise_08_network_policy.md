@@ -47,6 +47,12 @@ spec:
     - ipBlock:
         # US-West/Canada
         cidr: 84.203.229.0/26
+    - ipBlock:
+        # Montreal
+        cidr: 68.67.33.0/25
+    - ipBlock:
+        # Montreal
+        cidr: 208.49.239.224/28
 ```
 
 If you are unsure about the labels, run the queries you are about to implement manually - e.g. `kubectl get pods -l <my-ke>=<my-value>`. This way you can check, if the results match your intention.

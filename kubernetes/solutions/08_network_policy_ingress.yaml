@@ -39,3 +39,9 @@ spec:
     - ipBlock:
         # SOF
         cidr: 193.57.20.0/24
+    - ipBlock:
+        # Montreal
+        cidr: 68.67.33.0/25
+    - ipBlock:
+        # Montreal
+        cidr: 208.49.239.224/28
