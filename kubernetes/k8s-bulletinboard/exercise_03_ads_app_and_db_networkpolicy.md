@@ -119,7 +119,7 @@ spec:
 Now we have enabled https connection for the ingress and therefore also for the ads service behind the ingress.
 Open `https://<firstpart of url>.ingress.<clustername>.<projectname>.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
 To check that everything worked check out the certificate you get when opening the url, it should look like this:  
-<center><img src="images/Snag_1a2fb848.png" width="300"/></center>
+<img src="images/Snag_1a2fb848.png" width="300" align="center"/>
 
 
 
