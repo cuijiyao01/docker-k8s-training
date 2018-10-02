@@ -48,7 +48,6 @@ spring:
     username: <name-of-ads-db-postgres-user> 
     password: <password-of-ads-db-postgres-user> 
     driverClassName: org.postgresql.Driver
-    driver-class-name: org.postgresql.Driver
 ```
 The content above is itself a yaml, to make this readable also in the configmap yaml we suggest to store it as a text block using the literal block scalar: `|` .
 ```
