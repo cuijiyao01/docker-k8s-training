@@ -394,7 +394,7 @@
           "expr": "sum(kube_node_info)",
           "format": "time_series",
           "intervalFactor": 1,
-          "instant": true
+          "instant": true,
           "legendFormat": "",
           "refId": "A"
         }
