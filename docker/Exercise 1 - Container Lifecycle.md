@@ -1,4 +1,4 @@
-# Exercise 2 - Container lifecycle
+# Exercise 1 - Container lifecycle
 
 In this exercise, you will experience the container lifecycle, connect to running container instances and check log files for potential problems.
 

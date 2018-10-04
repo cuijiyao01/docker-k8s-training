@@ -1,4 +1,4 @@
-# Exercise 3 - Ports and Volumes
+# Exercise 2 - Ports and Volumes
 
 In this exercise, you will run an _nginx_ webserver in a container and serve a custom website to the outside world.
 

@@ -1,4 +1,4 @@
-# Exercise 6 - Dockerfiles Part 2: Building your own image from scratch
+# Exercise 5 - Dockerfiles Part 2: Building your own image from scratch
 
 In this exercise, you will create your very own _nginx_ image from scratch.
 

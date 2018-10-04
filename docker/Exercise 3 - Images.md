@@ -1,4 +1,4 @@
-# Exercise 4 - Images
+# Exercise 3 - Images
 
 In this exercise, you will run a specific version of an image, modify its contents and commit the changes into a new image.
 
