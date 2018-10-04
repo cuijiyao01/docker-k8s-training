@@ -1,4 +1,4 @@
-# Solution to Exercise 5 - Dockerfiles Part 1: Extending existing images
+# Solution to Exercise 4 - Dockerfiles Part 1: Extending existing images
 
 In this exercise, you will use a Dockerfile to extend an existing nginx image so that it is SSL enabled.
 

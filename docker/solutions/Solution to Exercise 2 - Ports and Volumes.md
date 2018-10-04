@@ -1,4 +1,4 @@
-# Solution to Exercise 3 - Ports and Volumes
+# Solution to Exercise 2 - Ports and Volumes
 
 In this exercise, you will run an _nginx_ webserver in a container and server a custom website to the outside world.
 
@@ -102,7 +102,7 @@ $ docker inspect nginx | grep -2 ExposedPorts
 
 ## Step 3: import a volume
 
-Create a directory on your VM. Inside that directory, create a file `index.html` and put some simple HTML into it. 
+Create a directory on your VM. Inside that directory, create a file `index.html` and put some simple HTML into it.
 
 ```bash
 $ mkdir `pwd`/nginx-html
