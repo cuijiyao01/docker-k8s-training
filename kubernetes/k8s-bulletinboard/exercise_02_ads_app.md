@@ -70,7 +70,7 @@ Purpose: Create a **Configmap** for the external (outside the docker image) conf
 
 - Save the **Configmap** spec under the filename `ads-app-configmap-envs.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
-- Now call `kubectl apply -f ads-db-configmap-envs.yaml` to create the **Configmap**.
+- Now call `kubectl apply -f ads-app-configmap-envs.yaml` to create the **Configmap**.
 
 _Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
 _Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
