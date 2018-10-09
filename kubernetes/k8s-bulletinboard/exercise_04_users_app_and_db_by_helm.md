@@ -20,7 +20,7 @@ The structure of the K8s entities in this chart is similar to the ones you creat
 
 ## User Service Docker image
 
-We created a Docker image with Tomcat and "user.war" which is used in the helm chart: `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users:v4.0`. 
+We created a Docker image with Tomcat and "user.war" which is used in the helm chart: `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users:v0.4`. 
 The version of the user service used here only needs a postgresql db to store the user data and has no other dependencies.
 The following endpoints are given: 
 - `/`: gives a 'Users: OK' string and 200 code.
