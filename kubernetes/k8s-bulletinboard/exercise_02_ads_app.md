@@ -30,9 +30,9 @@ kubectl create secret docker-registry artifactory --docker-server=cc-k8s-course.
 ```
 We will uses the name to identify in the deployment what ImagePullSecret to use.
 
-## Step 1: Configmap for Application properties file
+## Step 1: Secret for Application properties file
 
-Purpose: Create a single **Configmap** for the external (outside the docker image) configuration  of **ads:app**.
+Purpose: Create a **Secret** for the external (outside the docker image) configuration  of **ads:app**. Here for the **Application properties file** with name `application-k8s.yml`.
 
 Contrary to what we did for __ads:db__ where we used two configmaps, one for the environment variables and one for the initdb.sql file/script, will will only use one CM for both files and environment variables.
 
@@ -59,6 +59,19 @@ Example: |
 Please keep the indent stucture above also in the text block, they are crucial for yamls. If you want to learn more about [strings in yamls you can read it here.](http://blogs.perl.org/users/tinita/2018/03/strings-in-yaml---to-quote-or-not-to-quote.html). 
 
 - The second information the app needs to specify is which profile spring should use. We will uses the name __k8s__ for the profile (thus the name application-__k8s__.yml). One way Spring gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. So the 2nd data key will be `SPRING_PROFILES_ACTIVE_VALUE` with the value `k8s`.
+
+- By default **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
+
+- Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
+
+_Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
+_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
+
+## Step 2: Configmap for Spring Profile 
+
+Purpose: Create a **Configmap** for the external (outside the docker image) configuration of **ads:app** - for environment variable SPRING_PROFILES_ACTIVE, we want to "pass" to **Bulletinboard-Ads** Docker container.
+
+- The app needs to get specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way Spring gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. So the key shall be `spring_profiles_active_value` with the value `k8s`.
 
 - By default **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
