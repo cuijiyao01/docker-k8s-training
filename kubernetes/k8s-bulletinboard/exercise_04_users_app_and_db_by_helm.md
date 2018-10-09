@@ -32,8 +32,8 @@ The Tomcat itself runs on `port: 8080` and the user service is exposed under `/b
 We also use the cloud-foundary based way to pass to the user service the info about how to connect to the DB, namely we set an environment veriable `VCAP_SERVICES` with the right information. In ads we used an application.yml file to do this.
 
 ## Step 0: prerequisites
-If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`.
-Go to your project base folder `k8s-bulletinboard`, which you created at the beginning of exercise 1, and create a sub-folder `users`.
+- If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`. Also set an environmentVariable `TILLER_NAMESPACE` with the value of your namespace, our you have to add `--tiller-namespace <your-namespace>` to all helm commands below.
+- Go to your project base folder `k8s-bulletinboard`, which you created at the beginning of exercise 1, and create a sub-folder `users`.
 Download the chart into that subfolder and extract it: 
 ```
 cd users
