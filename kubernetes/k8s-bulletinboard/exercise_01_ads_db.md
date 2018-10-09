@@ -38,7 +38,8 @@ To shorten names, entities will be references by their component & module values
 
 ## Step 2: Create a Secret to initialize the database
 
-- Use the following sql script to create a new database `adsuser` and a specific user `adsuser` with password `initial`.  
+- Use the following sql script to create a new database `adsuser` and a specific user `adsuser` with password `initial`. 
+  You can change the password (in line 3) to something else, however we will need it in Exercise 2 too, so remember it. 
   Since the file contains censitive data like password, we will store it as a generic **secret**. First save this script in an `initdb.sql` named file.
 
  ```
