@@ -119,7 +119,6 @@ Everything is removed at once or is there still something there? Why?
 ```yaml
 Db:
   ConfigName: ads-db-config
-  InitConfigName: ads-db-init
   CredentialName: ads-db-cred
   ServiceName: ads-db-service
   SSetName: ads-db-sset
@@ -146,7 +145,7 @@ Create fully qualified name for DB config map.
 |File         | Name      | 
 | ------------- |-----------| 
 | `ads-db-configmap.yaml`| `metadata:  `<br/>`  name: {{ template "db-config-fullname" . }}`|
-| `ads-db-secret.yaml`| `metadata:  `<br/>`  name: {{ template "db-credential-fullname" . }}`|
+| `ads-db-secrets.yaml`| `metadata:  `<br/>`  name: {{ template "db-credential-fullname" . }}`|
 | `ads-db-service.yaml`| `metadata:  `<br/>`  name: {{ template "db-service-fullname" . }}`|
 | `ads-db.yaml`| `metadata:  `<br/>`  name: {{ template "db-sset-fullname" . }}`|
 | `ads-db-networkpolicy.yaml`| `metadata:  `<br/>`  name: {{ template "db-fullname" . }}`|
@@ -158,22 +157,17 @@ Create fully qualified name for DB config map.
 
 spec:
   serviceName: {{ template "db-service-fullname" . }}
-
 [...]
-
       - name: init
-        configMap:
-          name: {{ template "db-init-config-fullname" . }}
-
- [...]
-
+        secret:
+          secretName: {{ template "db-init-config-fullname" . }}
+[...]
             configMapKeyRef:
               name: {{ template "db-config-fullname" . }}
-
 [...]
             secretKeyRef:
               name: {{ template "db-credential-fullname" . }}
-  
+[...]
 ```    
 
 
@@ -186,8 +180,8 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
 
 ```
 
@@ -195,27 +189,31 @@ metadata:
 
 |Old         | New      | 
 | ------------- |-----------| 
-| ` component: ads`| `component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"`|
-| ` module: db`| `module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"`|
+| ` component: ads`| `component: "{{ .Values.Db.Component }}"`|
+| ` module: db`| `module: "{{ .Values.Db.Module }}"`|
 
 
 ```yaml
     matchLabels:
-      component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-      module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+      component: "{{ .Values.Db.Component }}"
+      module: "{{ .Values.Db.Module }}"
+      release: {{ .Release.Name | quote }}
 
   selector:
-    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
-
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+    release: {{ .Release.Name | quote }}
 ```
 
 >  **Warning**: Do not change the ` ingress / from/ podSelector / matchLabels` 
-in `ads-db-networkpolicy.yaml` as this is defining the labels for accessing the database service (for the application latedr)
+in `ads-db-networkpolicy.yaml` as this is defining the labels for accessing the database service (for the application later)
 
 ## Step 3: Parameterize PostgreSQL
 
 ### Introduce following values - `values.yaml`
+
+**Hint: Please substitute the place holders below <...> by proper values !**
+
 
 ```yaml
 Db:
@@ -223,11 +221,11 @@ Db:
     Image: postgres
     ImageTag: 9.6
     MountPath: /var/lib/postgres/data
-    RootPassword: I2hKVFdVMjAlejBk
-    Database: users
-    Schema: users
-    User: users_user
-    Password: initial
+    RootPassword: <value of postgres_password_value>
+    Database: ads
+    Schema: ads
+    User: adsuser
+    Password: <value of the adsuser password>
     Port: 5432
 ```
 
@@ -249,7 +247,7 @@ data:
       ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
       \c {{ .Values.Db.Postgres.Database }};
       CREATE SCHEMA {{ .Values.Db.Postgres.Schema }} AUTHORIZATION {{ .Values.Db.Postgres.User }};
-      ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
+      -- ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
       ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
 ```
 
