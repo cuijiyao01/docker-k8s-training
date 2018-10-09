@@ -50,6 +50,7 @@ Before you can install the helm chart, open the *values.yaml* file. We left out 
 - The values for e.g. Image and Version are mentioned above.
 - For the password you can choose any string, if you want to generate one, you can do so by executing in an termial e.g. `openssl rand -base64 9` ([here are a few more ways](https://www.howtogeek.com/howto/30184/10-ways-to-generate-a-random-password-from-the-command-line/)). 
 - ServicePort can be any port (e.g. 80 or 8080), you will need this one later to configure the route used by ads.
+- TomcatPort should be 8080 (default port of the tomcat docker image).
 
 Now do `helm install bulletinboard-users`. In the current state the user-service will run, but there will be no data in the database. 
 You can test that the user-service is runing by doing:  
