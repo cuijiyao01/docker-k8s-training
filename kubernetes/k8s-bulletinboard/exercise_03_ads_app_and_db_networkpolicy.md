@@ -52,7 +52,7 @@ spec:
 ### Testing of the implemented policy
 
 To test the ingress rule, restart your __ads:app__ pod (delete it, the deployment will create a new one). If it comes up the app can still connect to the DB. 
-You can also test it by creating a temporary pod with psql installed (e.g. a postgres:9.6 image like our DB) and use psql from this pod to connect to the DB. First we will use the right labels: `kubectl run tester -it --rm --image=postgres:9.6 --labels="component=ads,module=app,unique=yes" --env="PGCONNECT_TIMEOUT=5" --command -- bash`.  
+You can also test it by creating a temporary pod with psql installed (e.g. a postgres:9.6 image like our DB) and use psql from this pod to connect to the DB. First we will use the right labels: `kubectl run tester -it --rm --image=postgres:9.6 --labels="component=ads,module=app" --env="PGCONNECT_TIMEOUT=5" --command -- bash`.  
 A promt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
 `psql -h ads-db-0.ads-db-headless -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial`). After this you should connect to the ads db, a promt `ads=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
 
