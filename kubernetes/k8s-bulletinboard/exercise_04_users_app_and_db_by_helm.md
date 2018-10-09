@@ -52,8 +52,9 @@ Before you can install the helm chart, open the *values.yaml* file. We left out 
 - ServicePort can be any port (e.g. 80 or 8080), you will need this one later to configure the route used by ads.
 - TomcatPort should be 8080 (default port of the tomcat docker image).
 
-Now do `helm install bulletinboard-users`. In the current state the user-service will run, but there will be no data in the database. 
-You can test that the user-service is runing by doing:  
+Now do `helm install bulletinboard-users` in the `k8s-bulletinboard` folder containing the `bulletinboard-users` subfolder. In the current state the user-service will run, but there will be no data in the database. 
+You can test that the user-service is runing by doing: 
+- `kubectl get all -l "component=users"`, the pods should be on state running.
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`: this terminal is blocked by the open connection to the pod, either put it in the background (`crtl + z` + `bg`) or open a second terminal (`crtl + shift + t`)
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`
 - post a user: `curl -i -X POST localhost:8081/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data '{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'`
