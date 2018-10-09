@@ -9,8 +9,8 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
 ---
 apiVersion: v1
 data:
@@ -40,8 +40,8 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
 type: Opaque
 ---
 apiVersion: v1
@@ -52,16 +52,17 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
 spec:
   ports:
   - port: {{ .Values.Db.Postgres.Port }}
     name: users-db
   clusterIP: None
   selector:
-    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+    release: {{ .Release.Name | quote }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -71,23 +72,24 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
 spec:
   serviceName: {{ template "db-fullname" . }}
   replicas: 1
   selector:
     matchLabels:
-      component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-      module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+      component: "{{ .Values.Db.Component }}"
+      module: "{{ .Values.Db.Module }}"
+      release: {{ .Release.Name | quote }}
   template:
     metadata:
       labels:
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-        module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+        component: "{{ .Values.Db.Component }}"
+        module: "{{ .Values.Db.Module }}"
     spec:
       volumes:
       - name: init
@@ -122,8 +124,8 @@ spec:
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-        module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+        component: "{{ .Values.Db.Component }}"
+        module: "{{ .Values.Db.Module }}"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

@@ -10,8 +10,8 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
 
 ---
 apiVersion: v1
@@ -22,16 +22,17 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
 spec:
   ports:
   - port: {{ .Values.App.ServicePort }}
     protocol: TCP
     targetPort: users-app
   selector:
-    component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
+    release: {{ .Release.Name | quote }}
   type: ClusterIP
 ---
 apiVersion: apps/v1
@@ -42,22 +43,23 @@ metadata:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
 spec:
   replicas: {{ .Values.App.ReplicaCount }}
   selector:
     matchLabels:
-      component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-      module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+      component: "{{ .Values.App.Component }}"
+      module: "{{ .Values.App.Module }}"
+      release: {{ .Release.Name | quote }}
   template:
     metadata:
       labels:
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-        module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+        component: "{{ .Values.App.Component }}"
+        module: "{{ .Values.App.Module }}"
     spec:
       initContainers:
       - name: init-postgres

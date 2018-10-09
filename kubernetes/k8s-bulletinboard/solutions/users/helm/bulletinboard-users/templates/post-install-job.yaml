@@ -7,12 +7,12 @@ metadata:
     heritage: {{.Release.Service | quote }}
     release: {{.Release.Name | quote }}
     chart: "{{.Chart.Name}}-{{.Chart.Version}}"
-    component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "-5"
-    "helm.sh/hook-delete-policy": hook-succeeded
+#    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     metadata:
@@ -21,8 +21,8 @@ spec:
         heritage: {{.Release.Service | quote }}
         release: {{.Release.Name | quote }}
         chart: "{{.Chart.Name}}-{{.Chart.Version}}"
-        component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-        module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+        component: "{{ .Values.App.Component }}"
+        module: "{{ .Values.App.Module }}"
     spec:
       restartPolicy: Never
       initContainers:
@@ -32,7 +32,7 @@ spec:
       containers:
       - name: post-install-job
         image: "appropriate/curl:latest"
-        command: ['sh', '-c', 'curl -i -X POST http://{{ template "app-fullname" . }}:{{ .Values.App.ServicePort }}/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data ''{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'' ']
+        command: ['sh', '-c', 'echo "hello k8s trainee!";']
       imagePullSecrets:
         - name: {{ .Values.App.ImageSecret }}
 {{- end }}

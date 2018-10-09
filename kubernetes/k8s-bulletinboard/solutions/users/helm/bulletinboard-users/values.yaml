@@ -17,7 +17,7 @@ Db:
     Database: users
     Schema: users
     User: users_user
-    Password: initial
+    Password: userdbpass
     Port: 5432
   Storage: "512Mi"
 
@@ -30,8 +30,8 @@ App:
   Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users
   ImageTag: v0.4
   ImageSecret: artifactory
-  ServicePort: 8080
+  ServicePort: 80
   TomcatPort: 8080
   ReplicaCount: 1
-  InitPostJobEnabled: true
+  InitPostJobEnabled: false
 

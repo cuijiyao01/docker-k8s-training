@@ -3,46 +3,48 @@ kind: NetworkPolicy
 metadata:
   name: users-db-access
   labels:
-    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+    release: {{ .Release.Name | quote }}
 spec:
-  policyTypes:
-  - Ingress
-  - Egress
   podSelector:
     matchLabels:
-      component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-      module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+      component: "{{ .Values.Db.Component }}"
+      module: "{{ .Values.Db.Module }}"
+      release: {{ .Release.Name | quote }}
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-          module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
-  egress: []
+          component: "{{ .Values.App.Component }}"
+          module: "{{ .Values.App.Module }}"
+          release: {{ .Release.Name | quote }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: users-app-access
   labels:
-    component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-    module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
+    release: {{ .Release.Name | quote }}
 spec:
   policyTypes:
   - Ingress
   - Egress
   podSelector:
     matchLabels:
-      component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-      module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+      component: "{{ .Values.App.Component }}"
+      module: "{{ .Values.App.Module }}"
+      release: {{ .Release.Name | quote }}
   ingress:
   - from:
     - podSelector:
         matchLabels:
           # can access itself
-          component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-          module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+          component: "{{ .Values.App.Component }}"
+          module: "{{ .Values.App.Module }}"
+          release: {{ .Release.Name | quote }}
     - podSelector:
         matchLabels:
           # the bulletinboard ads app
@@ -53,13 +55,15 @@ spec:
     - podSelector:
         matchLabels:
           # can access itself
-          component: "{{ .Release.Name }}-{{ .Values.App.Component }}"
-          module: "{{ .Release.Name }}-{{ .Values.App.Module }}"
+          component: "{{ .Values.App.Component }}"
+          module: "{{ .Values.App.Module }}"
+          release: {{ .Release.Name | quote }}
     - podSelector:
         matchLabels:
           # the user db
-          component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
-          module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+          component: "{{ .Values.Db.Component }}"
+          module: "{{ .Values.Db.Module }}"
+          release: {{ .Release.Name | quote }}
     - podSelector:
         matchLabels:
           # the dns server
