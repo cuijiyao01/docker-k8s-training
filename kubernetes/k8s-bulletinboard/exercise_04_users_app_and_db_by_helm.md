@@ -54,7 +54,7 @@ Before you can install the helm chart, open the *values.yaml* file. We left out 
 
 Now do `helm install bulletinboard-users` in the `k8s-bulletinboard` folder containing the `bulletinboard-users` subfolder. In the current state the user-service will run, but there will be no data in the database. 
 You can test that the user-service is runing by doing: 
-- `kubectl get all -l "component=users"`, the pods should be on state running.
+- `kubectl get all -l "component=users"`, the pods should be on state running. <details><summary> Here you can see a example output.</summary><p><img src="images/kubectl-get-all-users.png" width="800"></p></details>
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`: this terminal is blocked by the open connection to the pod, either put it in the background (`crtl + z` + `bg`) or open a second terminal (`crtl + shift + t`)
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`
 - post a user: `curl -i -X POST localhost:8081/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data '{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'`
