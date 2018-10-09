@@ -21,8 +21,11 @@ spec:
     spec:
       volumes:
       - name: init
-        configMap:
-          name: ads-db-init
+        secret:
+          secretName: ads-db-secrets
+          items:          
+          - key: initdb.sql
+            path: initdb.sql
       containers:
       - name: ads-db
         image: postgres:9.6
@@ -43,7 +46,7 @@ spec:
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ads-db-secret
+              name: ads-db-secrets
               key: postgres_password_value
   volumeClaimTemplates:
   - metadata:
