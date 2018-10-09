@@ -96,6 +96,7 @@ Everything is removed at once or is there still something there? Why?
 ## Step 3: Parameterize the DB kubernetes manifest files
 
 > **IMPORTANT: Uninstall chart first**
+You need to do this because 
 
 ### Values - `values.yaml`
 
