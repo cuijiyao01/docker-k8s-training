@@ -1,20 +1,3 @@
-Exercise 1: Getting Started - Create Helm Chart
-====================================================
-
-
-
-## Step 3: Author the information about the chart 
-
-
-- `Values.yaml` Change service port https://github.com/helm/helm/blob/master/docs/charts.md#values-files
-
-Update the Chart
-
-```commandline
-helm upgrade <chart-name> bulletinboard-ads 
-```
-
-
 Exercise 1: Creating a chart to include the Database required by the ads application
 ====================================================
 
