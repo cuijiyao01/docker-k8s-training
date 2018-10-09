@@ -71,9 +71,13 @@ _Further informations on [Configmap from files](https://kubernetes.io/docs/tasks
 
 Purpose: Create a **Configmap** for the external (outside the docker image) configuration of **ads:app** - for environment variable SPRING_PROFILES_ACTIVE, we want to "pass" to **Bulletinboard-Ads** Docker container.
 
-- The app needs to get specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way Spring gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. So the key shall be `spring_profiles_active_value` with the value `k8s`.
+- The app needs to get specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way Spring gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. 
+
+- Therefor specify a **Configmap** `ads-app-config-envs` with key `spring_profiles_active_value` and value `k8s`.
 
 - By default **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
+
+- Save the **Configmap** spec under the filename `ads-app-configmap-envs.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
