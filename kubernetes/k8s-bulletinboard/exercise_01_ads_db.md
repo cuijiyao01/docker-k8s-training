@@ -102,7 +102,7 @@ metadata:
 ```
 
 - Refer to the "headless" service, created earlier and make shure that only one DB pod gets created. 
-- Additional refer under `volumes` to the secret with database initialization script and refer to the configmap and secret when setting up Postgres environment variables in the Docker container.
+- Additional refer under `volumes` to the secret item with database initialization script and refer to the configmap and right secret item when setting up Postgres environment variables in the Docker container.
 
 ```
 spec:
