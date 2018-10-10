@@ -43,10 +43,9 @@ spring:
     username: <name-of-ads-db-postgres-user> 
     password: <password-of-ads-db-postgres-user> 
     driverClassName: org.postgresql.Driver
-    driver-class-name: org.postgresql.Driver
 ```
 
-Hint: Please substitute the place holders below <...> by proper values !
+_**Hint: Please substitute the place holders below <...> by proper values !**_
 
 - Save the file under the filename `application-k8s.yml` in folder `k8s-bulletinboard/ads`.
 
