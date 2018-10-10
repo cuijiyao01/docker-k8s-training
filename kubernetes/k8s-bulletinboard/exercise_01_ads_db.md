@@ -56,24 +56,24 @@ To shorten names, entities will be references by their component & module values
 - Because the data in a **Secret** is base64 encoded we will use *kubectl* itself to generate the yaml: 
 
 ```
- kubectl create secret generic ads-db-secrets --from-file initdb.sql --dry-run -o yaml > ads-db-secrets.yaml
+ kubectl create secret generic ads-db-secret --from-file initdb.sql --dry-run -o yaml > ads-db-secret.yaml
 ```
 
 - Because of the `--dry-run` parameter this will only generate a yaml and does not create the **Secret** itself. 
 
-- Now open the file `ads-db-secrets.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
+- Now open the file `ads-db-secret.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
 
-- Now call `kubectl apply -f ads-db-secrets.yaml` to create the **Secret**.
+- Now call `kubectl apply -f ads-db-secret.yaml` to create the **Secret**.
 
 ## Step 3: Secret for Postgres Superuser Password
 
 Purpose: Create a **Secret** with password for Postgres superuser
 
 We could create a 2nd **Secret** for this. Yet, we will instead add this info to the above **Secret** so we have less files and entities on kubernetes. 
-- Open the file `ads-db-secrets.yaml` and add a data item with key `postgres_password_value` and with a value of your choice which will become the PostgreSQL master password. You will have to base64 encode the password before entering it into the YAML file.
-You can take any String as a master password, but if you want a random string you could do e.g. `openssl rand -base64 15 | base64` which will already give you a random already encoded password. (The first `-base64` option is used to only have alphanumerics in the password). Save the file `ads-db-secrets.yaml`.
+- Open the file `ads-db-secret.yaml` and add a data item with key `postgres_password_value` and with a value of your choice which will become the PostgreSQL master password. You will have to base64 encode the password before entering it into the YAML file.
+You can take any String as a master password, but if you want a random string you could do e.g. `openssl rand -base64 15 | base64` which will already give you a random already encoded password. (The first `-base64` option is used to only have alphanumerics in the password). Save the file `ads-db-secret.yaml`.
 
-- Now call `kubectl apply -f ads-db-secrets.yaml` to update the **Secret** with the 2nd data item.
+- Now call `kubectl apply -f ads-db-secret.yaml` to update the **Secret** with the 2nd data item.
 
 ## Step 4: "Headless" Service
 Purpose: Create the **"headless" Service**, required to access the pod, created by the statefulset.
@@ -123,7 +123,7 @@ spec:
       volumes:
       - name: init
         secret:
-          secretName: <name-of-init-secret>
+          secretName: <name-of-secret>
           items:
           - key: <key-name-of-INITDB.SQL-file>
             path: initdb.sql
