@@ -32,31 +32,37 @@ We will uses the name to identify in the deployment what ImagePullSecret to use.
 
 ## Step 1: Secret for Application properties file
 
-Purpose: Create a **Secret** for the external (outside the docker image) configuration  of **ads:app**. Here for the **Application properties file** with name `application-k8s.yml`.
+Purpose: Create a **Secret** for the external (outside the docker image) configuration of **ads:app**: **Application properties file** - `application-k8s.yml`. Since the file will contain sensitive data like password, etc. we use a **Secret** instead of a **Configmap**.
 
-Contrary to what we did for __ads:db__ where we used two configmaps, one for the environment variables and one for the initdb.sql file/script, will will only use one CM for both files and environment variables.
+- The content of the file - finally created at the filesystem of the Docker Container - should look like the following:
 
-- Create a file `ads-app-configmap.yaml` in folder `k8s-bulletinboard/ads` where we will specify a **Configmap** `ads-app-config` for all the external configuration information for Bulletinboard Ads App. Do not forget to specify proper labels for component and module !
-
-- First part of the data is the content of the **Application properties file** - finally created at the filesystem of the Docker Container - with name `application-k8s.yml`. You can store its content under a key `application-k8s` in the configMap. The content should look like the following:  
-**_Hint: Please substitute the place holders below <...> by proper values !_**
 ```
----
 spring: 
   datasource: 
     url: jdbc:postgresql://<name-of-ads-db-pod>.<name-of-ads-db-headless-service>:5432/ads
     username: <name-of-ads-db-postgres-user> 
     password: <password-of-ads-db-postgres-user> 
     driverClassName: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
 ```
-The content above is itself a yaml, to make this readable also in the configmap yaml we suggest to store it as a text block using the literal block scalar: `|` .
+
+Hint: Please substitute the place holders below <...> by proper values !
+
+- Save the file under the filename `application-k8s.yml` in folder `k8s-bulletinboard/ads`.
+
+- Because the data in a **Secret** is base64 encoded we will use *kubectl* itself to generate the yaml for the **Secret** itself: 
+
 ```
-Example: |
-  a block of
-  text in more
-    than a line.
+ kubectl create secret generic ads-app-secret-files --from-file application-k8s.yml --dry-run -o yaml > ads-app-secret-files.yaml
 ```
-Please keep the indent stucture above also in the text block, they are crucial for yamls. If you want to learn more about [strings in yamls you can read it here.](http://blogs.perl.org/users/tinita/2018/03/strings-in-yaml---to-quote-or-not-to-quote.html). 
+
+- Because of the `--dry-run` parameter this will only generate a yaml and does not create the **Secret** itself. 
+
+- Now open the file `ads-db-secret-files.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
+
+- Now call `kubectl apply -f ads-db-secret-files.yaml` to create the **Secret**.
+
+_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
 
 ## Step 2: Configmap for Spring Profile 
 
@@ -73,7 +79,6 @@ Purpose: Create a **Configmap** for the external (outside the docker image) conf
 - Now call `kubectl apply -f ads-app-configmap-envs.yaml` to create the **Configmap**.
 
 _Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
-_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
 
 ## Step 2: Deployment
 
