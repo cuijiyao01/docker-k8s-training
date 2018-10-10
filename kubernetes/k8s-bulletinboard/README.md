@@ -13,7 +13,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 
 The choosen structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the Application-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.  
 For name of files and of the entities itself we choose the schema: `<component>-<module>-<entity>.yaml` so e.g the yaml for the service for Bulletinboard-ads application would be named `ads-app-service.yaml`.  
-To shorten names in the exercise descriptions, entities will be references by their component & module values, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
+To shorten names in the exercise descriptions, entities will be referenced by their component & module values, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
 
 
 ## Exercises
