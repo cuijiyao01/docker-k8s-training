@@ -52,30 +52,30 @@ _**Hint: Please substitute the place holders below <...> by proper values !**_
 - Because the data in a **Secret** is base64 encoded we will use *kubectl* itself to generate the yaml for the **Secret** itself: 
 
 ```
- kubectl create secret generic ads-app-secret-files --from-file application-k8s.yml --dry-run -o yaml > ads-app-secret-files.yaml
+ kubectl create secret generic ads-app-secret --from-file application-k8s.yml --dry-run -o yaml > ads-app-secret.yaml
 ```
 
 - Because of the `--dry-run` parameter this will only generate a yaml and does not create the **Secret** itself. 
 
 - Now open the file `ads-db-secret-files.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
 
-- Now call `kubectl apply -f ads-db-secret-files.yaml` to create the **Secret**.
+- Now call `kubectl apply -f ads-db-secret.yaml` to create the **Secret**.
 
 _Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
 
 ## Step 2: Configmap for Spring Profile 
 
-Purpose: Create a **Configmap** for the external (outside the docker image) configuration of **ads:app** - for environment variable SPRING_PROFILES_ACTIVE, we want to "pass" to **Bulletinboard-Ads** Docker container.
+Purpose: Create a **Configmap** for the external (outside the docker image) configuration of **ads:app**, which will be the environment variable SPRING_PROFILES_ACTIVE, we want to "pass" to **Bulletinboard-Ads** Docker container.
 
-- The app needs to get specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way Spring gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. 
+- The app needs to get specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way **Spring** gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. 
 
-- Therefor specify a **Configmap** `ads-app-config-envs` with key `spring_profiles_active_value` and value `k8s`.
+- Therefor specify a **Configmap** `ads-app-config` with key `spring_profiles_active_value` and value `k8s`.
 
 - By default **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
-- Save the **Configmap** spec under the filename `ads-app-configmap-envs.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+- Save the **Configmap** spec under the filename `ads-app-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
-- Now call `kubectl apply -f ads-app-configmap-envs.yaml` to create the **Configmap**.
+- Now call `kubectl apply -f ads-app-configmap.yaml` to create the **Configmap**.
 
 _Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
 
@@ -106,11 +106,12 @@ spec:
       module: <name-of-module>
 ```
 
-- Assign to the volume `ads-app-properties` from the **Configmap** the key for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:  
+- Assign to the volume `ads-app-properties` from the **Secret** the key for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:  
 ```
 cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
 ```
-Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
+
+- Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
 
 ```  
   template:
@@ -121,10 +122,10 @@ Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corres
     spec:
       volumes:
       - name: ads-app-properties
-        configMap:
-          name: <name-of-configmap>
+        secret:
+          secretName: <name-of-secret>
           items:
-          - key: <name-of-the-key-with-the-file-content> 
+          - key: <name-of-the-key-with-the-file-content>
             path: application-k8s.yml
       imagePullSecrets:
       - name: artifactory
