@@ -42,10 +42,11 @@ templates
 
 ## Step 2: First Install
 
-We will see what the helm chart looks like now!
+We will see what the helm chart looks like now! Execute
 ```bash
-$ helm install bulletinboard-ads 
+$ helm install .
 ```
+in bulletinboard-ads folder.
 
 Inspect installation
 ```bash
@@ -97,6 +98,9 @@ Everything is removed at once or is there still something there? Why?
 
 > **IMPORTANT: Uninstall chart first**
 You need to do this because trying to update the chart will not work due to all the changes we will make to the files.
+
+We will now start to parameterize the  yamls.
+**Hint:** To test if what we do has the desired effect we should use `helm install --dry-run --debug .` and/or `helm lint`. 
 
 ### Values - `values.yaml`
 
