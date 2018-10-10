@@ -57,9 +57,9 @@ _**Hint: Please substitute the place holders below <...> by proper values !**_
 
 - Because of the `--dry-run` parameter this will only generate a yaml and does not create the **Secret** itself. 
 
-- Now open the file `ads-db-secret.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
+- Now open the file `ads-app-secret.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
 
-- Now call `kubectl apply -f ads-db-secret.yaml` to create the **Secret**.
+- Now call `kubectl apply -f ads-app-secret.yaml` to create the **Secret**.
 
 _Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
 
