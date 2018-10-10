@@ -54,10 +54,12 @@ To shorten names, entities will be references by their component & module values
 ```
 
 - Because the data in a **Secret** is base64 encoded we will use *kubectl* itself to generate the yaml: 
+
 ```
  kubectl create secret generic ads-db-secrets --from-file initdb.sql --dry-run -o yaml > ads-db-secrets.yaml
 ```
-  Because of the `--dry-run` parameter this will only generate a yaml and does not create the secret itself. 
+
+- Because of the `--dry-run` parameter this will only generate a yaml and does not create the **Secret** itself. 
 
 - Now open the file `ads-db-secrets.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
 
