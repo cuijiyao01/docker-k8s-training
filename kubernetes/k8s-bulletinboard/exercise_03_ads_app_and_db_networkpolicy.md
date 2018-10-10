@@ -5,7 +5,7 @@
 
 ## Scope
 
-Increase security and establish a network policy for ads DB and enable TLS (https) for the ingress. 
+Increase security by **establishing a network policy** for Ads DB and **enable TLS** (https) for the **Ingress** for Ads App. 
 
 <img src="images/k8s-bulletinboard-target-picture-networkpolicy.png" width="800" />
 
