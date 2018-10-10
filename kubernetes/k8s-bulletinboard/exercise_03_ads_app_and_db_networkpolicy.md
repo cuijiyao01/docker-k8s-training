@@ -7,6 +7,8 @@
 
 Increase security and establish a network policy for ads DB and enable TLS (https) for the ingress. 
 
+<img src="images/k8s-bulletinboard-target-picture-networkpolicy.png" width="800" />
+
 ## Step 0: prerequisites
 
 Currently none.
@@ -21,7 +23,7 @@ We want only that  __ads:db__ only takes messages from __ads:app__. Configure a 
 You can check the [network policy exercise](../exercise_08_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy.  
 Also we want to block all outgoing traffic by denying all egress traffic. You can see [here how to do so](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/11-deny-egress-traffic-from-an-application.md).
 
-<details> <summary>If you need further hints here is a skelton network policy!</summary>
+<details> <summary>If you need further hints here is a skeleton network policy!</summary>
 <p>
 
 ```yaml

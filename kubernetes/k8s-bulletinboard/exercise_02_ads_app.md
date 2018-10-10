@@ -87,14 +87,14 @@ Purpose: Create the **Deployment**, which is dependend on the Configmap, created
 
 _Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
 
-- Specify a **Deployment** for the **Bulletinboard Ads** with 2 instances, with name `ads-app` and with proper labels and selector for component and module. 
+- Specify a **Deployment** for the **Bulletinboard Ads** with 2 instances, with name `ads-app-deployment` and with proper labels and selector for component and module. 
 
 ```
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ads-app
+  name: ads-app-deployment
   labels:
     component: <name-of-component>
     module: <name-of-module>
@@ -134,7 +134,7 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
         image: <bulletinboard-ads-docker-image>
         ports:
         - containerPort: 8080
-          name: ads-app
+          name: ads-app-port
         env:
         - name: SPRING_PROFILES_ACTIVE
           valueFrom:
@@ -146,9 +146,9 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
           name: ads-app-properties    
 ```
 
-- When you are ready with the specification of the **Deployment** save it under the filename `ads-app-deployment.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-deployment.yaml` to create the **Deployment** `ads-app`.
+- When you are ready with the specification of the **Deployment** save it under the filename `ads-app-deployment.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-deployment.yaml` to create the **Deployment** `ads-app-deployment`.
 
-- After successful creation of the **Deployment** check, wether **2** Pods got created properly via `kubectl get pods`. The names of the 2 pods should be something like `ads-app-xx-yx`, `ads-app-xx-yy` and `ads-app-xx-yz`.
+- After successful creation of the **Deployment** check, wether **2** Pods got created properly via `kubectl get pods`. The names of the 2 pods should be something like `ads-app-deployment-xx-yx`, `ads-app-deployment-xx-yy` and `ads-app-deployment-xx-yz`.
 
 
 ## Step 4: Service & Ingress
@@ -159,7 +159,7 @@ _Hint: In the following sections we will provide you yaml-snippets of the Deploy
 
 ### Service
 
-- Specify a **Service** for the **Bulletinboard Ads**, with name `ads-app-service`, a named targetPort `ads-app` and with proper labels and selector for component and module. 
+- Specify a **Service** for the **Bulletinboard Ads**, with name `ads-app-service`, a named targetPort `ads-app-port` and with proper labels and selector for component and module. 
 
 
 ```
