@@ -32,7 +32,7 @@ We will uses the name to identify in the deployment what ImagePullSecret to use.
 
 ## Step 1: Secret for Application properties file
 
-Purpose: Create a **Secret** for the external (outside the docker image) configuration of **ads:app**: **Application properties file** - `application-k8s.yml`. Since the file will contain sensitive data like password, etc. we use a **Secret** instead of a **Configmap**.
+Purpose: Create a **Secret** for the external (outside the docker image) configuration of **ads:app**, which will be the **Application properties file** `application-k8s.yml`. Since the file will contain sensitive data like passwords, etc. we use a **Secret** instead of a **Configmap**.
 
 - The content of the file - finally created at the filesystem of the Docker Container - should look like the following:
 
