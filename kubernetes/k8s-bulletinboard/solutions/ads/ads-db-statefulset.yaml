@@ -2,12 +2,12 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ads-db
+  name: ads-db-statefulset
   labels:
     component: ads
     module: db
 spec:
-  serviceName: ads-db-headless
+  serviceName: ads-db-service
   replicas: 1
   selector:
     matchLabels:
@@ -22,16 +22,16 @@ spec:
       volumes:
       - name: init
         secret:
-          secretName: ads-db-secrets
+          secretName: ads-db-secret
           items:          
           - key: initdb.sql
             path: initdb.sql
       containers:
-      - name: ads-db
+      - name: ads-db-pod
         image: postgres:9.6
         ports:
         - containerPort: 5432
-          name: ads-db
+          name: ads-db-port
         volumeMounts:
         - name: ads-db-volume
           mountPath: /var/lib/postgresql/data/
@@ -41,12 +41,12 @@ spec:
         - name: PGDATA
           valueFrom:
             configMapKeyRef:
-              name: ads-db-config
+              name: ads-db-configmap
               key: pgdata_value
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ads-db-secrets
+              name: ads-db-secret
               key: postgres_password_value
   volumeClaimTemplates:
   - metadata:
