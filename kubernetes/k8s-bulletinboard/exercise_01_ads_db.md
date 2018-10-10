@@ -82,6 +82,8 @@ Purpose: Create the **"headless" Service**, required to access the pod, created 
 
 - Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless" Service**.
 
+> [Hint](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/extend_helm/kubernetes/exercise_07_statefulset.md#step-0-create-a-headless-service)
+
 ## Step 5: Statefulset
 
 Purpose: Create the **Statefulset**, which uses both Configmaps, the Secret and the "headless" Service, created in step 1-4 (Creation of Statefulset will fail, if those entities are not yet available !).
@@ -90,7 +92,7 @@ Purpose: Create the **Statefulset**, which uses both Configmaps, the Secret and 
 
 _Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders `<...>` by proper values !_
 
-- Specify a **Statefulset** for the Postgres Database Pod with name `ads-db` with proper labels and selector for component and module. 
+- Specify a **Statefulset** for the Postgres Database Pod with name `ads-db-statefulset` with proper labels and selector for component and module. 
 
 ```
 ---
@@ -128,11 +130,11 @@ spec:
           - key: <key-name-of-INITDB.SQL-file>
             path: initdb.sql
       containers:
-      - name: ads-db
+      - name: ads-db-pod
         image: postgres:9.6
         ports:
         - containerPort: 5432
-          name: ads-db
+          name: ads-db-port
         volumeMounts:
         - name: ads-db-volume
           mountPath: /var/lib/postgresql/data/
@@ -167,9 +169,9 @@ spec:
           storage: 1Gi
 ```
 
-- When you are ready with the specification of the **Statefulset** save it under the filename `ads-db.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-db.yaml` to create the **Statefulset** `ads-db`.
+- When you are ready with the specification of the **Statefulset** save it under the filename `ads-db-statefulset.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-db-statefulset.yaml` to create the **Statefulset** `ads-db-statefulset`.
 
-- After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-0` got created properly  via `kubectl get pod ads-db-0 -o yaml` or in more detail via `kubectl describe pod ads-db-0` . Also check wether the Database is ready to be connected via `kubectl logs ads-db-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
+- After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-pod-0` got created properly  via `kubectl get pod ads-db-pod-0 -o yaml` or in more detail via `kubectl describe pod ads-db-pod-0` . Also check wether the Database is ready to be connected via `kubectl logs ads-db-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
 
 
 ## Optional- Step 6: Detailled Check wether Pod with postgres DB is running properly
@@ -178,6 +180,6 @@ Purpose: check wether the database is running and accepting connections. Use the
 
 - Install pgadmin locally on your virtual machine. For the training virtual machine, use the following command to install the software: `sudo apt install pgadmin3`
 
-- Use `kubectl port-forward` to forward the database port from the database pod of your statefulset to your local virtual machine. 
+- Use `kubectl port-forward ads-db-pod-0 5432:5432` to forward the database port from the database pod of your statefulset to your local virtual machine. 
 
-- With pgadmin, connect to the forwarded database port on your `localhost` and supply the credentials for the user that got created on the database by the initialization script. If the login succeeds, your database is up and running and this part of the exercise is complete.
+- With e.g. pgadmin, connect to the forwarded database port on your `localhost` and supply the credentials for the user that got created on the database by the initialization script. If the login succeeds, your database is up and running and this part of the exercise is complete.
