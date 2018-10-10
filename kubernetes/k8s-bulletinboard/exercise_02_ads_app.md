@@ -57,7 +57,7 @@ _**Hint: Please substitute the place holders below <...> by proper values !**_
 
 - Because of the `--dry-run` parameter this will only generate a yaml and does not create the **Secret** itself. 
 
-- Now open the file `ads-db-secret.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
+- Now open the file `ads-app-secret.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
 
 - Now call `kubectl apply -f ads-app-secret.yaml` to create the **Secret**.
 
