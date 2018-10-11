@@ -5,7 +5,9 @@
 
 ## Scope
 
-Increase security and establish a network policy for ads DB and enable TLS (https) for the ingress. 
+Increase security by **establishing a network policy** for Ads DB and **enable TLS** (https) for the **Ingress** for Ads App. 
+
+<img src="images/k8s-bulletinboard-target-picture-networkpolicy.png" width="800" />
 
 ## Step 0: prerequisites
 
@@ -21,7 +23,7 @@ We want only that  __ads:db__ only takes messages from __ads:app__. Configure a 
 You can check the [network policy exercise](../exercise_08_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy.  
 Also we want to block all outgoing traffic by denying all egress traffic. You can see [here how to do so](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/11-deny-egress-traffic-from-an-application.md).
 
-<details> <summary>If you need further hints here is a skelton network policy!</summary>
+<details> <summary>If you need further hints here is a skeleton network policy!</summary>
 <p>
 
 ```yaml
@@ -119,7 +121,7 @@ spec:
 Now we have enabled https connection for the ingress and therefore also for the ads service behind the ingress.
 Open `https://<firstpart of url>.ingress.<clustername>.<projectname>.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
 To check that everything worked check out the certificate you get when opening the url, it should look like this:  
-<p align="center"><img src="images/Cerfificate.png" width="700"/></p>
+<p align="center"><img src="images/Certificate.png" width="700"/></p>
 
 
 

@@ -42,10 +42,11 @@ templates
 
 ## Step 2: First Install
 
-We will see what the helm chart looks like now!
+We will see what the helm chart looks like now! Execute
 ```bash
-$ helm install bulletinboard-ads 
+$ helm install .
 ```
+in bulletinboard-ads folder.
 
 Inspect installation
 ```bash
@@ -96,19 +97,22 @@ Everything is removed at once or is there still something there? Why?
 ## Step 3: Parameterize the DB kubernetes manifest files
 
 > **IMPORTANT: Uninstall chart first**
-You need to do this because 
+You need to do this because trying to update the chart will not work due to all the changes we will make to the files.
+
+We will now start to parameterize the  yamls.
+**Hint:** To test if what we do has the desired effect we should use `helm install --dry-run --debug .` and/or `helm lint`. 
 
 ### Values - `values.yaml`
 
 ```yaml
 Db:
-  ConfigName: ads-db-config
-  CredentialName: ads-db-cred
+  ConfigName: ads-db-configmap
+  SecretName: ads-db-secret
   ServiceName: ads-db-service
-  SSetName: ads-db-sset
+  StatefulsetName: ads-db-statefulset
   AccessName: ads-db-access
-  Component: ads-database
-  Module: ads-db
+  Component: ads
+  Module: db
 ```
 
 ### Metadata Names
@@ -129,16 +133,15 @@ Create fully qualified name for DB config map.
 |File         | Name      | 
 | ------------- |-----------| 
 | `ads-db-configmap.yaml`| `metadata:  `<br/>`  name: {{ template "db-config-fullname" . }}`|
-| `ads-db-secrets.yaml`| `metadata:  `<br/>`  name: {{ template "db-credential-fullname" . }}`|
+| `ads-db-secret.yaml`| `metadata:  `<br/>`  name: {{ template "db-credential-fullname" . }}`|
 | `ads-db-service.yaml`| `metadata:  `<br/>`  name: {{ template "db-service-fullname" . }}`|
 | `ads-db.yaml`| `metadata:  `<br/>`  name: {{ template "db-sset-fullname" . }}`|
 | `ads-db-networkpolicy.yaml`| `metadata:  `<br/>`  name: {{ template "db-fullname" . }}`|
 
-##### Updated references in `ads-db.yaml'
+##### Updated references in `ads-db-statefulset.yaml'
 
 ```yaml
 [...]
-
 spec:
   serviceName: {{ template "db-service-fullname" . }}
 [...]
@@ -176,6 +179,7 @@ metadata:
 | ` component: ads`| `component: "{{ .Values.Db.Component }}"`|
 | ` module: db`| `module: "{{ .Values.Db.Module }}"`|
 
+Add release label as selector/matchlabel component to distinquish different installations.
 
 ```yaml
     matchLabels:
@@ -194,10 +198,9 @@ in `ads-db-networkpolicy.yaml` as this is defining the labels for accessing the 
 
 ## Step 3: Parameterize PostgreSQL
 
-### Introduce following values - `values.yaml`
+### Introduce following values in `values.yaml`
 
 **Hint: Please substitute the place holders below <...> by proper values !**
-
 
 ```yaml
 Db:

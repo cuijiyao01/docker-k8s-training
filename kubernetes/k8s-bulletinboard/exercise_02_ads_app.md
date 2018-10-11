@@ -5,14 +5,15 @@
 
 ## Scope
 
-- In this second exercise we will focus on the setup of **Bulletinboard-Ads Application/Microservice** itself (See picture below) and make it available within the K8s cluster via a **Service** and publish externally via an **Ingress**.
-- Finally we will check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
+- In this second exercise we will focus on the setup of **Bulletinboard-Ads Application/Microservice** itself (Ads:App) and make it available within a K8s cluster via a **Service** and publish externally/ into the Internet via an **Ingress** (See picture below).
+
+- Finally we will check **Ads App** running properly together with **Ads DB** (e.g. create advertisements via postman, display list of ads in browser, ...)
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app.png" width="800" />
 
-- We decided our initial demand requires at least 2 instances of our app. Therefore we need horizontal scaling for the Ads app we will use a **Deployment**  with 2 instances (replicaset=2).
+- We decided our initial exepected load to **Ads App** requires at least 2 instances of our **Ads App**. Therefore we need horizontal scaling for the **Ads App**, which we provide using a **Deployment** with 2 instances (replicaset=2).
 
-- A specific version of **Bulletinboard-Ads**, slighty adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in **SAP Artifactory in DMZ**.
+- A specific version of Cloud Curriculum **Bulletinboard-Ads**, slighty adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in [**SAP Artifactory in DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home).
 
 - **Bulletinboard-Ads** is a **Spring Boot** application and can read [configuration from various external sources](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html). The Docker Image of **Bulletinboard-Ads** is reading the configuration from an **Application properties file** with name `application-k8s.yml`.
 
@@ -22,13 +23,16 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-labels-1.png" width="800" />
 
-## Step 0: Create ImagePullSecret for SAP artifactory repo cc-k8s-course
+## Step 0: ImagePullSecret for SAP artifactory repo cc-k8s-course
 
-The Dockerimage for Bulletinboard-ads is pushed to the SAP artifactory. To retrieve it from there you need to create a docker-registry secret named _artifactory_ by executing the command below:
+Purpose: The Dockerimage for Bulletinboard-ads is pushed to the [**SAP Artifactory DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home). To retrieve it from there you need the corresponding credentials (user/password) and 'location'/ repository in SAP Artifactory DMZ ([cc-k8s-course.docker.repositories.sap.ondemand.com](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course)) and provide these to K8s when creating **Ads App**.
+
+- To create a docker-registry **Secret** named _artifactory_ by executing the command below (Using the prepared credentials):
+
 ```
 kubectl create secret docker-registry artifactory --docker-server=cc-k8s-course.docker.repositories.sap.ondemand.com --docker-username=cc-k8s-course-r1 --docker-password=oQHCMaS05Z1i
 ```
-We will uses the name to identify in the deployment what ImagePullSecret to use.
+- We will uses the **Secret** name to identify in the **Deployment** what ImagePullSecret to use.
 
 ## Step 1: Secret for Application properties file
 
@@ -71,7 +75,7 @@ Purpose: Create a **Configmap** for the external (outside the docker image) conf
 
 - Therefor specify a **Configmap** `ads-app-config` with key `spring_profiles_active_value` and value `k8s`.
 
-- By default **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
+- By default this specific version of **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
 - Save the **Configmap** spec under the filename `ads-app-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
@@ -81,20 +85,20 @@ _Further informations on [Configmap and Container Environment Variables](https:/
 
 ## Step 2: Deployment
 
-Purpose: Create the **Deployment**, which is dependend on the Configmap, created in step 1 (Creation of Deployment will fail, if it is not yet available !). Also the `artifactory` secret is needed to pull the image.
+Purpose: Create the **Deployment**, which is dependend on the **Configmap** and **Secret**, created in step 1 (Creation of Deployment will fail, if those are not yet available !). Also the **Secret** `artifactory` is needed to pull the image.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-deployment.png" width="300" />
 
-_Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
+_Hint: In the following sections we will provide you several yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
 
-- Specify a **Deployment** for the **Bulletinboard Ads** with 2 instances, with name `ads-app` and with proper labels and selector for component and module. 
+- Specify a **Deployment** for the **Bulletinboard Ads** with 2 instances, with name `ads-app-deployment` and with proper labels and selector for component and module. 
 
 ```
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ads-app
+  name: ads-app-deployment
   labels:
     component: <name-of-component>
     module: <name-of-module>
@@ -134,7 +138,7 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
         image: <bulletinboard-ads-docker-image>
         ports:
         - containerPort: 8080
-          name: ads-app
+          name: ads-app-port
         env:
         - name: SPRING_PROFILES_ACTIVE
           valueFrom:
@@ -146,9 +150,9 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
           name: ads-app-properties    
 ```
 
-- When you are ready with the specification of the **Deployment** save it under the filename `ads-app.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app.yaml` to create the **Deployment** `ads-app`.
+- When you are ready with the specification of the **Deployment** save it under the filename `ads-app-deployment.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-deployment.yaml` to create the **Deployment** `ads-app-deployment`.
 
-- After successful creation of the **Deployment** check, wether **2** Pods got created properly via `kubectl get pods`. The names of the 2 pods should be something like `ads-app-xx-yx`, `ads-app-xx-yy` and `ads-app-xx-yz`.
+- After successful creation of the **Deployment** check, wether **2** Pods got created properly via `kubectl get pods`. The names of the 2 pods should be something like `ads-app-deployment-xx-yx`, `ads-app-deployment-xx-yy` and `ads-app-deployment-xx-yz`.
 
 
 ## Step 4: Service & Ingress
@@ -159,7 +163,7 @@ _Hint: In the following sections we will provide you yaml-snippets of the Deploy
 
 ### Service
 
-- Specify a **Service** for the **Bulletinboard Ads**, with name `ads-app-service`, a named targetPort `ads-app` and with proper labels and selector for component and module. 
+- Specify a **Service** for the **Bulletinboard Ads**, with name `ads-app-service`, a named targetPort `ads-app-port` and with proper labels and selector for component and module. 
 
 
 ```
