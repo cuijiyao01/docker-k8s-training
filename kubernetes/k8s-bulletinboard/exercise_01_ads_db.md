@@ -174,12 +174,12 @@ spec:
 - After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-statefulset-0` got created properly  via `kubectl get pod ads-db-statefulset-0` or in more detail via `kubectl describe pod ads-db-statefulseet-0` . Also check wether the Database is ready to be connected via `kubectl logs ads-db-statefulset-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
 
 
-## Optional- Step 6: Detailled Check wether Pod with postgres DB is running properly
+## Optional- Step 6: Detailled Check wether Pod with Postgres DB is running properly
 
-Purpose: check wether the database is running and accepting connections. Use the pgadmin tool for that.
+Purpose: check wether the database is running and accepting connections. Use the [**pgadmin tool**](https://www.pgadmin.org/) for that.
 
-- Install pgadmin locally on your virtual machine. For the training virtual machine, use the following command to install the software: `sudo apt install pgadmin3`
+- Install **pgadmin** locally on your virtual machine. For the training virtual machine, use the following command to install the software: `sudo apt install pgadmin3`
 
 - Use `kubectl port-forward ads-db-statefulset-0 5432:5432` to forward the database port from the database pod of your statefulset to your local virtual machine. 
 
-- With e.g. pgadmin, connect to the forwarded database port on your `localhost` and supply the credentials for the user that got created on the database by the initialization script. If the login succeeds, your database is up and running and this part of the exercise is complete.
+- With e.g. **pgadmin**, connect to the forwarded database port on your `localhost` and supply the credentials for the user that got created on the database by the initialization script. If the login succeeds, your database is up and running and this part of the exercise is complete.
