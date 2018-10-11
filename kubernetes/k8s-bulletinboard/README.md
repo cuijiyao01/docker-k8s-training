@@ -13,28 +13,28 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 
 ## Exercises
 ### [Exercise: "Setup Bulletinboard-Ads Database"](exercise_01_ads_db.md)
-- Database will run as a statefulset: Create prerequisites and configuration entities: configmap-init, init-secret, secret and service
-- Create a statefulset for the ads DB, based on above entities.
+- Database will run as a **Statefulset**: Create prerequisites and configuration entities: configmap, secret and service
+- Create a **Statefulset** for the Ads DB, based on above entities.
 
 
 ### [Exercise: "Setup Bulletinboard-Ads Application"](exercise_02_ads_app.md)
-- Create required configmaps
-- Create deployment for Ads App, based on above entities
-- Publish Ads App via Service and Ingress
+- Create required **Configmap** and **Secret**
+- Create **Deployment** for Ads App, based on above entities
+- Publish Ads App via **Service** and **Ingress**
 - Check Ads App running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
 
 ### [Exercise: "Networkpolicies & TLS for Bulletinboard-Ads and -DB"](exercise_03_ads_app_and_db_networkpolicy.md)
-- Increase security and establish a network policy for
+- Increase security and establish a **Network policy** for
   - Ads DB
   - Ads App
-- Enable https connection by adding TLS certificates to ingress
+- Enable https connection by adding TLS certificates to **Ingress**
 
 ### [Exercise: "Using Helm-chart to setup Bulletinboard-Users Application and -DB](exercise_04_users_app_and_db_by_helm.md)
-- Create Users DB and Users App via existing helm chart
+- Create Users DB and Users App via existing **Helm chart**
 
 
 ### [Optional - Exercise: "Create Helm chart for Bulletinboard-Ads Appl. and -DB"](exercise_05_ads_helm_chart.md)
-- Develop a Helm chart for Ads Db and Ads App
+- Develop a **Helm chart** for Ads Db and Ads App
 
 ## Naming of files and labels 
 
