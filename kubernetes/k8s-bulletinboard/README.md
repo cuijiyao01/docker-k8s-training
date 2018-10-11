@@ -4,7 +4,7 @@
 - In the following **5 exercises** you will learn how to make available a microservice based business application in Kubernetes. 
 - As sample application we are using a slightly adapted version of **[Bulletinboard from the Cloud Curriculum](https://github.wdf.sap.corp/cc-java-dev/cc-coursematerial/wiki)**. 
 - The Bulletinboard is build up by two individual microservices - **Bulletinboard-Ads** and **Bulletinboard-Users**, which communicate across each others to **list**, **create** and **delete Advertisements**. Both have an own database to store data.
-- The overall structure of Bulletinboard, incl. the different **K8s entities**, needed for Kubernetes can be found in the following picture.
+- The overall structure of **Bulletinboard 'in K8s'**, incl. the different **K8s entities**, needed for Kubernetes can be found in the following picture.
 
 <img src="images/k8s-bulletinboard-target-picture-detail-3.png" width="800" />
 
