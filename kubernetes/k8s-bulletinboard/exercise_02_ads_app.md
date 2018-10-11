@@ -147,7 +147,12 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
               name: <name-of-configmap>
         volumeMounts:
         - mountPath: /config/
-          name: ads-app-properties    
+          name: ads-app-properties
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 800Mi
 ```
 
 - When you are ready with the specification of the **Deployment** save it under the filename `ads-app-deployment.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-deployment.yaml` to create the **Deployment** `ads-app-deployment`.
