@@ -5,14 +5,15 @@
 
 ## Scope
 
-- In this second exercise we will focus on the setup of **Bulletinboard-Ads Application/Microservice** itself (See picture below) and make it available within the K8s cluster via a **Service** and publish externally via an **Ingress**.
-- Finally we will check Ads running properly together with Ads DB (e.g. create ads via postman, display list of ads in browser, ...)
+- In this second exercise we will focus on the setup of **Bulletinboard-Ads Application/Microservice** itself (Ads:App) and make it available within a K8s cluster via a **Service** and publish externally/ into the Internet via an **Ingress** (See picture below).
+
+- Finally we will check **Ads App** running properly together with **Ads DB** (e.g. create advertisements via postman, display list of ads in browser, ...)
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app.png" width="800" />
 
-- We decided our initial demand requires at least 2 instances of our app. Therefore we need horizontal scaling for the Ads app we will use a **Deployment**  with 2 instances (replicaset=2).
+- We decided our initial exepected load to **Ads App** requires at least 2 instances of our **Ads App**. Therefore we need horizontal scaling for the **Ads App**, which we provide using a **Deployment** with 2 instances (replicaset=2).
 
-- A specific version of **Bulletinboard-Ads**, slighty adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in **SAP Artifactory in DMZ**.
+- A specific version of Cloud Curriculum **Bulletinboard-Ads**, slighty adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in [**SAP Artifactory in DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home).
 
 - **Bulletinboard-Ads** is a **Spring Boot** application and can read [configuration from various external sources](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html). The Docker Image of **Bulletinboard-Ads** is reading the configuration from an **Application properties file** with name `application-k8s.yml`.
 
@@ -22,13 +23,16 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-labels-1.png" width="800" />
 
-## Step 0: Create ImagePullSecret for SAP artifactory repo cc-k8s-course
+## Step 0: ImagePullSecret for SAP artifactory repo cc-k8s-course
 
-The Dockerimage for Bulletinboard-ads is pushed to the SAP artifactory. To retrieve it from there you need to create a docker-registry secret named _artifactory_ by executing the command below:
+Purpose: The Dockerimage for Bulletinboard-ads is pushed to the [**SAP Artifactory DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home). To retrieve it from there you need the corresponding credentials (user/password) in SAP Artifactory DMZ and provide these to K8s when creating **Ads App**.
+
+- To create a docker-registry **Secret** named _artifactory_ by executing the command below (Using the prepared credentials):
+
 ```
 kubectl create secret docker-registry artifactory --docker-server=cc-k8s-course.docker.repositories.sap.ondemand.com --docker-username=cc-k8s-course-r1 --docker-password=oQHCMaS05Z1i
 ```
-We will uses the name to identify in the deployment what ImagePullSecret to use.
+- We will uses the **Secret** name to identify in the **Deployment** what ImagePullSecret to use.
 
 ## Step 1: Secret for Application properties file
 
