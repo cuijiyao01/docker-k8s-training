@@ -5,7 +5,7 @@ In this exercise you create a network policy for your namespace to restrict acce
 Before you deploy a network policy, check the connection from a random pod to the nginx pods via the service.
 
 Start a busybox image and connect to it. Try to re-use the busybox.yaml from exercise 05 but without the volumes and mounts. Use the `exec` command to open a shell session into it.
-Alternatively spin up a a temporary deployment with `kubectl run busybox --rm -ti --image=busybox /bin/sh`.
+Alternatively spin up a a temporary deployment with `kubectl run busybox --rm -ti --image=alpine:3.8 /bin/sh`.
 
 Do you remember, that your service name is also a valid DNS name? Instead of using an IP address to connect to your service, you can use its actual name (like `nginx-https`).
 
