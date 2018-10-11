@@ -25,7 +25,7 @@
 
 ## Step 0: ImagePullSecret for SAP artifactory repo cc-k8s-course
 
-Purpose: The Dockerimage for Bulletinboard-ads is pushed to the [**SAP Artifactory DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home). To retrieve it from there you need the corresponding credentials (user/password) in SAP Artifactory DMZ and provide these to K8s when creating **Ads App**.
+Purpose: The Dockerimage for Bulletinboard-ads is pushed to the [**SAP Artifactory DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home). To retrieve it from there you need the corresponding credentials (user/password) and 'location'/ repository in SAP Artifactory DMZ ([cc-k8s-course.docker.repositories.sap.ondemand.com](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course)) and provide these to K8s when creating **Ads App**.
 
 - To create a docker-registry **Secret** named _artifactory_ by executing the command below (Using the prepared credentials):
 
