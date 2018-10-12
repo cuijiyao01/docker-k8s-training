@@ -79,9 +79,7 @@ You should send a **'preparation mail'** to all participants about a week before
   <link to your forked repo>/blob/master/preparation.md
 ---------- end -----------
 ```
-An other option would be to take one of our **mail templates**, we have prepared:
-- [Template 1](preparation_email_sample1.txt)
-- [Template 2](preparation_email_sample2.txt)
+An other option would be to take one of our **mail templates**, we have prepared: [Template 1](preparation_email_sample1.txt), [Template 2](preparation_email_sample2.txt)
 
 Technically it would be possible to run most of the exercises also with Docker on Windows/Mac and a local kubectl. **However, we would recommend explicitly exclude support for this setup during the training.**
 
