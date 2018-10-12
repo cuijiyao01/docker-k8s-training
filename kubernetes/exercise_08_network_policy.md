@@ -45,8 +45,8 @@ spec:
         # Ireland
         cidr: 84.203.229.48/29
     - ipBlock:
-        # US-West/Canada
-        cidr: 84.203.229.0/26
+        # Palo Alto
+        cidr: 169.145.89.192/26
     - ipBlock:
         # Montreal
         cidr: 68.67.33.0/25
