@@ -19,5 +19,5 @@ Follow the instructions on the [Getting Started with the k8s training VM Image](
 Once you have your VM up and running, clone this repository to the VM:
 
 ```bash
-git clone https://github.wdf.sap.corp/i323266/docker-k8s-training.git
+git clone https://github.wdf.sap.corp/slvi/docker-k8s-training.git
 ```
