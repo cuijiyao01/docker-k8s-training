@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ads-app-config-envs
+  labels:
+    component: ads
+    module: app
+data:
+  profile: k8s
+  post_user_check: "false"
+  user_route: http://users-service/bulletinboard-users-service
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ads-app-config-files
+  labels:
+    component: ads
+    module: app
+data:
+  application-k8s.yml: |
+    ---
+    spring:
+      datasource:
+        url: jdbc:postgresql://{{ template "db-service-fullname" . }}:{{ .Values.Db.Postgres.Port }}/{{ .Values.Db.Postgres.Database }}
+        username: {{ .Values.Db.Postgres.User}}
+        password: {{ .Values.Db.Postgres.Password }}
+        driverClassName: org.postgresql.Driver
+        driver-class-name: org.postgresql.Driver

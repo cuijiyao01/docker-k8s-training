@@ -1,0 +1,6 @@
+dependencies:
+- name: bulletinboard-users
+  repository: file://../../../users/helm/bulletinboard-users
+  version: 0.1.0
+digest: sha256:e005edbce6f1bc027b6efb898b4a29fbb94111592d06303776f0658fe8d3e32d
+generated: 2018-08-30T06:36:49.3102245+02:00

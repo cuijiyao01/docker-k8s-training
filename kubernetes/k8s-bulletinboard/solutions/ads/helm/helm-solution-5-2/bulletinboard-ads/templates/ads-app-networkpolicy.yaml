@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ads-app-access
+  labels:
+    component: users
+    module: app
+spec:
+  podSelector:
+    matchLabels:
+      component: users
+      module: app
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          component: ads
+          module: db
+    - podSelector:
+        matchLabels:
+          component: users
+          module: app
+    - ipBlock:
+        # Germany
+        cidr: 155.56.0.0/16

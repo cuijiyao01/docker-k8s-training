@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ads-app
+  labels:
+    component: ads
+    module: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: ads
+      module: app
+  template:
+    metadata:
+      labels:
+        component: ads
+        module: app
+    spec:
+      volumes:
+      - name: ads-app-properties
+        configMap:
+          name: ads-app-config-files
+      imagePullSecrets:
+      - name: artifactory
+      initContainers:
+      - name: init-postgres
+        image: alpine
+        command: ['sh', '-c', 'for i in $(seq 1 200); do nc -z -w3 {{ template "db-service-fullname" . }} {{ .Values.Db.Postgres.Port }} && exit 0 || sleep 3; done; exit 1']
+      containers:
+      - name: ads
+        image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
+        ports:
+        - containerPort: 8080
+          name: ads-app
+        env:
+        - name: USER_ROUTE
+          valueFrom:
+            configMapKeyRef:
+              key: user_route
+              name: ads-app-config-envs
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            configMapKeyRef:
+              key: profile
+              name: ads-app-config-envs
+        - name: POST_USER_CHECK
+          valueFrom:
+            configMapKeyRef:
+              key: post_user_check
+              name: ads-app-config-envs
+        volumeMounts:
+        - mountPath: /config/
+          name: ads-app-properties
