@@ -38,7 +38,7 @@ High level topics are:
 
 ## Preparation and Setup
 
-Follow the instructions on the page [Prerequisites and Environment Setup](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/preparation.md).
+Follow the instructions on the page [Prerequisites and Environment Setup](preparation.md).
 
 ## Trainers and Course developers
 
