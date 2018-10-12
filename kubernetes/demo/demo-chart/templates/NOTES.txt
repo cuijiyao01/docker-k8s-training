@@ -1,0 +1,9 @@
+1. Get the config maps by running these commands:
+
+ kubectl get cm --namespace {{ .Release.Namespace }} specific-configmap -o jsonpath="{.data.message}" | awk 1
+
+ kubectl get cm --namespace {{ .Release.Namespace }} -l "app={{ template "demo-chart.name" . }},release={{ .Release.Name }}" -o jsonpath="{.items[0].data.message}" | awk 1
+
+2. Get the logs of the pod that uses the configmap:
+
+ kubectl logs --namespace {{ .Release.Namespace }} {{ .Release.Name }}-pod

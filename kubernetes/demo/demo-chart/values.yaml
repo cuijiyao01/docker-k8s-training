@@ -1,0 +1,17 @@
+# Default values for demo-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# simple demo chart with hello * message
+myMessage: "hello course"
+
+# we want to run a pod that makes use of the configmap, here goes its specifics
+# note: this is YAML, so we can nest our properties of course
+pod:
+  image:
+    repository: busybox
+    tag: latest
+# we want to mount the configmap into the mount and we specify here where to mount
+# it - helm takes care of entering this mountpoint into the right places
+  mount: /etc/flexible
+
