@@ -2,7 +2,17 @@
 
 In this exercise, you will run a specific version of an image, modify its contents and commit the changes into a new image.
 
-## Step 0: Pulling a specific image
+## Step 0: Prepare the environment
+
+Run the following commands, to prepare your local environment inside the VM.
+
+```
+~/setup/get_kube_config.sh <first id> <second id>
+sudo systemctl restart docker.service
+```
+It will download access credentials and update the certificate store of the docker daemon.
+
+## Step 1: Pulling a specific image
 
 Search on [Docker Hub](https://hub.docker.com) for the _nginx_ image in version 1.15.3 and pull it to your computer.
 
@@ -10,7 +20,7 @@ Search on [Docker Hub](https://hub.docker.com) for the _nginx_ image in version 
 
 Use the image to start a new container in detached mode - do not forget to have a port assigned to the container. Use your web browser to connect to the webserver in your container - you should see a banner page.
 
-## Step 1: Enhancing the container
+## Step 2: Enhancing the container
 
 Execute an interactive shell in your _nginx_ container using the `docker exec` command. We are going to install the download manager wget into the container and use it to change the default website that _nginx_ is delivering.
 
@@ -41,23 +51,23 @@ wget --no-check-certificate -O /usr/share/nginx/html/index.html https://github.w
 
 Reload the webpage in your browser and see how the output changed. Exit from the shell but do not stop the container.
 
-## Step 2: Committing the change to a new image
+## Step 3: Committing the change to a new image
 
 Use the `docker commit` command to commit the changes you made to the container into an image. Make note of the new images' ID.
 
-## Step 3: Tagging the new image
+## Step 4: Tagging the new image
 
 Use the `docker tag` command to assign the name *evil_nginx* to your new image. You might want to give it a release number, too.
 
-## Step 4: Lauching your custom images
+## Step 5: Lauching your custom images
 
 In case you haven't done it yet, stop your existing container using `docker stop`. Launch a new container from your custom image, make sure its port is forwarded to the host and connect with your web browser to it.
 
-## Step 5: Examining an images history
+## Step 6: Examining an images history
 
 Use the `docker history` command to examine the history of your custom image. Can you see what the drawback of using `docker commit` is?
 
-## Step 6: Pushing the image to a registry
+## Step 7: Pushing the image to a registry
 
 The K8s cluster prepared for the training is also serving a docker registry at  **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com** to which you can push your image. The values for *\<cluster-name\>* and *\<project-name\>* will be given to you by your trainer and **must be substituted** respectively.
 
