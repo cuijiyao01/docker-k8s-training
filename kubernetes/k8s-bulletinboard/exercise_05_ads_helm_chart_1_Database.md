@@ -26,6 +26,8 @@ bulletinboard-ads
 > **Tip**: Don't delete them, you can use them as an example for the next steps. Just move them out of the chart folder structure.
 - To `Chart.yaml` Add some more fields, like sources or maintainers. See https://github.com/helm/helm/blob/master/docs/charts.md#the-chartyaml-file
 
+> **IMPORTANT**: Please do `export TILLER_NAMESPACE=<your namespace>` so you do not always have to add `--tiller-namespace <your namespace>` to all helm calls. 
+
 ## Step 1: Getting the templates
 
 Copy all kubernetes files `ads-db-*.yaml` you created for ads-db into the templates folder. 
@@ -49,6 +51,8 @@ $ helm install .
 in bulletinboard-ads folder.
 
 Inspect installation
+<details><summary>example printout:</summary><p>
+  
 ```bash
 $ helm list
 NAME           	REVISION	UPDATED                 	STATUS  	CHART                  	NAMESPACE         
@@ -79,8 +83,8 @@ networkpolicy.extensions/ads-db-access   component=ads,module=db   6s
 NAME                         TYPE                                  DATA      AGE
 secret/ads-db-secrets        Opaque                                1         6s
 
-
 ```
+</p></details>
 
 What do you notice? Does everything looks like before, when you created all Kubernetes objects individually?
 
@@ -102,7 +106,9 @@ You need to do this because trying to update the chart will not work due to all 
 We will now start to parameterize the  yamls.
 **Hint:** To test if what we do has the desired effect we should use `helm install --dry-run --debug .` and/or `helm lint`. 
 
-### Values - `values.yaml`
+### Step 3.1: Values and Helpers 
+
+- Add the following values to `values.yaml`:
 
 ```yaml
 Db:
@@ -115,12 +121,13 @@ Db:
   Module: db
 ```
 
-### Metadata Names
-
-- `_helpers.tpl` - add 3 template/functions: 
+- Remove all default content from `_helpers.tpl` and add 3 template/functions: 
   1. Template for Component and Module tag + release name to distinguish different installs, can be used for MatchSelectors and labels
   2. Tamplate for metaclass labels section
   3. Function that produces fully qualified names for all kubernetes objects used for metaclass name key. All Entities get the release name added to their name.
+ 
+<details><summary> Here is the code for the 3 template/functions</summary><p>
+  
 ```
 {{/*
 Complete tages for labels selectors etc.
@@ -151,40 +158,46 @@ Used for Names of Chart entities
 {{- printf "%s-%s" $dot.Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 ```    
+</p></details>
 
-##### Change names in all kubernetes manifest files:
+
+### Step 3.2: Metadata Names
+
+- We use these templates now to first change names in all kubernetes manifest files:
 
 |File         | Name      | 
 | ------------- |-----------| 
 | `ads-db-configmap.yaml`| `metadata:  `<br/>` name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ConfigName) }}`|
 | `ads-db-secret.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}`|
 | `ads-db-service.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName) }}`|
-| `ads-db.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.StatefulsetName) }}`|
+| `ads-db-statefulset.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.StatefulsetName) }}`|
 | `ads-db-networkpolicy.yaml`| `metadata:  `<br/>`  {{ template "add-release-name" (dict "dot" . "name" .Values.Db.Access) }}`|
 
-##### Updated references in `ads-db-statefulset.yaml'
+- Also Updated references in `ads-db-statefulset.yaml'
 
 ```yaml
 [...]
 spec:
-  serviceName: {{ template "db-service-fullname" . }}
+  serviceName: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName) }}
 [...]
       - name: init
         secret:
-          secretName: {{ template "db-init-config-fullname" . }}
+          secretName: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
 [...]
             configMapKeyRef:
-              name: {{ template "db-config-fullname" . }}
+              name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ConfigName) }}
 [...]
             secretKeyRef:
-              name: {{ template "db-credential-fullname" . }}
+              name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
 [...]
-```    
+```
 
+Now do `helm install --debug --dry-run .` in the bulletinboard-ads folder and inspect if the names are changes as you thought and also the references still link correctly.
 
-### Labels
+### Step 3.3. Labels and their references
 
-##### Change all metadata labels to:
+- Change all metadata labels to something like the following using the "labels.ads.db" template:
+
 ```yaml
 metadata:
   labels:
