@@ -70,7 +70,7 @@ You could simply write a static pod specification but with helm, we can make thi
 - image tag
 - mount point directory to where the config map gets mounted
 
-In order to have pod print out the contents of the config map, use the following snippet in the containers section of the pod specification. The `.Values.pod.mount` is the mount point directory of the config map, so make sure that it gets mounted to the same place.
+In order to have pod print out the contents of the config map, use the following snippet in the containers section of the pod specification. To check if the pod really did use the configmap correctly do `kubectl logs <pod of chart>` after the installation and see if it printed the correct food/drinks. The `.Values.pod.mount` is the mount point directory of the config map, so make sure that it gets mounted to the same place.
 
 ```yaml
 command: [ "/bin/sh", "-c", "for i in $(ls -1 {{ .Values.pod.mount }}/*); do echo -e \"\\nContent of $i: \"; cat $i; done; echo -e \n\n" ]
