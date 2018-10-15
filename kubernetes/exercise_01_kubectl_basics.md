@@ -5,7 +5,7 @@ In this exercise you will learn how `kubectl` can be used to communicate with th
 ## Step 0: check your environment
 Login to your VM and locate the kubectl binary by running `which kubectl`. The result should return the path to the binary. 
 
-Make shure you have executed the script `~/setup/get_kube-config.sh` with proper parameters for `training_id` and `your training_namespace` to download your personal 'kube.config` in advance, as requested by your trainer (small paper, handed over to you).
+Make shure you have executed the script `~/setup/get_kube-config.sh` with proper parameters for 'training_id' and 'your training_namespace' to download your personal 'kube.config` in advance, as requested by your trainer (small paper, handed over to you).
 
 Run `kubectl config get-contexts` to ensure a configuration file is available.
 
