@@ -171,7 +171,7 @@ spec:
 
 - When you are ready with the specification of the **Statefulset** save it under the filename `ads-db-statefulset.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-db-statefulset.yaml` to create the **Statefulset** `ads-db-statefulset`.
 
-- After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-statefulset-0` got created properly  via `kubectl get pod ads-db-statefulset-0` or in more detail via `kubectl describe pod ads-db-statefulseet-0` . Also check wether the Database is ready to be connected via `kubectl logs ads-db-statefulset-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
+- After successful creation of the **Statefulset** check, wether the **Pod** `ads-db-statefulset-0` got created properly  via `kubectl get pod ads-db-statefulset-0` or in more detail via `kubectl describe pod ads-db-statefulset-0` . Also check wether the Database is ready to be connected via `kubectl logs ads-db-statefulset-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
 
 
 ## Optional- Step 6: Detailled Check wether Pod with Postgres DB is running properly
