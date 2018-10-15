@@ -4,6 +4,14 @@ Exercise 1: Creating a chart to include the Database required by the ads applica
 ## Learning Goal
 Create a new helm chart with all DB related Kubernetes objects with the help of a Helm chart
 
+## Helm components we will use
+
+- `include "name" .` instead of `template "name" .` [See here](https://github.com/helm/helm/blob/master/docs/chart_template_guide/named_templates.md#the-include-function)
+- Pipe function `indent X` to set the indent of certain elements
+- `.Files.Get` to read in a file
+- Pipe function `replace` to replace one part of a string with an other part.
+- Check the use of the right `{{-`,`{{`,`}}`,and`-}}` to fix linebreaks and empty lines in the generated yamls. 
+
 ## Prerequisite
 
 To get things started, create a default chart with helm authoring tools:
@@ -132,7 +140,7 @@ Db:
 {{/*
 Complete tages for labels selectors etc.
 */}}
-{{- define "tags.ads.db" -}}
+{{- define "tags.ads.db" }}
 component: ads
 module: db
 release: {{ .Release.Name }}
@@ -141,7 +149,7 @@ release: {{ .Release.Name }}
 {{/*
 Complete metaclass labels entry
 */}}
-{{- define "labels.ads.db" -}}
+{{- define "labels.ads.db" }}
   labels:
     heritage: {{ .Release.Service | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -196,38 +204,28 @@ Now do `helm install --debug --dry-run .` in the bulletinboard-ads folder and in
 
 ### Step 3.3. Labels and their references
 
-- Change all metadata labels to something like the following using the "labels.ads.db" template:
+- Change all metadata labels to something like the following, but make use of the "labels.ads.db" template: 
 
 ```yaml
 metadata:
   labels:
     heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name | quote }}    
     component: "{{ .Values.Db.Component }}"
     module: "{{ .Values.Db.Module }}"
 
 ```
 
-##### Replace all match labels and selectors:
-
-|Old         | New      | 
-| ------------- |-----------| 
-| ` component: ads`| `component: "{{ .Values.Db.Component }}"`|
-| ` module: db`| `module: "{{ .Values.Db.Module }}"`|
-
-Add release label as selector/matchlabel component to distinquish different installations.
+- Replace all match labels and selectors:
+  We add the `release` tag as selector/matchlabel component (next to `component`/`module`) to distinquish different installations. As with the metaclass labels we use the template we defined in `_helpers.yaml`. 
 
 ```yaml
     matchLabels:
-      component: "{{ .Values.Db.Component }}"
-      module: "{{ .Values.Db.Module }}"
-      release: {{ .Release.Name | quote }}
+{{- include "tags.ads.db" . | indent 6 }}
 
   selector:
-    component: "{{ .Values.Db.Component }}"
-    module: "{{ .Values.Db.Module }}"
-    release: {{ .Release.Name | quote }}
+{{- include "tags.ads.db" . | indent 4 }}
 ```
 
 >  **Warning**: Do not change the ` ingress / from/ podSelector / matchLabels` 
