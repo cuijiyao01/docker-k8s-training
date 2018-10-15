@@ -6,10 +6,12 @@ Create a new helm chart with all DB related Kubernetes objects with the help of 
 
 ## Helm components we will use
 
+- use of `_helpers.yaml` to define templates/functions for certain parts of our chart.
 - `include "name" .` instead of `template "name" .` [See here](https://github.com/helm/helm/blob/master/docs/chart_template_guide/named_templates.md#the-include-function)
 - Pipe function `indent X` to set the indent of certain elements
 - `.Files.Get` to read in a file
 - Pipe function `replace` to replace one part of a string with an other part.
+- Pipe function `b64enc` to encode strings for values of secret items.
 - Check the use of the right `{{-`,`{{`,`}}`,and`-}}` to fix linebreaks and empty lines in the generated yamls. 
 
 ## Prerequisite
@@ -52,14 +54,12 @@ templates
 
 ## Step 2: First Install
 
-We will see what the helm chart looks like now! Execute
+We will see what the helm chart looks like now! Execute the following in bulletinboard-ads folder and Inspect installation.
 ```bash
 $ helm install .
 ```
-in bulletinboard-ads folder.
 
-Inspect installation
-<details><summary>example printout:</summary><p>
+<details><summary>An example printout:</summary><p>
   
 ```bash
 $ helm list
@@ -96,7 +96,7 @@ secret/ads-db-secrets        Opaque                                1         6s
 
 What do you notice? Does everything looks like before, when you created all Kubernetes objects individually?
 
-Uninstall the chart
+Now uninstall the chart
 
 ```bash
 $ helm delete <release_name> 
@@ -200,7 +200,7 @@ spec:
 [...]
 ```
 
-Now do `helm install --debug --dry-run .` in the bulletinboard-ads folder and inspect if the names are changes as you thought and also the references still link correctly.
+Now do `helm install --debug --dry-run .` in the bulletinboard-ads folder and inspect if the names are changed as you thought and also the references still link correctly.
 
 ### Step 3.3. Labels and their references
 
@@ -218,7 +218,7 @@ metadata:
 ```
 
 - Replace all match labels and selectors:
-  We add the `release` tag as selector/matchlabel component (next to `component`/`module`) to distinquish different installations. As with the metaclass labels we use the template we defined in `_helpers.yaml`. 
+  We add the `release` tag as selector/matchlabel component (next to `component`/`module`) to distinquish different installations. As with the metaclass labels we use the template we defined in `_helpers.yaml`. Check for the right indent.
 
 ```yaml
     matchLabels:
@@ -231,9 +231,12 @@ metadata:
 >  **Warning**: Do not change the ` ingress / from/ podSelector / matchLabels` 
 in `ads-db-networkpolicy.yaml` as this is defining the labels for accessing the database service (for the application later)
 
-## Step 3: Parameterize PostgreSQL
 
-### Introduce following values in `values.yaml`
+Now again do `helm install --debug --dry-run .` in the bulletinboard-ads folder and inspect if the labels are changed as you thought and also the selectory still link correctly.
+
+## Step 4: Parameterize PostgreSQL
+
+- Add the following values in `values.yaml` to the Db section
 
 **Hint: Please substitute the place holders below <...> by proper values !**
 
@@ -251,32 +254,35 @@ Db:
     Port: 5432
 ```
 
-##### Update Mount path in `ads-db-configmap.yaml`
+- Update Mount path in `ads-db-configmap.yaml`
 ```yaml
 data:
   PGDATA: "{{ .Values.Db.Postgres.MountPath }}/pgdata"
 ```
+### Step 4.1 The Secrets
 
-#### Update database coordinates and credentials in `ads-db-configmap-init.yaml`
-```yaml
-data:
-  initdb.sql: |
-      -- This is a postgres initialization script for the postgres container. Execute it with psql as:
-      -- $> psql postgres -f initdb.sql
-      CREATE ROLE {{ .Values.Db.Postgres.User }} WITH CREATEDB LOGIN PASSWORD '{{ .Values.Db.Postgres.Password }}';
-      CREATE DATABASE {{ .Values.Db.Postgres.Database }} WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
-      GRANT ALL PRIVILEGES ON DATABASE {{ .Values.Db.Postgres.Database }} TO {{ .Values.Db.Postgres.User}};
-      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
-      \c {{ .Values.Db.Postgres.Database }};
-      CREATE SCHEMA {{ .Values.Db.Postgres.Schema }} AUTHORIZATION {{ .Values.Db.Postgres.User }};
-      -- ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
-      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
+- Create a `initdb.txt` file in `bulletinboard-ads` folder with the following content. We will read this file in and substitute all $placeholders with helm. 
+
+```
+-- This is a postgres initialization script for the postgres container.
+-- Will be executed during container initialization ($> psql postgres -f initdb.sql)
+CREATE ROLE $dbuser WITH LOGIN PASSWORD '$password' INHERIT CREATEDB;
+CREATE DATABASE $dbname WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
+GRANT ALL PRIVILEGES ON DATABASE $dbname TO $dbuser;
+CREATE SCHEMA $dbschema AUTHORIZATION $dbuser;
+-- ALTER DATABASE $dbname SET search_path TO '$dbschema';
+ALTER DATABASE $dbname OWNER TO $dbuser;
 ```
 
-#### Update database admin password `ads-db-secret.yaml`
+- Add the following code to the `_helpers.yaml` file: 
+```
+
+```
+
+- Update database admin password `ads-db-secret.yaml`, use `b64enc` to encode the password. 
 ```yaml
 data:
-  PG_PASSWORD: {{ .Values.Db.Postgres.RootPassword }}
+  PG_PASSWORD: {{ .Values.Db.Postgres.RootPassword | b64enc }}
 ```
 
 #### Update port for the service in `ads-db-service.yaml`
@@ -299,7 +305,7 @@ spec:
           mountPath: {{ .Values.Db.Postgres.MountPath }}
 ```
 
-## Step 4: Install the Chart
+## Step 5: Install the Chart
 
 ```bash
 $ helm install bulletinboard-ads 
@@ -341,7 +347,7 @@ secret/<release_name>-ads-db-cred   Opaque                                1     
 
 ```
 
-## Step 5: Connect to the database (optional)
+## Step 6: Connect to the database (optional)
 
 Execute following command:
 
