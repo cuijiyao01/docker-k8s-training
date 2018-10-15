@@ -117,14 +117,38 @@ Db:
 
 ### Metadata Names
 
-- `_helpers.tpl` - add fully qualified names for all kubernetes objects, for example for the database configmap:
+- `_helpers.tpl` - add 3 template/functions: 
+  1. Template for Component and Module tag + release name to distinguish different installs, can be used for MatchSelectors and labels
+  2. Tamplate for metaclass labels section
+  3. Function that produces fully qualified names for all kubernetes objects used for metaclass name key. All Entities get the release name added to their name.
 ```
 {{/*
-Create fully qualified name for DB config map.
+Complete tages for labels selectors etc.
 */}}
-{{- define "db-config-fullname" -}}
-{{- $name := default .Chart.Name .Values.Db.ConfigName -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- define "tags.ads.db" -}}
+component: ads
+module: db
+release: {{ .Release.Name }}
+{{- end -}}
+
+{{/*
+Complete metaclass labels entry
+*/}}
+{{- define "labels.ads.db" -}}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+{{- include "tags.ads.db" . | indent 4 }}    
+{{- end -}}
+
+{{/*
+Ads release name prefix to string and truncates to 63 chars.
+Used for Names of Chart entities
+*/}}
+{{- define "add-release-name" -}}
+{{- $name := index . "name" -}}
+{{- $dot := index . "dot" -}}
+{{- printf "%s-%s" $dot.Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 ```    
 
@@ -132,11 +156,11 @@ Create fully qualified name for DB config map.
 
 |File         | Name      | 
 | ------------- |-----------| 
-| `ads-db-configmap.yaml`| `metadata:  `<br/>`  name: {{ template "db-config-fullname" . }}`|
-| `ads-db-secret.yaml`| `metadata:  `<br/>`  name: {{ template "db-credential-fullname" . }}`|
-| `ads-db-service.yaml`| `metadata:  `<br/>`  name: {{ template "db-service-fullname" . }}`|
-| `ads-db.yaml`| `metadata:  `<br/>`  name: {{ template "db-sset-fullname" . }}`|
-| `ads-db-networkpolicy.yaml`| `metadata:  `<br/>`  name: {{ template "db-fullname" . }}`|
+| `ads-db-configmap.yaml`| `metadata:  `<br/>` name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ConfigName) }}`|
+| `ads-db-secret.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}`|
+| `ads-db-service.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName) }}`|
+| `ads-db.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.StatefulsetName) }}`|
+| `ads-db-networkpolicy.yaml`| `metadata:  `<br/>`  {{ template "add-release-name" (dict "dot" . "name" .Values.Db.Access) }}`|
 
 ##### Updated references in `ads-db-statefulset.yaml'
 
