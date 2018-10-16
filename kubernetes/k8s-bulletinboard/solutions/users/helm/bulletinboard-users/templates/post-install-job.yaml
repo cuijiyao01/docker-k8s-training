@@ -32,7 +32,7 @@ spec:
       containers:
       - name: post-install-job
         image: "appropriate/curl:latest"
-        command: ['sh', '-c', 'echo "hello k8s trainee!";']
+        command: ['sh', '-c', 'curl -i -X POST http://{{ template "app-fullname" . }}:{{ .Values.App.ServicePort }}/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data ''{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'' ']
       imagePullSecrets:
         - name: {{ .Values.App.ImageSecret }}
 {{- end }}
