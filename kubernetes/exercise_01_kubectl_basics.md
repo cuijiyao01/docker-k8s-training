@@ -1,6 +1,7 @@
 # Exercise 01 - kubectl basics
 
-In this exercise you will learn how `kubectl` can be used to communicate with the cluster.
+In this exercise you will learn how the command line interface (CLI) `kubectl` can be used to communicate with the Kubernetes cluster ([kubectl documentation](https://kubernetes.io/docs/reference/kubectl/overview/)).
+
 
 ## Step 0: check your environment
 Login to your VM and locate the kubectl binary by running `which kubectl`. The result should return the path to the binary. 
