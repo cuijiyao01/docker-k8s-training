@@ -83,7 +83,7 @@ Purpose: Create a **Configmap** for the external (outside the docker image) conf
 
 _Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
 
-## Step 2: Deployment
+## Step 3: Deployment
 
 Purpose: Create the **Deployment**, which is dependend on the **Configmap** and **Secret**, created in step 1 (Creation of Deployment will fail, if those are not yet available !). Also the **Secret** `artifactory` is needed to pull the image.
 
