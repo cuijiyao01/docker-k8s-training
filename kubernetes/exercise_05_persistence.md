@@ -8,7 +8,7 @@ Firstly, remove the deployment you created in the earlier exercise. Check the ch
 Next, take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`. Are there already  resources present in the cluster?
 Inspect the resouces you found and try to figure out how they are related (hint - look for `status: bound`).
 
-By the way, you don't have to type `PersistentVolume` all the time. You can abbreviate it with `PV` and similarly use `PVC` for the claim resource.
+By the way, you don't have to type `PersistentVolume` all the time. You can abbreviate it with `pv` and similarly use `pvc` for the claim resource.
 
 ## Step 1: Create a PersistentVolume and a corresponding claim
 Instead of creating a PersistentVolume (PV) first and then bind it to a PersistentVolumeClaim (PVC), you will directly request storage via a PVC using the default storage class.
