@@ -177,7 +177,7 @@ _Hint: In the following sections we will provide you yaml-snippets of the Deploy
 apiVersion: v1
 kind: Service
 metadata:
-  name: ads-service
+  name: ads-app-service
   labels:
     component: <name-of-component>
     module: <name-of-module>
