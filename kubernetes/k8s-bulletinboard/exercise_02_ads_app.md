@@ -11,7 +11,7 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app.png" width="800" />
 
-- We decided our initial exepected load to **Ads App** requires at least 2 instances of our **Ads App**. Therefore we need horizontal scaling for the **Ads App**, which we provide using a **Deployment** with 2 instances (replicaset=2).
+- We decided our initial exepected load to **Ads App** requires at least 2 instances of our **Ads App**. Therefore we need horizontal scaling for the **Ads App**, which we provide using a **Deployment** with 2 instances (replicas is 2).
 
 - A specific version of Cloud Curriculum **Bulletinboard-Ads**, slighty adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in [**SAP Artifactory in DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home).
 
@@ -61,7 +61,7 @@ _**Hint: Please substitute the place holders below <...> by proper values !**_
 
 - Because of the `--dry-run` parameter this will only generate a yaml and does not create the **Secret** itself. 
 
-- Now open the file `ads-app-secret.yaml` and add the proper labels for component and modul. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
+- Now open the file `ads-app-secret.yaml` and add the proper *labels* for component and module. Add `type: Opaque` and also remove the `creationTimestamp`. Save the changes. 
 
 - Now call `kubectl apply -f ads-app-secret.yaml` to create the **Secret**.
 
@@ -185,7 +185,7 @@ spec:
   ports:
   - port: 8080
     protocol: TCP
-    targetPort: ads-app
+    targetPort: ads-app-port
   selector:
     component: <name-of-component>
     module: <name-of-module>
