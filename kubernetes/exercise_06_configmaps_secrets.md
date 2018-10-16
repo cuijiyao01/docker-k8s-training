@@ -144,6 +144,6 @@ Finally, you have to create a new service to expose your https-deployment.
 
 Derive the ports you have to expose and extend the service.yaml from the previous exercise.
 
-Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject and organization specified in step 1.
+Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject and organization specified in step 1. Since we signed the certificate ourself, your Browser will complain about the certificate (depending on your browser) and you have to accept the risk browsing the url. 
 
 **Important: do not delete this setup with deployment, PVC, configMap, secret and service.**
