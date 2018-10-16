@@ -47,7 +47,6 @@ data:
         username: {{ .Values.Db.Postgres.User}}
         password: {{ .Values.Db.Postgres.Password }}
         driverClassName: org.postgresql.Driver
-        driver-class-name: org.postgresql.Driver
 ```
 
 ## Step 2: Add ingress rewriting configuration for your application
