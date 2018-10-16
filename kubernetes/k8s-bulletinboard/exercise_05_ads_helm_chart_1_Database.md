@@ -261,22 +261,27 @@ data:
 ```
 ### Step 4.1 The Secrets
 
-- Create a `initdb.txt` file in `bulletinboard-ads` folder with the following content. We will read this file in and substitute all $placeholders with helm. 
+- Create a `initdb.txt` file in `bulletinboard-ads` folder with the following content. When helm reads it in, it will substitute all the placeholders with the values we specified in  the `values.yaml`
 
 ```
--- This is a postgres initialization script for the postgres container.
+-- This is a postgres initialization script for the postgres container. 
 -- Will be executed during container initialization ($> psql postgres -f initdb.sql)
-CREATE ROLE $dbuser WITH LOGIN PASSWORD '$password' INHERIT CREATEDB;
-CREATE DATABASE $dbname WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
-GRANT ALL PRIVILEGES ON DATABASE $dbname TO $dbuser;
-CREATE SCHEMA $dbschema AUTHORIZATION $dbuser;
--- ALTER DATABASE $dbname SET search_path TO '$dbschema';
-ALTER DATABASE $dbname OWNER TO $dbuser;
+CREATE ROLE {{ .Values.Db.Postgres.Username }} WITH LOGIN PASSWORD '{{ .Values.Db.Postgres.UserPassword }}' INHERIT CREATEDB;
+CREATE DATABASE {{ .Values.Db.Postgres.Database }} WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
+GRANT ALL PRIVILEGES ON DATABASE {{ .Values.Db.Postgres.Database }} TO {{ .Values.Db.Postgres.Username }};
+CREATE SCHEMA {{ .Values.Db.Postgres.Schema }} AUTHORIZATION {{ .Values.Db.Postgres.Username }};
+-- ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
+ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.Username }};
 ```
 
-- Add the following code to the `_helpers.yaml` file: 
+- Add the following code to the `_helpers.yaml` file. The `tpl` function takes a text and applies all templates on it before passing it along. The `b64enc` is used to then encoded it for the secret.  
 ```
-
+{{/*
+template for initdb sql secret
+*/}}
+{{- define "initdb.encoded" -}}
+{{- tpl (.Files.Get "initdb.txt") . | b64enc}}
+{{- end -}}
 ```
 
 - Update database admin password `ads-db-secret.yaml`, use `b64enc` to encode the password. 
@@ -285,14 +290,14 @@ data:
   PG_PASSWORD: {{ .Values.Db.Postgres.RootPassword | b64enc }}
 ```
 
-#### Update port for the service in `ads-db-service.yaml`
+- Update port for the service in `ads-db-service.yaml`
 ```yaml
 spec:
   ports:
   - port: {{ .Values.Db.Postgres.Port }}
 ```
 
-#### Update stateful set specification in `ads-db.yaml`
+- Update stateful set specification in `ads-db.yaml`
 ```yaml
     spec:
       containers:
@@ -305,7 +310,9 @@ spec:
           mountPath: {{ .Values.Db.Postgres.MountPath }}
 ```
 
-## Step 5: Install the Chart
+## Step 5: Install the Chart and test the Microservice
+
+- First after checking with `helm install --debug --dry-run .` that all yamls are generated correctly do
 
 ```bash
 $ helm install bulletinboard-ads 
@@ -343,26 +350,11 @@ networkpolicy.extensions/<release_name>-ads-db-access   component=<release_name>
 
 NAME                                 TYPE                                  DATA      AGE
 secret/<release_name>-ads-db-cred   Opaque                                1         23m
-
-
 ```
 
-## Step 6: Connect to the database (optional)
-
-Execute following command:
-
-```bash
-
- kubectl port-forward <pod_name>  55432:5432
-
-
-```
-
-Then use your DB tool of choice to connect to localhost on port 55432
+- now test the Db using the same tests as during the previous exercises. 
+  1. Exec onto the pod and use pgadmin to test.
+  2. `kubectl port-forward <pod_name>  5432:5432` and use a local DB viewer.
 
 ![Connect to DB using DBVisualiser](images/db-connection.png)
 
-
-## Step 6: Further parameterization (optional)
-
-Make storage and replicaCount also configurable.
