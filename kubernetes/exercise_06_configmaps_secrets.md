@@ -71,7 +71,7 @@ server {
 }
 ```
 
-Make sure, the values for `ssl_certificate` and `ssl_certificate_key` match the names of the files within the secret. In this example output the files are named `tls.crt` and `tls.key` in the secret as well as the configuration. The location in the filesystem will be set via the `volmeMount`, when you create your deployment.
+Make sure, the values for `ssl_certificate` and `ssl_certificate_key` match the names of the files within the secret. In this example output the files are named `tls.crt` and `tls.key` in the secret as well as the configuration. The location in the filesystem will be set via the `volumeMount`, when you create your deployment.
 Also note, that there is a location explicitly defined for a healthcheck. If called, `/healthz` will return a status code `200` to satisfy a liveness probe.
 
 ## Step 4: Upload the configuration to kubernetes
