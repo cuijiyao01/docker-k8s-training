@@ -36,7 +36,7 @@ Additionally we strongly recommend to use certificates around the registry. Use 
     ```
   * download the helm client like in [exercise 09](../../kubernetes/exercise_09_helm_basics.md).
   * initialize helm: `helm init --tiller-namespace kube-system --service-account tiller`
-  * run `helm list` to verify the setup. It should return an empty string.
+  * run `helm list --tiller-namespace kube-system` to verify the setup. It should return an empty string.
 
 ### Install the registry
 run `install_registry.sh [project name] [cluster name]` and supply the name or your Gardener project as well as the cluster name.
