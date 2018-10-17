@@ -17,7 +17,7 @@ Additionally we strongly recommend to use certificates around the registry. Use 
   * make the binaries executable (`chmod +x`)
   * move them to a directory covered by your `$PATH` variable ( e.g. `/usr/local/bin/`).
 * check, that `kubectl` works with your cluster
-* If not yet done - setup `helm` in your `kube-system` namespace.
+* If not yet done - setup `helm` in your `kube-system` namespace (via the following 5 steps).
   * create a new service account: `kubectl -n kube-system create sa tiller`
   * generate a clusterrolebinding for the new service account:
     ```
@@ -34,7 +34,7 @@ Additionally we strongly recommend to use certificates around the registry. Use 
       name: tiller
       namespace: kube-system
     ```
-  * download the helm client like in [exercise 09](../../kubernetes/exercise_09_helm.md).
+  * download the helm client like in [exercise 09](../../kubernetes/exercise_09_helm_basics.md).
   * initialize helm: `helm init --tiller-namespace kube-system --service-account tiller`
   * run `helm list` to verify the setup. It should return an empty string.
 
