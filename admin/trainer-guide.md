@@ -76,19 +76,20 @@ You should send a 'preparation mail' to all participants about a week before the
 ```
 ------- adapt & add this info
 - Please follow these instructions to download a VM and prep for the course:
-  <link to your forked repo>/blob/master/preparation.md
+  <link to repo>/blob/master/preparation.md
 ---------- end -----------
 ```
 Technically it would be possible to run most of the exercises also with Docker on Windows/Mac and a local kubectl. However, we would recommend explicitly exclude support for this setup during the training.
 
 ## Setting you up for the training
+**Important: Forking is no longer necessary! But feel free to do so, if you feel more comfortable with it.**
 
 ### Clone the repo
 There are demo scripts/files for the container, docker and kubernetes parts. Simply clone the repo to your VM and work with this copy:
 
 `git clone https://github.wdf.sap.corp/slvi/docker-k8s-training.git`
 
-**Important: Forking is no longer necessary!**
+We are referencing stable versions of our repo with a release tag, so you can use one of these for the training as well.
 
 ### Get the cluster and project name
 You will need the information to setup components like the registry. It is also required for some docker exercises and k8s demos.
@@ -113,7 +114,9 @@ Check the following files for `<cluster-name>` and `<project-name>` placeholders
 ### Check IP address ranges
 Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we/[Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) have limited the access to whatever you expose in the cluster to traffic originating from the SAP network at your training location. Therefor we have configured the firewall rules to block traffic, that does not originate from these addresses.
 
-Furthermore, while the training these ranges will be used for the nework policy exercise. Check the yaml files in the [demo](../kubernetes/demo/11c_network_policy_ingress.yaml) and [solutions](../kubernetes/solutions/08_network_policy_ingress.yaml) folder and adapt it, if necessary.
+Furthermore, while the training these ranges will be used for the network policy exercise. Check the yaml files in the [demo](../kubernetes/demo/11c_network_policy_ingress.yaml) and [solutions](../kubernetes/solutions/08_network_policy_ingress.yaml) folder and adapt it to your local IP blocks, if necessary.
+
+You can use the [network information portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml) to get your local office's CIDR blocks. For the exercise 8 you can give the info to participants as well or ask them to search for it.
 
 ### Setup a docker registry (~1 day before course starts)
 For the docker exercises you need a private docker registry. Participants will upload their custom images to it during the course. Recommendation is to spin up a registry without any persistence in the k8s cluster you use for the training.
