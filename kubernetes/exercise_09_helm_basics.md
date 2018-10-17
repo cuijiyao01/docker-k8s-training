@@ -8,11 +8,13 @@ Download and unpack the helm client:
 wget -O helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz
 tar -xzf helm.tar.gz
 ```
-Next locate the `helm` binary in the extracted folder and move it to a directory in your `PATH`:   
-Run as user root or with sudo: `mv linux-amd64/helm /usr/local/bin/helm`
+Next locate the `helm` binary in the extracted folder and move it to a directory in your `PATH`. Run as user root or with sudo: 
 
-Change the permissions of the binary accordingly that also the `vagrant` user can run it:  
-Run as user root or with sudo: `chmod +x /usr/local/bin/helm`
+`mv linux-amd64/helm /usr/local/bin/helm`
+
+Change the permissions of the binary accordingly that also the `vagrant` user can run it. Run as user root or with sudo:
+
+`chmod +x /usr/local/bin/helm`
 
 ## Step 1: initialize helm
 The helm client uses the information stored in .kube/config to talk to the kubernetes cluster. But before you set up the tiller-server, you need to specify the namespace to be used. Otherwise, everyone will deploy their tiller-server into the kube-system namespace resulting in an overwrite of what was there before.
