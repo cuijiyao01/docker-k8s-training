@@ -17,7 +17,7 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "app-fullname" . }}
+  name: {{ .Values.App.ServiceName | quote }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

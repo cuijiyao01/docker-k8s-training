@@ -14,6 +14,7 @@ Db:
     ImageTag: 9.6
     MountPath: /var/lib/postgres/data
     RootPassword: I2hKVFdVMjAlejBk
+#decoded #hJTWU20%z0d
     Database: users
     Schema: users
     User: users_user
@@ -23,8 +24,8 @@ Db:
 
 
 App:
-  ConfigName: app-config
-  Name: users-app
+  ServiceName: users-app-service
+  ConfigName: users-app-config
   Component: users
   Module: app
   Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users
