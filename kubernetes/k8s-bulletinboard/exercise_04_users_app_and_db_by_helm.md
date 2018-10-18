@@ -97,3 +97,9 @@ Adapt your configmap for the environment variables to also contain these values 
 
 After this, please test that you now need a header `User-id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement. The UI itself already has this field in its requests to the ads-service therefore using it does not test this. 
 
+## Troubleshooting tips
+
+- If you encounter difficulties you can use 'helm install --dry-run --debug .' to check if the generated yamls.
+- For some changes a `helm upgrade <release-name> bulletinboard-users` updates the chart to the new changes.
+- For others, like labels, you need to delete the old installation before reinstalling the new one. `helm delete <release-name>`
+- The release name are the first two words (adjective+animal) of the name of the users-db and users-app pods in `kubectl get pods`. 
