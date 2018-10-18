@@ -108,3 +108,4 @@ After this, please test that you now need a header `User-Id : 42` in your POSTS 
 - For step 3, if you can't create a new ads. 
   - check if the new variables are known inside the pods: `kubectl exec -it <ads-app-...> bash` and do `export` to see what the environment variables are.
   - check kubectl logs <ads-app-...> on both pods
+  - If in postman you get a 200 and all ads as a return to a POST, check if your URL starts with https://
