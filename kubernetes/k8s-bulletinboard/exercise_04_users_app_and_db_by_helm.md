@@ -35,9 +35,9 @@ We also use the cloud-foundary based way to pass to the user service the info ab
 If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace>`. Also set an environmentVariable `TILLER_NAMESPACE` with the value of your namespace, our you have to add `--tiller-namespace <your-namespace>` to all helm commands below.  
 Go to your project base folder `k8s-bulletinboard`, which you created at the beginning of exercise 1, and create a sub-folder `users`.
 Download the chart into that subfolder and extract it: 
-```
+```bash
 cd users
-wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/k8s-bulletinboard/kubernetes/k8s-bulletinboard/bulletinboard-users.tar.gz
+wget https://github.wdf.sap.corp/201810-ttt-wdf-docker-k8s-training/docker-k8s-training/raw/k8s-bulletinboard/kubernetes/k8s-bulletinboard/bulletinboard-users.tar.gz
 tar -xvzf bulletinboard-users.tar.gz
 cd bulletinboard-users
 ```
