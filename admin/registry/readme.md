@@ -12,7 +12,7 @@ Additionally we strongly recommend to use certificates around the registry. Use 
 ## step-by-step setup
 
 ### preparation
-* prepare `cfssl` tools (if not yet part of VM image):
+* prepare `cfssl` tools:
   * if not present, download `cfssl` & `cfssljson` tools for your platform: https://pkg.cfssl.org/ (`curl -L https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 -o cfssl`)
   * make the binaries executable (`chmod +x`)
   * move them to a directory covered by your `$PATH` variable ( e.g. `/usr/local/bin/`).
