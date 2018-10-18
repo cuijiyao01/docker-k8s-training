@@ -104,4 +104,7 @@ After this, please test that you now need a header `User-id : 42` in your POSTS 
 - If you encounter difficulties you can use `helm install --dry-run --debug bulletinboard-users` to check if the generated yamls.
 - For some changes a `helm upgrade <release-name> bulletinboard-users` updates the chart to the new changes.
 - For others, like labels, you need to delete the old installation before reinstalling the new one. `helm delete <release-name>`
-- The release name are the first two words (adjective+animal) of the name of the users-db and users-app pods in `kubectl get pods`. 
+- The release name are the first two words (adjective+animal) of the name of the users-db and users-app pods in `kubectl get pods`.
+- For step 3, if you can't create a new ads. 
+  - check if the new variables are known inside the pods: `kubectl exec -it <ads-app-...> bash` and do `export` to see what 
+  - check kubectl logs <ads-app-...> on both pods
