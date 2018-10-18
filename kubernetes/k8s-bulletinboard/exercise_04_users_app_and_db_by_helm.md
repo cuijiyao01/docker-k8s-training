@@ -46,6 +46,8 @@ cd bulletinboard-users
 
 __Purpose: Get familar with the provided template files and the user service.__
 
+**Hint:** Remember setting the TILLER_NAMESPACE 
+
 Before you can install the helm chart, open the *values.yaml* file. We left out the values of a few entries, you have to fill them out yourself:
 - The values for e.g. Image and Version are mentioned above.
 - For the password you can choose any string, if you want to generate one, you can do so by executing in an termial e.g. `openssl rand -base64 9` ([here are a few more ways](https://www.howtogeek.com/howto/30184/10-ways-to-generate-a-random-password-from-the-command-line/)). 
@@ -99,7 +101,7 @@ After this, please test that you now need a header `User-id : 42` in your POSTS 
 
 ## Troubleshooting tips
 
-- If you encounter difficulties you can use 'helm install --dry-run --debug .' to check if the generated yamls.
+- If you encounter difficulties you can use `helm install --dry-run --debug bulletinboard-users` to check if the generated yamls.
 - For some changes a `helm upgrade <release-name> bulletinboard-users` updates the chart to the new changes.
 - For others, like labels, you need to delete the old installation before reinstalling the new one. `helm delete <release-name>`
 - The release name are the first two words (adjective+animal) of the name of the users-db and users-app pods in `kubectl get pods`. 
