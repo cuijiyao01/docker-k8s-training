@@ -224,6 +224,7 @@ spec:
 ```
   In the examble above the namespace would be `part-40a86f44`, cluster name would be `wdfcw43` and project name would be `k8s-train`.
   You can find out what your cluster and project name is by looking into the config: `kubectl config view`. Here `clusters.cluster.server` contains the api url, which contains both cluster and project name. 
+  <img src="images/ClusterConfigNameFromConfig.png" width="800" />
 
 - When you are ready with the specification of the **Ingress** save it under the filename `ads-app-ingress.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-ingress.yaml` to create the **Ingress** `ads-app-ingress`.
 
