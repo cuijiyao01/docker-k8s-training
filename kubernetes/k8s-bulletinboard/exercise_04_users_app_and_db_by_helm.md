@@ -93,8 +93,8 @@ __Purpose: show communication between apps through a service; finsish bulletinbo
 
 Up till now your Ads was not asking a User Service for information on a certain user. The ads app we use has a flag with which we can turn this on. To work the app needs 2 more environment variables: 
 - `POST_USER_CHECK = true`: turns the checking of users on.
-- `USER_ROUTE = <route to users>`: contains the route to the user service app, without the api/v1.0/users ending. 
-Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started.
+- `USER_ROUTE = <route to users>`: contains the route to the user service app, without the api/v1.0/users ending. It starts with `http://`.  
+  Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started.
 - Also adjust your network policy for __ads:app__ to allow traffic to (egress) __users:app__. 
 
 After this, please test that you now need a header `User-id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement. The UI itself already has this field in its requests to the ads-service therefore using it does not test this. 
