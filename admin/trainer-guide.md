@@ -115,6 +115,8 @@ Check the following files for `<cluster-name>` and `<project-name>` placeholders
 ### Check IP address ranges
 Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we/[Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) have limited the access to whatever you expose in the cluster to traffic originating from the SAP network at your training location. Therefor we have configured the firewall rules to block traffic, that does not originate from these addresses.
 
+You can check the internal [**Network Information Portal(NIP)**](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml), to figure out the address ranges of your training locations.
+
 Furthermore, while the training these ranges will be used for the nework policy exercise. Check the yaml files in the [demo](../kubernetes/demo/11c_network_policy_ingress.yaml) and [solutions](../kubernetes/solutions/08_network_policy_ingress.yaml) folder and adapt it, if necessary.
 
 ### Setup a docker registry (~1 day before course starts)
