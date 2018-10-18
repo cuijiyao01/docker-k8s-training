@@ -26,6 +26,7 @@ Db:
 App:
   ServiceName: users-app-service
   ConfigName: users-app-config
+  Name: users-db
   Component: users
   Module: app
   Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users
