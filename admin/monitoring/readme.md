@@ -1,10 +1,11 @@
 # Setup a monitoring with promethes and grafana
 
-In this folder you find scripts & yaml files to deploy a monitoring system based on prometheus & visualization based on grafana. We use the `stable/prometheus` and `stable/grafana` helm charts and install them with custom values.
+In this folder you find scripts & yaml files to deploy a **monitoring system** based on **[Prometheus]**(https://prometheus.io/) & **visualization** based on **[Grafana]**(https://grafana.com/). We use the `stable/prometheus` and `stable/grafana` helm charts and install them with custom values.
 
-Prometheus collects metrics from various endpoints such as the API server or kubelet. Data is stored as time series and can be queried via `prometheus-server`.
+**Prometheus** collects metrics from various endpoints such as the API server or kubelet. Data is stored as time series and can be queried via `prometheus-server`.
 
-Grafana is used to run queries and visualize the results. Upon deployment we also import 2 predefined dashboards. One provides information about the cluster state like memory or CPU usage. The other is more specific to the training. It shows the deployments, services or pod status per namespace or across all namespaces.
+**Grafana** is used to run queries and visualize the results. Upon deployment we also import 2 predefined dashboards: 'Kubernetes cluster monitoring (via Prometheus)' and 'TrainingStats'. One provides information about the cluster state like memory or CPU usage. The other is more specific to the training. It shows the deployments, services or pod status per namespace or across all namespaces.
+
 Grafana is exposed via an `ingress` resource, so make sure your cluster has a running ingress controller. When running with Gardener this prerequisite is already fulfilled.  
 
 ## step-by-step setup
