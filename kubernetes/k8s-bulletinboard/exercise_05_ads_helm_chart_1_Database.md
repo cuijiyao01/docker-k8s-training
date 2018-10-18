@@ -131,7 +131,7 @@ Db:
 
 - Remove all default content from `_helpers.tpl` and add 3 template/functions: 
   1. Template for Component and Module tag + release name to distinguish different installs, can be used for MatchSelectors and labels
-  2. Tamplate for metaclass labels section
+  2. Template for metaclass labels section
   3. Function that produces fully qualified names for all kubernetes objects used for metaclass name key. All Entities get the release name added to their name.
  
 <details><summary> Here is the code for the 3 template/functions</summary><p>
