@@ -25,6 +25,8 @@ Verify your installation by running `helm version --tiller-connection-timeout=5 
 
 Hint: If you are getting tired of typing in your tiller namespace for every command, you can set an environment variable `TILLER_NAMESPACE` with your tiller server's namespace as value. However for sake of completeness the following code samples will continue to use the `--tiller-namespace` flag where required.
 
+<details><summary>Bash command to set TILLER_NAMESPACE to namespace of kube config</summary><p> You can use this bash line to set  TILLER_NAMESPACE `export TILLER_NAMESPACE=$(kubectl config view -o json | jq ".contexts[0].context.namespace" | sed -e "s/^\"//g" -e "s/\"$//g")`</p></details>
+
 ## Step 2: looking for charts?
 Now that helm is able to talk to its tiller in Kubernetes it is time to use it. Helm organizes applications in so called charts, which contain parameters you can set during installation. By default there is a local and an official repository where you can look for charts, but of course you can also add futher repos. Check out the available repos and search for a chaoskube chart
 `helm repo list`
