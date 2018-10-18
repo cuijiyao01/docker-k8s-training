@@ -97,7 +97,7 @@ Up till now your Ads was not asking a User Service for information on a certain 
   Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started.
 - Also adjust your network policy for __ads:app__ to allow traffic to (egress) __users:app__. 
 
-After this, please test that you now need a header `User-Id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement. The UI itself already has this field in its requests to the ads-service therefore using it does not test this. 
+After this, please test that you now need a header `User-Id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement, e.g. via postman or via `curl -k -X POST ...` . Also since we activated TLS in Exercise 3 , remember to send the requests to `https://` now. The UI itself already has this field in its requests to the ads-service therefore using it does not test this. 
 
 ## Troubleshooting tips
 
@@ -106,5 +106,5 @@ After this, please test that you now need a header `User-Id : 42` in your POSTS 
 - For others, like labels, you need to delete the old installation before reinstalling the new one. `helm delete <release-name>`
 - The release name are the first two words (adjective+animal) of the name of the users-db and users-app pods in `kubectl get pods`.
 - For step 3, if you can't create a new ads. 
-  - check if the new variables are known inside the pods: `kubectl exec -it <ads-app-...> bash` and do `export` to see what 
+  - check if the new variables are known inside the pods: `kubectl exec -it <ads-app-...> bash` and do `export` to see what the environment variables are.
   - check kubectl logs <ads-app-...> on both pods
