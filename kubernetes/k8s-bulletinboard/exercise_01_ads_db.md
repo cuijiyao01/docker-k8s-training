@@ -178,6 +178,24 @@ spec:
 
 Purpose: check wether the database is running and accepting connections. Use the [**pgadmin tool**](https://www.pgadmin.org/) for that.
 
+Here are two different ways how you could test if the statefulset is configured correctly and the db intialized with the right user and password:
+
+### Using a temporary postgres pod and psql
+
+Create a temporary pod with psql installed (e.g. a postgres:9.6 image like our DB) and use psql from this pod to connect to the DB.
+
+```
+kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash
+```
+
+A promt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
+`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial` if you have not changed it). After this you should connect to the ads db, a promt `ads=>` will ask you for the next command. If this does, all is correctly set up!  
+Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command. The pod should be automatically removed after this. 
+
+### Using port-forward and pgadmin in the VM
+
+
+
 - Install **pgadmin** locally on your virtual machine. For the training virtual machine, use the following command to install the software: `sudo apt install pgadmin3`
 
 - Use `kubectl port-forward ads-db-statefulset-0 5432:5432` to forward the database port from the database pod of your statefulset to your local virtual machine. 
