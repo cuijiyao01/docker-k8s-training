@@ -32,23 +32,23 @@ spec:
         image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
         ports:
         - containerPort: 8080
-          name: ads-app
+          name: ads-app-port
         env:
         - name: USER_ROUTE
           valueFrom:
             configMapKeyRef:
               key: user_route_value
-              name: ads-app-config
+              name: ads-app-configmap
         - name: SPRING_PROFILES_ACTIVE
           valueFrom:
             configMapKeyRef:
               key: spring_profiles_active_value
-              name: ads-app-config
+              name: ads-app-configmap
         - name: POST_USER_CHECK
           valueFrom:
             configMapKeyRef:
               key: post_user_check_value
-              name: ads-app-config 
+              name: ads-app-configmap 
         volumeMounts:
         - mountPath: /config/
           name: ads-app-properties    
