@@ -123,6 +123,9 @@ Open `https://<firstpart of url>.ingress.<clustername>.<projectname>.shoot.canar
 To check that everything worked check out the certificate you get when opening the url, it should look like this:  
 <p align="center"><img src="images/Certificate.png" width="700"/></p>
 
+## Troubleshooting
 
+- decoding the server.csr to see if the namespace is correctly put in: `openssl req -in mycsr.csr -noout -text`
+- decoding the server.crt to see if the "Subject Alternative Name DNS" entry is correct: `openssl x509 -in server.crt -text -noout`
 
 
