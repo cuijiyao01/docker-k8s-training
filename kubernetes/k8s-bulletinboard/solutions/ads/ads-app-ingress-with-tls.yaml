@@ -15,7 +15,7 @@ spec:
       paths:
       - path: /ads
         backend:
-          serviceName: ads-service
+          serviceName: ads-app-service
           servicePort: ads-app-port
   tls:
   - secretName: ingress-tls-sec
