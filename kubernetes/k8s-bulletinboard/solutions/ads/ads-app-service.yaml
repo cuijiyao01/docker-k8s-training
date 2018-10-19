@@ -10,7 +10,7 @@ spec:
   ports:
   - port: 8080
     protocol: TCP
-    targetPort: ads-app
+    targetPort: ads-app-port
   selector:
     component: ads
     module: app
