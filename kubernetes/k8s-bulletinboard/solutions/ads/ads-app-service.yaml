@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ads-service
+  name: ads-app-service
   labels:
     component: ads
     module: app
