@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ads-app-config
+  name: ads-app-configmap
   labels:
     component: ads
     module: app
