@@ -1,4 +1,4 @@
-# - D R A F T/ Under Construction !
+# - PILOT in CW43 - !
 
 # Exercise: Setup Bulletinboard-Ads Microservice/ Application
 
