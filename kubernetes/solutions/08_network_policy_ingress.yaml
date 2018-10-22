@@ -19,9 +19,6 @@ spec:
         # Ireland
         cidr: 84.203.229.48/29
     - ipBlock:
-        # US-West/Canada
-        cidr: 84.203.229.0/26
-    - ipBlock:
         # BLR
         cidr: 203.13.146.0/24
     - ipBlock:
@@ -45,3 +42,21 @@ spec:
     - ipBlock:
         # Montreal
         cidr: 208.49.239.224/28
+    - ipBlock:
+      # Palo mailto
+        cidr: 169.145.89.192/26
+    - ipBlock:
+      # Palo mailto
+        cidr: 169.145.92.72/32
+    - ipBlock:
+      # Palo mailto
+        cidr: 169.145.92.73/32
+    - ipBlock:
+      # Palo mailto
+        cidr: 169.145.92.74/32
+    - ipBlock:
+      # Palo mailto
+        cidr: 169.145.92.75/32
+# your location is missing or not working?
+# check with your trainers to get the local address blocks
+# add the blocks to this list

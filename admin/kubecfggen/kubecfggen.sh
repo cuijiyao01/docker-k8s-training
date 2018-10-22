@@ -15,11 +15,12 @@
 # History:           0.1 - 22-Mar-2018 - Initial release
 #                    0.2 - 03-Apr-2018 - Fields CA_CERT and API_SERVER will be automatically retrieved from current kube context
 #                    0.3 - 19-Apr-2018 - Resource quotas and limits will be created per namespace now.
-#					 0.4 - 19-Apr-2018 - Package generated configs as tar and switch to download from jenkins
+#			0.4 - 19-Apr-2018 - Package generated configs as tar and switch to download from jenkins
+#			0.5 - 18-Oct-2018 - Introducing the access service account which gets ClusterAdmin rights
 #
 
 # version tag
-_VERSION=0.4
+_VERSION=0.5
 
 # this is where we expect our configuration file
 CONFIG_FILE=`dirname $0`/kubecfggen.conf
@@ -110,7 +111,7 @@ echo -e "> Compiling $YAML_FILE...\n"
 # Do we have a namespace prefix? If not, we fall back to a default.
 [ -z "$NS_PREFIX" ] && NS_PREFIX="part"
 
-# create the namespace ojects for the YAML file
+# create the namespace ojects for the YAML file along with the access service account
 for i in `seq -w 01 1 $NS_COUNT`; do
 	NS_NAME=$NS_PREFIX-$(get_uid)
 	NAMESPACES="$NAMESPACES $NS_NAME"
@@ -121,6 +122,12 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: $NS_NAME
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: access
+  namespace: $NS_NAME
 __EOF
 done
 
@@ -143,7 +150,7 @@ __EOF
 for ns in $NAMESPACES; do
 	cat << __EOF >> $YAML_FILE
 - kind: ServiceAccount
-  name: default
+  name: access
   namespace: $ns
 __EOF
 done
@@ -179,7 +186,6 @@ spec:
 __EOF
 done
 
-
 # let's feed this YAML file to our cluster
 echo -e "> Sending $YAML_FILE to the cluster...\n"
 ${KUBECTL} create -f $YAML_FILE
@@ -192,13 +198,14 @@ fi
 
 
 # now we create the kube.config files
-echo -e "\n> Retrieving access tokens for default service accounts and creating kube.config files."
+echo -e "\n> Retrieving access tokens for the access service accounts and creating kube.config files."
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
 	KUBE_CONF_DIR="$OUTPUT_DIR/kube-configs/$NS_UID"
 	mkdir -p $KUBE_CONF_DIR
 	echo "  - processing namespace $ns"
-	TOKEN=`${KUBECTL} get secret -n $ns -o json | jq '.items[0].data.token' | sed 's/"//g' | base64 --decode`
+	SA_SECRET=$(${KUBECTL} get serviceaccount access -n $ns -o json | jq '.secrets[0].name' | sed 's/"//g')
+	TOKEN=$(${KUBECTL} get secret ${SA_SECRET} -n $ns -o json | jq '.data.token' | sed 's/"//g' | base64 --decode)
 
 	# create kubeconfig
 	cat << __EOF > $KUBE_CONF_DIR/kube.config

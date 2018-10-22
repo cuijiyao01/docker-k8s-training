@@ -45,8 +45,8 @@ spec:
         # Ireland
         cidr: 84.203.229.48/29
     - ipBlock:
-        # US-West/Canada
-        cidr: 84.203.229.0/26
+        # Palo Alto
+        cidr: 169.145.89.192/26
     - ipBlock:
         # Montreal
         cidr: 68.67.33.0/25
@@ -54,6 +54,7 @@ spec:
         # Montreal
         cidr: 208.49.239.224/28
 ```
+If you're location is not on the list, check with your trainer to get the address blocks. You can also check the [network information portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml) and search for your location.
 
 If you are unsure about the labels, run the queries you are about to implement manually - e.g. `kubectl get pods -l <my-ke>=<my-value>`. This way you can check, if the results match your intention.
 
