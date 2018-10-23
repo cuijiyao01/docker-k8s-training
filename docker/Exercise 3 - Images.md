@@ -57,7 +57,7 @@ Use the `docker commit` command to commit the changes you made to the container 
 
 ## Step 4: Tagging the new image
 
-Use the `docker tag` command to assign the name *evil_nginx* to your new image. You might want to give it a release number, too.
+Use the `docker tag` command to assign the name __*evil_nginx*__ to your new image. You might want to give it a release number, too.
 
 ## Step 5: Lauching your custom images
 
