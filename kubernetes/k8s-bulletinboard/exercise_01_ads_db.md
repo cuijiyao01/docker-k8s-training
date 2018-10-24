@@ -27,6 +27,8 @@ To shorten names, entities will be references by their component & module values
 
 ## Step 0: Preparation
 
+** Please, before you start with this exercises, clean up your namespace from what you did the previous days by deleting all deployments, statefulsets, pvcs, services etc.** This helps you by easier finding the entities in your namespace and us by reducing the load on the cluster!
+
 - Create a folder `k8s-bulletinboard` in your home directory for the various yaml-files, you will create in the exercises.
 - Create a sub-folder `ads` for all yaml-files, related to **Bulletinboard-Ads** (App/Microservice + DB).
 
