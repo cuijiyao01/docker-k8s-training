@@ -19,7 +19,7 @@ Change the permissions of the binary accordingly that also the `vagrant` user ca
 ## Step 1: initialize helm
 The helm client uses the information stored in .kube/config to talk to the kubernetes cluster. But before you set up the tiller-server, you need to specify the namespace to be used. Otherwise, everyone will deploy their tiller-server into the kube-system namespace resulting in an overwrite of what was there before.
 
-`helm init --tiller-namespace <your-namespace> --service-account access`
+`helm init --tiller-namespace <your-namespace>`
 
 Verify your installation by running `helm version --tiller-connection-timeout=5 --tiller-namespace <your-namespace>`. The command should return a version for the client as well as the server. In case the server does not respond properly, you can check, if the `tiller`pod is already up and running.
 
