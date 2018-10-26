@@ -73,9 +73,9 @@ Purpose: Create a **Configmap** for the external (outside the docker image) conf
 
 - The app needs to get specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way **Spring** gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. 
 
-- Therefor specify a **Configmap** `ads-app-configmap` with key `spring_profiles_active_value` and value `k8s`.
+- Therefore specify a **Configmap** `ads-app-configmap` with key `spring_profiles_active_value` and value `k8s`.
 
-- By default this specific version of **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
+- By default this specific version of **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefore we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
 - Save the **Configmap** spec under the filename `ads-app-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
@@ -230,7 +230,7 @@ spec:
 
 - Check wether the **Ingress** is properly created via `kubectl get ingress ads-app-ingress`.
 
-- Additional check wether you can call your **Bulletinboard-Ads** on the `/health` endpoint via the **Ingress** Url with the following **cURL** command:
+- Additional check wether you can call your **Bulletinboard-Ads** on the `/ads/health` endpoint via the **Ingress** Url with the following **cURL** command:
 
 `curl http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/health`.
 
