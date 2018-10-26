@@ -64,9 +64,9 @@ A promt with root@... should come up. You are now connected to the pod, here we 
 
 <p align="center"><img src="images/successful_psql_connection.png"></p>
 
-To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above: `kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash`. Again you should get a root promt, execute `psql -h ads-db-0 -p 5432 -U adsuser -W ads` which, after you entered the password, should return with a timeout after 5 seconds.
+To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above: `kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash`. Again you should get a root promt, execute `psql -h ads-db-statefulset-0 -p 5432 -U adsuser -W ads` which, after you entered the password, should return with `timeout expired` after 5 seconds.
 
-To test the egress `kubectl exec -it ads-db-0 bash` and try to ping any page/pod e.g. ads:app. 
+To test the egress `kubectl exec -it ads-db-statefulset-0 bash` and try to ping any page/pod e.g. ads:app. 
 
 ## Step 2: Network policy for Ads
 
