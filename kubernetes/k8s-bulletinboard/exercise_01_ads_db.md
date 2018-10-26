@@ -34,7 +34,7 @@ To shorten names, entities will be references by their component & module values
 
 ## Step 1: Create a Configmap with location of Postgres database files
 
-- Specify a **Configmap** `ads-db-config` with a data item for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` with key `pgdata_value` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+- Specify a **Configmap** `ads-db-configmap` with a data item for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` with key `pgdata_value` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
