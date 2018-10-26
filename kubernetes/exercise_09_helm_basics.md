@@ -39,7 +39,7 @@ Found it? Check the github [page](https://github.com/kubernetes/charts/tree/mast
 
 ## Step 3: install a chart
 Run the following command to install the chaoskube chart:
-`helm install --name <any-name> stable/chaoskube --set namespaces=<your-namespace> --set rbac.serviceAccountName=access --tiller-namespace <your-namespace> --debug`
+`helm install --name <any-name> stable/chaoskube --set namespaces=<your-namespace> --tiller-namespace <your-namespace> --debug`
 It installs eveything that is associated to the chart into your namespace. Note the `--set` flag, it specifies a parameter of chart. Check the github page mentioned above again, if you want to learn what it does and which other parameters are available.
 
 ## Step 4: inspect your chaoskube
