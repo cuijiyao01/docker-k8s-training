@@ -28,7 +28,7 @@ Hint: If you are getting tired of typing in your tiller namespace for every comm
 <details><summary>Bash command to set TILLER_NAMESPACE to namespace of kube config</summary><p> 
 
 You can use this bash line to set  TILLER_NAMESPACE:  
-`export TILLER_NAMESPACE=$(kubectl config view -o json | jq - r ".contexts[0].context.namespace")` 
+`export TILLER_NAMESPACE=$(kubectl config view -o json | jq -r ".contexts[0].context.namespace")` 
 </p></details>
 
 ## Step 2: looking for charts?
