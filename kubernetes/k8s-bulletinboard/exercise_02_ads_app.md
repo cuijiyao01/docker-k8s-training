@@ -73,7 +73,7 @@ Purpose: Create a **Configmap** for the external (outside the docker image) conf
 
 - The app needs to get specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way **Spring** gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. 
 
-- Therefor specify a **Configmap** `ads-app-config` with key `spring_profiles_active_value` and value `k8s`.
+- Therefor specify a **Configmap** `ads-app-configmap` with key `spring_profiles_active_value` and value `k8s`.
 
 - By default this specific version of **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefor we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
