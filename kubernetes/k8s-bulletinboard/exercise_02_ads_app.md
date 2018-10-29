@@ -197,7 +197,7 @@ spec:
 
 - Additional specify an **Ingress** for the **Bulletinboard Ads**, with name `ads-app-ingress` and with proper labels and selector for component and module. 
 
-- As the host URL has to be unique across the whole K8s Cluster, add `--<name-of-your-namespace>` as suffix to the hostname 'bulletinboard', so the host URL would look like: `bulletinboard--part-40a86f44.ingress.wdfcw43.k8s-train.shoot.canary.k8s-hana.ondemand.com`.
+- As the host URL has to be unique across the whole K8s Cluster, add `--<name-of-your-namespace>` as suffix to the hostname 'bulletinboard', so the host URL would look like: `bulletinboard--part-40a86f44.ingress.testcw43.k8s-train.shoot.canary.k8s-hana.ondemand.com`.
 
 - Refer to the above created **Service** `ads-app-service` in field `serviceName` and `servicePort` (Section '- backend').
 
@@ -222,7 +222,7 @@ spec:
           serviceName: <name-of-ads-service>
           servicePort: <name-of-ads-port>
 ```
-  In the examble above the namespace would be `part-40a86f44`, cluster name would be `wdfcw43` and project name would be `k8s-train`.
+  In the examble above the namespace would be `part-40a86f44`, cluster name would be `testcw43` and project name would be `k8s-train`.
   You can find out what your *cluster name* and *project name* is by looking into the config: `kubectl config view`. Here `clusters.cluster.server` contains the api url, which contains both cluster and project name. You can see an example in the picture below.  
   <img src="images/ClusterConfigNameFromConfig.png" width="600" />
 
