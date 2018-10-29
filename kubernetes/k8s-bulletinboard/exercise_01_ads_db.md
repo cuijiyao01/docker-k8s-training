@@ -41,7 +41,7 @@ This hirachy allows to retrieve e.g all entities for our databases via a `kubect
 
 ## Step 1: Create a Configmap with location of Postgres database files
 
-- Specify a **Configmap** `ads-db-configmap` with a data item for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` with key `pgdata_value` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for [component and module](exercise_01_ads_db.md#labels) !
+- Specify a **Configmap** `ads-db-configmap` with a data item for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` with key `pgdata_value` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for [component and module](exercise_01_ads_db.md#labels)!
 
 - Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
@@ -70,7 +70,7 @@ This hirachy allows to retrieve e.g all entities for our databases via a `kubect
 
 - Because of the `--dry-run` parameter this will only generate a yaml and does not create the **Secret** itself. 
 
-- Now open the file `ads-db-secret.yaml` and add the proper labels for component and modul. Also remove the `creationTimestamp`. Save the changes.
+- Now open the file `ads-db-secret.yaml` and add the proper labels for [component and module](exercise_01_ads_db.md#labels). Also remove the `creationTimestamp`. Save the changes.
 
 - Add top level entry `type: Opaque`.
 
@@ -89,7 +89,7 @@ You can take any String as a master password, but if you want a random string yo
 ## Step 4: "Headless" Service
 Purpose: Create the **"headless" Service**, required to access the pod, created by the statefulset.
 
-- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for component and module. Use the default port, given by the Docker image (port 5432 as depicted by the description on [Docker Hub](https://hub.docker.com/_/postgres/)) and make sure you are using a named port. Save the service under the filename `ads-db-service.yaml` in folder `k8s-bulletinboard/ads`.
+- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for [component and module](exercise_01_ads_db.md#labels). Use the default port, given by the Docker image (port 5432 as depicted by the description on [Docker Hub](https://hub.docker.com/_/postgres/)) and make sure you are using a named port. Save the service under the filename `ads-db-service.yaml` in folder `k8s-bulletinboard/ads`.
 
 - Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless" Service**.
 
@@ -103,7 +103,7 @@ Purpose: Create the **Statefulset**, which uses both Configmaps, the Secret and 
 
 _Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders `<...>` by proper values !_
 
-- Specify a **Statefulset** for the Postgres Database Pod with name `ads-db-statefulset` with proper labels and selector for component and module. 
+- Specify a **Statefulset** for the Postgres Database Pod with name `ads-db-statefulset` with proper labels and selector for [component and module](exercise_01_ads_db.md#labels). 
 
 ```
 ---
@@ -164,7 +164,7 @@ spec:
               key: <name-of-data-specified-in-secret>
 ```
 
-- For the creation of the PVC we are using the volumeClaimTemplates mechanism. Here just make sure you are using proper labels for component and module. 
+- For the creation of the PVC we are using the volumeClaimTemplates mechanism. Here just make sure you are using proper labels for [component and module](exercise_01_ads_db.md#labels). 
 
 ```
   volumeClaimTemplates:
