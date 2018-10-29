@@ -289,7 +289,8 @@ template for initdb sql secret
 - Update database admin password `ads-db-secret.yaml`, use `b64enc` to encode the password. 
 ```yaml
 data:
-  PG_PASSWORD: {{ .Values.Db.Postgres.RootPassword | b64enc }}
+  postgres_password_value: {{ .Values.Db.Postgres.RootPassword | b64enc }}
+  initdb_sql_value: {{- template "initdb.encoded" . }}
 ```
 
 - Update port for the service in `ads-db-service.yaml`
