@@ -1,4 +1,4 @@
-Exercise 3: Authoring the chart to include the ads application itself
+Exercise 5.2: Authoring the chart to include the ads application itself
 ====================================================
 
 ## Learning Goal
