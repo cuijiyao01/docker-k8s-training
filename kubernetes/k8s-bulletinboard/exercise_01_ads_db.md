@@ -25,9 +25,9 @@ We make us of labels on **all** entities so they can be easier selected/searched
 
 - The structure for **Labels** (and with this for **Selectors**) has 2 levels. On the first level we want to separate **Bulletinboard-Ads** from **Bulletinboard-Users**. For this we introduce the **Label** `component` with value `ads` or `users`. On the second level we separate the App-part from the Database-part within each "Component". Here we introduce the **Label** `module` with value `app` or `db`. 
 
-This hirachy allows to retrieve e.g all entities for our databases via a `kubectl get sts,pods,cm,secrets,svc -l module=db`, or for ads with `kubectl get sts,pods,cm,secrets,svc -l component=ads`.
+This hierarchy allows us to retrieve e.g all entities for our databases via a `kubectl get deploy,sts,pods,cm,secrets,svc -l module=db`, or for ads with `kubectl get deploy,sts,pods,cm,secrets,svc -l component=ads`.
 
-- To shorten names, entities will be references by their component & module values, like __ads:app__ to name e.g. the pod(s) for bulletinboard-ads application pod.
+- To shorten names, entities will be referenced by their component & module values, like __ads:app__ to name e.g. the pod(s) for bulletinboard-ads application pod.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-labels-1.png" width="800" />
 
