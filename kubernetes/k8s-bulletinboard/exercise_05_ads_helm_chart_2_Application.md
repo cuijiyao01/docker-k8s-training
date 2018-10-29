@@ -8,7 +8,7 @@ Exercise 3: Authoring the chart to include the ads application itself
 
 ## Prerequisite
 
-- Chart from Excercise 2 correctly installed (check out solution 2 branch if not done)
+- Chart from Excercise 2 correctly installed (check out ads-db-* files in the bulletionboard-users helm solutions if previous exercise not done)
 
 ## Step 1: Copy all app K8s manifest files (`ads-app-*.yaml`) to the `templates` folder
 
@@ -28,66 +28,71 @@ templates
   ads-db-secret.yaml         
   ads-db-service.yaml
   ads-db.yaml
-
+  
+  _helpers.tpl
+  NOTES.txt
 ``` 
 
 ## Step 2: Change configuration so that the app can talk to the database installed with Helm
 
-> **IMPORTANT: Do not parameterize everything like in the Exercise 2 again **
+> **IMPORTANT: Do not parameterize everything like in the Exercise 2 again. (Due to time) **
 
-### `ads-app-configmap.yaml`
+### `ads-app-secret.yaml`
 
-```yaml
-data:
-  application-k8s.yml: |
-    ---
-    spring:
-      datasource:
-        url: jdbc:postgresql://{{ template "db-service-fullname" . }}:{{ .Values.Db.Postgres.Port }}/{{ .Values.Db.Postgres.Database }}
-        username: {{ .Values.Db.Postgres.User}}
-        password: {{ .Values.Db.Postgres.Password }}
-        driverClassName: org.postgresql.Driver
-```
-
-## Step 2: Add ingress rewriting configuration for your application
-
-
-### `ads-app-ingress.yaml`
+Here we do the same thing we did with initdb.sql: 
+-Create a templated application-k8s.txt
 
 ```yaml
-spec:
-  rules:
-  - host: ads.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com
-    http:
-      paths:
-      - path: /<YOUR_USER_NAME>
-        backend:
-          serviceName: ads-service
-          servicePort: ads-app
+---
+spring:
+  datasource:
+    url: jdbc:postgresql://{{ template "db-connection" . }}:{{ .Values.Db.Postgres.Port }}/{{ .Values.Db.Postgres.Database }}
+    username: {{ .Values.Db.Postgres.User}}
+    password: {{ .Values.Db.Postgres.Password }}
+    driverClassName: org.postgresql.Driver
 ```
 
+- Add to _helpers.tpl the templates:
 
-## Step 3: Upgrade the Chart
+```yaml
+{{/*
+template for applications-k8s secret
+*/}}
+{{- define "applications-k8s.encoded" -}}
+{{- tpl (.Files.Get "applications-k8s.txt") . | b64enc }}
+{{- end -}}
+
+{{/*
+template for db connection
+*/}}
+{{- define "db-connection" -}}
+{{- printf "%s-0.%s" .Values.Db.StatefulsetName .Values.Db.ServiceName -}}
+{{- end -}}
+```
+
+- Make use of this template in the ads-app-secret!
+
+## Step 2: Upgrade the Chart
 
 ```bash
 $ helm upgrade <release-name> bulletinboard-ads 
 ```
 
 
-## Step 4: Check if the service is up and running
+## Step 3: Check if the service is up and running
 
 ```bash
-http://ads.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/<YOUR_USER_NAME>/api/v1/ads
+http://bulletionboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
 ```
 
 
-## Step 5: Introduce init container to check that DB is up (optional)
+## Step 4: Introduce init container to check that DB is up (optional)
 
 Do a fresh install of the chart
 
 ```bash
 
-helm delete <release-name>
+helm delete <release-name> --prune
 
 helm install bulletinboard-ads
 
@@ -121,14 +126,14 @@ You'll notice that ads app pod starts before the db pod starts, which leads to e
 
 However, you can configure the app pod to start only after db pod is started by using init containers.
 
-Add following configuration to the specification for the app deployment (`ads-app.yaml`)
+Add following configuration to the specification for the app deployment (`ads-app-deployment.yaml`)
 
 ```yaml
 
       initContainers:
       - name: init-postgres
         image: alpine
-        command: ['sh', '-c', 'for i in $(seq 1 200); do nc -z -w3 {{ template "db-service-fullname" . }} {{ .Values.Db.Postgres.Port }} && exit 0 || sleep 3; done; exit 1']
+        command: ['sh', '-c', 'for i in $(seq 1 200); do nc -z -w3 {{ template "db-connection" . }} {{ .Values.Db.Postgres.Port }} && exit 0 || sleep 3; done; exit 1']
 
 
 ```
