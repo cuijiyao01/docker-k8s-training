@@ -259,7 +259,7 @@ Db:
 - Update Mount path in `ads-db-configmap.yaml`
 ```yaml
 data:
-  PGDATA: "{{ .Values.Db.Postgres.MountPath }}/pgdata"
+  pgdata_value: "{{ .Values.Db.Postgres.MountPath }}/pgdata"
 ```
 ### Step 4.1 The Secrets
 
@@ -311,6 +311,21 @@ spec:
         volumeMounts:
         - name: ads-db-volume
           mountPath: {{ .Values.Db.Postgres.MountPath }}
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: PGDATA
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ConfigName) }}
+              key: pgdata_value
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
+              key: postgres_password_value
+          
+          
 ```
 
 ## Step 5: Install the Chart and test the Microservice
