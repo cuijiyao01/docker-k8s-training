@@ -307,9 +307,9 @@ spec:
         image: "{{ .Values.Db.Postgres.Image }}:{{ .Values.Db.Postgres.ImageTag }}"
         ports:
         - containerPort: {{ .Values.Db.Postgres.Port }}
-          name: users-db
+          name: ads-db-port
         volumeMounts:
-        - name: users-db-volume
+        - name: ads-db-volume
           mountPath: {{ .Values.Db.Postgres.MountPath }}
 ```
 
@@ -321,7 +321,8 @@ spec:
 $ helm install bulletinboard-ads 
 ```
 
-Inspect installation
+
+<details><summary>Inspect installation with helm list:</summary><p>
 ```bash
 $ helm list
 NAME           	REVISION	UPDATED                 	STATUS  	CHART                  	NAMESPACE         
@@ -354,6 +355,7 @@ networkpolicy.extensions/<release_name>-ads-db-access   component=<release_name>
 NAME                                 TYPE                                  DATA      AGE
 secret/<release_name>-ads-db-cred   Opaque                                1         23m
 ```
+</p></details>
 
 - now test the Db using the same tests as during the previous exercises. 
   1. Exec onto the pod and use pgadmin to test.
