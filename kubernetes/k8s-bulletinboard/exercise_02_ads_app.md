@@ -158,7 +158,7 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
 
 - When you are ready with the specification of the **Deployment** save it under the filename `ads-app-deployment.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-deployment.yaml` to create the **Deployment** `ads-app-deployment`.
 
-- After successful creation of the **Deployment** check, wether **2** Pods got created properly via `kubectl get pods`. The names of the 2 pods should be something like `ads-app-deployment-xx-yx`, `ads-app-deployment-xx-yy` and `ads-app-deployment-xx-yz`.
+- After successful creation of the **Deployment** check, wether **2** Pods got created properly via `kubectl get pods`. The names of the 2 pods should be something like `ads-app-deployment-xx-yx` and `ads-app-deployment-xx-yy`.
 
 
 ## Step 4: Service & Ingress
@@ -251,9 +251,9 @@ Now, access the application using the browser.
 - Open Chromium browser
 - Open a new tab
 - Paste the following URLs into the adress field and check the results.
-  - **REST API, health Endpoint**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/health`
-  - **REST API, Get All**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads`
-  - **REST API, Get Single**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads/<advertisement-id>`
+  - **REST API, health Endpoint**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/health`
+  - **REST API, Get All**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads`
+  - **REST API, Get Single**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads/<advertisement-id>`
   - **Web-UI**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/`
   
 <img src="images/k8s-bulletinboard-browser-2.png" width="800" />
