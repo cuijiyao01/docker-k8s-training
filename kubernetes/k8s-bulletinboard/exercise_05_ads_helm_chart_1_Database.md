@@ -362,7 +362,7 @@ secret/<release_name>-ads-db-cred   Opaque                                1     
 </p>
 </details>
 
-- now test the Db using the same tests as during the previous exercises. 
+Now test the Db using the same tests as during the previous exercises. 
   1. Exec onto the pod and use pgadmin to test.
   2. `kubectl port-forward <pod_name>  5432:5432` and use a local DB viewer.
 
