@@ -13,14 +13,21 @@
 
 - As database we will use Postgresql, where on Docker hub we can find a well suiting offical [Postgresql Docker image](https://hub.docker.com/_/postgres/).
 
-- The Postgresql Docker image gives us the possibility to override several default values via **environment variables** for e.g. the location for the database files (`PGDATA`) and the superuser password (`POSTGRES_PASSWORD`).
+- The Postgresql Docker image gives us the possibility to override several default values via **environment variables** for e.g. the location for the database files (`PGDATA`) and the superuser password (`POSTGRES_PASSWORD`). (Information needed in step 5)
 
 - As well we can run any **initdb scripts**, which we will use to create a new database with a specific user and password (Not using the default user postgres).
 
 - To make available the Bulletinboard-Ads Database **Pod** from we setup a **"headless" service** to allow the app to talk to the database.
 
-- The structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.  
-To shorten names, entities will be references by their component & module values, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
+## Labels
+
+We make us of labels on **all** entities so they can be easier selected/searched for with kubectl. 
+
+- The structure for **Labels** (and with this for **Selectors**) has 2 levels. On the first level we want to separate **Bulletinboard-Ads** from **Bulletinboard-Users**. For this we introduce the **Label** `component` with value `ads` or `users`. On the second level we separate the App-part from the Database-part within each "Component". Here we introduce the **Label** `module` with value `app` or `db`. 
+
+This hirachy allows to retrieve e.g all entities for our databases via a `kubectl get sts,pods,cm,secrets,svc -l module=db`, or for ads with `kubectl get sts,pods,cm,secrets,svc -l component=ads`.
+
+- To shorten names, entities will be references by their component & module values, like __ads:app__ to name e.g. the pod(s) for bulletinboard-ads application pod.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-labels-1.png" width="800" />
 
@@ -34,7 +41,7 @@ To shorten names, entities will be references by their component & module values
 
 ## Step 1: Create a Configmap with location of Postgres database files
 
-- Specify a **Configmap** `ads-db-configmap` with a data item for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` with key `pgdata_value` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
+- Specify a **Configmap** `ads-db-configmap` with a data item for the new location of the Postgresql database files: `/var/lib/postgresql/data/pgdata` with key `pgdata_value` and save the **Configmap** spec under the filename `ads-db-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for [component and module](exercise_01_ads_db.md#labels) !
 
 - Now call `kubectl apply -f ads-db-configmap.yaml` to create the **Configmap**.
 
