@@ -322,7 +322,10 @@ $ helm install bulletinboard-ads
 ```
 
 
-<details><summary>Inspect installation with helm list:</summary><p>
+<details>
+<summary>Inspect installation with helm list:</summary>
+<p>
+
 ```bash
 $ helm list
 NAME           	REVISION	UPDATED                 	STATUS  	CHART                  	NAMESPACE         
@@ -355,7 +358,9 @@ networkpolicy.extensions/<release_name>-ads-db-access   component=<release_name>
 NAME                                 TYPE                                  DATA      AGE
 secret/<release_name>-ads-db-cred   Opaque                                1         23m
 ```
-</p></details>
+
+</p>
+</details>
 
 - now test the Db using the same tests as during the previous exercises. 
   1. Exec onto the pod and use pgadmin to test.
