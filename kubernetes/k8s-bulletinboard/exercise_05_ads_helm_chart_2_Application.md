@@ -6,6 +6,8 @@ Exercise 5.2: Authoring the chart to include the ads application itself
 - Connect the application to the database (use parameterized DB coordinates)
 - Configure app to wait until DB is up and running
 
+> **IMPORTANT: You do not have to parameterize everything like in the Exercise 5.1 again. (Due to time)**
+
 ## Prerequisite
 
 - Chart from Excercise 2 correctly installed (check out ads-db-* files in the bulletionboard-users helm solutions if previous exercise not done)
@@ -35,12 +37,9 @@ templates
 
 ## Step 2: Change configuration so that the app can talk to the database installed with Helm
 
-> **IMPORTANT: Do not parameterize everything like in the Exercise 2 again. (Due to time) **
+We will only change `ads-app-secret.yaml` so the application-k8s.yml in the end has the right connection information. Here we do the same thing we did with initdb.sql: 
 
-### `ads-app-secret.yaml`
-
-Here we do the same thing we did with initdb.sql: 
--Create a templated application-k8s.txt
+- Create a templated application-k8s.txt
 
 ```yaml
 ---
