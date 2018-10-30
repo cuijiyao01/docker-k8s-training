@@ -1,4 +1,4 @@
-# - PILOT in CW43 - !
+# - 2. PILOT in CW46 - !
 
 # Microservice based Application in Kubernetes using Cloud Curriculum Sample Application "Bulletinboard"
 - In the following **5 exercises** you will learn how to make available a microservice based business application in Kubernetes. 
