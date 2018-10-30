@@ -11,7 +11,12 @@ Increase security by **establishing a network policy** for Ads DB and **enable T
 
 ## Step 0: prerequisites
 
-Currently none.
+Test that the kube-system namespace has the proper label: 
+```bash
+$ kubectl get namespaces --show-labels | grep system
+kube-system     Active    20d       name=kube-system
+```
+If the last value is `<none>` your kube-system namespace is missing the label. In this case talk to the trainers that it gets the label.
 
 ## Step 1: Network policy for DB
 
