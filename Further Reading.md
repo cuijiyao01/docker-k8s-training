@@ -53,6 +53,11 @@ If you would like to get some more information on Docker and/or Kubernetes insid
   - https://video.sap.com/playlist/dedicated/31122632/1_b597m58u/1_910vsh7f
   - https://video.sap.com/playlist/dedicated/31122632/1_b597m58u/1_hkwlxqmn
 
+## SAP specific security aspects
+- [container reference architecture security procedure](https://wiki.wdf.sap.corp/wiki/x/HkxOcQ)
+- [Docker security procedure](https://wiki.wdf.sap.corp/wiki/x/Uk8GcQ)
+- [Security approved container base images](https://wiki.wdf.sap.corp/wiki/x/UYYRd)
+
 ## General
 
 - Brendan Burns, Distinguished Engineer at Microsoft and Chief Architect behind the container infrastucture within Azure released one of his books on distributed software design for free: [Designing Distributed Systems](https://azure.microsoft.com/en-us/resources/designing-distributed-systems/)
