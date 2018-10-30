@@ -2,15 +2,13 @@ Exercise 5.3: Advanced topics
 ====================================================
 
 ## Learning Goal
-- Define dependencies to other charts
-- ...
+- Define dependencies to other charts by connection users ands ads.
 
 ## Prerequisite
 
 - uninstall all charts for **users** and **ads**.
 
 ## Step 1: Create file `requirements.yaml` in the `bulletinboard-ads` folder
-
 
 ```
 dependencies:
@@ -23,13 +21,13 @@ dependencies:
 ## Step 2: Update dependencies
 
 ```bash
-$  helm dependency update bulletinboard-ads
+$ helm dependency update bulletinboard-ads
 ```
 
 ## Step 3: Install chart
 
 ```bash
-$  helm install bulletinboard-ads
+$ helm install bulletinboard-ads
 ```
 
 Now both charts should be installed
@@ -38,7 +36,7 @@ Now both charts should be installed
 ## Step 4: Check if the service is up and running
 
 ```bash
-http://bulletinboard--<your namespace>.ingress.<cluster name>.<project name>.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
+$ curl http://bulletinboard--<your namespace>.ingress.<cluster name>.<project name>.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
 ```
 
 ## Step 5: Configure app application to check users (optional)
@@ -59,7 +57,7 @@ Upgrade chart, kill app pod, check that application still works and that you can
 
 ## Step 6: Bonus tasks (optional)
 
-**Bonus 1:** Figure it out how to make the user service name configurable
+**Bonus 1:** WE have a fixed user service name without the release name being part of it. Figure it out how to make the user service name configurable and how to path the name to the ads chart during installation. (Please send us your example.)
 
 **Bonus 2:** Make app manifest files fully configurable (simiar with db manifest files)
 
