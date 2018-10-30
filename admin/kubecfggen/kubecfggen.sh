@@ -250,7 +250,9 @@ done
 tar -zcvf ${OUTPUT_TAR} $OUTPUT_DIR
 
 # at last we give kube-system namespace a label for network policies to work.
-${KUBECTL} label namespaces kube-system name=kube-system
+if [ $(${KUBECTL} get namespaces kube-system -o json | jq ".metadata.labels.name") == "null" ]; then
+  ${KUBECTL} label namespaces kube-system name=kube-system
+fi
 
 # print out the final message (yes, I like here-docs)
 cat << __EOF
