@@ -7,7 +7,7 @@ Exercise 5.3: Advanced topics
 
 ## Prerequisite
 
-- uninstall all charts
+- uninstall all charts for **users** and **ads**.
 
 ## Step 1: Create file `requirements.yaml` in the `bulletinboard-ads` folder
 
@@ -38,14 +38,14 @@ Now both charts should be installed
 ## Step 4: Check if the service is up and running
 
 ```bash
-http://ads.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/<YOUR_USER_NAME>/api/v1/ads
+http://bulletinboard--<your namespace>.ingress.<cluster name>.<project name>.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
 ```
 
 ## Step 5: Configure app application to check users (optional)
 
-Edit `ads-app-configmap.yaml` and set parameter `post_user_check` to `true`
+Edit `ads-app-configmap.yaml` and set parameter `post_user_check` to `true`, if it is not already that.
 
-Change URL of the user service to match your newly created service:
+Check URL of the user service to match your newly created service (Should be the same as before):
 
 
 ```bash
