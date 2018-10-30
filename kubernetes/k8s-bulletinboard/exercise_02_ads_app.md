@@ -1,4 +1,4 @@
-# - PILOT in CW43 - !
+# - 2. PILOT in CW46 - !
 
 # Exercise: Setup Bulletinboard-Ads Microservice/ Application
 
