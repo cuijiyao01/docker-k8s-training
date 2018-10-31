@@ -6,15 +6,15 @@
 #
 
 
-PROJECT=$1
-CLUSTER=$2
+CLUSTER=$1
+PROJECT=$2
 
 MYHOME=$(dirname $0)
 
 if [ -z "$PROJECT" -o -z "$CLUSTER" ]; then
         echo "Specify project and cluster name."
         echo -e "\nUsage:"
-        echo "  $0 <gardener project name> <gardener cluster name>"
+        echo "  $0 <gardener cluster name> <gardener project name>"
         exit 1
 fi
 
