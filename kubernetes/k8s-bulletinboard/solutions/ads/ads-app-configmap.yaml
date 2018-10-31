@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ads-app-configmap
+  labels:
+    component: ads
+    module: app
+data:
+  user_route_value: http://users-app-service/bulletinboard-users-service
+  spring_profiles_active_value: k8s
+  post_user_check_value: "false"
+  

@@ -1,0 +1,133 @@
+---
+apiVersion: v1
+kind: ConfigMap
+data:
+  PGDATA_VALUE: "{{ .Values.Db.Postgres.MountPath }}/pgdata"
+metadata:
+  name: {{ template "db-config-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+---
+apiVersion: v1
+data:
+  initdb.sql: |
+      -- This is a postgres initialization script for the postgres container. Execute it with psql as:
+      -- $> psql postgres -f initdb.sql
+      CREATE ROLE {{ .Values.Db.Postgres.User }} WITH CREATEDB LOGIN PASSWORD '{{ .Values.Db.Postgres.Password }}';
+      CREATE DATABASE {{ .Values.Db.Postgres.Database }} WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
+      GRANT ALL PRIVILEGES ON DATABASE {{ .Values.Db.Postgres.Database }} TO {{ .Values.Db.Postgres.User}};
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
+      \c {{ .Values.Db.Postgres.Database }};
+      CREATE SCHEMA {{ .Values.Db.Postgres.Schema }} AUTHORIZATION {{ .Values.Db.Postgres.User }};
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
+      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
+      -- close script
+kind: ConfigMap
+metadata:
+  name: {{ template "db-init-fullname" . }}
+---
+apiVersion: v1
+data:
+  POSTGRES_PASSWORD_VALUE: {{ .Values.Db.Postgres.RootPassword }}
+kind: Secret
+metadata:
+  name: {{ template "db-credential-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "db-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+spec:
+  ports:
+  - port: {{ .Values.Db.Postgres.Port }}
+    name: users-db
+  clusterIP: None
+  selector:
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+    release: {{ .Release.Name | quote }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "db-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+spec:
+  serviceName: {{ template "db-fullname" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      component: "{{ .Values.Db.Component }}"
+      module: "{{ .Values.Db.Module }}"
+      release: {{ .Release.Name | quote }}
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        component: "{{ .Values.Db.Component }}"
+        module: "{{ .Values.Db.Module }}"
+    spec:
+      volumes:
+      - name: init
+        configMap:
+          name: {{ template "db-init-fullname" . }}
+      containers:
+      - name: {{ template "db-fullname" . }}
+        image: "{{ .Values.Db.Postgres.Image }}:{{ .Values.Db.Postgres.ImageTag }}"
+        ports:
+        - containerPort: {{ .Values.Db.Postgres.Port }}
+          name: users-db
+        volumeMounts:
+        - name: users-db-volume
+          mountPath: {{ .Values.Db.Postgres.MountPath }}
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "db-credential-fullname" . }}
+              key: POSTGRES_PASSWORD_VALUE
+        - name: PGDATA
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "db-config-fullname" . }}
+              key: PGDATA_VALUE
+  volumeClaimTemplates:
+  - metadata:
+      name: users-db-volume
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        component: "{{ .Values.Db.Component }}"
+        module: "{{ .Values.Db.Module }}"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.Db.Storage }}

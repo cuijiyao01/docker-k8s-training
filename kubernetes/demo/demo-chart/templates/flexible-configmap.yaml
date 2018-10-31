@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  labels:                                
+     app: {{ template "demo-chart.name" . }}    
+     chart: {{ template "demo-chart.chart" . }} 
+     release: {{ .Release.Name }}         
+     heritage: {{ .Release.Service }}     
+data:
+  message: {{ .Values.myMessage | quote }}

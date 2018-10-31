@@ -1,6 +1,6 @@
 # Exercise 0 - chroot, unshare and lots of typing
 
-Before you get used to the convenience of the Docker cli, it is important to understand how Linux containers are working under the hood.
+Before you get used to the convenience of the [**Docker** Command Line Interface (CLI)](https://docs.docker.com/engine/reference/commandline/cli/), it is important to understand how Linux containers are working under the hood.
 
 In this exercise you will use the `chroot` command to create file system isolation. You will also learn to isolate the process ID namespace using `unshare`.
 

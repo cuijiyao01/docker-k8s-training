@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  SPRING_PROFILES_ACTIVE: cloud
+  VCAP_APPLICATION: '{}'
+  VCAP_SERVICES: '{"postgresql":[{"credentials":{"dbname":"{{ .Values.Db.Postgres.Database }}","hostname":"{{ template "db-fullname" . }}-0.{{ template "db-fullname" . }}","password":"{{ .Values.Db.Postgres.Password }}","port":"{{ .Values.Db.Postgres.Port }}","uri":"postgres://{{ .Values.Db.Postgres.User}}:{{ .Values.Db.Postgres.Password }}@{{ template "db-fullname" . }}-0.{{ template "db-fullname" . }}:{{ .Values.Db.Postgres.Port }}/{{ .Values.Db.Postgres.Database }}","username":"{{ .Values.Db.Postgres.User}}"},"label":"postgresql","name":"postgres-bulletinboard-ads","plan":"v9.6-dev","tags":["postgresql","relational"]}]}'
+metadata:
+  name: {{ template "app-config-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.App.ServiceName | quote }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
+spec:
+  ports:
+  - port: {{ .Values.App.ServicePort }}
+    protocol: TCP
+    targetPort: users-app
+  selector:
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
+    release: {{ .Release.Name | quote }}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "app-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
+spec:
+  replicas: {{ .Values.App.ReplicaCount }}
+  selector:
+    matchLabels:
+      component: "{{ .Values.App.Component }}"
+      module: "{{ .Values.App.Module }}"
+      release: {{ .Release.Name | quote }}
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        component: "{{ .Values.App.Component }}"
+        module: "{{ .Values.App.Module }}"
+    spec:
+      initContainers:
+      - name: init-postgres
+        image: busybox
+        command: ['sh', '-c', 'for i in $(seq 1 200); do nc -z -w3 {{ template "db-fullname" . }}-0.{{ template "db-fullname" . }} {{ .Values.Db.Postgres.Port }} && exit 0 || sleep 3; done; exit 1']
+#        command: ['sh', '-c', 'until nslookup {{ template "db-fullname" . }}-0.{{ template "db-fullname" . }}; do echo waiting for {{ template "db-fullname" . }}-0.{{ template "db-fullname" . }}; sleep 2; done;']
+      containers:
+      - name: {{ template "app-fullname" . }}
+        image: "{{ .Values.App.Image }}:{{ .Values.App.ImageTag }}"
+        envFrom:
+        - configMapRef:
+            name: {{ template "app-config-fullname" . }}
+        ports:
+        - containerPort: {{ .Values.App.TomcatPort }}
+          name: users-app
+      imagePullSecrets:
+      - name: {{ .Values.App.ImageSecret }}

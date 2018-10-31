@@ -39,8 +39,8 @@ spec:
           access: "true"
 # allow access originating from SAP networks
     - ipBlock:
-        # Germany
-        cidr: 155.56.68.208/28
+        # Germany WDF
+        cidr: 155.56.0.0/16
     - ipBlock:
         # Ireland
         cidr: 84.203.229.48/29

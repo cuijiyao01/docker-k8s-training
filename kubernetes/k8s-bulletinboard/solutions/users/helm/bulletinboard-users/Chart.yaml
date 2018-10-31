@@ -1,0 +1,12 @@
+name: bulletinboard-users
+version: 0.1.0
+appVersion: "1.0"
+description: The bulletinboard users service used in the CC reference application
+home: https://github.wdf.sap.corp/cloud-native-dev/bulletinboard-users
+icon: https://github.wdf.sap.corp/avatars/u/26308?s=200
+sources:
+  - https://github.wdf.sap.corp/cloud-native-dev/bulletinboard-users
+  - https://github.wdf.sap.corp/cloud-native-dev/k8s-bulletinboard/tree/master/users/helm
+maintainers:
+  - name: SAP CloudCurriculum 
+    email: DL_5B2CDDFFECB21162D9000010@sap.com

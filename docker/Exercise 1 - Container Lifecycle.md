@@ -12,7 +12,7 @@ Inside your container, use the `top` command to find out which program is runnin
 
 Start a new [nginx](https://hub.docker.com/_/nginx/) container. Make sure you start it in detached mode.
 
-Use the `docker exec` command to start another shell (`/bin/sh`) in your container. Use `ps` to find out how many programs are running in your container now (you may need to install `ps` first by running the command `apt-get update && apt-get install procps`).
+Use the `docker exec` command to start another shell (`/bin/sh`) in your container. Use `ps` to find out how many programs are running in your container now (you may need to install `ps` first by running the command `apt-get update && apt-get install -y procps`).
 
 Once finished, exit from the shell. Check whether or not the container is still running.
 

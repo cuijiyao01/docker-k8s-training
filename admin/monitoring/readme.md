@@ -1,10 +1,11 @@
 # Setup a monitoring with promethes and grafana
 
-In this folder you find scripts & yaml files to deploy a monitoring system based on prometheus & visualization based on grafana. We use the `stable/prometheus` and `stable/grafana` helm charts and install them with custom values.
+In this folder you find scripts & yaml files to deploy a **monitoring system** based on [**Prometheus**](https://prometheus.io/) & **visualization** based on [**Grafana**](https://grafana.com/). We use the `stable/prometheus` and `stable/grafana` helm charts and install them with custom values.
 
-Prometheus collects metrics from various endpoints such as the API server or kubelet. Data is stored as time series and can be queried via `prometheus-server`.
+**Prometheus** collects metrics from various endpoints such as the API server or kubelet. Data is stored as time series and can be queried via `prometheus-server`.
 
-Grafana is used to run queries and visualize the results. Upon deployment we also import 2 predefined dashboards. One provides information about the cluster state like memory or CPU usage. The other is more specific to the training. It shows the deployments, services or pod status per namespace or across all namespaces.
+**Grafana** is used to run queries and visualize the results. Upon deployment we also import 2 predefined dashboards: 'Kubernetes cluster monitoring (via Prometheus)' and 'TrainingStats'. One provides information about the cluster state like memory or CPU usage. The other is more specific to the training. It shows the deployments, services or pod status per namespace or across all namespaces.
+
 Grafana is exposed via an `ingress` resource, so make sure your cluster has a running ingress controller. When running with Gardener this prerequisite is already fulfilled.  
 
 ## step-by-step setup
@@ -15,7 +16,7 @@ Grafana is exposed via an `ingress` resource, so make sure your cluster has a ru
   * make the binaries executable (`chmod +x`)
   * move them to a directory covered by your `$PATH` variable ( e.g. `/usr/local/bin/`).
 * check, that `kubectl` works with your cluster
-* If not yet done - setup `helm` in your `kube-system` namespace.
+* If not yet done - setup `helm` in your `kube-system` namespace (via the following 5 steps).
   * create a new service account: `kubectl -n kube-system create sa tiller`
   * generate a clusterrolebinding for the new service account:
     ```
@@ -34,7 +35,7 @@ Grafana is exposed via an `ingress` resource, so make sure your cluster has a ru
     ```
   * download the helm client like in [exercise 09](../../kubernetes/exercise_09_helm.md).
   * initialize helm: `helm init --tiller-namespace kube-system --service-account tiller`
-  * run `helm list` to verify the setup. It should return an empty string.
+  * run `helm list --tiller-namespace kube-system` to verify the setup. It should return an empty string.
 
 ### Run the setup script
 run `setup_monitoring.sh [project name] [cluster name]` and supply the name or your Gardener project as well as the cluster name.

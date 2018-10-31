@@ -1,0 +1,73 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: users-db-access
+  labels:
+    component: "{{ .Values.Db.Component }}"
+    module: "{{ .Values.Db.Module }}"
+    release: {{ .Release.Name | quote }}
+spec:
+  podSelector:
+    matchLabels:
+      component: "{{ .Values.Db.Component }}"
+      module: "{{ .Values.Db.Module }}"
+      release: {{ .Release.Name | quote }}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          component: "{{ .Values.App.Component }}"
+          module: "{{ .Values.App.Module }}"
+          release: {{ .Release.Name | quote }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: users-app-access
+  labels:
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
+    release: {{ .Release.Name | quote }}
+spec:
+  policyTypes:
+  - Ingress
+  - Egress
+  podSelector:
+    matchLabels:
+      component: "{{ .Values.App.Component }}"
+      module: "{{ .Values.App.Module }}"
+      release: {{ .Release.Name | quote }}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          # can access itself
+          component: "{{ .Values.App.Component }}"
+          module: "{{ .Values.App.Module }}"
+          release: {{ .Release.Name | quote }}
+    - podSelector:
+        matchLabels:
+          # the bulletinboard ads app
+          component: ads
+          module: app
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          # can access itself
+          component: "{{ .Values.App.Component }}"
+          module: "{{ .Values.App.Module }}"
+          release: {{ .Release.Name | quote }}
+    - podSelector:
+        matchLabels:
+          # the user db
+          component: "{{ .Values.Db.Component }}"
+          module: "{{ .Values.Db.Module }}"
+          release: {{ .Release.Name | quote }}
+    - podSelector:
+        matchLabels:
+          # the dns server
+          k8s-app: kube-dns
+      namespaceSelector:
+        matchLabels:
+          name: kube-system

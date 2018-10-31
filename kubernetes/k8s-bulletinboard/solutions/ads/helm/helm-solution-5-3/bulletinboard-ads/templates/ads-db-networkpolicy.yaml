@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ template "db-access-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+spec:
+  podSelector:
+    matchLabels:
+      component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+      module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          component: ads
+          module: app

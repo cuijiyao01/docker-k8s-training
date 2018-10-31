@@ -33,13 +33,16 @@ High level topics are:
 - expose applications via ingress ([slides](./kubernetes/09_ingress.pptx) & [optional exercise](./kubernetes/exercise_optional_ingress.md))
 - run stateful applications with stateful sets ([slides](./kubernetes/10_statefulset.pptx) & [exercise 7](./kubernetes/exercise_07_statefulset.md))
 - manage a cluster with namespaces, role based authorization and network policies ([slides](./kubernetes/11_administration.pptx) & [exercise 8](./kubernetes/exercise_08_network_policy.md))
-- deploy packaged applications with helm ([slides](./kubernetes/12_helm.pptx) & [exercise 9](./kubernetes/exercise_09_helm.md))
+- deploy packaged applications with helm ([slides](./kubernetes/12_helm.pptx) & [exercise 9](./kubernetes/exercise_09_helm_basics.md))
+- write a helm chart ([slides](./kubernetes/12_helm.pptx) & [exercise 10](./kubernetes/exercise_10_write_a_helm_chart.md))
+
+### [Kubernetes: HowTo 'bring' Bulletinboard in K8s](./kubernetes/k8s-bulletinboard/README.md) (day 4)
 
 ## Preparation and Setup
 
-Follow the instructions on the page [Prerequisites and Environment Setup](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/preparation.md).
+Follow the instructions on the page [Prerequisites and Environment Setup](preparation.md).
 
 ## Trainers and Course developers
 
-* As trainer please check out the [Trainer Guide](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/admin/trainer-guide.md) in advance to the training.
+* As trainer please check out the [Trainer Guide](./admin/trainer-guide.md) in advance to the training.
 * The VM to be used by participants is built here: https://github.wdf.sap.corp/cloud-native-dev/k8s-training-vm
