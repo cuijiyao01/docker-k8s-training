@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "db-sset-fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+    module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+spec:
+  serviceName: {{ template "db-service-fullname" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+      module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+        module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    spec:
+      volumes:
+      - name: init
+        configMap:
+          name: {{ template "db-init-config-fullname" . }}
+      containers:
+      - name: ads-db
+        image: "{{ .Values.Db.Postgres.Image }}:{{ .Values.Db.Postgres.ImageTag }}"
+        ports:
+        - containerPort: {{ .Values.Db.Postgres.Port }}
+          name: ads-db
+        volumeMounts:
+        - name: ads-db-volume
+          mountPath: {{ .Values.Db.Postgres.MountPath }}
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: PGDATA
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "db-config-fullname" . }}
+              key: PGDATA
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "db-credential-fullname" . }}
+              key: PG_PASSWORD
+  volumeClaimTemplates:
+  - metadata:
+      name: ads-db-volume
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        component: "{{ .Release.Name }}-{{ .Values.Db.Component }}"
+        module: "{{ .Release.Name }}-{{ .Values.Db.Module }}"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

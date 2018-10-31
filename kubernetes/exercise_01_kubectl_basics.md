@@ -1,10 +1,15 @@
 # Exercise 01 - kubectl basics
 
-In this exercise you will learn how `kubectl` can be used to communicate with the cluster.
+In this exercise you will learn how the command line interface (CLI) `kubectl` can be used to communicate with the Kubernetes cluster ([kubectl documentation](https://kubernetes.io/docs/reference/kubectl/overview/)).
+
 
 ## Step 0: check your environment
-Login to your VM and locate the kubectl binary by running `which kubectl`.
-The result should return the path to the binary. Run `kubectl config get-contexts` to ensure a configuration file is available.
+Login to your VM and locate the kubectl binary by running `which kubectl`. The result should return the path to the binary. 
+
+Make shure you have executed the script `~/setup/get_kube-config.sh` with proper parameters for 'training_id' and 'your training_namespace' to download your personal 'kube.config` in advance, as requested by your trainer (small paper, handed over to you).
+
+Run `kubectl config get-contexts` to ensure a configuration file is available.
+
 
 ## Step 1: check the nodes
 Use the `kubectl get nodes` command to get the basic information about the clusters' nodes. Try to find out, how the output can be modified. Hint: use the `-o <format>` switch. More information can be found by appending `--help` to your command.

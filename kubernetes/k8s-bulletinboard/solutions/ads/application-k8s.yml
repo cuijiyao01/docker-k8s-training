@@ -1,0 +1,6 @@
+spring: 
+  datasource: 
+    url: jdbc:postgresql://ads-db-statefulset-0.ads-db-service:5432/ads
+    username: adsuser 
+    password: initial 
+    driverClassName: org.postgresql.Driver

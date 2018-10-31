@@ -1,0 +1,38 @@
+{{- if  .Values.App.InitPostJobEnabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{.Release.Name}}"
+  labels:
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    component: "{{ .Values.App.Component }}"
+    module: "{{ .Values.App.Module }}"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "-5"
+#    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{.Release.Name}}"
+      labels:
+        heritage: {{.Release.Service | quote }}
+        release: {{.Release.Name | quote }}
+        chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+        component: "{{ .Values.App.Component }}"
+        module: "{{ .Values.App.Module }}"
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: tomcat-listener
+        image: alpine
+        command: ['sh', '-c', 'for i in $(seq 1 200); do nc -z -w3 {{ .Values.App.ServiceName }} {{ .Values.App.ServicePort }} && exit 0 || sleep 3; done; exit 1']
+      containers:
+      - name: post-install-job
+        image: "appropriate/curl:latest"
+        command: ['sh', '-c', 'curl -i -X POST {{ .Values.App.ServiceName }}:{{ .Values.App.ServicePort }}/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data ''{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'' ']
+      imagePullSecrets:
+        - name: {{ .Values.App.ImageSecret }}
+{{- end }}

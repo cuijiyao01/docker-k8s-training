@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-pod
+  labels:
+     app: {{ template "demo-chart.name" . }}    
+     chart: {{ template "demo-chart.chart" . }} 
+     release: {{ .Release.Name }}         
+     heritage: {{ .Release.Service }}     
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: config
+    configMap:
+      name: {{ .Release.Name }}-configmap
+  containers:
+    - name: {{ template "demo-chart.name" . }}-configured-container
+      image: "{{ .Values.pod.image.repository }}:{{ .Values.pod.image.tag }}"
+      command: [ "/bin/sh", "-c", "for i in $(ls -1 {{ .Values.pod.mount }}/*); do echo -e \"\\nContent of $i: \"; cat $i; done; echo -e \n\n" ]
+      volumeMounts:
+      - name: config
+        mountPath: {{ .Values.pod.mount }}
+        readOnly: true

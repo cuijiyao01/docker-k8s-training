@@ -169,10 +169,10 @@ spec:
   limits:
   - default:
       cpu: 0.5
-      memory: 500Mi
+      memory: 300Mi
     defaultRequest:
-      cpu: 0.2
-      memory: 200Mi
+      cpu: 0.1
+      memory: 100Mi
     type: Container
 ---
 apiVersion: v1
@@ -239,7 +239,7 @@ echo "Training ID: $GLOBAL_UID" > $PARTICIPANT_SHEET
 echo -e "\n-----------------------------------------" >> $PARTICIPANT_SHEET
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
-	echo "Your ID (namespace): $NS_UID" >> $PARTICIPANT_SHEET
+	echo "Your ID: $NS_UID , Your namespace name: $NS_PREFIX-$NS_UID" >> $PARTICIPANT_SHEET
 	echo "In your VM: Download your personal kube.config by running the script (with args): " >> $PARTICIPANT_SHEET
 	echo "  ~/setup/get_kube_config.sh $GLOBAL_UID $NS_UID" >> $PARTICIPANT_SHEET
 	echo "-----------------------------------------" >> $PARTICIPANT_SHEET
@@ -249,6 +249,10 @@ done
 # package created training configs in a tar to be uploaded in jenkins
 tar -zcvf ${OUTPUT_TAR} $OUTPUT_DIR
 
+# at last we give kube-system namespace a label for network policies to work.
+if [ $(${KUBECTL} get namespaces kube-system -o json | jq ".metadata.labels.name") == "null" ]; then
+  ${KUBECTL} label namespaces kube-system name=kube-system
+fi
 
 # print out the final message (yes, I like here-docs)
 cat << __EOF

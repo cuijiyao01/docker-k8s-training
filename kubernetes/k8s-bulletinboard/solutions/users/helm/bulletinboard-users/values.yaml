@@ -1,0 +1,39 @@
+# Default values for bulletinboard users.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Db:
+  ConfigName: db-config
+  InitName: db-init
+  CredentialName: db-cred
+  Name: users-db
+  Component: users
+  Module: db
+  Postgres:
+    Image: postgres
+    ImageTag: 9.6
+    MountPath: /var/lib/postgres/data
+    RootPassword: I2hKVFdVMjAlejBk
+#decoded #hJTWU20%z0d
+    Database: users
+    Schema: users
+    User: users_user
+    Password: userdbpass
+    Port: 5432
+  Storage: "512Mi"
+
+
+App:
+  ServiceName: users-app-service
+  ConfigName: users-app-config
+  Name: users-db
+  Component: users
+  Module: app
+  Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users
+  ImageTag: v0.4
+  ImageSecret: artifactory
+  ServicePort: 80
+  TomcatPort: 8080
+  ReplicaCount: 1
+  InitPostJobEnabled: false
+
