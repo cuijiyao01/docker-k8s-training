@@ -15,12 +15,13 @@
 # History:           0.1 - 22-Mar-2018 - Initial release
 #                    0.2 - 03-Apr-2018 - Fields CA_CERT and API_SERVER will be automatically retrieved from current kube context
 #                    0.3 - 19-Apr-2018 - Resource quotas and limits will be created per namespace now.
-#			0.4 - 19-Apr-2018 - Package generated configs as tar and switch to download from jenkins
-#			0.5 - 18-Oct-2018 - Introducing the access service account which gets ClusterAdmin rights
+#                    0.4 - 19-Apr-2018 - Package generated configs as tar and switch to download from jenkins
+#                    0.5 - 18-Oct-2018 - Introducing the access service account which gets ClusterAdmin rights
+#                    0.6 - 31-Oct-2018 - Simply numbering the namespace IDs - K.I.S.S.
 #
 
 # version tag
-_VERSION=0.5
+_VERSION=0.6
 
 # this is where we expect our configuration file
 CONFIG_FILE=`dirname $0`/kubecfggen.conf
@@ -105,6 +106,15 @@ if [ -z "$NS_COUNT" -o $NS_COUNT -lt 1 ]; then
 	exit 5
 fi
 
+# maybe we do not want to start counting from 1, so which is our start number?
+if [[ "$2" =~ ^[0-9]+$ ]]; then
+	NS_START=$2
+	NS_END=$((NS_START+NS_COUNT-1))
+else
+	NS_START=1
+	NS_END=$NS_COUNT
+fi
+
 # let's start by creating a YAML file that contains the namespace and cluster-role-binding definitions
 echo -e "> Compiling $YAML_FILE...\n"
 
@@ -112,8 +122,17 @@ echo -e "> Compiling $YAML_FILE...\n"
 [ -z "$NS_PREFIX" ] && NS_PREFIX="part"
 
 # create the namespace ojects for the YAML file along with the access service account
-for i in `seq -w 01 1 $NS_COUNT`; do
-	NS_NAME=$NS_PREFIX-$(get_uid)
+for i in $(seq $NS_START 1 $NS_END); do
+	NS_NUM=$(printf "%04d" $i)
+	NS_NAME=$NS_PREFIX-$NS_NUM
+
+	${KUBECTL} get ns $NS_NAME >& /dev/null
+	if [ $? -eq 0 ]; then
+		echo "The namespace $NS_NAME already exists in the cluster."
+		echo "Please check if you need to start counting from a different value than $NS_START."
+		exit 1
+	fi
+
 	NAMESPACES="$NAMESPACES $NS_NAME"
 
 	cat << __EOF >> $YAML_FILE
@@ -250,8 +269,8 @@ done
 tar -zcvf ${OUTPUT_TAR} $OUTPUT_DIR
 
 # at last we give kube-system namespace a label for network policies to work.
-if [ $(${KUBECTL} get namespaces kube-system -o json | jq ".metadata.labels.name") == "null" ]; then
-  ${KUBECTL} label namespaces kube-system name=kube-system
+if [ "$(${KUBECTL} get namespaces kube-system -o json | jq \".metadata.labels.name\")" == "null" ]; then
+	${KUBECTL} label namespaces kube-system name=kube-system
 fi
 
 # print out the final message (yes, I like here-docs)
