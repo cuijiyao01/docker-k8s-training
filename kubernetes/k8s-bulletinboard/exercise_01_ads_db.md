@@ -17,7 +17,7 @@
 
 - As well we can run any **initdb scripts**, which we will use to create a new database with a specific user and password (Not using the default user postgres).
 
-- To make available the Bulletinboard-Ads Database **Pod** from we setup a **"headless" service** to allow the app to talk to the database.
+- In order to make available the Bulletinboard-Ads Database **Pod** we have to setup a **"headless" service** to allow the app to talk to the database.
 
 ## Labels
 

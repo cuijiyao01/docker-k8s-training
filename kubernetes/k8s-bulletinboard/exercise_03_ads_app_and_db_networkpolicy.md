@@ -64,12 +64,12 @@ You can also test it by creating a temporary pod with psql installed (e.g. a pos
 kubectl run --restart=Never -it --rm --image=postgres:9.6 --labels="component=ads,module=app" --env="PGCONNECT_TIMEOUT=5" helper --command -- /bin/bash
 ```
 
-A promt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
-`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial`). After this you should connect to the ads db, a promt `ads=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
+A prompt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
+`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial`). After this you should connect to the ads db, a prompt `ads=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
 
 <p align="center"><img src="images/successful_psql_connection.png"></p>
 
-To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above: `kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash`. Again you should get a root promt, execute `psql -h ads-db-statefulset-0 -p 5432 -U adsuser -W ads` which, after you entered the password, should return with `timeout expired` after 5 seconds.
+To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above: `kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash`. Again you should get a root prompt, execute `psql -h ads-db-statefulset-0 -p 5432 -U adsuser -W ads` which, after you entered the password, should return with `timeout expired` after 5 seconds.
 
 To test the egress `kubectl exec -it ads-db-statefulset-0 bash` and try to ping any page/pod e.g. ads:app. 
 
