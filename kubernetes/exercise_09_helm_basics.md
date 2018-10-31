@@ -19,7 +19,7 @@ Change the permissions of the binary accordingly that also the `vagrant` user ca
 ## Step 1: initialize helm
 The helm client uses the information stored in .kube/config to talk to the kubernetes cluster. But before you set up the tiller-server, you need to specify the namespace to be used. Otherwise, everyone will deploy their tiller-server into the kube-system namespace resulting in an overwrite of what was there before.
 
-`helm init --tiller-namespace <your-namespace>`
+`helm init --tiller-namespace <your-namespace>  --service-account access`
 
 Verify your installation by running `helm version --tiller-connection-timeout=5 --tiller-namespace <your-namespace>`. The command should return a version for the client as well as the server. In case the server does not respond properly, you can check, if the `tiller`pod is already up and running.
 
@@ -39,8 +39,10 @@ Found it? Check the github [page](https://github.com/kubernetes/charts/tree/mast
 
 ## Step 3: install a chart
 Run the following command to install the chaoskube chart:
-`helm install --name <any-name> stable/chaoskube --set namespaces=<your-namespace> --tiller-namespace <your-namespace> --debug`
-It installs eveything that is associated to the chart into your namespace. Note the `--set` flag, it specifies a parameter of chart. Check the github page mentioned above again, if you want to learn what it does and which other parameters are available.
+`helm install --name <any-name> stable/chaoskube --set namespaces=<your-namespace> --set rbac.serviceAccountName=access --tiller-namespace <your-namespace> --debug`
+It installs eveything that is associated to the chart into your namespace. Note the `--set` flag, it specifies a parameter of chart.
+The parameter `namespaces` defines in which namespaces the choaskube will delete pods, `rbac.serviceAccountName` tells helm which serviceAccount chaoskube will get. Here we give it the access account because it has to be able to delete pods.  
+Check the github page mentioned above again, if you want to learn what it does and which other parameters are available.
 
 ## Step 4: inspect your chaoskube
 Next, check your installation by running `helm list --tiller-namespace <your-namespace>`. It returns all installed releases including your chaoskube. You can reference it by its name.
