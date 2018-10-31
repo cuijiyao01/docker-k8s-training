@@ -46,6 +46,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - with the introduction of the `horizontal pod autoscaler`, k8s is capable of auto scaling. Check the [documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) and [tutorial](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for further details.
 
+- [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) is a tool which helps creating API extensions including their controller/reconcile loops
+
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
 - offical documentatio: https://docs.helm.sh/
@@ -63,3 +65,5 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 - Brendan Burns, Distinguished Engineer at Microsoft and Chief Architect behind the container infrastucture within Azure released one of his books on distributed software design for free: [Designing Distributed Systems](https://azure.microsoft.com/en-us/resources/designing-distributed-systems/)
 
 - [katacoda learning platform](https://www.katacoda.com/learn) offers browser-based tutorials around docker & kubernetes  
+
+- [CTO Circle – Container Delivery Guidance](https://sap.sharepoint.com/sites/60001485/Shared%20Documents/01_Communication/CTO%20Circle%20%26%20Technology%20Board%20Meetings/CTO%20Circle/Container%20Delivery_RELEASED.pdf?csf=1&e=THkcxG)
