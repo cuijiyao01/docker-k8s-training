@@ -4,7 +4,7 @@
 
 `https://api.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy`
 
-The connection is insecure because the certificate is not signed by an trusted authority.
+The connection is insecure because the certificate is not signed by an trusted authority. Accept it anyways. 
 
 ## Reading the access credentials out of the kubeconfig
 
