@@ -20,3 +20,5 @@ Cou get the master kubeconfig after cluster generation. Look for the following s
 This contains the username and password to access the dashboard.
 
 When you gained access to the dashboard, on the following screen press skip. Now you can use the dashboard.
+
+<img src="images/dashboardSkipScreen.png" width="800"/>
