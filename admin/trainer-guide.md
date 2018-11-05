@@ -127,6 +127,8 @@ In the admin folder of this repo, you find a registry folder with `install.regis
 ### Setup cluster monitoring (~1 day before course starts)
 If you want to keep track of things happening in the cluster, you can use these [scripts](./monitoring) to setup  prometheus/grafana based monitoring.
 
+### (Optional) [Gain access to the Dashboard](accessDashboard.md)
+
 ## During the Course
 
 ### Get support from Gardener Team
