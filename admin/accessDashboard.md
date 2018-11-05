@@ -2,7 +2,7 @@
 
 ## Building the dashboard url:
 
-https://api.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+`https://api.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy`
 
 The connection is insecure because the certificate is not signed by an trusted authority.
 
