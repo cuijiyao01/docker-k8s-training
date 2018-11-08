@@ -18,10 +18,11 @@
 #                    0.4 - 19-Apr-2018 - Package generated configs as tar and switch to download from jenkins
 #                    0.5 - 18-Oct-2018 - Introducing the access service account which gets ClusterAdmin rights
 #                    0.6 - 31-Oct-2018 - Simply numbering the namespace IDs - K.I.S.S.
+#                    0.7 - 08-Nov-2018 - Added security by locking participants into their namespaces
 #
 
 # version tag
-_VERSION=0.6
+_VERSION=0.7
 
 # this is where we expect our configuration file
 CONFIG_FILE=`dirname $0`/kubecfggen.conf
@@ -91,7 +92,8 @@ fi
 YAML_FILE=$OUTPUT_DIR/cluster-resources.yaml
 
 # this is the unique name for the cluster role binding
-ROLEBINDING_NAME=training-roles-$GLOBAL_UID
+ROLEBINDING_NAME=training:access-is-clusteradmin
+ROLEBINDING_YAML=$OUTPUT_DIR/emergency_clusteradmin-rolebinding.yaml
 
 # we store the list of namespaces in this variable
 NAMESPACES=""
@@ -141,49 +143,50 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: $NS_NAME
+  labels:
+    heritage: kubecfggen
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: access
   namespace: $NS_NAME
+  labels:
+    heritage: kubecfggen
 __EOF
 done
 
-# create the rolebinding object to give namespace default service accounts cluster admin rights
-# first the header for the rolebindingobject
-cat << __EOF >> $YAML_FILE
+
+
+# create a rolebinding in each namespace to give the admin role to the access serviceaccount
+# also add resource quotas and limits to each namespac
+# max 15 pods per namespace, by default container consume 0.2 cpu & 200 MiB memory
+for ns in $NAMESPACES; do
+        cat << __EOF >> $YAML_FILE
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: $ROLEBINDING_NAME
+  name: training:access-is-admin
+  namespace: $ns
+  labels:
+    heritage: kubecfggen
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cluster-admin
+  name: admin
 subjects:
-__EOF
-
-# and then the rolebindings for the default service accounts for each namespace
-for ns in $NAMESPACES; do
-	cat << __EOF >> $YAML_FILE
 - kind: ServiceAccount
   name: access
   namespace: $ns
-__EOF
-done
-
-# finally, add resource quotas and limits to each namespace
-# max 15 pods per namespace, by default container consume 0.2 cpu & 200 MiB memory
-for ns in $NAMESPACES; do
-	cat << __EOF >> $YAML_FILE
 ---
 apiVersion: v1
 kind: LimitRange
 metadata:
-  name: resource-containment
+  name: training-resource-containment
   namespace: $ns
+  labels:
+    heritage: kubecfggen
 spec:
   limits:
   - default:
@@ -197,13 +200,96 @@ spec:
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: pod-demo
+  name: training-pod-limit
   namespace: $ns
+  labels:
+    heritage: kubecfggen
 spec:
   hard:
     pods: "15"
 __EOF
 done
+
+# finally, create a Role and a rolebinding that lets participants see what's going on in the
+# kube-system namespace as well as a ClusterRole and a ClusterRoleBinding lets people see
+# nodes, pvs, etc...
+cat << __EOF >> $YAML_FILE
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: training:kube-system-view
+  namespace: kube-system
+  labels:
+    heritage: kubecfggen
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log", "endpoints", "events", "persistentvolumeclaims", "podtemplates", "serviceaccounts", "services", "configmaps", "replicationcontrollers"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["daemonsets", "deployments", "replicasets", "statefulsets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: training:kube-system-view
+  namespace: kube-system
+  labels:
+    heritage: kubecfggen
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: training:kube-system-view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: training:cluster-view
+  labels:
+    heritage: kubecfggen
+rules:
+- apiGroups: [""]
+  resources: ["componentstatuses", "namespaces", "nodes", "persistentvolumes"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["rbac.authorization.k8s.io"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apiextensions.k8s.io"]
+  resources: ["customresourcedefinitions"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions", "policy"]
+  resources: ["podsecuritypolicies"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["storage.k8s.io"]
+  resources: ["storageclasses"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: training:cluster-view
+  labels:
+    heritage: kubecfggen
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: training:cluster-view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts
+__EOF
 
 # let's feed this YAML file to our cluster
 echo -e "> Sending $YAML_FILE to the cluster...\n"
@@ -215,6 +301,33 @@ if [ $RC -ne 0 ]; then
 	exit 11
 fi
 
+## just for emergency purposes: if the locking in of access service accounts does not work
+## we create a clusterrolebinding which grants cluster-admin to all access service accounts
+# first the header for the rolebindingobject
+cat << __EOF >> $ROLEBINDING_YAML
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: $ROLEBINDING_NAME
+  labels:
+    heritage: kubecfggen
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+__EOF
+
+# and then the rolebindings for the default service accounts for each namespace
+for ns in $NAMESPACES; do
+	cat << __EOF >> $ROLEBINDING_YAML
+- kind: ServiceAccount
+  name: access
+  namespace: $ns
+__EOF
+done
+## end of emergency rolebindings
 
 # now we create the kube.config files
 echo -e "\n> Retrieving access tokens for the access service accounts and creating kube.config files."
@@ -228,6 +341,7 @@ for ns in $NAMESPACES; do
 
 	# create kubeconfig
 	cat << __EOF > $KUBE_CONF_DIR/kube.config
+---
 apiVersion: v1
 kind: Config
 clusters:
@@ -266,6 +380,7 @@ done
 
 
 # package created training configs in a tar to be uploaded in jenkins
+echo -e "> Packing everything into a handy tarball ${OUTPUT_TAR}...\n"
 tar -zcvf ${OUTPUT_TAR} $OUTPUT_DIR
 
 # at last we give kube-system namespace a label for network policies to work.
