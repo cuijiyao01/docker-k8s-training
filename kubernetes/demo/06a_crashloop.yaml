@@ -1,0 +1,15 @@
+# starts a pod with an invalid shell command
+# pod will fail to start and go to crashloopbackoff
+# use "kubectl get pods" and "kubectl logs" to show
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crash-loop
+spec:
+  containers:
+  - name: crash
+    image: alpine
+    args:
+    - /bin/sh
+    - -c
+    - no-such-cmd

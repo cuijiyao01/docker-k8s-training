@@ -1,0 +1,21 @@
+# starts an nginx pod and without an index.html file
+# the default index file is overwritten by emptyDir mount
+# pod will run but nginx will return an error
+# use " kubectl port-forward app-failure 8080:80" to show error
+# exec into pod to show missing index page
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-failure
+spec:
+  volumes:
+  - name: index-html
+    emptyDir: {}
+  containers:
+    - name: nginx
+      image: nginx:mainline
+      ports:
+      - containerPort: 80
+      volumeMounts:
+      - name: index-html
+        mountPath: /usr/share/nginx/html

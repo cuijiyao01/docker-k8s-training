@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      tier: web-frontend
+  template:
+    metadata:
+      labels:
+        tier: web-frontend
+    spec:
+      volumes:
+      - name: index-html
+        emptyDir: {}
+      initContainers:
+      - name: setup
+        image: alpine:3.8
+        command:
+        - /bin/sh
+        - -c
+        - echo This is my web-frontend! > /work-dir/index.html
+        volumeMounts:
+        - name: index-html
+          mountPath: "/work-dir"
+      containers:
+      - name: nginx
+        image: nginx:mainline
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: index-html
+          mountPath: /usr/share/nginx/html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    tier: web-frontend
