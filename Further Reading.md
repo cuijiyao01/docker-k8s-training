@@ -14,6 +14,10 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - resource management with Docker - [how to limit a container's resources](https://docs.docker.com/config/containers/resource_constraints)
 
+- [dive](https://github.com/wagoodman/dive/blob/master/README.md) is a tool for image inspection
+
+- building images without docker is possible with [kaniko](https://github.com/GoogleContainerTools/kaniko)
+
 ## Kubernetes
 
 - First of all: SAP offers an internal Kubernetes platform offering that is called Project Gardener. If you need a Kubernetes environment, this is the place to go: [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/)
