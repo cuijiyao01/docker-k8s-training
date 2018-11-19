@@ -18,7 +18,7 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
   <img src="images/postman_get_rooturl.png" />
 
 ## Step 2: Get All Advertisements
-- In Postman, extend the URL of your app with `/ads/api/v1/ads/` to `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/ads/api/v1/ads`.
+- In Postman, extend the URL of your app with `/ads/api/v1/ads/` to `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads`.
 
 - Send the request. As response an empty array should be returned. **Remark**: We do not have created any advertisements so far - so there are no ones
 
