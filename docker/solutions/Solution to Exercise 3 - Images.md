@@ -77,7 +77,7 @@ Use the `docker tag` command to assign the name *evil_nginx:stable* to your new 
 docker tag evil_nginx:1.0 evil_nginx:latest
 ```
 
-## Step 4: Lauching your custom images
+## Step 4: Launching your custom images
 
 In case you haven't done it yet, stop your existing container using `docker stop`.
 
