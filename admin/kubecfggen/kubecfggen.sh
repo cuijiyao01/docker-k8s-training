@@ -293,7 +293,7 @@ __EOF
 
 # let's feed this YAML file to our cluster
 echo -e "> Sending $YAML_FILE to the cluster...\n"
-${KUBECTL} create -f $YAML_FILE
+${KUBECTL} apply -f $YAML_FILE
 RC=$?
 if [ $RC -ne 0 ]; then
 	echo "ERROR: Something went wrong while creating the namespaces and cluster role bindings."
@@ -372,7 +372,7 @@ echo "Training ID: $GLOBAL_UID" > $PARTICIPANT_SHEET
 echo -e "\n-----------------------------------------" >> $PARTICIPANT_SHEET
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
-	echo "Your ID: $NS_UID , Your namespace name: $NS_PREFIX-$NS_UID" >> $PARTICIPANT_SHEET
+	echo "Your ID is $NS_UID, your namespace name is $NS_PREFIX-$NS_UID" >> $PARTICIPANT_SHEET
 	echo "In your VM: Download your personal kube.config by running the script (with args): " >> $PARTICIPANT_SHEET
 	echo "  ~/setup/get_kube_config.sh $GLOBAL_UID $NS_UID" >> $PARTICIPANT_SHEET
 	echo "-----------------------------------------" >> $PARTICIPANT_SHEET
@@ -384,7 +384,7 @@ echo -e "> Packing everything into a handy tarball ${OUTPUT_TAR}...\n"
 tar -zcvf ${OUTPUT_TAR} $OUTPUT_DIR
 
 # at last we give kube-system namespace a label for network policies to work.
-if [ "$(${KUBECTL} get namespaces kube-system -o json | jq \".metadata.labels.name\")" == "null" ]; then
+if [ "$(${KUBECTL} get namespaces kube-system -o json | jq '.metadata.labels.name == null')" == "true" ]; then
 	${KUBECTL} label namespaces kube-system name=kube-system
 fi
 
