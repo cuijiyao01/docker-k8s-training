@@ -59,7 +59,7 @@ Use the `docker commit` command to commit the changes you made to the container 
 
 Use the `docker tag` command to assign the name __*evil_nginx*__ to your new image. You might want to give it a release number, too.
 
-## Step 5: Lauching your custom images
+## Step 5: Launching your custom images
 
 In case you haven't done it yet, stop your existing container using `docker stop`. Launch a new container from your custom image, make sure its port is forwarded to the host and connect with your web browser to it.
 
