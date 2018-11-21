@@ -52,7 +52,7 @@ template for db connection
 template for user-route
 */}}
 {{- define "user-route" -}}
-{{- printf "http://%s/bulletinboard-users-bootwar" .Values.UsersServiceName -}}
+{{- printf "http://%s/bulletinboard-users-bootwar" .Values.UsersApp.ServiceName -}}
 {{- end -}}
 
 {{/*

@@ -38,4 +38,5 @@ App:
     Hostname: ads--bulletinboard-helm
     Path: /ads
   
-UsersServiceName: users-app-service
+
+    
