@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 
 Db:
-  ConfigName: db-config
-  InitName: db-init
+  ConfigName: users-db-configmap
+  InitName: users-db-init
   CredentialName: db-cred
   Name: users-db
   Component: users
@@ -25,8 +25,8 @@ Db:
 
 App:
   ServiceName: users-app-service
-  ConfigName: users-app-config
-  Name: users-db
+  ConfigName: users-app-configmap
+  Name: users-app
   Component: users
   Module: app
   Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users
@@ -35,5 +35,5 @@ App:
   ServicePort: 80
   TomcatPort: 8080
   ReplicaCount: 1
-  InitPostJobEnabled: false
+  InitPostJobEnabled: true
 

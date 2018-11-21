@@ -72,6 +72,11 @@ spec:
         envFrom:
         - configMapRef:
             name: {{ template "app-config-fullname" . }}
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 500Mi
         ports:
         - containerPort: {{ .Values.App.TomcatPort }}
           name: users-app
