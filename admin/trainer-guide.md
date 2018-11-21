@@ -31,8 +31,7 @@ You can use the participant VM also for all work as a trainer.
 
 - In case you have already a Gardener K8s cluster, you can take this cluster for the training.
 
-  **Hint: The K8s cluster has to be a Gardener K8s cluster !**
-
+  **Note:** This training has been developed and tested using K8S clusters on GCP provided by Gardener. Clusters on other platforms and/or not provided by Gardener might result in some demos and exercises (e.g. Ingress, persistens volumes, LoadBalancers, etc.) not working as designed. Therefore, please make sure your K8S cluster is running on GCP and has been provided by Gardener.
 
 ### Create your trainer .kube/config
 
@@ -53,8 +52,7 @@ Now run the script `kubecfggen.sh`. Give it the number of participants/namespace
 - Generates the kubeconfig files for the participants in the subdir for the training
 - Packages all files for this training into a tar.
 
-**Please note, the script creates not only the namespaces. It also deploys a ResourceQuota & LimitRange to each namespace.**
-With this abuse of the training cluster should become harder. The ResourceQuota limits the number of pods accepted by each namespace to 15. Any particpant trying to scale a deployment to a hundred pods or more will not harm other participants. The LimitRange assigns default values for memory and CPU requested by a pod. It also give a default limit. If a pod does not specify any of these it will inherit the defaults. In other terms, by specifying a cpu/memory request & limit, the defaults can be overwritten.
+**Please note:** The script creates not only the namespaces. It also deploys a ResourceQuota & LimitRange to each namespace. With this, abuse of the training cluster should become harder. The ResourceQuota limits the number of pods accepted by each namespace to 15. Any particpant trying to scale a deployment to a hundred pods or more will not harm other participants. The LimitRange assigns default values for memory and CPU requested by a pod. It also give a default limit. If a pod does not specify any of these it will inherit the defaults. In other terms, by specifying a cpu/memory request & limit, the defaults can be overwritten.
 
 ### Copy the configs to the share
 
@@ -102,7 +100,7 @@ The URL pattern on Gardener looks like this:
 
  `[custom-endpoint].ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com`
 
- If you API server URL would be `https://api.ccdev.k8s-train.shoot.canary.k8s-hana.ondemand.com`, the project name is `k8s-train` and the cluster name `ccdev`.
+**Example:** If your API server URL were `https://api.ccdev.k8s-train.shoot.canary.k8s-hana.ondemand.com`, the project name would be `k8s-train` and the cluster name would be `ccdev`.
 
 ### Adapt the ingress URLs
 Gardener deploys an ingress controller to each cluster and allows you to register custom URLs to a specific subdomain. Since the subdomain contains the name of the Gardener project as well as the cluster, you have to adapt the ingress resources locally (on your VM) to match with your setup.
@@ -116,7 +114,7 @@ Check the following files for `<cluster-name>` and `<project-name>` placeholders
 ### Check IP address ranges
 Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we/[Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) have limited the access to whatever you expose in the cluster to traffic originating from the SAP network at your training location. Therefor we have configured the firewall rules to block traffic, that does not originate from these addresses.
 
-Furthermore, while the training these ranges will be used for the network policy exercise. Check the yaml files in the [demo](../kubernetes/demo/11c_network_policy_ingress.yaml) and [solutions](../kubernetes/solutions/08_network_policy_ingress.yaml) folder and adapt it to your local IP blocks, if necessary.
+Furthermore, during the training these ranges will be used for the network policy exercise. Check the yaml files in the [demo](../kubernetes/demo/11c_network_policy_ingress.yaml) and [solutions](../kubernetes/solutions/08_network_policy_ingress.yaml) folder and adapt it to your local IP blocks, if necessary.
 
 You can use the [network information portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml) to get your local office's CIDR blocks. For the exercise 8 you can give the info to participants as well or ask them to search for it.
 
