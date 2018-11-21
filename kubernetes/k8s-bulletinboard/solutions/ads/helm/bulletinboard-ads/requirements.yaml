@@ -1,0 +1,9 @@
+# parent's requirements.yaml file
+dependencies:
+  - name: bulletinboard-users
+    repository: file://../bulletinboard-users-test/
+    version: 0.1.0
+    ...
+    import-values:
+    - child: App.ServiceName
+      parent: UsersServiceName

@@ -5,7 +5,7 @@ metadata:
   name: {{ template "add-release-name" (dict "dot" . "name" .Values.App.ConfigMap.Name) }}
   {{- include "labels.ads.app" . }}
 data:
-  user_route_value: {{ .Values.App.ConfigMap.UserRoute }}
+  user_route_value: {{ template "user-route" . }}
   spring_profiles_active_value: k8s
-  post_user_check_value: "false"
+  post_user_check_value: {{ .Values.App.ConfigMap.PostUserCheck | quote }}
   

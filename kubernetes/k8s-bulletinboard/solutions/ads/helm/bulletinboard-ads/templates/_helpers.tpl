@@ -49,6 +49,13 @@ template for db connection
 {{- end -}}
 
 {{/*
+template for user-route
+*/}}
+{{- define "user-route" -}}
+{{- printf "http://%s/bulletinboard-users-bootwar" .Values.UsersServiceName -}}
+{{- end -}}
+
+{{/*
 This is bonus to make the chart "complete".
 */}}
 

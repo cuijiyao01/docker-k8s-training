@@ -27,8 +27,8 @@ App:
   Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads
   ImageTag: latest
   ConfigMap:
-    Name: ads-app-configmap
-    UserRoute: http://users-app-service/bulletinboard-users-bootwar    
+    Name: ads-app-configmap  
+    PostUserCheck: true
   ServiceName: ads-app-service
   NetworkPolicyName: ads-app-networkpolicy
   SecretName: ads-app-secret
@@ -38,5 +38,4 @@ App:
     Hostname: ads--bulletinboard-helm
     Path: /ads
   
-
-
+UsersServiceName: users-app-service
