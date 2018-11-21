@@ -9,3 +9,5 @@ How to use:
 - do `helm dependency update bulletinboard-ads`
 - do `helm install bulletinboard`.
 
+One Issue:
+No TLS for Ingress in this Solution.
