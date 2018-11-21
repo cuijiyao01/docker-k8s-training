@@ -45,7 +45,7 @@ We will only change `ads-app-secret.yaml` so the application-k8s.yml in the end 
 ---
 spring:
   datasource:
-    url: jdbc:postgresql://{{ template "db-connection" . }}:{{ .Values.Db.Postgres.Port }}/{{ .Values.Db.Postgres.Database }}
+    url: "jdbc:postgresql://{{- template "db-connection" . -}}:{{- .Values.Db.Postgres.Port -}}/{{- .Values.Db.Postgres.Database -}}"
     username: {{ .Values.Db.Postgres.User}}
     password: {{ .Values.Db.Postgres.Password }}
     driverClassName: org.postgresql.Driver
@@ -65,7 +65,7 @@ template for applications-k8s secret
 template for db connection
 */}}
 {{- define "db-connection" -}}
-{{- printf "%s-0.%s" .Values.Db.StatefulsetName .Values.Db.ServiceName -}}
+{{- printf "%s-0.%s" (include "add-release-name" (dict "dot" . "name" .Values.Db.StatefulsetName)) (include "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName)) -}}
 {{- end -}}
 ```
 
