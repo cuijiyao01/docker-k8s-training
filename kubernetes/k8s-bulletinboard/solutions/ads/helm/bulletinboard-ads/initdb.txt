@@ -1,0 +1,8 @@
+-- This is a postgres initialization script for the postgres container. 
+-- Will be executed during container initialization ($> psql postgres -f initdb.sql)
+CREATE ROLE {{ .Values.Db.Postgres.Username }} WITH LOGIN PASSWORD '{{ .Values.Db.Postgres.UserPassword }}' INHERIT CREATEDB;
+CREATE DATABASE {{ .Values.Db.Postgres.Database }} WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
+GRANT ALL PRIVILEGES ON DATABASE {{ .Values.Db.Postgres.Database }} TO {{ .Values.Db.Postgres.Username }};
+CREATE SCHEMA {{ .Values.Db.Postgres.Schema }} AUTHORIZATION {{ .Values.Db.Postgres.Username }};
+-- ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
+ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.Username }};

@@ -1,0 +1,42 @@
+ProjectName: k8s-train
+ClusterName: ccdev01
+
+Db:
+  ConfigName: ads-db-configmap
+  SecretName: ads-db-secret
+  ServiceName: ads-db-service
+  StatefulsetName: ads-db-statefulset
+  AccessName: ads-db-access
+  Component: ads
+  Module: db
+  Postgres:
+    Image: postgres
+    ImageTag: 9.6
+    Port: 5432
+    MountPath: /var/lib/postgres/data
+    StorageSubdir: pgdata
+    RootPassword: PVuFK2YMGc0n
+    Database: ads
+    Schema: ads
+    Username: adsuser
+    UserPassword: initial
+
+App:
+  Component: ads
+  Module: app
+  Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads
+  ImageTag: latest
+  ConfigMap:
+    Name: ads-app-configmap
+    UserRoute: http://users-app-service/bulletinboard-users-bootwar    
+  ServiceName: ads-app-service
+  NetworkPolicyName: ads-app-networkpolicy
+  SecretName: ads-app-secret
+  DeploymentName: ads-app-deployment
+  Ingress:
+    Name: ads-app-ingress 
+    Hostname: ads--bulletinboard-helm
+    Path: /ads
+  
+
+

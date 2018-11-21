@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.StatefulsetName) }}
+  {{- include "labels.ads.db" . }}
+spec:
+  serviceName: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName) }}
+  replicas: 1
+  selector:
+    matchLabels:
+{{- include "tags.ads.db" . | indent 6 }}
+  template:
+    metadata:
+{{- include "labels.ads.db" . | indent 4 }}
+    spec:
+      volumes:
+      - name: init
+        secret:
+          secretName: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
+          items:
+          - key: initdb_sql_value
+            path: initdb.sql
+      containers:
+      - name: ads-db-container
+        image: {{ .Values.Db.Postgres.Image }}:{{ .Values.Db.Postgres.ImageTag }}
+        ports:
+        - containerPort: {{ .Values.Db.Postgres.Port }}
+          name: ads-db-port
+        volumeMounts:
+        - name: ads-db-volume
+          mountPath: {{ .Values.Db.Postgres.MountPath }}
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: PGDATA
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ConfigName) }}
+              key: pgdata_value
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
+              key: postgres_password_value
+  volumeClaimTemplates:
+  - metadata:
+      name: ads-db-volume
+{{- include "labels.ads.db" . | indent 4 }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
