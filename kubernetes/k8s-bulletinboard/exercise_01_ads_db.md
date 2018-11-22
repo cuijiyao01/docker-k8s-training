@@ -121,7 +121,7 @@ metadata:
 
 ```
 spec:
-  serviceName: <name-of-headless-service
+  serviceName: <name-of-headless-service>
   replicas: <#-of-DB-pods>
   selector:
     matchLabels:
