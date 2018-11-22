@@ -37,7 +37,7 @@ Go to your project base folder `k8s-bulletinboard`, which you created at the beg
 Download the chart into that subfolder and extract it: 
 ```bash
 cd users
-wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/k8s-bulletinboard/kubernetes/k8s-bulletinboard/bulletinboard-users.tar.gz
+wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/kubernetes/k8s-bulletinboard/bulletinboard-users.tar.gz
 tar -xvzf bulletinboard-users.tar.gz
 cd bulletinboard-users
 ```
