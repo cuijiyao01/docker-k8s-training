@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+     app: {{ template "demo-chart.name" . }}
+     chart: {{ template "demo-chart.chart" . }}
+     release: {{ .Release.Name }}
+     heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     app: {{ template "demo-chart.name" . }}
+  template:
+     metadata:
+       labels:
+          app: {{ template "demo-chart.name" . }}
+       annotations:
+           checksum/config: {{ .Values.myMessage  }}
+     spec:
+      volumes:
+      - name: config
+        configMap:
+          name: {{ .Release.Name }}-configmap
+      containers:
+        - name: {{ template "demo-chart.name" . }}-configured-container
+          image: "{{ .Values.pod.image.repository }}:{{ .Values.pod.image.tag }}"
+          command: [ "/bin/sh", "-c", "for i in $(ls -1 {{ .Values.pod.mount }}/*); do echo -e \"\\nContent of $i: \"; cat $i; done; echo; tail -f /dev/null" ]
+          volumeMounts:
+          - name: config
+            mountPath: {{ .Values.pod.mount }}
+            readOnly: true
