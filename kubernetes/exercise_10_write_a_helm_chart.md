@@ -2,7 +2,7 @@
 In this exercise you will author a very basic helm chart consisting of a config map with stores information about your favorite food & drinks.
 
 ## Documentation
-The usage of helm and the go functions might not intuitive. There take a look at these links, they explain the most relevant:
+The usage of helm and the go functions might not be intuitive. There take a look at these links, they explain the most relevant:
 
 * [overview of helm docs](https://github.com/kubernetes/helm/tree/master/docs)
 * [how values files work in helm](https://github.com/kubernetes/helm/blob/master/docs/chart_template_guide/values_files.md)
