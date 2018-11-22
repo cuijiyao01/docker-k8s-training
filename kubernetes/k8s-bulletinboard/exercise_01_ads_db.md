@@ -49,7 +49,7 @@ This hierarchy allows us to retrieve e.g all entities for our databases via a `k
 
 - Use the following sql script to create a new database `adsuser` and a specific user `adsuser` with password `initial`. 
   You can change the password (in line 3) to something else, however we will need it in Exercise 2&5 too, so remember it. 
-  Since the file contains censitive data like password, we will store it as a generic **secret**. First save this script in an `initdb.sql` named file.
+  Since the file contains sensitive data like password, we will store it as a generic **secret**. First save this script in an `initdb.sql` named file.
 
  ```
  -- This is a postgres initialization script for the postgres container. 
