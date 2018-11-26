@@ -18,6 +18,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - building images without docker is possible with [kaniko](https://github.com/GoogleContainerTools/kaniko)
 
+- If you are looking for incredibly slim container base images, have a look at Google's [distroless images](https://github.com/GoogleContainerTools/distroless).
+
 ## Kubernetes
 
 - First of all: SAP offers an internal Kubernetes platform offering that is called Project Gardener. If you need a Kubernetes environment, this is the place to go: [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/)
