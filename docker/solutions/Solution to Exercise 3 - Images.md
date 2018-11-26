@@ -39,7 +39,7 @@ docker exec -it perly-monkey /bin/bash
 
 As the _nginx_ image is built upon Debian, you can use the apt package manager to download and install wget. Use these commands to get you started:
 
-- **Only if proxy server is required:**
+- **Only do this if a proxy server is required. You will be told by your trainer if you have to execute this step. Skip it otherwise.**
 ```bash
 export http_proxy=http://proxy.wdf.sap.corp:8080
 export https_proxy=http://proxy.wdf.sap.corp:8080

@@ -22,7 +22,11 @@ Create an new Dockerfile that starts `FROM scratch`. Since you want to get some 
 
 ## Step 2: Setting up the Environment
 
-At SAP we are behind a proxy which requires us to set the `http_proxy` and `https_proxy` environment before we can continue. Use the `ENV` directive to set both variables to http://proxy.wdf.sap.corp:8080.
+At SAP we more and more becoming proxy-less and most locations do not require a proxy anymore. You will be told by your trainer whether or not this is the case.
+
+**Only do this if you need a to use a proxy server, skip this step otherwise.**
+
+Set the `http_proxy` and `https_proxy` environment before we can continue. Use the `ENV` directive to set both variables to http://proxy.wdf.sap.corp:8080.
 
 We also need to make sure that the proxy is bypassed for computers within SAP so set the variable `no_proxy` to `.wdf.sap.corp` (the leading period(.) is important).
 

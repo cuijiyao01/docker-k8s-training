@@ -28,7 +28,7 @@ Execute an interactive shell in your _nginx_ container using the `docker exec` c
 
 As the _nginx_ image is built upon Debian, you can use the apt package manager to download and install wget into your container.
 
-- **Only if a proxy server is required:**
+- **Only if a proxy server is required (which is not the case for most SAP locations):**
 ```bash
 export http_proxy=http://proxy.wdf.sap.corp:8080
 export https_proxy=http://proxy.wdf.sap.corp:8080

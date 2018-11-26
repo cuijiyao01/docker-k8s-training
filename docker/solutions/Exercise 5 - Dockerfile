@@ -1,9 +1,10 @@
 FROM scratch
 
 # set the environment to honour SAP's proxy servers
-ENV http_proxy http://proxy.wdf.sap.corp:8080
-ENV https_proxy http://proxy.wdf.sap.corp:8080
-ENV no_proxy .wdf.sap.corp
+# uncomment these if you are required to use a proxy server
+#ENV http_proxy http://proxy.wdf.sap.corp:8080
+#ENV https_proxy http://proxy.wdf.sap.corp:8080
+#ENV no_proxy .wdf.sap.corp
 
 # give yourself some credit
 LABEL maintainer="d044431"
