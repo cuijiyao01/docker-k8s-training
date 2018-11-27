@@ -20,7 +20,7 @@ Now that you know the cluster's node names, query more information about a speci
 ## Step 3: kubectl proxy
 The `kubectl proxy` command allows you to open a tunnel to the API server and make it available locally - usually on `localhost:8001` / `127.0.0.1:8001`. When you want to explore the API, this is an easy way to gain access.
 
-Run the proxy command in a new terminal window and open `localhost:8001` in your VM's browser. Traverse through the `api/v1/` and search for the cluster nodes.  
+Run the proxy command in a new terminal window and open `localhost:8001/api/v1` in your VM's browser. Traverse through the `api/v1/` tree and search for the cluster nodes.  
 
 ## Step 4: api-versions & api-resources
 Dealing with the API directly can be cumbersome. If you want to get an overview of existing APIs `kubectl` offers the `api-versions` command. Give it a try and compare the output with APIs you found in step 3.
