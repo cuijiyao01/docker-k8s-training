@@ -34,7 +34,7 @@ spec:
 Create the resource: `kubectl create -f pvc.yaml`. Verify that your respective claim has been created and is bound to a PV.
 
 ## Step 2: Attach the PVC to a pod
-Create a busybox pod with a volume and mount section to get access to your PVC. The snippet below is not complete, so fill in the `???` with the corresponding values.
+Create a helper pod with a volume and mount section to get access to your PVC. The snippet below is not complete, so fill in the `???` with the corresponding values.
 
 ```
 apiVersion: v1
