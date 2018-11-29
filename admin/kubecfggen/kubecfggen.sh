@@ -260,7 +260,7 @@ metadata:
     heritage: kubecfggen
 rules:
 - apiGroups: [""]
-  resources: ["componentstatuses", "namespaces", "nodes", "persistentvolumes"]
+  resources: ["pods", "componentstatuses", "namespaces", "nodes", "persistentvolumes"]
   verbs: ["get", "list", "watch"]
 - apiGroups: ["rbac.authorization.k8s.io"]
   resources: ["*"]
