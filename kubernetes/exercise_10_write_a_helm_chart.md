@@ -28,8 +28,9 @@ Go to the `templates` folder and create new file, which will contain the yaml & 
 
 ```
 data:
-    favorite.drink: < your favorite drink >
-    favorite.food: < your favorite food >
+    favorite:
+        drink: < your favorite drink >
+        food: < your favorite food >
 ```
 
 ### Adapt values.yaml
