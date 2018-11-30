@@ -77,6 +77,8 @@ You should send a **'preparation mail'** to all participants about a week before
   <link to repo>/blob/master/preparation.md
 ---------- end -----------
 ```
+Also it is recommended to refer to the cheat-sheets for [docker](../docker/Docker%20Cheat%20Sheet.docx) and [Kubernetes](../kubernetes/cheat%20sheet.docx). Ask participants to print and bring them along, if they deem it would be helpful.
+
 An other option would be to take one of our **mail templates**, we have prepared: [Template 1](preparation_email_sample1.txt), [Template 2](preparation_email_sample2.txt)
 
 Technically it would be possible to run most of the exercises also with Docker on Windows/Mac and a local kubectl. **However, we would recommend explicitly exclude support for this setup during the training.**
