@@ -78,3 +78,8 @@ Use `docker push` to upload your image to the registry.
 If the push succeeded, open the registry in a browser: **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com/v2/_catalog**
 
 Ideally you would see an "evil_nginx" repository there. To browse the list of tags use **/v2/< repo-name >/tags/list**, where the repo name should be *evil_nginx*.
+
+Here is a command to find our your cluster and projectname:
+```bash
+echo "Clustername: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f2)"; echo "Projectname: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f3)"
+```
