@@ -1,17 +1,33 @@
+# declaration of a service
+# services belong to api group 'core' in version 'v1'
+# 'core' does not need to be specified explicitly
 apiVersion: v1
 kind: Service
+# metadata is an object/map and requires at least the key 'name'. 
+# The value has to be unique for this type of resource within the namespace
 metadata:
   name: nginx-https-service
+  # labels is anothre map and contains one to many key:value pairs
   labels:
+    # the service itself will be labeled with a key 'tier' that has a value 'networking'
     tier: networking
+# defines the behavior of a service
 spec:
-  type: LoadBalancer
+  # a service can handle one or many ports. They are defined in a list
   ports:
+    # 'port' specifies on which port the service will accept traffic
+    # as 'targetPort' is not specified, the value of 'port' will be used
   - port: 80
     protocol: TCP
+    # since this is a multi-port service, each port requires a name
     name: http
   - port: 443
     protocol: TCP
     name: https
+  # Route service traffic to pods labeled with keys and values matching this selector.  
   selector:
     app: nginx-https
+  # specify the service type: LoadBalancer, NodePort, ClusterIP
+  # a service of type NodePort implicitly is also of type ClusterIP
+  # a service of type LoadBalancer implicitly is also of type NodePort and ClusterIP
+  type: LoadBalancer

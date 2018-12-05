@@ -1,6 +1,8 @@
 #########################################################
 ## adapt the cluster and project name before deploying ##
 #########################################################
+# 
+# specify a deployment first - this will be the backend all traffic is routed to.
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -40,6 +42,7 @@ spec:
         - name: index-html
           mountPath: /usr/share/nginx/html
 ---
+# next, a service is required to handle traffic to the pods created by the deployment
 apiVersion: v1
 kind: Service
 metadata:
@@ -53,20 +56,29 @@ spec:
     targetPort: 80
   selector:
     app: simple-nginx
-  type: NodePort
+  type: ClusterIP
 ---
+# finally, define the ingress
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: simple-nginx-ingress
+  # annotations are part of the metadata object
+  # usually annotations are used to sent information to a controller
+  # here we instruct the ingress-controller to set the connect-timeout to 60s and rewrite the target to '/' for this specific host/URL
   annotations:
     nginx.ingress.kubernetes.io/proxy-connect-timeout: 60s
     nginx.ingress.kubernetes.io/rewrite-target: /
+# define the routing rules for the ingress in its 'spec'
 spec:
   rules:
-  - host: simple-nginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
+    # an ingress can have one to many hosts. A host is fully quallified URL
+    # TODO: replace <cluster-name> and <project-name> parameters of the training cluster 
+  - host: simple-nginx.ingress.wdfcw48.k8s-train.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
+      # the ingress controller routes traffic to a service backend based on a <host>/<path> combination
+      # in this case traffic coming in to <host>/my-app will be routed to the service 'simple-nginx-service'
       - path: /my-app
         backend:
           serviceName: simple-nginx-service

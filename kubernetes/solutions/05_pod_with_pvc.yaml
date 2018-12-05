@@ -3,8 +3,11 @@ kind: Pod
 metadata:
   name: nginx-storage-pod
 spec:
+  # list of volumes that can be mounted by containers belonging to the pod
   volumes:
+      # define a unique name for the volume. It is valid within the specification of the pod only.
     - name: content-storage
+      # a reference to a PersistentVolumeClaim in the same namespace
       persistentVolumeClaim:
        claimName: nginx-pvc
   containers:
@@ -13,6 +16,8 @@ spec:
     args:
     - sleep
     - "1000"
+    # make use of volumes specified on pod level to mount into the container's filesystem
     volumeMounts:
     - mountPath: "/usr/share/nginx/html"
+      # use the name given to the volume in the 'volumes' section above to reference it
       name: content-storage

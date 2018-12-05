@@ -1,19 +1,38 @@
+# declaration of a deployment
+# deployments belong to api group 'apps' in version 'v1'
 apiVersion: apps/v1
 kind: Deployment
+# metadata is an object/map and requires at least the key 'name'. 
+# The value has to be unique for this type of resource within the namespace
 metadata:
   name: nginx-deployment
+  # labels is anothre map and contains one to many key:value pairs
   labels:
+    # the deplyoment will be labeled with a key 'tier' that has a value 'application'
     tier: application
+# spec is an object/map
+# the pod.spec specifies the desired behavior of the deplyoment 
 spec:
+  # define how many pods will be created 
   replicas: 3
+  # Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment.
+  # A label selector is a label query over a set of resources.
   selector:
     matchLabels:
+      # all pods are expected to have this label
       run: nginx
+  # the following section describes the pods that will be created.
   template:
+    # as for every pod, a metadata section is required
+    # a name is not required as it will be generated
     metadata:
+      # specify how pods will be labeled. 
+      # the labels have to match the selector.matchLabels query defined above
       labels:
         run: nginx
+    # regular pod.spec object
     spec:
+      # define one or several containers
       containers:
       - name: nginx
         image: nginx:mainline
