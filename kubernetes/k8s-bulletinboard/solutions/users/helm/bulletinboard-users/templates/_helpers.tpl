@@ -1,87 +1,72 @@
 {{/* vim: set filetype=mustache: */}}
 {{/*
-Expand the name of the chart.
+Complete tages for labels selectors etc.
 */}}
-{{- define "ba-users.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- define "tags.users.app" }}
+component: {{ .Values.App.Component }}
+module: {{ .Values.App.Module }}
+release: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
+Complete metaclass labels entry
 */}}
-{{- define "ba-users.fullname" -}}
-{{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- if contains $name .Release.Name -}}
-{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-{{- end -}}
+{{- define "labels.users.app" }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+{{- include "tags.users.app" . | indent 4 }}    
 {{- end -}}
 
 {{/*
-Create chart name and version as used by the chart label.
+Complete tages for labels selectors etc.
 */}}
-{{- define "ba-users.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- define "tags.users.db" }}
+component: {{ .Values.Db.Component }}
+module: {{ .Values.Db.Module }}
+release: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
-Create fully qualified names.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+Complete metaclass labels entry
 */}}
-{{- define "db-fullname" -}}
-{{- $name := default .Chart.Name .Values.Db.Name -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- define "labels.users.db" }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+{{- include "tags.users.db" . | indent 4 }}    
 {{- end -}}
 
 {{/*
-Create fully qualified names.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+Ads release name prefix to string and truncates to 63 chars.
+Used for Names of Chart entities
 */}}
-{{- define "db-config-fullname" -}}
-{{- $name := default .Chart.Name .Values.Db.ConfigName -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- define "add-release-name" -}}
+{{- $name := index . "name" -}}
+{{- $dot := index . "dot" -}}
+{{- printf "%s-%s" $dot.Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
-Create fully qualified names.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+template for initdb sql secret
 */}}
-{{- define "db-init-fullname" -}}
-{{- $name := default .Chart.Name .Values.Db.InitName -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- define "initdb.encoded" -}}
+{{- tpl (.Files.Get "initdb.txt") . | b64enc }}
 {{- end -}}
 
 {{/*
-Create fully qualified names.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+template for initdb sql secret
 */}}
-{{- define "db-credential-fullname" -}}
-{{- $name := default .Chart.Name .Values.Db.CredentialName -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-
-{{/*
-Create fully qualified names.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "app-config-fullname" -}}
-{{- $name := default .Chart.Name .Values.App.ConfigName -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- define "vcap-services.encoded" -}}
+{{- tpl (.Files.Get "files/VCAP_SERVICES.string") . | b64enc }}
 {{- end -}}
 
 {{/*
-Create fully qualified names.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+template for db connection
 */}}
-{{- define "app-fullname" -}}
-{{- $name := default .Chart.Name .Values.App.Name -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- define "db-connection" -}}
+{{- printf "%s-0.%s" (include "add-release-name" (dict "dot" . "name" .Values.Db.Name)) (include "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName)) -}}
 {{- end -}}
+
+
+

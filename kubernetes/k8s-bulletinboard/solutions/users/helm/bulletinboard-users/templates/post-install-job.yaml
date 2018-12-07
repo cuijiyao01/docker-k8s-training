@@ -2,27 +2,20 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{.Release.Name}}"
-  labels:
-    heritage: {{.Release.Service | quote }}
-    release: {{.Release.Name | quote }}
-    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
-    component: "{{ .Values.App.Component }}"
-    module: "{{ .Values.App.Module }}"
+  name: {{ template "add-release-name" (dict "dot" . "name" .Values.App.JobName) }}
+  {{- include "labels.users.app" . }}
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "-5"
 #    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
+  {{- if  .Values.App.DeleteSuccessfulJob }}
+  ttlSecondsAfterFinished: 600
+  {{- end }}
   template:
     metadata:
-      name: "{{.Release.Name}}"
-      labels:
-        heritage: {{.Release.Service | quote }}
-        release: {{.Release.Name | quote }}
-        chart: "{{.Chart.Name}}-{{.Chart.Version}}"
-        component: "{{ .Values.App.Component }}"
-        module: "{{ .Values.App.Module }}"
+      name: {{ template "add-release-name" (dict "dot" . "name" .Values.App.JobName) }}
+{{- include "labels.users.app" . | indent 4 }}
     spec:
       restartPolicy: Never
       initContainers:
@@ -34,5 +27,5 @@ spec:
         image: "appropriate/curl:latest"
         command: ['sh', '-c', 'curl -i -X POST {{ .Values.App.ServiceName }}:{{ .Values.App.ServicePort }}/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data ''{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'' ']
       imagePullSecrets:
-        - name: {{ .Values.App.ImageSecret }}
+      - name: {{ .Values.App.ImageSecret }}
 {{- end }}
