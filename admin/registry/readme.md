@@ -7,7 +7,7 @@ We use the `stable/docker-registry` helm chart to deploy our registry. It uses t
 
 The registry is exposed via `ingress` resource, so make sure your cluster has a running ingress controller. When running with Gardener this prerequisite is already fulfilled.  
 
-Additionally we strongly recommend to use certificates around the registry. Use the cluster's root CA to sign a certificate for the ingress URL.
+Additionally we strongly recommend to use certificates around the registry. With the `install_registry.sh` script the cluster's root CA is used to sign a certificate for the ingress URL. The script also sets up basic authentication terminating at the ingress controller (together with TLS).
 
 ## step-by-step setup
 
@@ -48,6 +48,7 @@ The script will
   * approve the signing request & download the certificate
   * create a namespace `registry`
   * create a secret `registry-certs` in the new namespace
+  * create a secret `basic-auth` in the new namespace
   * deploy the chart `stable/docker-registry` into the new namespace
 
-Finally, test your registry by opening `[ingress.url]/v2/_catalog`
+Finally, test your registry by opening `[ingress.url]/v2/_catalog`. The connection should default to `https` and you should be asked to supply a username (`participant`) & password (`2r4!rX6u5-qH`).
