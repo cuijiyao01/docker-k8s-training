@@ -1,5 +1,3 @@
-# - 2. PILOT in CW46 - !
-
 # Microservice based Application in Kubernetes using Cloud Curriculum Sample Application "Bulletinboard"
 - In the following **5 exercises** you will learn how to make available a microservice based business application in Kubernetes. 
 - As sample application we are using a slightly adapted version of **[Bulletinboard from the Cloud Curriculum](https://github.wdf.sap.corp/cc-java-dev/cc-coursematerial/wiki)**. 
