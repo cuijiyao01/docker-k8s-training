@@ -131,6 +131,11 @@ If you want to keep track of things happening in the cluster, you can use these 
 
 ## During the Course
 
+### Use the "master" kube.config 
+For all demos to work properly (especially the RBAC demo), you have to use an "admin" user when talking to the cluster. When you use the `kube.config` you got along with the cluster details, you are on the save side. However if you use a participant user / namespace, the RBAC demo will fail due to missing autorization. 
+
+Of course, you can create a separate namespace (!= `default`) and add it to the `kube.config` context definition to send requests to it by default.
+
 ### Get support from Gardener Team
 - Raise your question via email in the [kubernetes-users Mailinglist](https://listserv.sap.corp/mailman/listinfo/kubernetes-users) or in the [K8s CaaS in SAP Cloud Platform Jam Group](https://jam4.sapjam.com/groups/Niq7TSBxLlzgb3nroBZJVx/overview_page/e9uqTDxXBRFbk7FJXEA4Cd).
 
