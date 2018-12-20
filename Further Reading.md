@@ -59,6 +59,15 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - SE radio: [container networking talk](http://www.se-radio.net/2018/10/se-radio-episode-341-michael-hausenblas-on-container-networking/)
 
+- [Envoy](https://kubernetespodcast.com/episode/033-envoy/), with Matt Klein
+
+### secrity
+- wordpress & reverse shell - k8s security talk @ContainerConf by Jen Tong: https://vimeo.com/306157921 (demo starts around 30:20)
+
+- [Three Years of Lessons Running Potentially Malicious Code Inside Containers](https://www.youtube.com/watch?v=kbPEE33HEHw) - Ben Hall, Katacoda 
+
+- [root container](https://www.youtube.com/watch?v=ltrV-Qmh3oY&feature=youtu.be) @KubeCon by Liz Rice
+
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
 - offical documentatio: https://docs.helm.sh/
