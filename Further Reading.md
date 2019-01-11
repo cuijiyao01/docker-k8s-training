@@ -20,6 +20,13 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - If you are looking for incredibly slim container base images, have a look at Google's [distroless images](https://github.com/GoogleContainerTools/distroless).
 
+### SAP specific
+- Docker [build plugin](https://github.wdf.sap.corp/pages/xmake-ci/User-Guide/Setting_up_a_Build/Build_Plugins/Docker_Build_Plugin/About_Docker_Build_Plugin) with [xmake](http://go.sap.corp/xmake)
+
+- infos about DMZ & customer facing stores can be found [here](https://shipments.pages.repositories.sap.ondemand.com/docs/).
+
+-  more details about the repository based shipment channel implementation can be found [here]https://shipments.pages.repositories.sap.ondemand.com/docs/shipment.html#supported-user-stories).
+
 ## Kubernetes
 
 #### @SAP: Gardener
