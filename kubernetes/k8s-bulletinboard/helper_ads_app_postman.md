@@ -5,7 +5,7 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
 <img src="images/PostmanAppOverview.png" width="700" />
 
 ## Step 1: Open Postman
-- On Desktop click on the `Postman Desktop App` to open the app. I can take a few seconds to start.  
+- On Desktop click on the `Postman Desktop App` to open the app. It can take a few seconds to start.  
   <img src="images/PostmanAppDesktop.png" width="200" />
 
 - Select `GET`  in the URL section and paste the URL to the `/health` endpoint of your **Bulletinboard-Ads** App. (**Hint**: You must use the HTTP protocol).
