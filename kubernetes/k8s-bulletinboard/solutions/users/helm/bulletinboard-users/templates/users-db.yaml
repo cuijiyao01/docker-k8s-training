@@ -4,103 +4,63 @@ kind: ConfigMap
 data:
   PGDATA_VALUE: "{{ .Values.Db.Postgres.MountPath }}/pgdata"
 metadata:
-  name: {{ template "db-config-fullname" . }}
-  labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Values.Db.Component }}"
-    module: "{{ .Values.Db.Module }}"
+  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ConfigName) }}
+  {{- include "labels.users.db" . }}
+
 ---
 apiVersion: v1
-data:
-  initdb.sql: |
-      -- This is a postgres initialization script for the postgres container. Execute it with psql as:
-      -- $> psql postgres -f initdb.sql
-      CREATE ROLE {{ .Values.Db.Postgres.User }} WITH CREATEDB LOGIN PASSWORD '{{ .Values.Db.Postgres.Password }}';
-      CREATE DATABASE {{ .Values.Db.Postgres.Database }} WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
-      GRANT ALL PRIVILEGES ON DATABASE {{ .Values.Db.Postgres.Database }} TO {{ .Values.Db.Postgres.User}};
-      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
-      \c {{ .Values.Db.Postgres.Database }};
-      CREATE SCHEMA {{ .Values.Db.Postgres.Schema }} AUTHORIZATION {{ .Values.Db.Postgres.User }};
-      ALTER DATABASE {{ .Values.Db.Postgres.Database }} SET search_path TO '{{ .Values.Db.Postgres.Schema }}';
-      ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgres.User }};
-      -- close script
-kind: ConfigMap
-metadata:
-  name: {{ template "db-init-fullname" . }}
----
-apiVersion: v1
-data:
-  POSTGRES_PASSWORD_VALUE: {{ .Values.Db.Postgres.RootPassword }}
 kind: Secret
+data:
+  POSTGRES_PASSWORD_VALUE: {{ .Values.Db.Postgres.RootPassword | b64enc }}
+  initdb_sql_value: {{ template "initdb.encoded" . }}
 metadata:
-  name: {{ template "db-credential-fullname" . }}
-  labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Values.Db.Component }}"
-    module: "{{ .Values.Db.Module }}"
+  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
+  {{- include "labels.users.db" . }}
 type: Opaque
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "db-fullname" . }}
-  labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Values.Db.Component }}"
-    module: "{{ .Values.Db.Module }}"
+  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName) }}
+  {{- include "labels.users.db" . }}
 spec:
   ports:
   - port: {{ .Values.Db.Postgres.Port }}
-    name: users-db
+    name: {{ .Values.Db.PortName }}
   clusterIP: None
   selector:
-    component: "{{ .Values.Db.Component }}"
-    module: "{{ .Values.Db.Module }}"
-    release: {{ .Release.Name | quote }}
+{{- include "tags.users.db" . | indent 4 }}
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ template "db-fullname" . }}
-  labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    component: "{{ .Values.Db.Component }}"
-    module: "{{ .Values.Db.Module }}"
+  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.Name) }}
+{{- include "labels.users.db" . }}
 spec:
-  serviceName: {{ template "db-fullname" . }}
+  serviceName: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName) }}
   replicas: 1
   selector:
     matchLabels:
-      component: "{{ .Values.Db.Component }}"
-      module: "{{ .Values.Db.Module }}"
-      release: {{ .Release.Name | quote }}
+{{- include "tags.users.db" . | indent 6 }}
   template:
     metadata:
-      labels:
-        heritage: {{ .Release.Service | quote }}
-        release: {{ .Release.Name | quote }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        component: "{{ .Values.Db.Component }}"
-        module: "{{ .Values.Db.Module }}"
+{{- include "labels.users.db" . | indent 4 }}
     spec:
       volumes:
       - name: init
-        configMap:
-          name: {{ template "db-init-fullname" . }}
+        secret:
+          secretName: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
+          items:
+          - key: initdb_sql_value
+            path: initdb.sql
       containers:
-      - name: {{ template "db-fullname" . }}
-        image: "{{ .Values.Db.Postgres.Image }}:{{ .Values.Db.Postgres.ImageTag }}"
+      - name: users-db-container
+        image: "{{ .Values.Db.Postgres.Image -}}:{{- .Values.Db.Postgres.ImageTag }}"
         ports:
         - containerPort: {{ .Values.Db.Postgres.Port }}
-          name: users-db
+          name: {{ .Values.Db.PortName }}
         volumeMounts:
         - name: users-db-volume
           mountPath: {{ .Values.Db.Postgres.MountPath }}
@@ -110,24 +70,20 @@ spec:
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ template "db-credential-fullname" . }}
+              name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
               key: POSTGRES_PASSWORD_VALUE
         - name: PGDATA
           valueFrom:
             configMapKeyRef:
-              name: {{ template "db-config-fullname" . }}
+              name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ConfigName) }}
               key: PGDATA_VALUE
-  volumeClaimTemplates:
+  volumeClaimTemplates: 
   - metadata:
       name: users-db-volume
-      labels:
-        heritage: {{ .Release.Service | quote }}
-        release: {{ .Release.Name | quote }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        component: "{{ .Values.Db.Component }}"
-        module: "{{ .Values.Db.Module }}"
+{{- include "labels.users.db" . | indent 4 }}
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: {{ .Values.Db.Storage }}
+          storage: {{ .Values.Db.StorageSize }}
+

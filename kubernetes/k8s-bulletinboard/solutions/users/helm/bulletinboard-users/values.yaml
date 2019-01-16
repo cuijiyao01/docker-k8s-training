@@ -4,11 +4,13 @@
 
 Db:
   ConfigName: users-db-configmap
-  InitName: users-db-init
+  SecretName: users-db-secret
+  ServiceName: users-db-service
   CredentialName: db-cred
   Name: users-db
   Component: users
   Module: db
+  PortName: users-db-port
   Postgres:
     Image: postgres
     ImageTag: 9.6
@@ -20,20 +22,22 @@ Db:
     User: users_user
     Password: userdbpass
     Port: 5432
-  Storage: "512Mi"
-
+  StorageSize: "512Mi"
 
 App:
   ServiceName: users-app-service
+  SecretName: users-app-secret
   ConfigName: users-app-configmap
   Name: users-app
   Component: users
   Module: app
   Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users
-  ImageTag: v0.4
+  ImageTag: v0.5
   ImageSecret: artifactory
   ServicePort: 80
   TomcatPort: 8080
   ReplicaCount: 1
+  JobName: users-app-job
   InitPostJobEnabled: true
+  DeleteSuccessfulJob: true
 

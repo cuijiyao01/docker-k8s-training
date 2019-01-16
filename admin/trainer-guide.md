@@ -77,6 +77,8 @@ You should send a **'preparation mail'** to all participants about a week before
   <link to repo>/blob/master/preparation.md
 ---------- end -----------
 ```
+Also it is recommended to refer to the cheat-sheets for [docker](../docker/Docker%20Cheat%20Sheet.docx) and [Kubernetes](../kubernetes/cheat%20sheet.docx). Ask participants to print and bring them along, if they deem it would be helpful.
+
 An other option would be to take one of our **mail templates**, we have prepared: [Template 1](preparation_email_sample1.txt), [Template 2](preparation_email_sample2.txt)
 
 Technically it would be possible to run most of the exercises also with Docker on Windows/Mac and a local kubectl. **However, we would recommend explicitly exclude support for this setup during the training.**
@@ -128,6 +130,11 @@ If you want to keep track of things happening in the cluster, you can use these 
 ### (Optional) [Gain access to the Dashboard](accessDashboard.md)
 
 ## During the Course
+
+### Use the "master" kube.config 
+For all demos to work properly (especially the RBAC demo), you have to use an "admin" user when talking to the cluster. When you use the `kube.config` you got along with the cluster details, you are on the save side. However if you use a participant user / namespace, the RBAC demo will fail due to missing autorization. 
+
+Of course, you can create a separate namespace (!= `default`) and add it to the `kube.config` context definition to send requests to it by default.
 
 ### Get support from Gardener Team
 - Raise your question via email in the [kubernetes-users Mailinglist](https://listserv.sap.corp/mailman/listinfo/kubernetes-users) or in the [K8s CaaS in SAP Cloud Platform Jam Group](https://jam4.sapjam.com/groups/Niq7TSBxLlzgb3nroBZJVx/overview_page/e9uqTDxXBRFbk7FJXEA4Cd).

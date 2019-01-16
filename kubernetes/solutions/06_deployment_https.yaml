@@ -14,14 +14,18 @@ spec:
       labels:
         app: nginx-https
     spec:
+       # list of volumes that can be mounted by containers belonging to the pod
       volumes:
+        # make the persistentVolumeClaim with the index.html page available
       - name: content-storage
         persistentVolumeClaim:
           claimName: nginx-pvc
           readOnly: true
+        # make the secret with the TLS certificates available
       - name: tls-secret
         secret:
           secretName: nginx-sec
+        # make the configMap with the server configuration available
       - name: nginxconf
         configMap:
           name: nginxconf
@@ -35,10 +39,13 @@ spec:
           name: https
         livenessProbe:
           httpGet:
+            # point the livenessProbe to the URI specified in the server configuration (configMap)
             path: /healthz
+            # reference the port by its name
             port: http
           initialDelaySeconds: 3
           periodSeconds: 5
+        # define how/where to container can acces the available volumes
         volumeMounts:
         - mountPath: "/usr/share/nginx/html"
           name: content-storage

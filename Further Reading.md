@@ -20,29 +20,32 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - If you are looking for incredibly slim container base images, have a look at Google's [distroless images](https://github.com/GoogleContainerTools/distroless).
 
+### SAP specific
+- Docker [build plugin](https://github.wdf.sap.corp/pages/xmake-ci/User-Guide/Setting_up_a_Build/Build_Plugins/Docker_Build_Plugin/About_Docker_Build_Plugin) with [xmake](http://go.sap.corp/xmake)
+
+- infos about DMZ & customer facing stores can be found [here](https://shipments.pages.repositories.sap.ondemand.com/docs/).
+
+-  more details about the repository based shipment channel implementation can be found [here]https://shipments.pages.repositories.sap.ondemand.com/docs/shipment.html#supported-user-stories).
+
 ## Kubernetes
 
+#### @SAP: Gardener
 - First of all: SAP offers an internal Kubernetes platform offering that is called Project Gardener. If you need a Kubernetes environment, this is the place to go: [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/)
 
 - If you are looking for more detailed information about Gardener, check out this [kubernetes blog post](https://kubernetes.io/blog/2018/05/17/gardener/).
-
-- Do you want to watch Kelsey Hightower, one of the big brains behind Kubernetes play Tetris on the Jumbotron at d-Kom 2018 at SAP Arena? Check out [his keynote](https://broadcast.co.sap.com/event/dkom/2018#!video%2F18106).
-
-- If there is a Container 101 talk at *devX*, there must be a Kubernetes 102 talk as well: [Kubernetes 102](https://video.sap.com/media/t/1_64gue1c2/84675141)
 
 - Interested in the architecture behing Gardener? There was a talk about it at *devX*, too:
 [Project Gardener: Multicloud Kubernetes Cluster Provisioning at Scale](https://video.sap.com/media/t/1_9ifoaxbx/84675141)
 
 - Gardener's curated [link list](https://github.wdf.sap.corp/pages/kubernetes/gardener/doc/2017/01/16/howto-curated-links.html)
 
+#### in general
+- Do you want to watch Kelsey Hightower, one of the big brains behind Kubernetes play Tetris on the Jumbotron at d-Kom 2018 at SAP Arena? Check out [his keynote](https://broadcast.co.sap.com/event/dkom/2018#!video%2F18106).
+
+- If there is a Container 101 talk at *devX*, there must be a Kubernetes 102 talk as well: [Kubernetes 102](https://video.sap.com/media/t/1_64gue1c2/84675141)
+
 - Another talk at *devX* was about resource management in Kubernetes:
 [Inside Kubernetes Resource Management (QoS) – Mechanics and Lessons from the Field](https://video.sap.com/media/t/1_hcnybwp9/84675141)
-
-- The nitty gritty details about the networking in and behind Kubernetes are explained in the final *devX* talk we would like to point you to: [Insights into Kubernetes Networking](https://video.sap.com/media/t/1_8fawa5io/84675141)
-
-- More on networking? The [Life of a Packet](https://www.youtube.com/watch?v=0Omvgd7Hg1I) talk by Google's Michael Rubin at KubeCon EU '17 can be found [here on YouTube](https://www.youtube.com/watch?v=0Omvgd7Hg1I).
-
-- If you are more into reading - here is a very good [blog post](https://sookocheff.com/post/kubernetes/understanding-kubernetes-networking-model/) about networking in Kubernetes context.
 
 - The Kubernetes API reference can be found here: [Kubernetes API reference Documentation](https://kubernetes.io/docs/reference/).
 
@@ -53,6 +56,24 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 - with the introduction of the `horizontal pod autoscaler`, k8s is capable of auto scaling. Check the [documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) and [tutorial](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for further details.
 
 - [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) is a tool which helps creating API extensions including their controller/reconcile loops
+
+#### networking
+- The nitty gritty details about the networking in and behind Kubernetes are explained in the final *devX* talk we would like to point you to: [Insights into Kubernetes Networking](https://video.sap.com/media/t/1_8fawa5io/84675141)
+
+- More on networking? The [Life of a Packet](https://www.youtube.com/watch?v=0Omvgd7Hg1I) talk by Google's Michael Rubin at KubeCon EU '17 can be found [here on YouTube](https://www.youtube.com/watch?v=0Omvgd7Hg1I).
+
+- If you are more into reading - here is a very good [blog post](https://sookocheff.com/post/kubernetes/understanding-kubernetes-networking-model/) about networking in Kubernetes context.
+
+- SE radio: [container networking talk](http://www.se-radio.net/2018/10/se-radio-episode-341-michael-hausenblas-on-container-networking/)
+
+- [Envoy](https://kubernetespodcast.com/episode/033-envoy/), with Matt Klein
+
+### secrity
+- wordpress & reverse shell - k8s security talk @ContainerConf by Jen Tong: https://vimeo.com/306157921 (demo starts around 30:20)
+
+- [Three Years of Lessons Running Potentially Malicious Code Inside Containers](https://www.youtube.com/watch?v=kbPEE33HEHw) - Ben Hall, Katacoda 
+
+- [root container](https://www.youtube.com/watch?v=ltrV-Qmh3oY&feature=youtu.be) @KubeCon by Liz Rice
 
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable

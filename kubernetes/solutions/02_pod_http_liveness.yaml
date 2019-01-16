@@ -1,17 +1,32 @@
+# declaration of a very basic pod
+# for details check the APi docs or use kubectl explain
+# firstly, specify the resource type and where to find it in the API
 apiVersion: v1
 kind: Pod
+# metadata is an object/map and requires at least the key 'name'. 
+# The value has to be unique for this type of resource within the namespace
 metadata:
   name: nginx-liveness-pod
+# spec is an object/map
+# the pod.spec specifies the desired behavior of the pod 
 spec:
+  # a list of one or several containers
   containers:
+    # first container is defined here 
   - name: nginx
+    # specify which image:tag to use
     image: nginx:mainline
+    # a list of ports the container will listen at
+    # define a name for a port and make use of it elsewhere so you can change the port without issues.
     ports:
     - containerPort: 80
       name: http-port
+    # liveness probe to check the container's health. 
+    # container will be restarted on repeated failure 
     livenessProbe:
       httpGet:
         path: /
+        # use the port name instead of number 
         port: http-port
       initialDelaySeconds: 3
       periodSeconds: 30

@@ -3,15 +3,19 @@ kind: NetworkPolicy
 metadata:
   name: access-nginx
 spec:
+  # the network policy will handle traffic to pods labeled with keys and values matching this selector.  
   podSelector:
     matchLabels:
       run: nginx
+ # specify how incoming traffic should be handled / filtered  
   ingress:
   - from:
+    # allow traffic originating from pods labeled with keys and values matching this selctor
     - podSelector:
         matchLabels:
-          access: "true"
-# allow access originating from SAP networks
+          access: "true" # pods sending request require to have a label "access=true"
+    # allow traffic originating from SAP networks
+    # filtering is based on source IP addresses
     - ipBlock:
         # Germany
         cidr: 155.56.0.0/16

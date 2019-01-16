@@ -1,11 +1,19 @@
+# declaration of a PersistentVolumeClaim (PVC)
+# PVC belong to api group 'core' in version 'v1'
+# 'core' does not need to be specified explicitly
 apiVersion: v1
 kind: PersistentVolumeClaim
+# metadata is an object/map and requires at least the key 'name'. 
 metadata:
   name: nginx-pvc
+# Spec defines the desired characteristics of a volume
 spec:
+  # reference a storage class that should provision a matching persistentVolume
   storageClassName: default
+  # request a volume with a specific access mode
   accessModes:
     - ReadOnlyMany
   resources:
     requests:
+      # request storage of certain size
       storage: 1Gi

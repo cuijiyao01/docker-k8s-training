@@ -13,6 +13,9 @@ Once you have your VM up and running, clone this repository to the VM:
 git clone https://github.wdf.sap.corp/slvi/docker-k8s-training.git
 ```
 
+## Cheat Sheets
+We have prepared a collection of basic commands which may be helpful during the training. Feel free to print the cheat-sheets for [docker](../docker/Docker%20Cheat%20Sheet.docx) and [Kubernetes](../kubernetes/cheat-sheet.md) and bring them along.
+
 ## Prerequisite knowledge
 
 - **Linux:** You should have a basic knowledge of Linux. If you are not familiar with Unix/Linux, you can check out [Learn Unix in 10 Minutes](https://csg.sph.umich.edu/docs/hints/learnUNIXin10minutes.html) or [Introduction to Linux](http://tldp.org/LDP/intro-linux/html/index.html) or with a little more detail [Learn Linux in 5 Days](https://linuxtrainingacademy.com/wp-content/uploads/2016/08/learn-linux-in-5-days.pdf) (it actually takes a lot less time). There is also a very good [Linux Commandline Cheat Sheet](https://www.linuxtrainingacademy.com/wp-content/uploads/2016/12/LinuxCommandLineCheatSheet.pdf).

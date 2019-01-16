@@ -71,10 +71,17 @@ Use the `docker history` command to examine the history of your custom image. Ca
 
 The K8s cluster prepared for the training is also serving a docker registry at  **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com** to which you can push your image. The values for *\<cluster-name\>* and *\<project-name\>* will be given to you by your trainer and **must be substituted** respectively.
 
-Use the `docker tag` command to tag your image correctly so that the registry is used. The name of your image should be **evil_nginx with the ID of your K8s namespace** as release tag. For instance, if you are working on *part-760d7ca6*, tag your image like **"\<registry name\>/evil_nginx:760d7ca6"**.
+Since the registry is setup with basic authentication, you have to login first and Docker provides a way to manage your login data. With `docker login <registry-URL>` you can authenticate once and store the credentials in `~/.docker/config.json`. For our registry the username is `participant` and the password `2r4!rX6u5-qH`.
 
-Use `docker push` to upload your image to the registry.
+Next, use the `docker tag` command to tag your image correctly so that the registry is used. The name of your image should be **evil_nginx with the ID of your K8s namespace** as release tag. For instance, if you are working on *part-760d7ca6*, tag your image like **"\<registry name\>/evil_nginx:760d7ca6"**.
+
+Use `docker push <full-image-name:<tag>` to upload your image to the registry.
 
 If the push succeeded, open the registry in a browser: **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com/v2/_catalog**
 
 Ideally you would see an "evil_nginx" repository there. To browse the list of tags use **/v2/< repo-name >/tags/list**, where the repo name should be *evil_nginx*.
+
+Here is a command to find our your cluster and projectname:
+```bash
+echo "Clustername: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f2)"; echo "Projectname: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f3)"
+```

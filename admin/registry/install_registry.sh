@@ -101,6 +101,9 @@ spec:
  - server auth
 __EOF
 
+# create htpasswd file for basic authentication
+echo 'participant:$apr1$5KiSajCb$WS1TN7L0KTOltFHuDYle1/' > auth
+
 # create a namespace for the registry
 ${KUBECTL} create ns registry
 
@@ -110,12 +113,15 @@ ${KUBECTL} -n registry certificate approve training-registry.registry
 # download certificate
 ${KUBECTL} -n registry get csr training-registry.registry -o jsonpath='{.status.certificate}' | base64 -d > server.crt
 
-# create a secret
+# create a secret with certificate
 ${KUBECTL} -n registry create secret tls registry-certs --cert=./server.crt --key=./server-key.pem
+
+# create a secret with username/password for basic authentication
+${KUBECTL} -n registry create secret generic basic-auth --from-file=auth
 
 ## prepare values file and install helm chart
 sed -i.bck "s/INGRESS_HOSTNAME/${INGRESS_HOSTNAME}/g" $CONFIG_FILE
 ${HELM} install stable/docker-registry --namespace registry -f $CONFIG_FILE
 
 # clean-up
-rm server.csr server.crt server-key.pem
+rm server.csr server.crt server-key.pem auth

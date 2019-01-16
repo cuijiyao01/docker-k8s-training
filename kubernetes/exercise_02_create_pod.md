@@ -36,7 +36,7 @@ Now tell the cluster that you would like it to schedule the pod for you. To do s
 If it does not work as expected, check the indentation and consult the API reference linked above.
 
 ## Step 2: verify that the pod is running
-Use `kubectl`with the `get` verb, to check, if your pod has been scheduled. It should be up and running after a few seconds. Check the [cheat-sheet](./cheat-sheet.md) for help.
+Use `kubectl` with the `get` verb, to check, if your pod has been scheduled. It should be up and running after a few seconds. Check the [cheat-sheet](./cheat-sheet.md) for help.
 Experiment with `-o=yaml` to modify the output. Compare the result with your local `pod.yaml` file. Can you spot the odd/differences?
 
 ## Step 3: get the logs
