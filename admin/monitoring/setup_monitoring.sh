@@ -76,7 +76,7 @@ fi
 ${KUBECTL} create ns $NAMESPACE
 
 # install prometheus chart
-${HELM} install --namespace $NAMESPACE -n prometheus stable/prometheus --set networkPolicy.enabled=true
+${HELM} install --namespace $NAMESPACE -n prometheus stable/prometheus --set networkPolicy.enabled=true --set nodeExporter.enabled=false
 
 ## prepare for grafana
 
@@ -119,7 +119,7 @@ __EOF
 ${KUBECTL} -n $NAMESPACE certificate approve training-monitoring.monitoring
 
 # download certificate
-${KUBECTL} -n $NAMESPACE get csr training-monitoring.monitoring -o jsonpath='{.status.certificate}' | base64 -d > server.crt
+${KUBECTL} -n $NAMESPACE get csr training-monitoring.monitoring -o jsonpath='{.status.certificate}' | base64 --decode > server.crt
 
 # create a secret
 ${KUBECTL} -n $NAMESPACE create secret tls grafana-tls --cert=./server.crt --key=./server-key.pem

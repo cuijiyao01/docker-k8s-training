@@ -111,7 +111,7 @@ ${KUBECTL} create ns registry
 ${KUBECTL} -n registry certificate approve training-registry.registry
 
 # download certificate
-${KUBECTL} -n registry get csr training-registry.registry -o jsonpath='{.status.certificate}' | base64 -d > server.crt
+${KUBECTL} -n registry get csr training-registry.registry -o jsonpath='{.status.certificate}' | base64 --decode > server.crt
 
 # create a secret with certificate
 ${KUBECTL} -n registry create secret tls registry-certs --cert=./server.crt --key=./server-key.pem
