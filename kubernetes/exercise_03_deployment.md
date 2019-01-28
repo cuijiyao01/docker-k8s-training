@@ -35,13 +35,13 @@ Once finished, check the deplyoment, pods and ReplicaSets available in your name
 
 This way you would be able to roll back in case of an issue during update or with the new version. Check `kubectl rollout history deployment/nginx` for the existing versions of your deployment. By specifying `--revision=1` you will be able to get detailed on revision number one.
 
-## Step 4 - optional: prepare for the hard way
+## Step 4: from file
 Of course it is possible to create deployments from a yaml file. The following step gives an example, how it could look like.
 
 Firstly, delete the deployment you just created:
 `kubectl delete deployment nginx`
 
-Secondly, try to write your own yaml file for a new deployment that creates 3 replicas of an `nginx` image, version 1.13.6.
+Secondly, try to write your own yaml file for a new deployment that creates 3 replicas of an `nginx` image, with version tag `mainline`.
 
 Below is a skeleton of a deployment, however it is still missing some essential fields. Check the [api reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#deployment-v1-apps) for details.
 
@@ -66,8 +66,9 @@ spec:
     spec:
 ```
 
-## Step 5 - optional: deploy(ment)!
-Now create the deployment again. However this time it will be created based on the yaml file:
+## Step 5: deploy(ment)!
+Now create the deployment again. Remember that you can always use the `--dry-run` flag to test. Use the yaml file you just wrote instead of the `run` generator.
+
 `kubectl create -f <your-file>.yaml`
 
 
