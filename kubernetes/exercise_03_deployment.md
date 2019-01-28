@@ -29,13 +29,31 @@ Checkout the ReplicaSet created by your deployment:
 
 But a deployment can do more than managing replicasets in order to scale. It also allows you to perform a rolling update. Run `watch kubectl rollout status deployment/nginx` to monitor the process of updating. Now trigger the  update with the following command:
 
-`kubectl set image deployment/nginx nginx=nginx:mainline`
+`kubectl set image deployment/nginx nginx=nginx:mainline --record`
+
+Note that the `--record` option "logs" the `kubectl` command and stores it in the deplyoment's annotations. When checking the rollout history later, the command will be shown as change cause.
 
 Once finished, check the deplyoment, pods and ReplicaSets available in your namespace. By now there should be two ReplicaSets - one scaled to 0 and one scaled to 3 (or whatever number of replicas you had before the update).
 
 This way you would be able to roll back in case of an issue during update or with the new version. Check `kubectl rollout history deployment/nginx` for the existing versions of your deployment. By specifying `--revision=1` you will be able to get detailed on revision number one.
 
-## Step 4: from file
+
+## Step 4: update & rollback
+Now that already you know the `rollout status/history` commands, let's take a look at `undo`. 
+
+Similar to the previous step, initiate another update while monitoring the rollout status (`kubectl rollout status deployment/nginx`) in parallel. However this time set the image version to an not existing tag. It could be a typo like `mianlin` or something completely different.
+
+When listing the pods you should get one pod with an `ImagePullBackOff` error and the rollout should be stuck with the update of 1 new replica. 
+
+Why is the responsible controller not attempting to patch all the other replicas in parallel? The deployment specifies a `maxUnavailable` parameter as part of its update strategy (`kubectl explain deployment.spec.strategy.rollingUpdate`). It defaults to 25%, which means in our case, that with 3 replicas no more than one pod at a time is allowed to be unavailable.
+
+Since the attempt to patch the deployment to a new image obviously failed, you have to undo action:
+
+`kubectl rollout undo deployment nginx`
+
+Check the `rollout status` again to make sure, your image is `nginx:mainline` and all pods are up and running.
+
+## Step 5: from file
 Of course it is possible to create deployments from a yaml file. The following step gives an example, how it could look like.
 
 Firstly, delete the deployment you just created:
@@ -66,7 +84,7 @@ spec:
     spec:
 ```
 
-## Step 5: deploy(ment)!
+## Step 6: deploy(ment)!
 Now create the deployment again. Remember that you can always use the `--dry-run` flag to test. Use the yaml file you just wrote instead of the `run` generator.
 
 `kubectl create -f <your-file>.yaml`
