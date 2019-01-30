@@ -11,6 +11,7 @@
 #
 # Written by:        Thomas Buchner (D044431) <thomas.buchner@sap.com>
 #                    Juergen Heymann (D021619) <juergen.heymann@sap.com>
+#                    Hendrik Kahl (D051945) <hendrik.kahl@sap.com>
 #
 # History:           0.1 - 22-Mar-2018 - Initial release
 #                    0.2 - 03-Apr-2018 - Fields CA_CERT and API_SERVER will be automatically retrieved from current kube context
@@ -19,10 +20,11 @@
 #                    0.5 - 18-Oct-2018 - Introducing the access service account which gets ClusterAdmin rights
 #                    0.6 - 31-Oct-2018 - Simply numbering the namespace IDs - K.I.S.S.
 #                    0.7 - 08-Nov-2018 - Added security by locking participants into their namespaces
+#                    0.8 - 30-Jan-2019 - Use client certificates instead of service account tokens 
 #
 
 # version tag
-_VERSION=0.7
+_VERSION=0.8
 
 # this is where we expect our configuration file
 CONFIG_FILE=`dirname $0`/kubecfggen.conf
@@ -158,7 +160,7 @@ done
 
 
 
-# create a rolebinding in each namespace to give the admin role to the access serviceaccount
+# create a rolebinding in each namespace to give appropriate permissions to participants
 # also add resource quotas and limits to each namespac
 # max 15 pods per namespace, by default container consume 0.2 cpu & 200 MiB memory
 for ns in $NAMESPACES; do
@@ -176,8 +178,8 @@ roleRef:
   kind: ClusterRole
   name: admin
 subjects:
-- kind: ServiceAccount
-  name: access
+- kind: User
+  name: $ns
   namespace: $ns
 ---
 apiVersion: v1
@@ -250,7 +252,7 @@ roleRef:
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
-  name: system:serviceaccounts
+  name: participants
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -288,7 +290,7 @@ roleRef:
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
-  name: system:serviceaccounts
+  name: participants
 __EOF
 
 # let's feed this YAML file to our cluster
@@ -317,27 +319,42 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
+- kind: Group
+  name: participants
 __EOF
-
-# and then the rolebindings for the default service accounts for each namespace
-for ns in $NAMESPACES; do
-	cat << __EOF >> $ROLEBINDING_YAML
-- kind: ServiceAccount
-  name: access
-  namespace: $ns
-__EOF
-done
 ## end of emergency rolebindings
 
-# now we create the kube.config files
+# now we create the client certificates & kube.config files
 echo -e "\n> Retrieving access tokens for the access service accounts and creating kube.config files."
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
 	KUBE_CONF_DIR="$OUTPUT_DIR/kube-configs/$NS_UID"
+  CLIENT_CERT_DIR="$OUTPUT_DIR/certs/$NS_UID"
 	mkdir -p $KUBE_CONF_DIR
+  mkdir -p $CLIENT_CERT_DIR
 	echo "  - processing namespace $ns"
-	SA_SECRET=$(${KUBECTL} get serviceaccount access -n $ns -o json | jq '.secrets[0].name' | sed 's/"//g')
-	TOKEN=$(${KUBECTL} get secret ${SA_SECRET} -n $ns -o json | jq '.data.token' | sed 's/"//g' | base64 --decode)
+
+  # create key & csr files
+  openssl genrsa -out $CLIENT_CERT_DIR/client.key 4096
+  openssl req -new -key $CLIENT_CERT_DIR/client.key -out $CLIENT_CERT_DIR/client.csr -subj "/O=participants/CN=$ns"
+
+  # send csr to cluster
+  cat <<__EOF | $KUBECTL create -f -
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: $ns.client-auth.training
+spec:
+  groups:
+  - system:authenticated
+  request: $(cat $CLIENT_CERT_DIR/client.csr | base64 | tr -d '\n')
+  usages:
+  - client auth
+__EOF
+
+ # approve csr & download signed crt 
+${KUBECTL} certificate approve ${ns}.client-auth.training
+${KUBECTL} get csr ${ns}.client-auth.training -o jsonpath='{.status.certificate}' > $CLIENT_CERT_DIR/client.crt
 
 	# create kubeconfig
 	cat << __EOF > $KUBE_CONF_DIR/kube.config
@@ -350,13 +367,14 @@ clusters:
     server: $API_SERVER
   name: k8s_training_cluster
 users:
-- name: default
+- name: participant
   user:
-    token: $TOKEN
+    client-certificate-data: $(cat  $CLIENT_CERT_DIR/client.crt)
+    client-key-data: $(cat  $CLIENT_CERT_DIR/client.key | base64 --wrap=0)
 contexts:
 - context:
     cluster: k8s_training_cluster
-    user: default
+    user: participant
     namespace: $ns
   name: k8s-training-$ns
 current-context: k8s-training-$ns
