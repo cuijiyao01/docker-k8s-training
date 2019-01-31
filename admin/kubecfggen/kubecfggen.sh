@@ -94,7 +94,7 @@ fi
 YAML_FILE=$OUTPUT_DIR/cluster-resources.yaml
 
 # this is the unique name for the cluster role binding
-ROLEBINDING_NAME=training:access-is-clusteradmin
+ROLEBINDING_NAME=training:participant-is-clusteradmin
 ROLEBINDING_YAML=$OUTPUT_DIR/emergency_clusteradmin-rolebinding.yaml
 
 # we store the list of namespaces in this variable
@@ -125,7 +125,7 @@ echo -e "> Compiling $YAML_FILE...\n"
 # Do we have a namespace prefix? If not, we fall back to a default.
 [ -z "$NS_PREFIX" ] && NS_PREFIX="part"
 
-# create the namespace ojects for the YAML file along with the access service account
+# create the namespace ojects for the YAML file along with the tiller service account
 for i in $(seq $NS_START 1 $NS_END); do
 	NS_NUM=$(printf "%04d" $i)
 	NS_NAME=$NS_PREFIX-$NS_NUM
@@ -151,7 +151,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: access
+  name: tiller
   namespace: $NS_NAME
   labels:
     heritage: kubecfggen
@@ -169,7 +169,7 @@ for ns in $NAMESPACES; do
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: training:access-is-admin
+  name: training:participant-is-admin
   namespace: $ns
   labels:
     heritage: kubecfggen
@@ -180,6 +180,9 @@ roleRef:
 subjects:
 - kind: User
   name: $ns
+  namespace: $ns
+- kind: ServiceAccount
+  name: tiller
   namespace: $ns
 ---
 apiVersion: v1
@@ -291,6 +294,9 @@ subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
   name: participants
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts
 __EOF
 
 # let's feed this YAML file to our cluster
@@ -303,8 +309,8 @@ if [ $RC -ne 0 ]; then
 	exit 11
 fi
 
-## just for emergency purposes: if the locking in of access service accounts does not work
-## we create a clusterrolebinding which grants cluster-admin to all access service accounts
+## just for emergency purposes: if the locking in of participants does not work
+## we create a clusterrolebinding which grants cluster-admin to all participants
 # first the header for the rolebindingobject
 cat << __EOF >> $ROLEBINDING_YAML
 ---
@@ -325,7 +331,7 @@ __EOF
 ## end of emergency rolebindings
 
 # now we create the client certificates & kube.config files
-echo -e "\n> Retrieving access tokens for the access service accounts and creating kube.config files."
+echo -e "\n> Generating certificates for the participants and creating kube.config files."
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
 	KUBE_CONF_DIR="$OUTPUT_DIR/kube-configs/$NS_UID"
@@ -380,6 +386,9 @@ contexts:
 current-context: k8s-training-$ns
 __EOF
 done
+
+# remove certificates from file system
+rm -rf ${OUTPUT_DIR}/certs
 
 # create a printable sheet with participant information
 PARTICIPANT_SHEET=$OUTPUT_DIR/participant-sheet.txt
