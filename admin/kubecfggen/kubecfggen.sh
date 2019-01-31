@@ -294,10 +294,15 @@ subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
   name: participants
-- apiGroup: rbac.authorization.k8s.io
-  kind: Group
-  name: system:serviceaccounts
 __EOF
+
+for ns in $NAMESPACES; do
+        cat << __EOF >> $YAML_FILE
+- kind: ServiceAccount
+  name: tiller
+  namespace: $ns
+__EOF
+done
 
 # let's feed this YAML file to our cluster
 echo -e "> Sending $YAML_FILE to the cluster...\n"
