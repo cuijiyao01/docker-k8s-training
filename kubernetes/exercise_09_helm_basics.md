@@ -33,9 +33,15 @@ You can use this bash line to set  TILLER_NAMESPACE:
 
 ## Step 2: looking for charts?
 Now that helm is able to talk to its tiller in Kubernetes it is time to use it. Helm organizes applications in so called charts, which contain parameters you can set during installation. By default there is a local and an official repository where you can look for charts, but of course you can also add futher repos. Check out the available repos and search for a chaoskube chart
+
 `helm repo list`
+
 `helm search chaoskube`
+
 Found it? Check the github [page](https://github.com/kubernetes/charts/tree/master/stable/chaoskube) for a description of the chart.
+
+Of course, there are other ways to find charts. You can go to [charts org on github](https://github.com/kubernetes/charts) and take a look into the stable, test or incubatior repositories. This is also where you find the yaml / template files of charts.
+In addition the helm organization recently created [Helm Hub](https://hub.helm.sh/). It is a very convenient way to search for a chart and lets you access multiple / different repositories at once (like stable or incubator). Take a look and see, if you can find the chaoskube there as well.
 
 ## Step 3: install a chart
 Run the following command to install the chaoskube chart:
