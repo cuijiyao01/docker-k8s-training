@@ -1,4 +1,4 @@
-# Exercise: StatefulSet
+# Exercise 8: StatefulSet
 In this exercise you will deploy a ngnix webserver as a StatefulSet and scale it.
 
 ## Step 0: Create a headless service

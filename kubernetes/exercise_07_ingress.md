@@ -1,4 +1,4 @@
-# Optional exercise - Ingress
+# Exercise 7 - Ingress
 
 __Please note this is an optional exercise. It has an increased level of difficulty.__
 
