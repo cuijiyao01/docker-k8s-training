@@ -19,7 +19,6 @@
 * Registries
 * Docker's client/server architecture
 * runC
-* Exercise 1: getting started with Docker and running your first container
 
 ## Working with containers
 * Container lifecycle
@@ -30,11 +29,11 @@
 * Debugging containers
   * executing commands in containers
   * getting logs
-* Exercise 2: experiencing the container lifecycle, running commands in a container and searching through the logs
+* Exercise 1: experiencing the container lifecycle, running commands in a container and searching through the logs
 * Networking and persistent storage
   * network port forwarding
   * storage volumes
-* Exercise 3: making a container accessible from the network and attaching a storage volume to it
+* Exercise 2: making a container accessible from the network and attaching a storage volume to it
 
 ## Images
 * Recap: Image layers
@@ -44,8 +43,7 @@
 * dealing with registries
   * Docker Hub
   * Artifactory
-  * private registries
-* Exercise 4: committing changes of a container into an image and pushing it to a registry
+  * private registries and logging on
 
 ## Creating Docker images
 * outline of the Docker image build process
@@ -53,9 +51,9 @@
 * Structure and syntax of Dockerfiles
   * commonly used commands
   * do's and don'ts
-* Exercise 5: Extending an image with a Dockerfile
+* Exercise 4: Creating Images with Dockerfiles and uploading to a registry
 * Structure and contents of an image
   * absolutely necessary files
   * directory structure
   * setup of Docker's logging facility
-* Exercise 6: Creating a Docker image from scratch
+* Optional Exercise 5: Creating a Docker image from scratch
