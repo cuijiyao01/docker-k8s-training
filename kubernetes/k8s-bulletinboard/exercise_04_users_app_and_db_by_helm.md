@@ -20,7 +20,7 @@ The structure of the K8s entities in this chart is similar to the ones you creat
 
 ## User Service Docker image
 
-We created a Docker image with Tomcat and "user.war" which is used in the helm chart: `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users:v0.4`. 
+We created a Docker image with Tomcat and "user.war" which is used in the helm chart: `cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users:v0.5`. 
 The version of the user service used here only needs a postgresql db to store the user data and has no other dependencies.
 The following endpoints are given: 
 - `/`: gives a 'Users: OK' string and 200 code.
@@ -59,7 +59,7 @@ You can test that the user-service is runing by doing:
 - `kubectl get all -l "component=users"`, the pods should be on state running. <details><summary> Here you can see a example output.</summary><p><img src="images/kubectl-get-all-users.png" width="800"></p></details>
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`: this terminal is blocked by the open connection to the pod, either put it in the background (`crtl + z` + `bg`) or open a second terminal (`crtl + shift + t`)
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`
-- post a user: `curl -i -X POST localhost:8081/bulletinboard-users-service/api/v1.0/users -H "Content-Type: text/json" --data '{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'`
+- post a user: `curl -i -X POST localhost:8081/bulletinboard-users-service/api/v1.0/users -H "Content-Type: application/json" --data '{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'`
 
 If you do a "get-curl" request again you should now get the user back. It should look something like this: 
 ```vagrant@vagrant:~$ curl localhost:8081/bulletinboard-users-service/api/v1.0/users
