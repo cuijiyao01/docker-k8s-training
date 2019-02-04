@@ -34,6 +34,7 @@ App:
   Image: cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-users
   ImageTag: v0.5
   ImageSecret: artifactory
+  ImagePullPolicy: Always
   ServicePort: 80
   TomcatPort: 8080
   ReplicaCount: 1

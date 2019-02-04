@@ -52,6 +52,7 @@ spec:
       containers:
       - name: users
         image: "{{ .Values.App.Image }}:{{ .Values.App.ImageTag }}"
+        imagePullPolicy: "{{ .Values.App.ImagePullPolicy }}"
         env:
         - name: SPRING_PROFILES_ACTIVE
           valueFrom:
