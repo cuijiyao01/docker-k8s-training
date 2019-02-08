@@ -1,5 +1,3 @@
-# - 2. PILOT in CW46 - !
-
 # Exercise: Users Service with Helm
 
 ## Scope
