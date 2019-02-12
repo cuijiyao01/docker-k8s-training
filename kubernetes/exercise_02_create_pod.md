@@ -29,11 +29,13 @@ spec:
 ```
 
 ## Step 1: create the pod
-Now tell the cluster that you would like it to schedule the pod for you. To do so, run the following command:
+Now tell the cluster that you would like it to schedule the pod for you. Send the file "pod.yaml" to the API server for further processing. You can try this directly or use the `--dry-run` flag, if you are not sure yet:
+
+`kubectl create -f pod.yaml --dry-run`
 
 `kubectl create -f pod.yaml`
 
-If it does not work as expected, check the indentation and consult the API reference linked above.
+If it does not work as expected, check the indentation and consult the API reference linked above. You can also use `kubectl explain pod` instead. To get more details about fields like `spec` simply append the field name with a "." like this: `kubectl explain pod.spec`
 
 ## Step 2: verify that the pod is running
 Use `kubectl` with the `get` verb, to check, if your pod has been scheduled. It should be up and running after a few seconds. Check the [cheat-sheet](./cheat-sheet.md) for help.
