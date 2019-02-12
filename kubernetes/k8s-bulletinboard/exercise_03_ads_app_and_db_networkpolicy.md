@@ -68,7 +68,7 @@ A prompt with root@... should come up. You are now connected to the pod, here we
 
 To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above: `kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash`. Again you should get a root prompt, execute `psql -h ads-db-statefulset-0 -p 5432 -U adsuser -W ads` which, after you entered the password, should return with `timeout expired` after 5 seconds.
 
-To test the egress `kubectl exec -it ads-db-statefulset-0 bash` and try to "ping" any page/pod e.g. `wget <service of ads:app>/api/v1/ads` or `wget google.de`. Both should fail.
+To test the egress `kubectl exec -it ads-db-statefulset-0 bash` and try to "ping" any page/pod e.g. `wget <service of ads:app>/api/v1/ads` or `wget google.de`. Both should fail. If `wget` is not there, try e.g. `apt-get update`. This will also timeout.
 
 ## Step 2: Network policy for Ads
 
