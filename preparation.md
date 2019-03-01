@@ -14,7 +14,7 @@ git clone https://github.wdf.sap.corp/slvi/docker-k8s-training.git
 ```
 
 ## Cheat Sheets
-We have prepared a collection of basic commands which may be helpful during the training. Feel free to print the cheat-sheets for [docker](../docker/Docker%20Cheat%20Sheet.docx) and [Kubernetes](../kubernetes/cheat-sheet.md) and bring them along.
+We have prepared a collection of basic commands which may be helpful during the training. Feel free to print the cheat-sheets for [docker](docker/Docker%20Cheat%20Sheet.docx) and [Kubernetes](kubernetes/cheat-sheet.md) and bring them along.
 
 ## Prerequisite knowledge
 
