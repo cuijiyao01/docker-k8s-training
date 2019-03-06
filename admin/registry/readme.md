@@ -34,7 +34,7 @@ Additionally we strongly recommend to use certificates around the registry. With
       name: tiller
       namespace: kube-system
     ```
-  * download the helm client like in [exercise 09](../../kubernetes/exercise_10_helm_basics.md).
+  * download the helm client like in [exercise 10](../../kubernetes/exercise_10_helm_basics.md).
   * initialize helm: `helm init --tiller-namespace kube-system --service-account tiller`
   * run `helm list --tiller-namespace kube-system` to verify the setup. It should return an empty string.
 
