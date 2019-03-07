@@ -115,6 +115,7 @@ metadata:
 
 - Refer to the "headless" service, created earlier and make sure that only one DB pod gets created. 
 - Additional refer under `volumes` to the secret item with database initialization script and refer to the configmap and right secret item when setting up Postgres environment variables in the Docker container.
+- Also in the definition of the stateful set you need to give the names of the  **environment variables**. So the name for the location for the database files  is `PGDATA` and for the superuser password it is `POSTGRES_PASSWORD`.
 
 ```
 spec:
