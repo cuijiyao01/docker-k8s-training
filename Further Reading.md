@@ -99,3 +99,4 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - [kubernetes mailing list @sap](https://listserv.sap.corp/mailman/listinfo/kubernetes-users)
 - [Cloud Platform enabling Team offerings](https://github.wdf.sap.corp/pages/kubernetes/gardener/offering/)
+- [K8s Gardener Canary slack channel](https://sap-cp.slack.com/messages/CBV3JS9S4/)
