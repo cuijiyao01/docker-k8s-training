@@ -94,3 +94,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 - [katacoda learning platform](https://www.katacoda.com/learn) offers browser-based tutorials around docker & kubernetes  
 
 - [CTO Circle – Container Delivery Guidance](https://sap.sharepoint.com/sites/60001485/Shared%20Documents/01_Communication/CTO%20Circle%20%26%20Technology%20Board%20Meetings/CTO%20Circle/Container%20Delivery_RELEASED.pdf?csf=1&e=THkcxG)
+
+## Further contact informations:
+
+- [kubernetes mailing list @sap](https://listserv.sap.corp/mailman/listinfo/kubernetes-users)
+- [Cloud Platform enabling Team offerings](https://github.wdf.sap.corp/pages/kubernetes/gardener/offering/)
