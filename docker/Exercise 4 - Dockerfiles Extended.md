@@ -1,99 +1,69 @@
-# Optional Exercise 4 - Dockerfiles Extended: Building your own image from scratch
+# Optional Exercise 4 - Dockerfiles Extended: Multi-stage build
 
-In this exercise, you will create your very own _nginx_ image from scratch.
+In this exercise, you will create a Dockerfile consisting of two stages. Within a build stage you will compile a go-based web app. Next, copy the binary to run stage, which consists of a minimal set of libs only. (and yes, you could also link everything statically and have an image with the binary only). 
+
+The app is a simple web server providing view and edit functionality for "wiki pages" and is based on this [tutorial](https://golang.org/doc/articles/wiki/). It serves on port 8080, renders web pages based on templates parsed from files and can persist pages on the filesystem.
+
+The structure looks like this
+```
+/app
+├── wiki                --> executable
+├── tmpl                --> template for page rendering
+│   ├── edit.html
+│   └── view.html
+└── data                --> location to store pages as txt files
+│   ├── somepage.txt
+```
 
 ## Step 0: Setting up your build context
 
-Create an empty directory on your VM that will be your build context. Download the archive that contains the basic Debian root filesystem to it.
+Create an empty directory on your VM that will be your build context. Download the `wiki.go` file and create a folder called `tmpl` where you place the `edit.html` and `view.html` template files.
 
-```
-wget -O rootfs.tar.xz https://github.com/debuerreotype/docker-debian-artifacts/raw/b024a792c752a5c6ccc422152ab0fd7197ae8860/jessie/rootfs.tar.xz
-```
-
-We also want to use a custom nginx configuration inside our image so download it to your build context as well.
-
-```
-wget -O nginx.conf https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/nginx.conf
+```bash
+wget -O edit.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/edit.html
+wget -O view.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/view.html
+wget -O wiki.go https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/wiki.go
 ```
 
 ## Step 1: Creating the Dockerfile
 
-Create an new Dockerfile that starts `FROM scratch`. Since you want to get some credit for what you are doing, put a `LABEL maintainer="<your C/D/I-number>"` in there.
+Create an new Dockerfile that starts `FROM golang:1.12-alpine as builder`. Note, the `as builder` extensio - it allows you to reference files present at this stage and copy them over to another stage.
+To prepare for the build, change the `WORKDIR` to `/go/src/` and `COPY` the `wiki.go` file over.
 
-## Step 2: Adding the root filesystem
+## Step 2: Compile wiki.go
+The next step should be to compile the go binary. 
 
-Next, `ADD` the archive containing the root filesystem to the root `/` of your image.
+`RUN go build wiki.go`
 
-**Bonus question**: Could you use `COPY` instead of `ADD`?
+The result should be a binary called `wiki`.
 
-## Step 3: Install nginx
+## Step 3: Add another stage
+Multi-stage in the context of Docker means, you are allowed to have more than one line with a `FROM` keyword. Let's make use of this to create a new stage:
 
-Since we just added a Debian root filesystem to our image, we have the package manager ready. Use the `RUN` command to build the package cache first (`apt-get` will not run without this step).
+`FROM alpine:3.9`
 
-**Hint:** For those of you who are not familiar with Debian, here is the command:
+This will setup a completely new image which is initially independent of the previous. Since you want to get some credit for what you are doing, put a `LABEL maintainer="<your C/D/I-number>"` in there.
 
-```bash
-apt-get update
-```
+## Step 4: Prepare runtime
+Let's create an environment that reflects the file system structure mentioned in the beginning. Use the `RUN` directive to `mkdir` the directories. Also you don't want to run a simple app like the wiki with root permissions. Create a new `appuser` with this command:
 
-Use the `RUN` command to install nginx and wget. Make sure that apt-get runs does not ask questions interactively.
+`adduser -S -D -H -h /app appuser`
 
-**Hint:** For those of you who do not know Debian so well, here is the command:
+## Step 5: Get the executable 
+Data from earlier stages can be consumed with `COPY --from=<previous stage name>` commands. Move the `wiki` executable to the runtime stage and place it directly in the `/app/` directory.
 
-```bash
-apt-get -y install nginx wget
-```
+## Step 6: Adapt the environment
+So far all directories / files are owned by the `root` user. Time to change that and grant the `appuser` access to the required parts of the filesystem. Since everything relevent is stored within `/app` you can `RUN` this command to do the changes: `chown -R appuser /app`
 
-**Bonus question:** You just used how many layers for these commands? Can you reduce them by combining commands?
+Now you can user the `USER` directive to change to `appuser`. Also the wiki expects to find files relative to its location. So you have to set the `WORKDIR` accordingly.
 
-## Step 4: Download a custom website into the images
+What's still missing? Of course your image should `EXPOSE` a port and should have `CMD` that is invoked upon container start. 
+The wiki app is listening on port 8080.
 
-Use the `RUN` directive to call `wget` to download a picture and a custom HTML file into the image.
-
-```
-wget --no-check-certificate -O /usr/share/nginx/html/cheers.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/cheers.jpg
-wget --no-check-certificate -O /usr/share/nginx/html/index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/cheers.html
-```
-
-## Step 5: Copy a custom nginx configuration into the image
-
-In Step 0, you downloaded a custom nginx configuration file to your build context. Use the `COPY` directive to copy it to `/etc/nginx/nginx.conf` in your image.
-
-**Bonus question:** Could you use `ADD` instead of `COPY`?
-
-## Step 6: Make sure that Docker can collect nginx' logs
-
-The nginx program by default dumps its logs to `/var/log/nginx/access.log` for informative messages and to `/var/log/nginx/error.log` for error message.
-
-Use the `RUN` directive to create symlinks to `/dev/stdout` and `/dev/stderr` respectively so that Docker can collect and display the logs.
-
-**Hint:** This can be confusing as the source and the destination of the link might easily get mixed up. Here are the commands:
-```
-ln -sf /dev/stdout /var/log/nginx/access.log
-ln -sf /dev/stderr /var/log/nginx/error.log
-```
-
-## Step 7: Exposing the port
-
-Since nginx is a webserver, it needs to expose a port which in this case is port 80. Use the `EXPOSE` directive to expose port 80.
-
-## Step 8: Specify the command to run
-
-When a new container is created from your image, nginx must run as its main process.
-Use the `CMD` directive to start nginx.
-
-The options to the `CMD` directive are:
-
-```Dockerfile
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-## Step 9: Build the images
+## Step 7: Build the images
 
 Use the `docker build` command to build your image. Tag it along the way so you can find it easily.
 
-## Step 10: Run your image
+## Step 8: Run your image
 
-Run the image im detached mode, create a port forwarding from port 80 in the container to port 1081 on your host and connect with your webbrowser to it.
-
-If you managed to finish this exercise successfully, you will get some celebrity credit.
+Run the image im detached mode, create a port forwarding from port 8080 in the container to some port on your host and connect with your webbrowser to it.
