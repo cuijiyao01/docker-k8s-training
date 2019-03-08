@@ -36,7 +36,7 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.Name) }}
+  name: {{ template "db-name" . }}
 {{- include "labels.users.db" . }}
 spec:
   serviceName: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName) }}

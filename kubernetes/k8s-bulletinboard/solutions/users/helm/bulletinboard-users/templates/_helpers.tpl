@@ -61,11 +61,16 @@ template for initdb sql secret
 {{- tpl (.Files.Get "files/VCAP_SERVICES.string") . | b64enc }}
 {{- end -}}
 
+
+{{- define "db-name" -}}
+{{- include "add-release-name" (dict "dot" . "name" .Values.Db.Name) -}}
+{{- end -}}
+
 {{/*
 template for db connection
 */}}
 {{- define "db-connection" -}}
-{{- printf "%s-0.%s" (include "add-release-name" (dict "dot" . "name" .Values.Db.Name)) (include "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName)) -}}
+{{- printf "%s-0.%s" (include "db-name" .) (include "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName)) -}}
 {{- end -}}
 
 
