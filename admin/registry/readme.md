@@ -34,7 +34,7 @@ Additionally we strongly recommend to use certificates around the registry. With
       name: tiller
       namespace: kube-system
     ```
-  * download the helm client like in [exercise 09](../../kubernetes/exercise_10_helm_basics.md).
+  * download the helm client like in [exercise 10](../../kubernetes/exercise_10_helm_basics.md).
   * initialize helm: `helm init --tiller-namespace kube-system --service-account tiller`
   * run `helm list --tiller-namespace kube-system` to verify the setup. It should return an empty string.
 
@@ -51,4 +51,6 @@ The script will
   * create a secret `basic-auth` in the new namespace
   * deploy the chart `stable/docker-registry` into the new namespace
 
-Finally, test your registry by opening `[ingress.url]/v2/_catalog`. The connection should default to `https` and you should be asked to supply a username (`participant`) & password (`2r4!rX6u5-qH`).
+Finally, test your registry by opening `[ingress.url]/v2/_catalog` (e.g. `https://registry.ingress.cpwdfcw06.k8s-train.shoot.canary.k8s-hana.ondemand.com/v2/_catalog`).
+
+The connection should default to `https` and you should be asked to supply a username (`participant`) & password (`2r4!rX6u5-qH`).

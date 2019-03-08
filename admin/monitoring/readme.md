@@ -1,6 +1,6 @@
 # Setup a monitoring with promethes and grafana
 
-In this folder you find scripts & yaml files to deploy a **monitoring system** based on [**Prometheus**](https://prometheus.io/) & **visualization** based on [**Grafana**](https://grafana.com/). We use the `stable/prometheus` and `stable/grafana` helm charts and install them with custom values.
+In this folder you find scripts & yaml files to deploy a **monitoring system** based on [**Prometheus**](https://prometheus.io/) & **visualization** based on [**Grafana**](https://grafana.com/). We use the `stable/prometheus` ([details](https://github.com/helm/charts/tree/master/stable/prometheus)) and `stable/grafana` ([details](https://github.com/helm/charts/tree/master/stable/grafana)) helm charts and install them with custom values.
 
 **Prometheus** collects metrics from various endpoints such as the API server or kubelet. Data is stored as time series and can be queried via `prometheus-server`.
 
