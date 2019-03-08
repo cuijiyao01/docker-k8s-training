@@ -7,7 +7,7 @@ How to use:
 - Go to `.../solutions/ads/helm/`
 - Adjust value of `Ads.Ingress.Hostname` in `bulletinboard-ads/value.yaml` or set it to a custom value during install with `--set ...`
 - do `helm dependency update bulletinboard-ads`
-- do `helm install bulletinboard`.
+- do `helm install bulletinboard-ads --set ClusterName=<cluster name> --set App.Ingress.Hostname=bulletinboard--part-<id>`.
 
 One Issue:
 No TLS for Ingress in this Solution.
