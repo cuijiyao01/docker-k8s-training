@@ -1,7 +1,4 @@
-# - 2. PILOT in CW46 - !
-
 # Exercise: Setup Bulletinboard-Ads Microservice/ Application
-
 
 ## Scope
 
@@ -211,13 +208,13 @@ metadata:
     component: <name-of-component>
     module: <name-of-module>
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
   - host: bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.<your-project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths: 
-      - path: /ads
+      - path: /ads(.*)
         backend:
           serviceName: <name-of-ads-service>
           servicePort: <name-of-ads-port>

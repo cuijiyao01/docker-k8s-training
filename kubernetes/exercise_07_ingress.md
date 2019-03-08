@@ -1,19 +1,17 @@
 # Exercise 7 - Ingress
 
-__Please note this is an optional exercise. It has an increased level of difficulty.__
-
 Ingress resources allow us to expose services through a URL. In addition, it is possible to configure an Ingress so that traffic can be directed to different services, depending on the URL that is used for a request. In this exercise, you will set up a simple Ingress resource first and enhance it to eventually serve two different services.
 
 In addition to all that, you will use Init-Containers to initialize your nginx deployment and load the application's content.
 
 ## Step 0 - obtain necessary detail information
-Since the ingress controller is specific to the cluster, you need a few information to get started with this exercise.
+Since the ingress controller is specific to the cluster, you need a few information to construct a valid URL processible by the controller.
 
-Check with your trainers to get:
-- cluster name
-- Gardener project name
-
-You will need these info to construct a valid URL processible by the controller.
+Here is a command to find our your cluster and projectname:
+```bash
+echo "Clustername: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f2)"; echo "Projectname: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f3)"
+```
+If there are any issues, check with your trainer.
 
 ## Step 1 - init: prepare pods and services
 For this exercise you can either re-use already existing deployments, pods and services or create them from scratch. Please continue to use an nginx webserver as backend application. For sake of resource consumption, please use `replica: 1` for new resources.
@@ -38,7 +36,7 @@ For `<your-custom-endpoint>` it is recommended to use your generated participant
 
 Check the [help section](https://github.wdf.sap.corp/pages/kubernetes/gardener/doc/2017/01/16/howto-service-access.html) to get more information.
 
-Write the ingress yaml file and reference to your service. Check the [kubernetes API reference](https://kubernetes.io/docs/reference/) for details and further info. You can also look into the [demo example](./demo/09a_tls_ingress.yaml) (but don't include TLS for now) or the Gardener page linked above.
+Write the ingress yaml file and reference to your service. Check the [kubernetes API reference](https://kubernetes.io/docs/reference/) for details and further info. You can also look into the [demo example](./demo/09a_tls_ingress.yaml) (but don't include TLS for now) or the [Gardener page](https://github.wdf.sap.corp/pages/kubernetes/gardener/doc/2017/01/16/howto-service-access.html) also linked above.
 Finally, deploy your ingress and test the URL.
 
 ## Step 3 - annotate!
@@ -54,4 +52,4 @@ Now that you know how an annotation works and how it affects your ingress, lets 
 
 In a first step, you need to add `path: /my-app` to your backend configuration within the ingress. Take a look at the [fanout demo](./demo/09b_fanout_and_virtual_host_ingress.yaml), if you need inspiration. Once you applied your the change, go to your URL and test the different paths. But don't be surprised, if you don't see the expected pages.
 
-The ingress is forwarding traffic to `/my-app` also to `/my-app` at the backend. So unless you configured your nginx pods to serve at `/my-app` there is no valid endpoint available. You can solve the issue by rewriting the target to `/` of the backend pods. Check the `rewrite-target` [annotation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#rewrite) for details and apply it accordingly.
+The ingress is forwarding traffic to `/my-app` also to `/my-app` at the backend. So unless you configured your nginx pods to serve at `/my-app` there is no valid endpoint available. You can solve the issue by rewriting the target to `/` of the backend pods. Check the `rewrite-target` [annotation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#rewrite) for details and apply it accordingly. The documentation features an [example](https://kubernetes.github.io/ingress-nginx/examples/rewrite/) as well.

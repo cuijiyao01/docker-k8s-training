@@ -32,7 +32,8 @@ High level topics are:
 - configure applications with config maps and secrets ([slides](./kubernetes/07_configmap_secrets.pptx) & [exercise 6](./kubernetes/exercise_06_configmaps_secrets.md))
 - expose applications via ingress ([slides](./kubernetes/09_ingress.pptx) & [exercise 7](./kubernetes/exercise_07_ingress.md))
 - run stateful applications with stateful sets ([slides](./kubernetes/10_statefulset.pptx) & [exercise 8](./kubernetes/exercise_08_statefulset.md))
-- manage a cluster with namespaces, role based authorization and network policies ([slides](./kubernetes/11_administration.pptx) & [exercise 9](./kubernetes/exercise_09_network_policy.md))
+- introduction to jobs, scheduling, image pulling, kubernetes dashboard and Gardener ([slides](./kubernetes/11_1_administration.pptx))
+- security: RBAC, resource limits, security policies, network policies ([slides](./kubernetes/11_2_security.pptx) & [exercise 9](./kubernetes/exercise_09_network_policy.md)) and some attack scenarios
 - deploy packaged applications with helm ([slides](./kubernetes/12_helm.pptx) & [exercise 10](./kubernetes/exercise_10_helm_basics.md))
 - write a helm chart ([slides](./kubernetes/12_helm.pptx) & [exercise 11](./kubernetes/exercise_11_write_a_helm_chart.md))
 

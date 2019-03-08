@@ -111,17 +111,17 @@ kind: Ingress
 metadata:
   name: fanout-nginx
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
   - host: fanout-nginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
-      - path: /my
+      - path: /my(.*)
         backend:
           serviceName: mynginx-service
           servicePort: 80
-      - path: /your
+      - path: /your(.*)
         backend:
           serviceName: yournginx-service
           servicePort: 80
@@ -130,21 +130,19 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: vh-nginx
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: mynginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
-      - path: /*
+      - path: /
         backend:
           serviceName: mynginx-service
           servicePort: 80
   - host: yournginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
-      - path: /*
+      - path: /
         backend:
           serviceName: yournginx-service
           servicePort: 80

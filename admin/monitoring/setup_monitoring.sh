@@ -11,15 +11,24 @@ fi
 
 NAMESPACE="monitoring"
 
-# this is where we expect our helm values file
+# this is where we expect our helm values files
 MYHOME=$(dirname $0)
-CONFIG_FILE=$MYHOME/grafana-values.yaml
+GRAFANA_CONFIG_FILE=$MYHOME/grafana-values.yaml
 # read the configuration file
-if [ ! -r $CONFIG_FILE ]; then
-	echo "Cannot read the configuration file $CONFIG_FILE."
+if [ ! -r $GRAFANA_CONFIG_FILE ]; then
+	echo "Cannot read the configuration file $GRAFANA_CONFIG_FILE."
   echo "Please make sure, it's available."
 	exit 1
 fi
+
+PROMETHEUS_CONFIG_FILE=$MYHOME/prometheus-values.yaml
+# read the configuration file
+if [ ! -r $PROMETHEUS_CONFIG_FILE ]; then
+	echo "Cannot read the configuration file $PROMETHEUS_CONFIG_FILE."
+  echo "Please make sure, it's available."
+	exit 1
+fi
+
 
 # check if cfssl is available
 [ -z "$CFSSL" ] && CFSSL=$(which cfssl 2> /dev/null)
@@ -76,7 +85,7 @@ fi
 ${KUBECTL} create ns $NAMESPACE
 
 # install prometheus chart
-${HELM} install --namespace $NAMESPACE -n prometheus stable/prometheus --set networkPolicy.enabled=true --set nodeExporter.enabled=false
+${HELM} install --namespace $NAMESPACE -n prometheus stable/prometheus -f $PROMETHEUS_CONFIG_FILE
 
 ## prepare for grafana
 
@@ -125,7 +134,7 @@ ${KUBECTL} -n $NAMESPACE get csr training-monitoring.monitoring -o jsonpath='{.s
 ${KUBECTL} -n $NAMESPACE create secret tls grafana-tls --cert=./server.crt --key=./server-key.pem
 
 # set ingress url in values file
-sed -i.bck "s/INGRESS_HOSTNAME/${INGRESS_HOSTNAME}/g" $CONFIG_FILE
+sed -i.bck "s/INGRESS_HOSTNAME/${INGRESS_HOSTNAME}/g" $GRAFANA_CONFIG_FILE
 
 ## deploy grafana components
 
@@ -133,7 +142,7 @@ ${KUBECTL} -n $NAMESPACE create configmap monitoring-dashboards --from-file=./da
 ${KUBECTL} -n $NAMESPACE label configmap monitoring-dashboards grafana_dashboard=1
 
 # install grafana chart
-${HELM} install --namespace $NAMESPACE -n grafana stable/grafana -f $CONFIG_FILE
+${HELM} install --namespace $NAMESPACE -n grafana stable/grafana -f $GRAFANA_CONFIG_FILE
 
 # clean-up
 rm server.csr server.crt server-key.pem

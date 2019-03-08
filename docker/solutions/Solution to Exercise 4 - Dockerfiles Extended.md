@@ -1,51 +1,76 @@
-# Solution to optional Exercise 4 - Dockerfiles Extended: Building your own image from scratch
+# Solution to optional Exercise 4 - Dockerfiles Extended: Multi-stage build
 
-In this exercise, you will create your very own _nginx_ image from scratch.
+In this exercise, you will create a Dockerfile consisting of two stages. Within a build stage you will compile a go-based web app. Next, copy the binary to run stage, which consists of a minimal set of libs only. (and yes, you could also link everything statically and have an image with the binary only). 
 
-## Step 0: Set up your build context
+The app is a simple web server providing view and edit functionality for "wiki pages" and is based on this [tutorial](https://golang.org/doc/articles/wiki/). It serves on port 8080, renders web pages based on templates parsed from files and can persist pages on the filesystem.
 
-Create an empty directory on your VM that will be your build context. Download the archive that contains the basic Debian root filesystem and a custom NGINX configuration to it.
-
-```bash
-mkdir dbuild
-cd dbuild
-wget -O rootfs.tar.xz https://github.com/debuerreotype/docker-debian-artifacts/raw/b024a792c752a5c6ccc422152ab0fd7197ae8860/jessie/rootfs.tar.xz
-wget -O nginx.conf https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/nginx.conf
+The structure looks like this
+```
+/app
+├── wiki                --> executable
+├── tmpl                --> template for page rendering
+│   ├── edit.html
+│   └── view.html
+└── data                --> location to store pages as txt files
+│   ├── somepage.txt
 ```
 
-## Steps 1 to 8: Create the Dockerfile
+## Step 0: Setting up your build context
+
+Create an empty directory on your VM that will be your build context. Download the `wiki.go` file and create a folder called `tmpl` where you place the `edit.html` and `view.html` template files.
+
+```bash
+wget -O edit.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/edit.html
+wget -O view.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/view.html
+wget -O wiki.go https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/wiki.go
+```
+
+## Steps 1 to 6: Create the Dockerfile
 
 Create the following Dockerfile in your build context.
 
 ```Dockerfile
-FROM scratch
+# builder stage - based on golang image
+FROM golang:1.12-alpine as builder
 
-# give yourself some credit
-LABEL maintainer="<inser C/D/I-number here>"
+# change current directory to go source path
+WORKDIR /go/src
 
-# add and unpack an archive that contains a Debian root filesystem
-ADD rootfs.tar.xz /
+# copy the code into the image
+COPY wiki.go /go/src/wiki.go
 
-# use the apt-get package manager to install nginx and wget
-RUN apt-get update && \
-        apt-get -y install nginx wget
+# build the binary
+RUN go build wiki.go
 
-# use wget to download a custom website into the image
-RUN wget --no-check-certificate -O /usr/share/nginx/html/cheers.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/cheers.jpg && \
-        wget --no-check-certificate -O /usr/share/nginx/html/index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/cheers.html
+# app exec stage based on small alpine image
+####################################
+# separate & new image starts here!#
+####################################
+FROM alpine:3.9
 
-# copy the custom nginx configuration into the image
-COPY nginx.conf /etc/nginx/nginx.conf
+# prepare file system & create a new user
+RUN mkdir -p /app/data /app/tmpl && adduser -S -D -H -h /app appuser
 
-# link nginx log files to Docker log collection facility
-RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
-        ln -sf /dev/stderr /var/log/nginx/error.log
+# copy edit & view templates into image
+COPY tmpl/* /app/tmpl/
 
-# expose port 80 - the standard port for webservers
-EXPOSE 80
+# copy the compiled binary from the previous stage into current stage
+COPY --from=builder /go/src/wiki /app/wiki
 
-# and make sure that nginx runs when a container is created
-CMD ["nginx", "-g", "daemon off;"]
+# change ownership of everything in /app
+RUN chown -R appuser /app
+
+# change from root to appuser
+USER appuser
+
+# the app expects to find directories & files relative to the current directory
+WORKDIR /app
+
+# expose app port 
+EXPOSE 8080
+
+# set default command to launch the wiki application upon container start
+CMD ["/app/wiki"]
 ```
 
 ## Step 9: Build the images
@@ -53,7 +78,7 @@ CMD ["nginx", "-g", "daemon off;"]
 Build and tag the image. Again, use your participant-ID as release tag.
 
 ```bash
-docker build -t custom_nginx:part-0001 .
+docker build -t go-wiki:part-0001 .
 ```
 
 ## Step 10: Run your image
@@ -61,5 +86,5 @@ docker build -t custom_nginx:part-0001 .
 Run the image im detached mode, create a port forwarding from port 80 in the container to port 1081 on your host and connect with your webbrowser to it.
 
 ```bash
-docker run -d -p 1081:80 custom_nginx:part-0001
+docker run -d -p 8080:8080 go-wiki:part-0001
 ```

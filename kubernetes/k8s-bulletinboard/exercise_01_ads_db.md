@@ -1,7 +1,4 @@
-# - 2. PILOT in CW46 - !
-
 # Exercise: Setup Bulletinboard-Ads Database
-
 
 ## Scope
 

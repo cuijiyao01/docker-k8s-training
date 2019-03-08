@@ -1,4 +1,4 @@
-# Write your first helm chart
+# Exercise 11: Write your first helm chart
 In this exercise you will author a very basic helm chart consisting of a config map with stores information about your favorite food & drinks.
 
 ## Documentation
@@ -28,9 +28,8 @@ Go to the `templates` folder and create new file, which will contain the yaml & 
 
 ```
 data:
-    favorite:
-        drink: < your favorite drink >
-        food: < your favorite food >
+    drink: < your favorite drink >
+    food: < your favorite food >
 ```
 
 ### Adapt values.yaml

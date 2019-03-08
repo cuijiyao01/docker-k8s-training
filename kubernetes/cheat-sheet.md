@@ -36,4 +36,11 @@ Detailed information can be found [here](https://kubernetes.io/docs/user-guide/k
 kubectl wants you to reference resources by type. To do so, there are different formats available. Most common is the following `kubect <verb> <resource type> <name>` like `kubectl get deployment nginx`. However it is also possible to connect resource type and name like this `deployment/nginx`.
 
 For several of the resource types there are also shortend identifiers available. For example the type `service` can be referenced by `svc`. A full list is available [here](https://kubernetes.io/docs/user-guide/kubectl-overview/) in section "resource types".
+You can also run `kubectl api-resources` to get a list of all resources of this cluster including their shortnames.
+
 Furthermore it is possible to get all resources of different types belonging to a name or label: `kubectl get svc,pod,deploy -l name=nginx`.
+
+## other hints
+- `kubectl explain <resource>` will give you a description of the specified resource. To get more details append the field name to the resource like this: `kubectl explain pod.spec`
+- `--dry-run` can be added to a `kubectl` command to run in simulation mode.
+- `kubectl diff -f <file>` is useful to check & get the delta between a resource specified locally in a file and its currently deployed version in the cluster.  

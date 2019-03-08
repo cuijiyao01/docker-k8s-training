@@ -1,4 +1,4 @@
-# Happy Helming
+# Exercise 10: Happy Helming
 Helm is a tool to manage complex deployments of multiple components belonging to the same application stack. In this exercise, you will install the helm client locally and deploy its counterpart, the tiller server, to your own namespace. Once this is working you will deploy your first chart.
 For further information, visit the official docs pages (https://docs.helm.sh/)
 
@@ -17,9 +17,10 @@ Change the permissions of the binary accordingly that also the `vagrant` user ca
 `chmod +x /usr/local/bin/helm`
 
 ## Step 1: initialize helm
-The helm client uses the information stored in .kube/config to talk to the kubernetes cluster. But before you set up the tiller-server, you need to specify the namespace to be used. Otherwise, everyone will deploy their tiller-server into the kube-system namespace resulting in an overwrite of what was there before.
+The helm client uses the information stored in .kube/config to talk to the kubernetes cluster. But before you set up the tiller-server, you need to specify the namespace to be used. Otherwise, everyone will deploy their tiller-server into the kube-system namespace resulting in an overwrite of what was there before. 
+You also should use a dedicated service account for you helm installation. To make your life a little bit easier, a `tiller` service account with sufficient permissions was already created in your namespace.
 
-`helm init --tiller-namespace <your-namespace>  --service-account access`
+`helm init --tiller-namespace <your-namespace>  --service-account tiller`
 
 Verify your installation by running `helm version --tiller-connection-timeout=5 --tiller-namespace <your-namespace>`. The command should return a version for the client as well as the server. In case the server does not respond properly, you can check, if the `tiller`pod is already up and running.
 
@@ -45,9 +46,9 @@ In addition the helm organization recently created [Helm Hub](https://hub.helm.s
 
 ## Step 3: install a chart
 Run the following command to install the chaoskube chart:
-`helm install --name <any-name> stable/chaoskube --set namespaces=<your-namespace> --set rbac.serviceAccountName=access --tiller-namespace <your-namespace> --debug`
+`helm install --name <any-name> stable/chaoskube --set namespaces=<your-namespace> --set rbac.serviceAccountName=tiller --tiller-namespace <your-namespace> --debug`
 It installs eveything that is associated to the chart into your namespace. Note the `--set` flag, it specifies a parameter of chart.
-The parameter `namespaces` defines in which namespaces the choaskube will delete pods, `rbac.serviceAccountName` tells helm which serviceAccount chaoskube will get. Here we give it the access account because it has to be able to delete pods.  
+The parameter `namespaces` defines in which namespaces the choaskube will delete pods, `rbac.serviceAccountName` tells helm which serviceAccount chaoskube will get. Here we give it the tiller account because it has to be able to delete pods.  
 Check the github page mentioned above again, if you want to learn what it does and which other parameters are available.
 
 ## Step 4: inspect your chaoskube

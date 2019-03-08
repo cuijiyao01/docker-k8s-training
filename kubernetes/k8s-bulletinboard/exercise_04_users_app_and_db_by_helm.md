@@ -1,5 +1,3 @@
-# - 2. PILOT in CW46 - !
-
 # Exercise: Users Service with Helm
 
 ## Scope
@@ -14,7 +12,7 @@ Get experience with a bit more complex helm chart compared to the helm exercise.
 
 ## The helm chart
 
-We provide an almost complete helm chart for the User Service: [bulletinboard-users.tar.gz](bulletinboard-users.tar.gz)  
+We provide an almost complete helm chart for the User Service: **bulletinboard-users.tar.gz**.
 In it we make use of 2 images: First, like for ads, a postgres docker image to persist data. And second the user service image described in detail below.  
 The structure of the K8s entities in this chart is similar to the ones you created for ads. Just that all yaml for one module are put into a single template file. There is `templates/users-db.yaml` for the database and `templates/users-app.yaml` for the user service itself. Finally there is also a network policies template to control who can access what and a yaml for a post-install-job (more on this in step 2). 
 
@@ -32,7 +30,7 @@ The Tomcat itself runs on `port: 8080` and the user service is exposed under `/b
 We also use the cloud-foundary based way to pass to the user service the info about how to connect to the DB, namely we set an environment veriable `VCAP_SERVICES` with the right information. In ads we used an application.yml file to do this.
 
 ## Step 0: prerequisites
-If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace> --service-account access`. Also set an environmentVariable `TILLER_NAMESPACE` with the value of your namespace, or you have to add `--tiller-namespace <your-namespace>` to all helm commands below. 
+If you did not do the helm exercise, install the tiller service to enable helm in your namespace: `helm init --tiller-namespace <your-namespace> --service-account tiller`. Also set an environmentVariable `TILLER_NAMESPACE` with the value of your namespace, or you have to add `--tiller-namespace <your-namespace>` to all helm commands below. 
 Go to your project base folder `k8s-bulletinboard`, which you created at the beginning of exercise 1, and create a sub-folder `users`.
 Download the chart into that subfolder and extract it: 
 ```bash

@@ -1,0 +1,21 @@
+networkPolicy:
+  enabled: true 
+nodeExporter:
+  enabled: false
+extraScrapeConfigs: |
+  - job_name: 'node-exporter'
+    honor_labels: false
+    kubernetes_sd_configs:
+    - role: endpoints
+      namespaces:
+        names: [ kube-system ]
+    relabel_configs:
+    - source_labels:
+      - __meta_kubernetes_service_name
+      - __meta_kubernetes_endpoint_port_name
+      action: keep
+      regex: node-exporter;metrics
+    - action: labelmap
+      regex: __meta_kubernetes_service_label_(.+)
+    - source_labels: [ __meta_kubernetes_pod_name ]
+      target_label: pod

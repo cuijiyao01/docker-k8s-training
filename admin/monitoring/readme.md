@@ -1,6 +1,6 @@
 # Setup a monitoring with promethes and grafana
 
-In this folder you find scripts & yaml files to deploy a **monitoring system** based on [**Prometheus**](https://prometheus.io/) & **visualization** based on [**Grafana**](https://grafana.com/). We use the `stable/prometheus` and `stable/grafana` helm charts and install them with custom values.
+In this folder you find scripts & yaml files to deploy a **monitoring system** based on [**Prometheus**](https://prometheus.io/) & **visualization** based on [**Grafana**](https://grafana.com/). We use the `stable/prometheus` ([details](https://github.com/helm/charts/tree/master/stable/prometheus)) and `stable/grafana` ([details](https://github.com/helm/charts/tree/master/stable/grafana)) helm charts and install them with custom values.
 
 **Prometheus** collects metrics from various endpoints such as the API server or kubelet. Data is stored as time series and can be queried via `prometheus-server`.
 
@@ -33,7 +33,7 @@ Grafana is exposed via an `ingress` resource, so make sure your cluster has a ru
       name: tiller
       namespace: kube-system
     ```
-  * download the helm client like in [exercise 09](../../kubernetes/exercise_09_helm.md).
+  * download the helm client like in [exercise 10](../../kubernetes/exercise_10_helm_basics.md).
   * initialize helm: `helm init --tiller-namespace kube-system --service-account tiller`
   * run `helm list --tiller-namespace kube-system` to verify the setup. It should return an empty string.
 

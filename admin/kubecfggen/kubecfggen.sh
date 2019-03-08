@@ -11,6 +11,7 @@
 #
 # Written by:        Thomas Buchner (D044431) <thomas.buchner@sap.com>
 #                    Juergen Heymann (D021619) <juergen.heymann@sap.com>
+#                    Hendrik Kahl (D051945) <hendrik.kahl@sap.com>
 #
 # History:           0.1 - 22-Mar-2018 - Initial release
 #                    0.2 - 03-Apr-2018 - Fields CA_CERT and API_SERVER will be automatically retrieved from current kube context
@@ -19,10 +20,11 @@
 #                    0.5 - 18-Oct-2018 - Introducing the access service account which gets ClusterAdmin rights
 #                    0.6 - 31-Oct-2018 - Simply numbering the namespace IDs - K.I.S.S.
 #                    0.7 - 08-Nov-2018 - Added security by locking participants into their namespaces
+#                    0.8 - 30-Jan-2019 - Use client certificates instead of service account tokens 
 #
 
 # version tag
-_VERSION=0.7
+_VERSION=0.8
 
 # this is where we expect our configuration file
 CONFIG_FILE=`dirname $0`/kubecfggen.conf
@@ -92,7 +94,7 @@ fi
 YAML_FILE=$OUTPUT_DIR/cluster-resources.yaml
 
 # this is the unique name for the cluster role binding
-ROLEBINDING_NAME=training:access-is-clusteradmin
+ROLEBINDING_NAME=training:participant-is-clusteradmin
 ROLEBINDING_YAML=$OUTPUT_DIR/emergency_clusteradmin-rolebinding.yaml
 
 # we store the list of namespaces in this variable
@@ -123,7 +125,7 @@ echo -e "> Compiling $YAML_FILE...\n"
 # Do we have a namespace prefix? If not, we fall back to a default.
 [ -z "$NS_PREFIX" ] && NS_PREFIX="part"
 
-# create the namespace ojects for the YAML file along with the access service account
+# create the namespace ojects for the YAML file along with the tiller service account
 for i in $(seq $NS_START 1 $NS_END); do
 	NS_NUM=$(printf "%04d" $i)
 	NS_NAME=$NS_PREFIX-$NS_NUM
@@ -149,7 +151,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: access
+  name: tiller
   namespace: $NS_NAME
   labels:
     heritage: kubecfggen
@@ -158,7 +160,7 @@ done
 
 
 
-# create a rolebinding in each namespace to give the admin role to the access serviceaccount
+# create a rolebinding in each namespace to give appropriate permissions to participants
 # also add resource quotas and limits to each namespac
 # max 15 pods per namespace, by default container consume 0.2 cpu & 200 MiB memory
 for ns in $NAMESPACES; do
@@ -167,7 +169,7 @@ for ns in $NAMESPACES; do
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: training:access-is-admin
+  name: training:participant-is-admin
   namespace: $ns
   labels:
     heritage: kubecfggen
@@ -176,8 +178,11 @@ roleRef:
   kind: ClusterRole
   name: admin
 subjects:
+- kind: User
+  name: $ns
+  namespace: $ns
 - kind: ServiceAccount
-  name: access
+  name: tiller
   namespace: $ns
 ---
 apiVersion: v1
@@ -250,7 +255,7 @@ roleRef:
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
-  name: system:serviceaccounts
+  name: participants
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -288,8 +293,16 @@ roleRef:
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
-  name: system:serviceaccounts
+  name: participants
 __EOF
+
+for ns in $NAMESPACES; do
+        cat << __EOF >> $YAML_FILE
+- kind: ServiceAccount
+  name: tiller
+  namespace: $ns
+__EOF
+done
 
 # let's feed this YAML file to our cluster
 echo -e "> Sending $YAML_FILE to the cluster...\n"
@@ -301,8 +314,8 @@ if [ $RC -ne 0 ]; then
 	exit 11
 fi
 
-## just for emergency purposes: if the locking in of access service accounts does not work
-## we create a clusterrolebinding which grants cluster-admin to all access service accounts
+## just for emergency purposes: if the locking in of participants does not work
+## we create a clusterrolebinding which grants cluster-admin to all participants
 # first the header for the rolebindingobject
 cat << __EOF >> $ROLEBINDING_YAML
 ---
@@ -317,27 +330,42 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
+- kind: Group
+  name: participants
 __EOF
-
-# and then the rolebindings for the default service accounts for each namespace
-for ns in $NAMESPACES; do
-	cat << __EOF >> $ROLEBINDING_YAML
-- kind: ServiceAccount
-  name: access
-  namespace: $ns
-__EOF
-done
 ## end of emergency rolebindings
 
-# now we create the kube.config files
-echo -e "\n> Retrieving access tokens for the access service accounts and creating kube.config files."
+# now we create the client certificates & kube.config files
+echo -e "\n> Generating certificates for the participants and creating kube.config files."
 for ns in $NAMESPACES; do
 	NS_UID=${ns##*-}
 	KUBE_CONF_DIR="$OUTPUT_DIR/kube-configs/$NS_UID"
+  CLIENT_CERT_DIR="$OUTPUT_DIR/certs/$NS_UID"
 	mkdir -p $KUBE_CONF_DIR
+  mkdir -p $CLIENT_CERT_DIR
 	echo "  - processing namespace $ns"
-	SA_SECRET=$(${KUBECTL} get serviceaccount access -n $ns -o json | jq '.secrets[0].name' | sed 's/"//g')
-	TOKEN=$(${KUBECTL} get secret ${SA_SECRET} -n $ns -o json | jq '.data.token' | sed 's/"//g' | base64 --decode)
+
+  # create key & csr files
+  openssl genrsa -out $CLIENT_CERT_DIR/client.key 4096
+  openssl req -new -key $CLIENT_CERT_DIR/client.key -out $CLIENT_CERT_DIR/client.csr -subj "/O=participants/CN=$ns"
+
+  # send csr to cluster
+  cat <<__EOF | $KUBECTL create -f -
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: $ns.client-auth.training
+spec:
+  groups:
+  - system:authenticated
+  request: $(cat $CLIENT_CERT_DIR/client.csr | base64 | tr -d '\n')
+  usages:
+  - client auth
+__EOF
+
+ # approve csr & download signed crt 
+${KUBECTL} certificate approve ${ns}.client-auth.training
+${KUBECTL} get csr ${ns}.client-auth.training -o jsonpath='{.status.certificate}' > $CLIENT_CERT_DIR/client.crt
 
 	# create kubeconfig
 	cat << __EOF > $KUBE_CONF_DIR/kube.config
@@ -350,18 +378,22 @@ clusters:
     server: $API_SERVER
   name: k8s_training_cluster
 users:
-- name: default
+- name: participant
   user:
-    token: $TOKEN
+    client-certificate-data: $(cat  $CLIENT_CERT_DIR/client.crt)
+    client-key-data: $(cat  $CLIENT_CERT_DIR/client.key | base64 --wrap=0)
 contexts:
 - context:
     cluster: k8s_training_cluster
-    user: default
+    user: participant
     namespace: $ns
   name: k8s-training-$ns
 current-context: k8s-training-$ns
 __EOF
 done
+
+# remove certificates from file system
+rm -rf ${OUTPUT_DIR}/certs
 
 # create a printable sheet with participant information
 PARTICIPANT_SHEET=$OUTPUT_DIR/participant-sheet.txt
