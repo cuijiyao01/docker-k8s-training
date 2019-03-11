@@ -7,7 +7,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
 	"regexp"
+	"syscall"
 )
 
 type Page struct {
@@ -82,6 +85,14 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 
 func main() {
 	log.Println("Initializing handler functions...")
+
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGHUP)
+
+	go func() {
+		<-sig
+		templates = template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/view.html"))
+	}()
 
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
