@@ -44,7 +44,7 @@ template for applications-k8s secret
 {{/*
 template for db connection
 */}}
-{{- define "db-connection" -}}
+{{- define "ads-db-connection" -}}
 {{- printf "%s-0.%s" (include "add-release-name" (dict "dot" . "name" .Values.Db.StatefulsetName)) (include "add-release-name" (dict "dot" . "name" .Values.Db.ServiceName)) -}}
 {{- end -}}
 

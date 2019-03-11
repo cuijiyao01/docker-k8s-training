@@ -25,7 +25,7 @@ spec:
       initContainers:
       - name: check-db-ready
         image: postgres:9.6
-        command: ['sh', '-c', 'until pg_isready -h {{ template "db-connection" . }} -p 5432; do echo waiting for database; sleep 2; done;']
+        command: ['sh', '-c', 'until pg_isready -h {{ template "ads-db-connection" . }} -p 5432; do echo waiting for database; sleep 2; done;']
       containers:
       - name: ads
         image: {{ .Values.App.Image -}} : {{- .Values.App.ImageTag }}
