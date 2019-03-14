@@ -2,6 +2,8 @@
 
 The Solution of the Ads helmchart is written as a solution after Exercise 5.3 with the connection to the users-chart. The Reference to the users-chart relative to this chart as it is in the solutions. Depending on your situation you may need to adjust some things.
 
+Requirements: docker registry secret exists to pull the images.
+
 How to use:
 
 - Go to `.../solutions/ads/helm/`
