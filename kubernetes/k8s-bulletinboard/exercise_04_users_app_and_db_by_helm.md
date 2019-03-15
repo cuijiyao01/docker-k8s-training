@@ -70,15 +70,19 @@ In step 1 you added a premiumUser to the DB by hand, which we'll automate in thi
 
 __Purpose: Learn how to use a *job* and a bit more about *strings* in yamls__
 
-In the bulletinboard-users/templates subfolder there is a `post-install-job.yaml`, this is almost complete, only the command to fill the DB is missing. Currently there is an `echo "hello k8s trainee"` executed where we want the command to put a user in the DB. Change this echo to the __"POST" curl__ you did by hand in step 1.  
-Of course the address of the curl for this job is **not** `localhost:8081`. The pod in the job should send the request to the service pointing to the users app. 
+In the subfolder `bulletinboard-users/templates` there is a `post-install-job.yaml`, which is almost complete, only the command to fill the DB is missing. Currently there is a command `echo "hello k8s trainee"` executed where we want the command to put a user in the DB. Change this 'echo' command to the __"POST" curl__ you did by hand in step 1.  
+Of course the address of the curl for this job is **not** `localhost:8081`. The pod in the job should send the request to the service pointing to the users app.
+
+
 Also think about how to handle the single and double quotes in the data part of the curl. You can read about [strings in yaml](http://blogs.perl.org/users/tinita/2018/03/strings-in-yaml---to-quote-or-not-to-quote.html) here. (Tip: In a yaml, if you want to use a ' in a single quoted string use ''.)  
 After you adapted the file you can activated the job in the chart by setting the value `InitPostJobEnabled: true` (in `values.yaml`).  
+
 Now delete the old helm chart. Use `helm list` to get the name of the installed chart and then do `helm delete <name of installed bulletinboard>`. Be aware that the persisted volume claim created during install does not get deleted by this. You can removed it yourself. 
 
 After it is gone you can execute again `helm install bulletinboard-users`. 
 Now there should also be a job with a corresponding pod, which runs once and stops after it is done. 
 You can check this with `kubectl get jobs` and `kubectl logs <name of job pod>` to see what the job did.
+
 Again you can check the user service with:
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`, now you should get the user which our job put in. 
@@ -92,10 +96,14 @@ __Purpose: show communication between apps through a service; finsish bulletinbo
 Up till now your Ads was not asking a User Service for information on a certain user. The ads app we use has a flag with which we can turn this on. To work the app needs 2 more environment variables: 
 - `POST_USER_CHECK = true`: turns the checking of users on.
 - `USER_ROUTE = <route to users>`: contains the route to the user service app, without the api/v1.0/users ending. It starts with `http://`.  
-  Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started.
-- Also adjust your network policy for __ads:app__ to allow traffic to (egress) __users:app__. 
 
-After this, please test that you now need a header `User-Id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement, e.g. via postman or via `curl -k -X POST ...` . Also since we activated TLS in Exercise 3 , remember to send the requests to `https://` now. The UI itself already has this field in its requests to the ads-service therefore using it does not test this. 
+  Adapt your configmap for the environment variables to also contain these values and also add them to the deployment with the right names. After `kubectl apply -f ads-app.yaml` to update the deployment on the cluster itself, the old pod should stop and a new one started.
+
+Also adjust your network policy for __ads:app__ to allow traffic to (egress) __users:app__. 
+
+After this, please test that you now need a header `User-Id : 42` in your POSTS to `api/v1/ads` to be able to create a new advertisement, e.g. via postman or via `curl -k -X POST ...` . 
+
+Also since we activated TLS in Exercise 3 , remember to send the requests to `https://` now. The UI itself already has this field in its requests to the ads-service therefore using it does not test this. 
 
 ## Troubleshooting tips
 
