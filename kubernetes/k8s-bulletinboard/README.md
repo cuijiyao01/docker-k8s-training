@@ -40,4 +40,12 @@ The choosen structure for **Labels** (and with this for **Selectors**) has 2 lev
 For name of files and of the entities itself we choose the schema: `<component>-<module>-<entity>.yaml` so e.g the yaml for the service for Bulletinboard-ads application would be named `ads-app-service.yaml`.  
 To shorten names in the exercise descriptions, entities will be referenced by their component & module values, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
 
+## Links to the resources/repos used
+
+- [Bulletinboard Ads source with Jenkinsfile and Dockerfile](https://github.wdf.sap.corp/cc-refapp/cc-bulletinboard-ads-spring-boot/tree/migratedToK8s)
+- [Bulletinboard Users source with Jenkinsfile and Dockerfile](https://github.wdf.sap.corp/cloud-native-dev/bulletinboard-users-bootwar)
+- [Bulletinboard JSL library used in the Jenkinsfiles](https://github.wdf.sap.corp/cc-refapp/bulletinboard-JSL)
+- [Piper also used in the Jenkinsfile](https://github.wdf.sap.corp/pages/ContinuousDelivery/piper-doc/)
+- [Postgres docker images](https://hub.docker.com/_/postgres)
+
 

@@ -94,3 +94,11 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 - [katacoda learning platform](https://www.katacoda.com/learn) offers browser-based tutorials around docker & kubernetes  
 
 - [CTO Circle – Container Delivery Guidance](https://sap.sharepoint.com/sites/60001485/Shared%20Documents/01_Communication/CTO%20Circle%20%26%20Technology%20Board%20Meetings/CTO%20Circle/Container%20Delivery_RELEASED.pdf?csf=1&e=THkcxG)
+
+## Further contact informations:
+
+- [kubernetes mailing list @sap](https://listserv.sap.corp/mailman/listinfo/kubernetes-users)
+- [Cloud Platform enabling Team JAM Contact Page](https://go.sap.corp/cpet)
+- [Cloud Platform enabling Team offerings](https://github.wdf.sap.corp/pages/kubernetes/gardener/offering/)
+- [K8s Gardener Canary slack channel](https://sap-cp.slack.com/messages/CBV3JS9S4/)
+- [Gardener Jam Page](https://jam4.sapjam.com/groups/Niq7TSBxLlzgb3nroBZJVx/overview_page/e9uqTDxXBRFbk7FJXEA4Cd)
