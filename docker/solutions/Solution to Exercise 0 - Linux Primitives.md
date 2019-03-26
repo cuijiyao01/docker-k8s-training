@@ -109,3 +109,5 @@ unshare --pid --mount-proc --fork chroot $HOME/container /bin/bash
 ```
 
 Since we did not populate our container directory with the files required to run the `ps` command, you just have to believe that the process isolation still works.
+
+**Bonus:** If you want to use `ps` to look at the processes in this mini-container, you will need to copy the `mount` command along with all of its libraries into it as well. Use it then to mount the `/proc` filesystem *inside* the container - if you mounted it outside of the container, you would be able to still see the whole system.
