@@ -75,6 +75,8 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - [root container](https://www.youtube.com/watch?v=ltrV-Qmh3oY&feature=youtu.be) @KubeCon by Liz Rice
 
+- secret management with [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets) or [vault](https://www.vaultproject.io/docs/what-is-vault/index.html). 
+
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
 - offical documentatio: https://docs.helm.sh/
