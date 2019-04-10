@@ -4,6 +4,8 @@ In this exercise, you will build an image with a Dockerfile, tag it and upload i
 
 ## Step 0: Prepare the environment
 
+Due to a bug in the newest VM image, please execute the following command in advance `chmod 755 ~/setup/get_kube_config.sh`.
+
 Run the following commands, to prepare your local environment inside the VM. Replace _<training_id>_ and _<your_namespace_id>_ with the values that have been given to you by your trainer.
 
 ```
