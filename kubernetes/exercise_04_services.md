@@ -29,3 +29,21 @@ You will probably get an error message concerning missing labels. Solve this by 
 Once you are able to access the nginx via the `NodePort`, take a look at the pod and the service. Determine the label as well as the corresponding selectors. Now remove the label from the pod: `kubectl label pod <your-pod> --overwrite <your-label-key>-` and try again to access the nginx via the `NodePort`. Most likely this won't work anymore.
 
 Finally, clean-up and remove the pod as well as the service you created in step 4.
+
+## Troubleshooting
+In case your service is not routing traffic properly, run `kubectl describe service <service-name>` and check, if the list of `Endpoints` contains at least 1 IP address. The number of addresses should match the replica count of the deployment it is supposed to route traffic to. 
+
+Check the correctness of the label - selector combination by running the query manually. Firstly, get the selector from the service by running `kubectl get service <service-name> -o yaml`. Use the `<key>: <value>` pairs stored in `service.spec.selector` to get all pods with the corresponding label set: `kubectl get pods -l <key>=<value>`. These pods are what the service is selecting / looking for. Quite often the selector used within service matches the selector specified within the deployment.
+
+Finally, there might be some caching on various levels of the used infrastructure. To break caching on corporate proxy level, request a dedicated resource like the index page: `http:<LoadBalancer IP>/index.html`.
+
+The structure of a deplyoment can be found in the API documentation. Go to [API reference](https://kubernetes.io/docs/reference/) and choose the corresponding version (usually the training features a cluster with the latest or 2nd latest version). Within the API docs select the "Deployment".
+
+Alternatively use `kubectl explain service`. To get detailed information about a field within the pod use its "path" like this: `kubectl explain deployment.spec.ports`.
+
+To create a new file with a skeleton of a deployment, right-click the Desktop within the training VM, select the context menu "new document" and choose "service". Additionally the solution to this exercise contains further explanatory comments.
+
+## Further information & references
+- [services in K8s](https://kubernetes.io/docs/concepts/services-networking/service/)
+- [connecting a front end to a backend](https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/)
+- [cluster internal DNS](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
