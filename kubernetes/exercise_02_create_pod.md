@@ -31,9 +31,9 @@ spec:
 ## Step 1: create the pod
 Now tell the cluster that you would like it to schedule the pod for you. Send the file "pod.yaml" to the API server for further processing. You can try this directly or use the `--dry-run` flag, if you are not sure yet:
 
-`kubectl create -f pod.yaml --dry-run`
+`kubectl apply -f pod.yaml --dry-run`
 
-`kubectl create -f pod.yaml`
+`kubectl apply -f pod.yaml`
 
 If it does not work as expected, check the indentation and consult the API reference linked above. You can also use `kubectl explain pod` instead. To get more details about fields like `spec` simply append the field name with a "." like this: `kubectl explain pod.spec`
 
@@ -55,3 +55,14 @@ The `exec` command helps you in this situation. Adapt and run the following comm
 It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`.
 Now you can remove the pod from the cluster by running a `delete` command. Check the [cheat-sheet](./cheat-sheet.md) for help.
 Which phases of the pod do you observe in your second shell?
+
+## Troubleshooting
+The structure of a pod can be found in the API documentation. Go to [API reference](https://kubernetes.io/docs/reference/) and choose the corresponding version (usually the training features a cluster with the latest or 2nd latest version). Within the API docs select the "Pod".
+
+Alternatively use `kubectl explain pod`. To get detailed information about a field within the pod use its "path" like this: `kubectl explain pod.spec.containers`.
+
+To create a new file with a skeleton of a pod, right-click the Desktop within the training VM, select the context menu "new document" and choose "pod".
+
+## Further information & references
+- [Pod basics](https://kubernetes.io/docs/concepts/workloads/pods/pod/)
+- [Lifecycle & phases](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)
