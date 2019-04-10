@@ -5,7 +5,7 @@ This page describes the necessary **preparation steps** before the course and as
 ## Environment setup
 
 In the course you will use a Linux VM (Ubuntu based) that contains all the needed tools so that we lose no time for environment setup.
-Follow the instructions on the [Getting Started with the k8s training VM Image](https://github.wdf.sap.corp/cloud-native-dev/k8s-training-vm/blob/master/VMImage_GettingStarted.md) page to install VMWare (VirtualBox= Blacklisted !) and download and configure the VM image.
+Follow the instructions on the [Getting Started with the k8s training VM Image](https://github.wdf.sap.corp/cloud-native-dev/Cloud-Curriculum-VM/blob/master/Getting_Started_Running_KubernetesVM.md) page to install VMWare (VirtualBox= Blacklisted !) and download and configure the VM image.
 
 Once you have your VM up and running, clone this repository to the VM:
 
