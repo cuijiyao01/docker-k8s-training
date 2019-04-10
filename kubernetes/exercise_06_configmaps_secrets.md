@@ -13,7 +13,7 @@ Start by creating a new certificate:
 `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/nginx.key -out /tmp/nginx.crt -subj "/CN=nginxsvc/O=nginxsvc"`
 
 ## Step 2: Store the certificate in Kubernetes
-In order to use the certificate with our nginx, you need to add it to kubernetes and store it in a `secret` resource of type `tls` in your namespace.
+In order to use the certificate with our nginx, you need to add it to kubernetes and store it in a `secret` resource of type `tls` in your namespace. Note that Kubernetes changes the names of the files to a standardized string. For example, `nginx.crt` should become `tls.crt`.
 
 `kubectl  create secret tls nginx-sec --cert=/tmp/nginx.crt --key=/tmp/nginx.key`
 
@@ -36,7 +36,7 @@ tls.key:  1708 bytes
 **Important: remember the file names in the data section of the output. They are relevant for the next step.**
 
 ## Step 3: Create a ngnix configuration
-Once the certificate secret is prepared, create a configuration and store it to kubernetes as well.
+Once the certificate secret is prepared, create a configuration and store it to kubernetes as well. It will enable nginx to serve https traffic on port 443 using a certificate located at `/etc/nginx/ssl/`.
 
 Download from [gitHub](./solutions/06_default.conf) or create a file `default.conf` with the following content. In any case, ensure the file's name is `default.conf`.
 
@@ -77,10 +77,10 @@ Also note, that there is a location explicitly defined for a healthcheck. If cal
 ## Step 4: Upload the configuration to kubernetes
 Run `kubectl create configmap nginxconf --from-file=<path/to/your/>default.conf` to create a configMap resource with the corresponding content from default.conf.
 
-Verify the configmap exists with `kubectl get configmap`
+Verify the configmap exists with `kubectl get configmap`.
 
 ## Step 5: Combine everything into a deployment
-Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
+Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. As a result nignx should display the custom index.html page, serve http traffic on port 80 and https on port 443. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
 
 Complete the snippet below by inserting the missing parts (look for `???` blocks):
 
@@ -142,8 +142,22 @@ Verify that the newly created pods use the pvc, configMap and secret by running 
 ## Step 6: create a service
 Finally, you have to create a new service to expose your https-deployment.
 
-Derive the ports you have to expose and extend the service.yaml from the previous exercise.
+Derive the ports you have to expose and extend the service.yaml from the previous exercise. Make sure, that the labels used in the deployment and the selector specified by the service match.
 
 Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject and organization specified in step 1. Since we signed the certificate ourself, your Browser will complain about the certificate (depending on your browser) and you have to accept the risk browsing the url. 
 
 **Important: do not delete this setup with deployment, PVC, configMap, secret and service.**
+
+
+## Troubleshooting
+The deployment has grown throughout this exercise. There should be 3 volumes specified as part of `deployment.spec.template.spec.volumes` (a pvc, configMap & secret). Each item of the volumes list defines a (local/pod-internal) name and references the actual K8s object. Also these 3 volumes should be used and mounted to a specific location within the container (defined in `deployment.spec.template.spec.containers.volumeMount`). The local/pod-internal name is used for the `name` field.
+
+When creating the servie double check the used selector. It should match the labels given to any pod created by the new deployment. The value can be found at `deployment.spec.template.metadata.labels`. In case your service is not routing traffic properly, run `kubectl describe service <service-name>` and check, if the list of `Endpoints` contains at least 1 IP address. The number of addresses should match the replica count of the deployment it is supposed to route traffic to. 
+
+Also check, if the IP addresses point to the pods created during this exercise. In case of doubt check the correctness of the label - selector combination by running the query manually. Firstly, get the selector from the service by running `kubectl get service <service-name> -o yaml`. Use the `<key>: <value>` pairs stored in `service.spec.selector` to get all pods with the corresponding label set: `kubectl get pods -l <key>=<value>`. These pods are what the service is selecting / looking for. Quite often the selector used within service matches the selector specified within the deployment.
+
+Finally, there might be some caching on various levels of the used infrastructure. To break caching on corporate proxy level and display the custom page, request index.html directly: `http:<LoadBalancer IP>/index.html`.
+
+## Further information & references
+- [secrets in k8s](https://kubernetes.io/docs/concepts/configuration/secret/)
+- [options to use a configMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
