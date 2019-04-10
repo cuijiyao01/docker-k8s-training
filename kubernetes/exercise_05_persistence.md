@@ -17,7 +17,7 @@ The concept of the storage classes overcomes this problem. The tooling masked by
 
 Download the resource from [gitHub](./solutions/05_pvc.yaml) or copy the snippet from below to your VM:
 
-```
+```yaml
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -36,7 +36,7 @@ Create the resource: `kubectl create -f pvc.yaml`. Verify that your respective c
 ## Step 2: Attach the PVC to a pod
 Create a helper pod with a volume and mount section to get access to your PVC. The snippet below is not complete, so fill in the `???` with the corresponding values.
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -74,3 +74,19 @@ Once you successfully created the deployment, check that all replicas are up and
 Remember the service from the previous exercise? Since the labels where not changed, the service will route incoming traffic to the new pods with the attached storage volume. Open a web browser and verfiy that your custom index.html page is displayed properly.
 
 **Important: do not delete the deployment,service or PVC**
+
+
+## Troubleshooting
+In case the pods of the deplyoment stay in status `Pending` for quite some time, make sure the pod `nginx-storage-pod` got deleted. Also check the events of one of the pods by running `kubectl describe pod <pod-name>`. 
+
+If one of the events is a warning that contains something like "resource already in use", delete the deployment as well as the pod `nginx-storage-pod` (if not already done) but do NOT delete the PVC. Next, wait around 1-2min, to ensure  that the referenced storage device is unmounted from the node, where it was used before. Then re-create the deployment.  
+
+In case your service is not routing traffic properly, run `kubectl describe service <service-name>` and check, if the list of `Endpoints` contains at least 1 IP address. The number of addresses should match the replica count of the deployment it is supposed to route traffic to. 
+
+Finally, there might be some caching on various levels of the used infrastructure. To break caching on corporate proxy level and display the custom page, request index.html directly: `http:<LoadBalancer IP>/index.html`.
+
+## Further information & references
+- descripton of the [volumes API](https://kubernetes.io/docs/concepts/storage/volumes/)
+- how to use [PV & PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+- [storage classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+- [volume snapshots](https://kubernetes.io/docs/concepts/storage/volume-snapshots/)
