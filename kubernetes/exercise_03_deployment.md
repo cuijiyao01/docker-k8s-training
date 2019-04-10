@@ -67,7 +67,7 @@ Below is a skeleton of a deployment, however it is still missing some essential 
 * `containers` (check the pod spec from exercise 2 or the deployment created with run)
 * values for `matchLabels`
 
-```
+```yaml
 apiVersion: apps/v1
 metadata:
   name: nginx-deployment
@@ -87,7 +87,20 @@ spec:
 ## Step 6: deploy(ment)!
 Now create the deployment again. Remember that you can always use the `--dry-run` flag to test. Use the yaml file you just wrote instead of the `run` generator.
 
-`kubectl create -f <your-file>.yaml`
-
+`kubectl apply -f <your-file>.yaml`
 
 ## Finally, do not delete the latest version of your deployment. It will be used throughout the following exercises.
+
+## Troubleshooting
+In case of issues with the labels, make sure that the `deplyoment.spec.selector.matchLabels` query matches the labels specified within the `deployment.spec.template.metadata.labels`.
+
+The structure of a deplyoment can be found in the API documentation. Go to [API reference](https://kubernetes.io/docs/reference/) and choose the corresponding version (usually the training features a cluster with the latest or 2nd latest version). Within the API docs select the "Deployment".
+
+Alternatively use `kubectl explain deployment`. To get detailed information about a field within the pod use its "path" like this: `kubectl explain deployment.spec.replicas`.
+
+To create a new file with a skeleton of a deployment, right-click the Desktop within the training VM, select the context menu "new document" and choose "deplyoment". Additionally the solution to this exercise contains further explanatory comments.
+
+## Further information & references
+- [Deployments in K8s concepts documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+- [doing it the old way - replication controller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/)
+- [labels in K8s](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/)
