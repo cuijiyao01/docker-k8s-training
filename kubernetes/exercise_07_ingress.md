@@ -4,6 +4,8 @@ Ingress resources allow us to expose services through a URL. In addition, it is 
 
 In addition to all that, you will use Init-Containers to initialize your nginx deployment and load the application's content.
 
+**Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the script [prereq-exercise-07.sh](solutions/prereq-exercise-07.sh) in the *solutions* folder to create the prerequites. Please use this script only if you did not manage to complete the previous exercises.
+
 ## Step 0 - obtain necessary detail information
 Since the ingress controller is specific to the cluster, you need a few information to construct a valid URL processible by the controller.
 

@@ -1,6 +1,8 @@
 # Exercise - Network Policy
 In this exercise you create a network policy for your namespace to restrict access to your nginx deployment. From within any pod that is not labeled correctly you will not be able to access your nginx instances.
 
+**Note:** This exercise loosely builds on the previous exercises as you will need a deployment and a service. In case you do not have a deployment with a service ready because you did not manage to finish [exercise 5](exercise_05_persistence.md), use the script  [prereq-exercise-06.sh](solutions/prereq-exercise-06.sh) in the *solutions* folder. Please use this script only if you do not have a working deployment that has been exposed through a service.
+
 ## Step 0: verify the setup
 Before you deploy a network policy, check the connection from a random pod to the nginx pods via the service.
 

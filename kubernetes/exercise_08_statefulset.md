@@ -1,6 +1,8 @@
 # Exercise 8: StatefulSet
 In this exercise you will deploy a ngnix webserver as a StatefulSet and scale it.
 
+**Note:** This exercise does not build on any of the previous exercises.
+
 ## Step 0: Create a headless service
 Firstly, you need to create a so called "headless" service. These services are of `type: ClusterIP` and explicitly specify their `clusterIP` with `None`. Try to create such a service and think of a suitable name as well as selector for labels. Either re-use an existing service yaml file or start a new one from scratch. Make sure, you refer to a [named port](https://stackoverflow.com/questions/48886837/how-to-make-use-of-kubernetes-port-names).
 

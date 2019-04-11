@@ -2,6 +2,8 @@
 ConfigMaps and secrets bridge the gap between the requirements to build generic images but run them with a specific configuration in an secured environment.
 In this exercise you will move credentials and configuration into the Kubernetes cluster and make them available to your pods.
 
+**Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the script [prereq-exercise-06.sh](solutions/prereq-exercise-06.sh) in the *solutions* folder to create the prerequites. Please use this script only if you did not manage to complete the previous exercises.
+
 ## Step 0: clean-up
 Before you start with this exercise, remove the deployment(s) and service(s) from the previous excercises. **However do NOT delete the persistentVolumeClaim!** We will use it in this excercise as well. Check the cheat sheet for respective delete commands.
 
