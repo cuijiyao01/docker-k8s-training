@@ -1,8 +1,10 @@
 # Exercise 8: StatefulSet
 In this exercise you will deploy a ngnix webserver as a StatefulSet and scale it.
 
+**Note:** This exercise does not build on any of the previous exercises.
+
 ## Step 0: Create a headless service
-Firstly, you need to create a so called "headless" service. Services of this type explicitly specify their `clusterIP` with `None`. Try to create such a service and think of a suitable name as well as selector for labels. Either re-use an existing service yaml file or start a new one from scratch. Make sure, you refer to a [named port](https://stackoverflow.com/questions/48886837/how-to-make-use-of-kubernetes-port-names).
+Firstly, you need to create a so called "headless" service. These services are of `type: ClusterIP` and explicitly specify their `clusterIP` with `None`. Try to create such a service and think of a suitable name as well as selector for labels. Either re-use an existing service yaml file or start a new one from scratch. Make sure, you refer to a [named port](https://stackoverflow.com/questions/48886837/how-to-make-use-of-kubernetes-port-names).
 
 And don't forget to deploy the service to the cluster ;)
 
@@ -13,14 +15,14 @@ Next, describe your desired state in a yaml file. Use the snippets below to crea
 
 If you are looking for more info, check the official [api reference](https://kubernetes.io/docs/reference/) for StatefulSets.
 
-```
+```yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: web
 ```
 
-```
+```yaml
 volumeClaimTemplates:
 - metadata:
     name: ???
@@ -31,12 +33,12 @@ volumeClaimTemplates:
         storage: 1Gi
 ```
 
-```
+```yaml
 spec:
   replicas: 2
 ```
 
-```
+```yaml
 spec:
   initContainers:
   - name: setup
@@ -44,7 +46,7 @@ spec:
     command:
     - /bin/sh
     - -c
-    - echo $(hostname) > /work-dir/index.html
+    - echo $(hostname) >> /work-dir/index.html
     volumeMounts:
     - name: ???
       mountPath: /work-dir      
@@ -59,14 +61,14 @@ spec:
       mountPath: /usr/share/nginx/html
 ```
 
-```
+```yaml
 serviceName: "???"
 selector:
   matchLabels:
     ???: ???
 ```
 
-```
+```yaml
 template:
   metadata:
     labels:
@@ -80,8 +82,8 @@ Now post your yaml file to the API server and monitor the upcoming new pods. You
 
 Additionally you should find new `PVC` resources in your namespace.
 
-Quickly spin up a temporary pod and directly connect to it: `kubectl run -i --tty --image alpine:3.8 dns-test --restart=Never --rm /bin/sh`
-Within this context, run `nslookup [pod-name].[service-name]` to check, if your individual pods are accessible via the service. Also download the `index.html` page of each instance using `wget [pod-name].[service-name]`. When looking into it (with something like `cat` or `less`), you should get the corresponding host name that was written by the `initContainer`.
+Quickly spin up a temporary pod and directly connect to it: `kubectl run --generator=run-pod/v1 -i --tty --restart=Never --rm --image=alpine:3.8 /bin/sh`
+Within pod's shell context, run `nslookup [pod-name].[service-name]` to check, if your individual pods are accessible via the service. Also download the `index.html` page of each instance using `wget -q -O - [pod-name].[service-name]`. You should get the corresponding host name that was written by the `initContainer`.
 
 ## Step 3: Stable hostnames
 StatefulSets guarantee stable/reliable names. Since the pod name is also the hostname, it won't change over time - even when the pod gets killed and re-created.
@@ -106,3 +108,16 @@ Observe, how the pod `web-2` will be terminated and re-created. Check the image 
 `kubectl get po web-2 --template '{{range $i, $c := .spec.containers}}{{$c.image}}{{end}}'`
 
 Once you tested the canary and want to move all replicas to the new version, move "partition" to "0".
+
+## Troubleshooting
+In this exercise all the network traffic happens cluster internally. That's also why you have to create a helper pod and connect to it. Only then you have access to the cluster network and can contact cluster DNS to resolve names. 
+
+Note that the service needs to be of `type: ClusterIP` AND has to specify the field `clusterIP: None`. Anything else than `ClusterIP` is not valid or allowed in this specific combination. To expose pods of a StatefulSet create a regular service with an actual cluster IP. 
+
+To be able to use the headless service in combination with the pod names for DNS, the service has to be specified as part of the statefulset resource: `kubectl explain statefulset.spec.serviceName`
+
+## Further information & references
+- [statefulset documentation](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+- [cassandara deployed as a statefulset](https://kubernetes.io/docs/tutorials/stateful-application/cassandra/)
+- [init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/)
+- [debugging of init containers](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-init-containers/)

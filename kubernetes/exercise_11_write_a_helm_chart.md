@@ -1,6 +1,8 @@
 # Exercise 11: Write your first helm chart
 In this exercise you will author a very basic helm chart consisting of a config map with stores information about your favorite food & drinks.
 
+**Note:** This exercise does not build on any of the previous exercises.
+
 ## Documentation
 The usage of helm and the go functions might not be intuitive. There take a look at these links, they explain the most relevant:
 

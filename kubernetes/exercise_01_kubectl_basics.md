@@ -8,7 +8,7 @@ Login to your VM and locate the kubectl binary by running `which kubectl`. The r
 
 Make sure you have executed the script `~/setup/get_kube_config.sh` with proper parameters for 'training_id' and 'namespace/participant ID' to download your personal `kube.config` in advance, as requested by your trainer (small paper, handed over to you). Most likely you already did so during Docker Exercise 3. 
 
-Run `kubectl config get-contexts` to ensure a configuration file is available and/or `kubectl version` to test you can connect to the cluster.
+Run `kubectl config get-contexts` to ensure a configuration file is available and/or `kubectl version` to test you can connect to the cluster. If you face any issue try to re-run the scrpit and make sure the file `~/.kube/config` exist and is not empty.
 
 ## Step 1: check the nodes
 Use the `kubectl get nodes` command to get the basic information about the clusters' nodes. Try to find out, how the output can be modified. Hint: use the `-o <format>` switch. More information can be found by appending `--help` to your command.
@@ -39,3 +39,11 @@ Hint: if the output is not as readable as you expect it, consider changing the a
 
 ## optional Step 6 - learn some tricks
 There is a forum-like page hosted by K8s with lots of information around `kubectl` and how to use it best. If you are curious, take a look at https://discuss.kubernetes.io/t/kubectl-tips-and-tricks/.
+
+## Further information & references
+- Manage multiple clusters and multiple config files: https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/ 
+- kubectl command documentation: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+- a small [gist](https://github.wdf.sap.corp/gist/D051945/3f3daf9f71f7e012c1e25a48c1c6e8da) with bash function to manage multiple config files
+- shell autocompletion (should work for the VM already): https://kubernetes.io/docs/tasks/tools/install-kubectl/#enabling-shell-autocompletion
+- kubectl cheat sheet:(https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+- jsonpath in kubectl: https://kubernetes.io/docs/reference/kubectl/jsonpath/
