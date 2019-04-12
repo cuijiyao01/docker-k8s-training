@@ -1,4 +1,4 @@
-# Exercise 5 - persistence
+# Exercise 5: Persistence
 
 In this exercise you will add some content to the pods in your deployment.
 
