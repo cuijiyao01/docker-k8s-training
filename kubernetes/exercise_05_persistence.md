@@ -2,7 +2,7 @@
 
 In this exercise you will add some content to the pods in your deployment.
 
-**Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the YAML files [03_deployment.yaml](solutions/03_deployment.yaml) and [04_service.yaml](solutions/04_service.yaml) in the *solutions* folder to create a deployment with a service. Please use these files only if you did not manage to complete the previous exercises.
+**Note**: This exercise loosely builds upon the previous exercise. If you did not manage to finish the previous exercise successfully, you can use the YAML file [04_service.yaml](solutions/04_service.yaml) in the *solutions* folder to create a service. Please use this file only if you did not manage to complete the previous exercise.
 
 ## Step 0: Prepare and check your environment
 Firstly, remove the deployment you created in the earlier exercise. Check the cheat sheet for the respective command.
