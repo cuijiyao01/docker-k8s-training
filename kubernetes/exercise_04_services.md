@@ -1,4 +1,4 @@
-# Exercise: Expose your application
+# Exercise 4: Expose your application
 
 Now that the application is running and resilient to failure of a single pod, it is time to make it available to other users inside and outside of the cluster.
 
