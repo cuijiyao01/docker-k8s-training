@@ -76,14 +76,18 @@ template:
 ```
 
 ## Step 2: Ordered creation
-Before you create the StatefulSet, open a 2nd terminal and start to watch the pods in you namespace: `watch kubectl get pods`
+Before you create the StatefulSet, open a 2nd terminal and start to watch the pods in your namespace: `watch kubectl get pods`
 
 Now post your yaml file to the API server and monitor the upcoming new pods. You should observe the ordered creation of pods (by their ordinal index). Note that the pod name does not have any randomly generated string, but consists of the statefulset's name + the index.
 
 Additionally you should find new `PVC` resources in your namespace.
 
 Quickly spin up a temporary pod and directly connect to it: `kubectl run --generator=run-pod/v1 -i --tty --restart=Never --rm --image=alpine:3.8 /bin/sh`
-Within pod's shell context, run `nslookup [pod-name].[service-name]` to check, if your individual pods are accessible via the service. Also download the `index.html` page of each instance using `wget -q -O - [pod-name].[service-name]`. You should get the corresponding host name that was written by the `initContainer`.
+
+Within pod's shell context, run `nslookup [pod-name].[service-name]` to check, if your individual pods are accessible via the service. 
+
+Also download the `index.html` page of each instance using `wget -q -O - [pod-name].[service-name]`.
+You should get the corresponding host name that was written by the `initContainer`.
 
 ## Step 3: Stable hostnames
 StatefulSets guarantee stable/reliable names. Since the pod name is also the hostname, it won't change over time - even when the pod gets killed and re-created.
