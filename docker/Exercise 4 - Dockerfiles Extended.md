@@ -27,7 +27,7 @@ wget -O wiki.go https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/
 
 ## Step 1: Creating the Dockerfile
 
-Create an new Dockerfile that starts `FROM golang:1.12-alpine as builder`. Note, the `as builder` extensio - it allows you to reference files present at this stage and copy them over to another stage.
+Create an new Dockerfile that starts `FROM golang:1.12-alpine as builder`. Note, the `as builder` extension - it allows you to reference files present at this stage and copy them over to another stage.
 To prepare for the build, change the `WORKDIR` to `/go/src/` and `COPY` the `wiki.go` file over.
 
 ## Step 2: Compile wiki.go
