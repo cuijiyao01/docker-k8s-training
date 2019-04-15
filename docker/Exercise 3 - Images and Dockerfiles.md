@@ -99,7 +99,7 @@ If the push succeeded, open the registry in a browser: **registry.ingress.*\<clu
 
 Ideally you would see an "secure_nginx" repository there. To browse the list of tags use **/v2/< repo-name >/tags/list**, where the repo name should be *secure_nginx*.
 
-Here is a command to find our your cluster and projectname:
+Here is a command to find our/your cluster and projectname:
 ```bash
 echo "Clustername: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f2)"; echo "Projectname: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f3)"
 ```
