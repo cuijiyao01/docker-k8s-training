@@ -33,7 +33,7 @@ spec:
         command:
         - /bin/sh
         - -c
-        - echo $(hostname) > /work-dir/index.html
+        - echo $(hostname) >> /work-dir/index.html
         volumeMounts:
         - name: www
           mountPath: /work-dir

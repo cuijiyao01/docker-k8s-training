@@ -71,9 +71,13 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 ### secrity
 - wordpress & reverse shell - k8s security talk @ContainerConf by Jen Tong: https://vimeo.com/306157921 (demo starts around 30:20)
 
+- another talk about Kubernetes security by Dirk Marwinski of SAP's Gardener team that he held at SAP's Security Summit 2019 can be found [here](https://video.sap.com/media/t/1_4g3e4aah) with the slides [here](https://jam4.sapjam.com/groups/0O5MDqirlZsPGRKP3y6Ydt/documents/GZr8SmrvBdWhP7miO0WhU9)
+
 - [Three Years of Lessons Running Potentially Malicious Code Inside Containers](https://www.youtube.com/watch?v=kbPEE33HEHw) - Ben Hall, Katacoda 
 
 - [root container](https://www.youtube.com/watch?v=ltrV-Qmh3oY&feature=youtu.be) @KubeCon by Liz Rice
+
+- secret management with [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets) or [vault](https://www.vaultproject.io/docs/what-is-vault/index.html). 
 
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
@@ -94,3 +98,11 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 - [katacoda learning platform](https://www.katacoda.com/learn) offers browser-based tutorials around docker & kubernetes  
 
 - [CTO Circle – Container Delivery Guidance](https://sap.sharepoint.com/sites/60001485/Shared%20Documents/01_Communication/CTO%20Circle%20%26%20Technology%20Board%20Meetings/CTO%20Circle/Container%20Delivery_RELEASED.pdf?csf=1&e=THkcxG)
+
+## Further contact informations:
+
+- [kubernetes mailing list @sap](https://listserv.sap.corp/mailman/listinfo/kubernetes-users)
+- [Cloud Platform enabling Team JAM Contact Page](https://go.sap.corp/cpet)
+- [Cloud Platform enabling Team offerings](https://github.wdf.sap.corp/pages/kubernetes/gardener/offering/)
+- [K8s Gardener Canary slack channel](https://sap-cp.slack.com/messages/CBV3JS9S4/)
+- [Gardener Jam Page](https://jam4.sapjam.com/groups/Niq7TSBxLlzgb3nroBZJVx/overview_page/e9uqTDxXBRFbk7FJXEA4Cd)

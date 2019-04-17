@@ -24,7 +24,11 @@ dependencies:
 $ helm dependency update bulletinboard-ads
 ```
 
-## Step 3: Install chart
+## Step 3: Make necessary changes to ads chart
+
+When using dependencies it is important to know that templates (e.g. defined in _helpers.tpl files) are shared globally between subcharts and the main chart. This means that our "db-connection" template in ads overwrites the one in the users chart. For this not to happen please rename the `"db-connection"` template to `"ads-db-connection"` and adapt also the name in the application-k8s.txt file  and templates/ads-app-deployment.yaml file where it is used.
+
+## Step 4: Install chart
 
 ```bash
 $ helm install bulletinboard-ads
@@ -33,13 +37,13 @@ $ helm install bulletinboard-ads
 Now both charts should be installed
 
 
-## Step 4: Check if the service is up and running
+## Step 5: Check if the service is up and running
 
 ```bash
 $ curl http://bulletinboard--<your namespace>.ingress.<cluster name>.<project name>.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
 ```
 
-## Step 5: Configure app application to check users (optional)
+## Step 6: Configure app application to check users (optional)
 
 Edit `ads-app-configmap.yaml` and set parameter `post_user_check` to `true`, if it is not already that.
 

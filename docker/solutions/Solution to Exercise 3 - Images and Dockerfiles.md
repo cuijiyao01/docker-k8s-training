@@ -106,10 +106,10 @@ Assuming that `<cluster-name>` is `wdfcw01`, that `<project-name>` is `k8s-train
 docker tag 28ffc0efbc9b registry.ingress.wdfcw01.k8s-train.shoot.canary.k8s-hana.ondemand.com/secure-nginx:part-0001
 ```
 
-In order to push to the registry, you need to log on to it first:
+In order to push to the registry, you need to log on to it first. Run the command and enter the password `2r4!rX6u5-qH`:
 
 ```bash
-docker login -u participant -p 2r4!rX6u5-qH registry.ingress.wdfcw01.k8s-train.shoot.canary.k8s-hana.ondemand.com
+docker login -u participant registry.ingress.wdfcw01.k8s-train.shoot.canary.k8s-hana.ondemand.com
 ```
 
 Finally, push the image to the registry:

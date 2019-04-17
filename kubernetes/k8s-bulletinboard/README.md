@@ -30,7 +30,6 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 ### [04 Exercise: "Using Helm-chart to setup Bulletinboard-Users Application and -DB](exercise_04_users_app_and_db_by_helm.md)
 - Create Users DB and Users App via existing **Helm chart**
 
-
 ### [Optional - 05.1-05.3 Exercise: "Create Helm chart for Bulletinboard-Ads Appl. and -DB"](exercise_05_ads_helm_chart.md)
 - Develop a **Helm chart** for Ads Db and Ads App
 
@@ -39,5 +38,13 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 The choosen structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the Application-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.  
 For name of files and of the entities itself we choose the schema: `<component>-<module>-<entity>.yaml` so e.g the yaml for the service for Bulletinboard-ads application would be named `ads-app-service.yaml`.  
 To shorten names in the exercise descriptions, entities will be referenced by their component & module values, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
+
+## Links to the resources/repos used
+
+- [Bulletinboard Ads source with Jenkinsfile and Dockerfile](https://github.wdf.sap.corp/cloud-native-dev/bulletinboard-ads-k8s) and [Jenkins job](https://cc-cloudnative-jenkins.mo.sap.corp/job/bulletinboard-ads-k8s/)
+- [Bulletinboard Users source with Jenkinsfile and Dockerfile](https://github.wdf.sap.corp/cloud-native-dev/bulletinboard-users-bootwar) and [Jenkins job](https://cc-cloudnative-jenkins.mo.sap.corp/job/bulletinboard-users-k8s-piper/job/master/)
+- [Bulletinboard JSL library used in the Jenkinsfiles](https://github.wdf.sap.corp/cc-refapp/bulletinboard-JSL)
+- [Piper also used in the Jenkinsfile](https://github.wdf.sap.corp/pages/ContinuousDelivery/piper-doc/)
+- [Postgres docker images](https://hub.docker.com/_/postgres)
 
 

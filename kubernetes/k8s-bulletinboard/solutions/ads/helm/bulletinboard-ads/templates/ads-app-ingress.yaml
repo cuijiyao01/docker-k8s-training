@@ -5,7 +5,7 @@ metadata:
   name: {{ template "add-release-name" (dict "dot" . "name" .Values.App.Ingress.Name) }}
   {{- include "labels.ads.app" . }}
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
   - host: {{ .Values.App.Ingress.Hostname -}} .ingress. {{- .Values.ClusterName -}} . {{- .Values.ProjectName -}} .shoot.canary.k8s-hana.ondemand.com
