@@ -78,7 +78,7 @@ template:
 ## Step 2: Ordered creation
 Before you create the StatefulSet, open a 2nd terminal and start to watch the pods in your namespace: `watch kubectl get pods`
 
-Now post your yaml file to the API server and monitor the upcoming new pods. You should observe the ordered creation of pods (by their ordinal index). Note that the pod name does not have any randomly generated string, but consists of the statefulset's name + the index.
+Now post your yaml file to the API server and monitor the upcoming new pods. You should observe the **ordered creation** of pods (by their ordinal index). Note that the **pod name does not have any randomly generated string** (as with deployments), but consists of the statefulset's name + the index.
 
 Additionally you should find new `PVC` resources in your namespace.
 
