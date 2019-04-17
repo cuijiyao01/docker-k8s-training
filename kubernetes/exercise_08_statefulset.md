@@ -82,7 +82,7 @@ Now post your yaml file to the API server and monitor the upcoming new pods. You
 
 Additionally you should find new `PVC` resources in your namespace.
 
-Quickly spin up a temporary pod and directly connect to it: `kubectl run --generator=run-pod/v1 -i --tty --restart=Never --rm --image=alpine:3.8 /bin/sh`
+Quickly spin up a temporary pod and directly connect to it: `kubectl run dns-test --generator=run-pod/v1 -i --tty --restart=Never --rm --image=alpine:3.8 /bin/sh`
 
 Within pod's shell context, run `nslookup [pod-name].[service-name]` to check, if your individual pods are accessible via the service. 
 
