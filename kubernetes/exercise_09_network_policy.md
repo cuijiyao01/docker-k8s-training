@@ -15,7 +15,7 @@ Run `wget --timeout=1 -q -O - <your-serivce-name>` from within the pod to send a
 
 If everything works fine, the result should look like this (maybe with a different serivce name):
 ```bash
-# wget--timeout=1 -q -O - nginx-https
+# wget --timeout=1 -q -O - nginx-https
 Connecting to nginx (10.7.249.39:80)
 ```
 It proves the network connection to the pods masked by the service is working properly.
@@ -72,7 +72,7 @@ If you're location is not on the list, check with your trainer to get the addres
 
 If you are unsure about the labels, run the queries you are about to implement manually - e.g. `kubectl get pods -l <my-ke>=<my-value>`. This way you can check, if the results match your intention.
 
-Create the resource as usual with `kubectl create -f <your file>.yaml` and check its presence with `kubectl get networkpolicy`
+Create the resource as usual with `kubectl apply -f <your file>.yaml` and check its presence with `kubectl get networkpolicy`
 
 ## Step 2: Trying to connect, please wait ...
 Again, connect to the busybox pod you used in step 0 or spin up a new one. Run the same `wget` command and check the output.
