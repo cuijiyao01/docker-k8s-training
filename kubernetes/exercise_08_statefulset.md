@@ -99,7 +99,7 @@ Again, spin up a temporary deployment of a busybox and directly connect to it. I
 ## Step 4 (optional): rolling update with canary
 Statefulsets support advanced mechanisms to update to a new version (i.e. of the used container image). For this exercise, you will add an update strategy to your StatefulSet and perform an update with one pod serving as canary before moving all of your replicas to the new version.
 
-Firstly increase the number of replicas to 3. Then continue by patching your Statefulset. The `partition` parameter controls the replicas that are patched based on an "equals or greater" evaluation of the ordinal index of the replica. If you have 3 replicas [0,1,2], a partition parameter with value "2" will limit the effect of an update to replica #2 only.
+Firstly increase the number of replicas to 3. Then continue by patching your Statefulset. The `partition` parameter controls the replicas that are patched based on an **"equals or greater"** evaluation of the ordinal index of the replica. If you have 3 replicas [0,1,2], a partition parameter with value "2" will limit the effect of an update to replica #2 only.
 
 `kubectl patch statefulset web -p '{"spec":{"updateStrategy":{"type":"RollingUpdate","rollingUpdate":{"partition":2}}}}'`
 
