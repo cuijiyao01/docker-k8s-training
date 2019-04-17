@@ -194,7 +194,7 @@ Here are two different ways how you could test if the statefulset is configured 
 Create a temporary pod with psql installed (e.g. a postgres:9.6 image like our DB) and use psql from this pod to connect to the DB.
 
 ```
-kubectl run tester -it --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash
+kubectl run tester -it --generator=run-pod/v1 --restart=Never --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash
 ```
 
 A promt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
