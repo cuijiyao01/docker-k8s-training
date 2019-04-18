@@ -18,7 +18,7 @@
 
 ## Labels
 
-We make us of labels on **all** entities so they can be easier selected/searched for with kubectl. 
+We make use of labels on **all** entities so they can be easier selected/searched for with kubectl. 
 
 - The structure for **Labels** (and with this for **Selectors**) has 2 levels. On the first level we want to separate **Bulletinboard-Ads** from **Bulletinboard-Users**. For this we introduce the **Label** `component` with value `ads` or `users`. On the second level we separate the App-part from the Database-part within each "Component". Here we introduce the **Label** `module` with value `app` or `db`. 
 
