@@ -197,7 +197,7 @@ Create a temporary pod with psql installed (e.g. a postgres:9.6 image like our D
 kubectl run tester -it --generator=run-pod/v1 --restart=Never --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash
 ```
 
-A promt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
+A prompt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
 `psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial` if you have not changed it). After this you should connect to the ads db, a promt `ads=>` will ask you for the next command. If this does, all is correctly set up!  
 Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command. The pod should be automatically removed after this. 
 
