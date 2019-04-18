@@ -185,7 +185,7 @@ spec:
 
 ## Optional- Step 6: Detailled Check whether Pod with Postgres DB is running properly
 
-Purpose: check whether the database is running and accepting connections. Use the [**pgadmin tool**](https://www.pgadmin.org/) for that.
+Purpose: check whether the database is running and accepting connections. Use either  atemporary postgresql pod with sql or the [**pgadmin tool**](https://www.pgadmin.org/) for that.
 
 Here are two different ways how you could test if the statefulset is configured correctly and the db intialized with the right user and password:
 
