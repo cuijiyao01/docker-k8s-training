@@ -18,7 +18,7 @@
 
 ## Labels
 
-We make us of labels on **all** entities so they can be easier selected/searched for with kubectl. 
+We make use of labels on **all** entities so they can be easier selected/searched for with kubectl. 
 
 - The structure for **Labels** (and with this for **Selectors**) has 2 levels. On the first level we want to separate **Bulletinboard-Ads** from **Bulletinboard-Users**. For this we introduce the **Label** `component` with value `ads` or `users`. On the second level we separate the App-part from the Database-part within each "Component". Here we introduce the **Label** `module` with value `app` or `db`. 
 
@@ -185,7 +185,7 @@ spec:
 
 ## Optional- Step 6: Detailled Check whether Pod with Postgres DB is running properly
 
-Purpose: check whether the database is running and accepting connections. Use the [**pgadmin tool**](https://www.pgadmin.org/) for that.
+Purpose: check whether the database is running and accepting connections. Use either  atemporary postgresql pod with sql or the [**pgadmin tool**](https://www.pgadmin.org/) for that.
 
 Here are two different ways how you could test if the statefulset is configured correctly and the db intialized with the right user and password:
 
@@ -197,7 +197,7 @@ Create a temporary pod with psql installed (e.g. a postgres:9.6 image like our D
 kubectl run tester -it --generator=run-pod/v1 --restart=Never --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash
 ```
 
-A promt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
+A prompt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
 `psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial` if you have not changed it). After this you should connect to the ads db, a promt `ads=>` will ask you for the next command. If this does, all is correctly set up!  
 Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command. The pod should be automatically removed after this. 
 

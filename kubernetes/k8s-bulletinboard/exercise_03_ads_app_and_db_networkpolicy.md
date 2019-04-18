@@ -115,12 +115,7 @@ With this we can change `spec:` of ingress in the yaml to the following (added t
 ```
 spec:
   rules:
-  - host: <THE INGRESS URL>
-    http:
-      paths:
-      - backend:
-          serviceName: ads-service
-          servicePort: ads-app
+ < ... >
   tls:
   - secretName: ingress-tls-sec
 ```

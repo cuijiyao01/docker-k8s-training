@@ -105,7 +105,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-https-deplyoment
+  name: nginx-https-deployment
   labels:
     tier: application
 spec:
