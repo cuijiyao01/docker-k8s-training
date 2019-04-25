@@ -114,7 +114,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
-  - host: fanout-nginx.ingress.cpwdfcw16.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: fanout-nginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - path: /my(.*)
@@ -132,14 +132,14 @@ metadata:
   name: vh-nginx
 spec:
   rules:
-  - host: mynginx.ingress.cpwdfcw16.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: mynginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - path: /
         backend:
           serviceName: mynginx-service
           servicePort: 80
-  - host: yournginx.ingress.cpwdfcw16.k8s-train.shoot.canary.k8s-hana.ondemand.com
+  - host: yournginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
       - path: /
