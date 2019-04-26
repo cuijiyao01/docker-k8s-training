@@ -6,7 +6,7 @@ For an overview of topics see the agenda pages on top level.
 
 Official course information: [Docker and Kubernetes Fundamentals](https://jam4.sapjam.com/blogs/show/P2dUZRL6WyEY8FYqqGyaAR)  (part of [Cloud Curriculum](https://jam4.sapjam.com/groups/zAfXdXPcJGlCUrBScXSWKP/overview_page/Y1fECzZLQ8qjIlyCQTRi76)  )
 
-> For a comparison of SAP CP platforms and when to use what, see the [Platform Guide](https://wiki.wdf.sap.corp/wiki/x/Vwg4bg)
+> For a comparison of SAP CP platforms and when to use what, see the [Platform Guide](https://wiki.wdf.sap.corp/wiki/x/Vwg4bg) and [CF vs K8s](https://jam4.sapjam.com/groups/UvgtUwzohySLY8dDvClacv/documents/F36I53Tz8JVEGyVWesgGuV/slide_viewer?_lightbox=true)
 
 ## Course outline
 High level topics are:
