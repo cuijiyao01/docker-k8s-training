@@ -8,7 +8,7 @@ Login to your VM and locate the kubectl binary by running `which kubectl`. The r
 
 Make sure you have executed the script `~/setup/get_kube_config.sh` with proper parameters for 'training_id' and 'namespace/participant ID' to download your personal `kube.config` in advance, as requested by your trainer (small paper, handed over to you). Most likely you already did so during Docker Exercise 3. 
 
-Run `kubectl config get-contexts` to ensure a configuration file is available and/or `kubectl version` to test you can connect to the cluster. If you face any issue try to re-run the scrpit and make sure the file `~/.kube/config` exist and is not empty.
+Run `kubectl config get-contexts` to ensure a configuration file is available and/or `kubectl version` to test you can connect to the cluster. If you face any issue try to re-run the script and make sure the file `~/.kube/config` exist and is not empty.
 
 ## Step 1: check the nodes
 Use the `kubectl get nodes` command to get the basic information about the clusters' nodes. Try to find out, how the output can be modified. Hint: use the `-o <format>` switch. More information can be found by appending `--help` to your command.
