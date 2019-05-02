@@ -1,4 +1,7 @@
 # Exercise 6 - ConfigMaps and Secrets
+
+In this exercise, you will be dealing with _Pods_, _Deployments_, _Services_, _Labels & Selectors_, _Persistent&nbsp;Volume&nbsp;Claims_, **_Config&nbsp;Maps_** and **_Secrets_**.
+
 ConfigMaps and secrets bridge the gap between the requirements to build generic images but run them with a specific configuration in an secured environment.
 In this exercise you will move credentials and configuration into the Kubernetes cluster and make them available to your pods.
 

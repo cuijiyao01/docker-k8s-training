@@ -1,5 +1,7 @@
 # Exercise 4: Expose your application
 
+In this exercise, you will be dealing with _Pods_, _Deployments_, _Labels & Selectors_, **_Services_** and **_Service Types_**.
+
 Now that the application is running and resilient to failure of a single pod, it is time to make it available to other users inside and outside of the cluster.
 
 **Note**: This exercise builds upon the previous exercise. If you did not manage to finish the previous exercise successfully, you can use the YAML file [03_deployment.yaml](solutions/03_deployment.yaml) in the *solutions* folder to create a deployment. Please use the file only if you did not manage to complete the previous exercise.

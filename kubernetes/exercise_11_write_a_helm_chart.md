@@ -1,5 +1,8 @@
 # Exercise 11: Write your first helm chart
-In this exercise you will author a very basic helm chart consisting of a config map with stores information about your favorite food & drinks.
+
+In this exercise, you will be dealing with _Tiller_ and _Helm_.
+
+After having used a ready-made helm chart from the public chart repository on GitHub, it is now time to author a very basic helm chart consisting of a config map which stores information about your favorite food & drinks.
 
 **Note:** This exercise does not build on any of the previous exercises.
 

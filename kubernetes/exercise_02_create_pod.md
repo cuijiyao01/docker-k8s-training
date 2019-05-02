@@ -1,4 +1,7 @@
 # Exercise 2 - create your first pod
+
+In this exercise you will be dealing with **_Pods_**.
+
 Now that you know, how kubectl works and what the smallest entity on kubernetes looks like, it is time to create your own pod.
 
 ## Step 0: prepare a yaml file

@@ -1,4 +1,7 @@
 # Exercise 10: Happy Helming
+
+In this exercise, you will be dealing with **_Tiller_** and **_Helm_**.
+
 Helm is a tool to manage complex deployments of multiple components belonging to the same application stack. In this exercise, you will install the helm client locally and deploy its counterpart, the tiller server, to your own namespace. Once this is working you will deploy your first chart.
 For further information, visit the official docs pages (https://docs.helm.sh/)
 
