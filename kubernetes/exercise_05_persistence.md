@@ -1,6 +1,8 @@
 # Exercise 5: Persistence
 
-In this exercise you will add some content to the pods in your deployment.
+In this exercise, you will be dealing with _Pods_, _Deployments_, _Services_, _Labels & Selectors_, **_Persistent&nbsp;Volumes_**, **_Persistent&nbsp;Volume&nbsp;Claims_** and **_Storage Classes_**.
+
+After you exposed your webserver to the network in the previous exercise, we will now add some custom content to it which resides on persistent storage outside of pods and containers. 
 
 **Note**: This exercise loosely builds upon the previous exercise. If you did not manage to finish the previous exercise successfully, you can use the YAML file [04_service.yaml](solutions/04_service.yaml) in the *solutions* folder to create a service. Please use this file only if you did not manage to complete the previous exercise.
 

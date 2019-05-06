@@ -1,4 +1,7 @@
 # Exercise 8: StatefulSet
+
+In this exercise, you will be dealing with _Pods_, _Persistent&nbsp;Volumes_, _Persistent&nbsp;Volume&nbsp;Claims_, **_Headless Services_** and **_Stateful&nbsp;Sets_**.
+
 In this exercise you will deploy a ngnix webserver as a StatefulSet and scale it.
 
 **Note:** This exercise does not build on any of the previous exercises.

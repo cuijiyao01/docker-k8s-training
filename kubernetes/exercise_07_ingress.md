@@ -1,5 +1,7 @@
 # Exercise 7 - Ingress
 
+In this exercise, you will be dealing with _Pods_, _Deployments_, _Services_, _Labels & Selectors_, **_Init Containers_** and **_Ingresses_**.
+
 Ingress resources allow us to expose services through a URL. In addition, it is possible to configure an Ingress so that traffic can be directed to different services, depending on the URL that is used for a request. In this exercise, you will set up a simple Ingress resource.
 
 In addition to all that, you will use Init-Containers to initialize your nginx deployment and load the application's content.
