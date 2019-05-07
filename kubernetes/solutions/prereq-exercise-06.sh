@@ -79,6 +79,7 @@ spec:
       - name: content-storage
         persistentVolumeClaim:
           claimName: nginx-pvc
+          readOnly: true
       containers:
       - name: nginx
         image: nginx:1.14.2
@@ -88,6 +89,7 @@ spec:
         volumeMounts:
         - mountPath: "/usr/share/nginx/html"
           name: content-storage
+          readOnly: true
 ---
 apiVersion: v1
 kind: Service
