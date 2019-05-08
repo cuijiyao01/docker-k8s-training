@@ -55,10 +55,10 @@ spec:
     - ipBlock:
         # Germany WDF
         cidr: 155.56.0.0/16
-     - ipBlock:
+    - ipBlock:
         # Germany WDF
         cidr: 193.16.224.0/28
-     - ipBlock:
+    - ipBlock:
         # Ireland
         cidr: 84.203.229.48/29
     - ipBlock:
