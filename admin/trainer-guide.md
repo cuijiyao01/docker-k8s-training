@@ -4,7 +4,7 @@
 
 #### Course Prep steps
 These are the logical steps for a trainer to prep for a course (details below):
-- Make sure your training is 'officially' requested and schedules in SccessMap Learning
+- Make sure your training is 'officially' requested and schedules in SuccessMap Learning
 - Sent email with preparation steps to participants
 - Get/ create a Gardener cluster for your training
 - Download your trainer .kube/config from Gardener that lets you control the cluster
