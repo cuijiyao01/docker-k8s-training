@@ -22,7 +22,7 @@ __Purpose: control traffic to and from *ads:db* pod__
 <p align="center"><img src="images/bulletinboard-networkpolicy-db.png" width="800"/></p>
 
 We want only that  __ads:db__ only takes messages from __ads:app__. Configure a network policy in a file named `ads-db-networkpolicy.yaml` accordingly. 
-You can check the [network policy exercise](../exercise_08_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy.  
+You can check the [network policy exercise](../exercise_09_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy.  
 Also we want to block all outgoing traffic by denying all egress traffic. You can see [here how to do so](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/11-deny-egress-traffic-from-an-application.md).
 
 <details> <summary>If you need further hints here is a skeleton network policy!</summary>
