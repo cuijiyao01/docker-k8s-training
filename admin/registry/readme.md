@@ -17,26 +17,7 @@ Additionally we strongly recommend to use certificates around the registry. With
   * make the binaries executable (`chmod +x`)
   * move them to a directory covered by your `$PATH` variable ( e.g. `/usr/local/bin/`).
 * check, that `kubectl` works with your cluster
-* If not yet done - setup `helm` in your `kube-system` namespace (via the following 5 steps).
-  * create a new service account: `kubectl -n kube-system create sa tiller`
-  * generate a clusterrolebinding for the new service account:
-    ```
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRoleBinding
-    metadata:
-      name: tiller
-    roleRef:
-      apiGroup: rbac.authorization.k8s.io
-      kind: ClusterRole
-      name: cluster-admin
-    subjects:
-    - kind: ServiceAccount
-      name: tiller
-      namespace: kube-system
-    ```
-  * download the helm client like in [exercise 10](../../kubernetes/exercise_10_helm_basics.md).
-  * initialize helm: `helm init --tiller-namespace kube-system --service-account tiller`
-  * run `helm list --tiller-namespace kube-system` to verify the setup. It should return an empty string.
+* If not yet done - setup `helm` in your `kube-system` namespace with a separate service account and cluster-admin permissions. Use the `helm_init.sh` [script](../helm_init.sh) to carry out all required steps.
 
 ### Install the registry
 run `install_registry.sh [project name] [cluster name]` and supply the name or your Gardener project as well as the cluster name.
