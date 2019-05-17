@@ -60,7 +60,31 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 	http.Redirect(w, r, "/view/"+title, http.StatusFound)
 }
 
-var templates = template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/view.html"))
+// Idea: wrap panic with defer & recover
+// in recovery mode:
+// -- write files to disk
+// -- parse again
+func recoverToCreateHTMLTemplate() {
+	if r := recover(); r != nil {
+		log.Println("Error loading templates from file. Defaulting back to built-in templates.")
+
+		editHTML, _ := os.Create("tmpl/edit.html")
+		defer editHTML.Close()
+
+		editHTML.WriteString(`<h1>Editing {{.Title}}</h1><form action="/save/{{.Title}}" method="POST"><div><textarea name="body" rows="20" cols="80">{{printf "%s" .Body}}</textarea></div> <div><input type="submit" value="Save"></div></form>`)
+		editHTML.Sync()
+
+		viewHTML, _ := os.Create("tmpl/view.html")
+		defer viewHTML.Close()
+
+		viewHTML.WriteString(`<h1>{{.Title}}</h1><p>[<a href="/edit/{{.Title}}">edit</a>]</p><div>{{printf "%s" .Body}}</div>`)
+		viewHTML.Sync()
+
+		templates = template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/view.html"))
+	}
+}
+
+var templates *template.Template = nil
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	err := templates.ExecuteTemplate(w, tmpl+".html", p)
@@ -83,17 +107,28 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 	}
 }
 
+func loadTemplates() {
+	defer recoverToCreateHTMLTemplate()
+	templates = template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/view.html"))
+}
+
 func main() {
-	log.Println("Initializing handler functions...")
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGHUP)
 
+	log.Println("Loading templates...")
+	loadTemplates()
+
 	go func() {
-		<-sig
-		templates = template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/view.html"))
+		for {
+			<-sig
+			log.Println("received SIG HUP - reload tempaltes...")
+			loadTemplates()
+		}
 	}()
 
+	log.Println("Initializing handler functions...")
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
@@ -101,4 +136,5 @@ func main() {
 
 	log.Println("Running web server ...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+
 }
