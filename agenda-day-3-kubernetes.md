@@ -6,7 +6,7 @@
   * config maps
 * Exercise 06 - configure your nginx & add certificates
 
-## Furhter entities
+## Further entities
 * Overview
   * networking
   * workloads
