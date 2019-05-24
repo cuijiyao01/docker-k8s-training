@@ -254,6 +254,7 @@ Now, access the application using the browser.
   - **Web-UI**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/`
   
   _**Hint: Do not miss the '/' at the end of the URL !**_
+  _**Another Hint: If there is only a blue screen that comes up, and are faced with a Blocked by client error message on your console, try pausing your adblocker - The file is literally named Advertisement.view.xml, which any self respecting adblocker will block :) **_
 <img src="images/k8s-bulletinboard-browser-2.png" width="800" />
 
 <img src="images/k8s-bulletinboard-browser-3.png" width="800" />
