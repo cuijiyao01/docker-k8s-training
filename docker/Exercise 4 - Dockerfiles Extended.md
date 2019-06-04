@@ -66,4 +66,4 @@ Use the `docker build` command to build your image. Tag it along the way so you 
 
 ## Step 8: Run your image
 
-Run the image im detached mode, create a port forwarding from port 8080 in the container to some port on your host and connect with your webbrowser to it.
+Run the image in detached mode, create a port forwarding from port 8080 in the container to some port on your host and connect with your webbrowser to it.
