@@ -79,7 +79,7 @@ Remember the service from the previous exercise? Since the labels where not chan
 
 
 ## Troubleshooting
-In case the pods of the deplyoment stay in status `Pending` for quite some time, make sure the pod `nginx-storage-pod` got deleted. Also check the events of one of the pods by running `kubectl describe pod <pod-name>`. 
+In case the pods of the deployment stay in status `Pending` for quite some time, make sure the pod `nginx-storage-pod` got deleted. Also check the events of one of the pods by running `kubectl describe pod <pod-name>`. 
 
 If one of the events is a warning that contains something like "resource already in use", delete the deployment as well as the pod `nginx-storage-pod` (if not already done) but do NOT delete the PVC. Next, wait around 1-2min, to ensure  that the referenced storage device is unmounted from the node, where it was used before. Then re-create the deployment.  
 

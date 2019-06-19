@@ -18,7 +18,7 @@ If there are any issues, check with your trainer.
 ## Step 1 - init: prepare pods and services
 For this exercise you can either re-use already existing deployments, pods and services or create them from scratch. Please continue to use an nginx webserver as backend application. For sake of resource consumption, please use `replica: 1` for new resources.
 
-When you create a new deployment, remember that you can generate a skeleton by right-clicking the VM desktop -> context menu "new documents" -> deplyoment. You could also try to add an [init container](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/). The init container should write a string like the hostname or "hello world" to and `index.html` on an emptyDir volume. Use this volume in the nginx container as well to get a customized `index.html` page.
+When you create a new deployment, remember that you can generate a skeleton by right-clicking the VM desktop -> context menu "new documents" -> deployment. You could also try to add an [init container](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/). The init container should write a string like the hostname or "hello world" to and `index.html` on an emptyDir volume. Use this volume in the nginx container as well to get a customized `index.html` page.
 
 The snippets below might give an idea, how to create a cache volume and pass an appropriate command to a busybox running as init container.
 

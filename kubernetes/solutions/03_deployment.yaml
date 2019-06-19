@@ -8,10 +8,10 @@ metadata:
   name: nginx-deployment
   # labels is anothre map and contains one to many key:value pairs
   labels:
-    # the deplyoment will be labeled with a key 'tier' that has a value 'application'
+    # the deployment will be labeled with a key 'tier' that has a value 'application'
     tier: application
 # spec is an object/map
-# the pod.spec specifies the desired behavior of the deplyoment 
+# the pod.spec specifies the desired behavior of the deployment 
 spec:
   # define how many pods will be created 
   replicas: 3

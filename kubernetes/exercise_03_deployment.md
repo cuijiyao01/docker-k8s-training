@@ -31,9 +31,9 @@ But a deployment can do more than managing replicasets in order to scale. It als
 
 `kubectl set image deployment/nginx nginx=nginx:mainline --record`
 
-Note that the `--record` option "logs" the `kubectl` command and stores it in the deplyoment's annotations. When checking the rollout history later, the command will be shown as change cause.
+Note that the `--record` option "logs" the `kubectl` command and stores it in the deployment's annotations. When checking the rollout history later, the command will be shown as change cause.
 
-Once finished, check the deplyoment, pods and ReplicaSets available in your namespace. By now there should be two ReplicaSets - one scaled to 0 and one scaled to 3 (or whatever number of replicas you had before the update).
+Once finished, check the deployment, pods and ReplicaSets available in your namespace. By now there should be two ReplicaSets - one scaled to 0 and one scaled to 3 (or whatever number of replicas you had before the update).
 
 This way you would be able to roll back in case of an issue during update or with the new version. Check `kubectl rollout history deployment/nginx` for the existing versions of your deployment. By specifying `--revision=1` you will be able to get detailed on revision number one.
 
@@ -92,13 +92,13 @@ Now create the deployment again. Remember that you can always use the `--dry-run
 ## Finally, do not delete the latest version of your deployment. It will be used throughout the following exercises.
 
 ## Troubleshooting
-In case of issues with the labels, make sure that the `deplyoment.spec.selector.matchLabels` query matches the labels specified within the `deployment.spec.template.metadata.labels`.
+In case of issues with the labels, make sure that the `deployment.spec.selector.matchLabels` query matches the labels specified within the `deployment.spec.template.metadata.labels`.
 
-The structure of a deplyoment can be found in the API documentation. Go to [API reference](https://kubernetes.io/docs/reference/) and choose the corresponding version (usually the training features a cluster with the latest or 2nd latest version). Within the API docs select the "Deployment".
+The structure of a deployment can be found in the API documentation. Go to [API reference](https://kubernetes.io/docs/reference/) and choose the corresponding version (usually the training features a cluster with the latest or 2nd latest version). Within the API docs select the "Deployment".
 
 Alternatively use `kubectl explain deployment`. To get detailed information about a field within the pod use its "path" like this: `kubectl explain deployment.spec.replicas`.
 
-To create a new file with a skeleton of a deployment, right-click the Desktop within the training VM, select the context menu "new document" and choose "deplyoment". Additionally the solution to this exercise contains further explanatory comments.
+To create a new file with a skeleton of a deployment, right-click the Desktop within the training VM, select the context menu "new document" and choose "deployment". Additionally the solution to this exercise contains further explanatory comments.
 
 ## Further information & references
 - [Deployments in K8s concepts documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)

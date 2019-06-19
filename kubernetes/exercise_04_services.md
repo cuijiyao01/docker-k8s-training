@@ -39,7 +39,7 @@ Check the correctness of the label - selector combination by running the query m
 
 Finally, there might be some caching on various levels of the used infrastructure. To break caching on corporate proxy level, request a dedicated resource like the index page: `http:<LoadBalancer IP>/index.html`.
 
-The structure of a deplyoment can be found in the API documentation. Go to [API reference](https://kubernetes.io/docs/reference/) and choose the corresponding version (usually the training features a cluster with the latest or 2nd latest version). Within the API docs select the "Deployment".
+The structure of a deployment can be found in the API documentation. Go to [API reference](https://kubernetes.io/docs/reference/) and choose the corresponding version (usually the training features a cluster with the latest or 2nd latest version). Within the API docs select the "Deployment".
 
 Alternatively use `kubectl explain service`. To get detailed information about a field within the pod use its "path" like this: `kubectl explain deployment.spec.ports`.
 
