@@ -68,7 +68,7 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - [Envoy](https://kubernetespodcast.com/episode/033-envoy/), with Matt Klein
 
-### secrity
+### security
 - wordpress & reverse shell - k8s security talk @ContainerConf by Jen Tong: https://vimeo.com/306157921 (demo starts around 30:20)
 
 - another talk about Kubernetes security by Dirk Marwinski of SAP's Gardener team that he held at SAP's Security Summit 2019 can be found [here](https://video.sap.com/media/t/1_4g3e4aah) with the slides [here](https://jam4.sapjam.com/groups/0O5MDqirlZsPGRKP3y6Ydt/documents/GZr8SmrvBdWhP7miO0WhU9)
