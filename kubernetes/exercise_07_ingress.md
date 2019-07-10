@@ -50,7 +50,7 @@ Check the [help section](https://github.wdf.sap.corp/pages/kubernetes/gardener/d
 Write the ingress yaml file and reference to your service. Use the following skeleton and check the [kubernetes API reference](https://kubernetes.io/docs/reference/) for details and further info. 
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: <ingress resource name>
