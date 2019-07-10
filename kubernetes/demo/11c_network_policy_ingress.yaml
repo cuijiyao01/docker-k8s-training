@@ -1,44 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: access-nginx
+  name: direct-line-to-peach
 spec:
   podSelector:
     matchLabels:
-      run: nginx
+      location: castle
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          access: "true"
+          caller: mario
 # allow access originating from SAP networks
     - ipBlock:
-        # Germany
-        cidr: 155.56.68.208/28
-    - ipBlock:
-        # Germany
-        cidr: 193.16.224.0/28
-    - ipBlock:
-        # Ireland
-        cidr: 84.203.229.48/29
-    - ipBlock:
-        # US-West/Canada
-        cidr: 84.203.229.0/26
-    - ipBlock:
-        # BLR
-        cidr: 203.13.146.0/24
-    - ipBlock:
-        # BLR
-        cidr: 125.16.22.176/28
-    - ipBlock:
-        # BLR
-        cidr: 123.63.99.32/28
-    - ipBlock:
-        # BLR
-        cidr: 121.244.154.220/30
-    - ipBlock:
-        # BLR
-        cidr: 14.142.206.80/28
-    - ipBlock:
-        # SOF
-        cidr: 193.57.20.0/24       
+        # <insert local cidr block>
+        cidr: <ip block>
