@@ -205,7 +205,7 @@ Type `\q` to quit psql since we only wanted to test that we can connect. Also ex
 
 
 
-- Install **pgadmin** locally on your virtual machine. For the training virtual machine, use the following command to install the software: `sudo apt install pgadmin3`
+- Install **pgadmin** locally on your virtual machine. For the training virtual machine, use the following command to install the software: `sudo apt update && sudo apt install pgadmin3`
 
 - Use `kubectl port-forward ads-db-statefulset-0 5432:5432` to forward the database port from the database pod of your statefulset to your local virtual machine. 
 
