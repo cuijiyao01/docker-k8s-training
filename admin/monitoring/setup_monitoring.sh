@@ -29,24 +29,6 @@ if [ ! -r $PROMETHEUS_CONFIG_FILE ]; then
 	exit 1
 fi
 
-
-# check if cfssl is available
-[ -z "$CFSSL" ] && CFSSL=$(which cfssl 2> /dev/null)
-if [ -z "$CFSSL" -o ! -x "$CFSSL" ]; then
-	echo "cfssl could not be found, downloading it from from https://pkg.cfssl.org..."
-	curl --progress-bar -o $MYHOME/cfssl https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
-	chmod 755 $MYHOME/cfssl
-	CFSSL=$MYHOME/cfssl
-fi
-# check if cfssl-json is available
-[ -z "$CFSSLJSON" ] && CFSSLJSON=$(which cfssljson 2> /dev/null)
-if [ -z "$CFSSLJSON" -o ! -x "$CFSSLJSON" ]; then
-	echo "cfssljson could not be found, downloading it from from https://pkg.cfssl.org..."
-	curl --progress-bar -o $MYHOME/cfssljson https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
-	chmod 755 $MYHOME/cfssljson
-	CFSSLJSON=$MYHOME/cfssljson
-fi
-
 # check if we have a working kubectl ready
 [ -z "$KUBECTL" ] && KUBECTL=`which kubectl`
 if [ -z "$KUBECTL" -o ! -x "$KUBECTL" ]; then
@@ -92,49 +74,12 @@ ${HELM} install --namespace $NAMESPACE -n prometheus stable/prometheus -f $PROME
 # construct ingress hostname string
 GARDENER_PROJECTNAME=$1
 GARDENER_CLUSTERNAME=$2
-INGRESS_HOSTNAME=test-monitoring.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
-
-# generate a private key & certificate signing request
-cat <<__EOF | $CFSSL genkey - | $CFSSLJSON -bare server
-{
-  "hosts": [
-    "$INGRESS_HOSTNAME"
-  ],
-  "CN": "$INGRESS_HOSTNAME",
-  "key": {
-    "algo": "rsa",
-    "size": 2048
-  }
-}
-__EOF
-
-# upload certificate signing request to k8s
-cat <<__EOF | $KUBECTL create -f -
-apiVersion: certificates.k8s.io/v1beta1
-kind: CertificateSigningRequest
-metadata:
- name: training-monitoring.monitoring
-spec:
- groups:
- - system:authenticated
- request: $(cat server.csr | base64 | tr -d '\n')
- usages:
- - digital signature
- - key encipherment
- - server auth
-__EOF
-
-# approve certificate signing request
-${KUBECTL} -n $NAMESPACE certificate approve training-monitoring.monitoring
-
-# download certificate
-${KUBECTL} -n $NAMESPACE get csr training-monitoring.monitoring -o jsonpath='{.status.certificate}' | base64 --decode > server.crt
-
-# create a secret
-${KUBECTL} -n $NAMESPACE create secret tls grafana-tls --cert=./server.crt --key=./server-key.pem
+INGRESS_HOSTNAME_SHORT=m.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
+INGRESS_HOSTNAME_LONG=training-monitoring.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 
 # set ingress url in values file
-sed -i.bck "s/INGRESS_HOSTNAME/${INGRESS_HOSTNAME}/g" $GRAFANA_CONFIG_FILE
+sed -i.bck "s/INGRESS_HOSTNAME_SHORT/${INGRESS_HOSTNAME_SHORT}/g" $GRAFANA_CONFIG_FILE
+sed -i.bck "s/INGRESS_HOSTNAME_LONG/${INGRESS_HOSTNAME_LONG}/g" $GRAFANA_CONFIG_FILE
 
 ## deploy grafana components
 
@@ -143,9 +88,6 @@ ${KUBECTL} -n $NAMESPACE label configmap monitoring-dashboards grafana_dashboard
 
 # install grafana chart
 ${HELM} install --namespace $NAMESPACE -n grafana stable/grafana -f $GRAFANA_CONFIG_FILE
-
-# clean-up
-rm server.csr server.crt server-key.pem
 
 ## print some help
 echo "To access grafana, follow the instructions above."
