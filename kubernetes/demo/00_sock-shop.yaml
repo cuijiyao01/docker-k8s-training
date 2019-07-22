@@ -274,6 +274,7 @@ metadata:
   name: front-end
   labels:
     name: front-end
+    garden.sapcloud.io/purpose: managed-cert
   namespace: sock-shop
 spec:
   rules:
@@ -283,6 +284,17 @@ spec:
         - backend:
             serviceName: front-end
             servicePort: http
+  - host: sock-shop.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
+    http:
+      paths:
+        - backend:
+            serviceName: front-end
+            servicePort: http
+  tls:
+  - hosts:
+    secretName: garden-sock-shop
+     - s.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
+     - sock-shop.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
 ---
 apiVersion: apps/v1
 kind: Deployment

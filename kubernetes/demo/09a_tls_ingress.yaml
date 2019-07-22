@@ -58,8 +58,16 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: simple-nginx-ingress
+  labels:
+    garden.sapcloud.io/purpose: managed-cert
 spec:
   rules:
+  - host: n.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
+    http:
+      paths:
+      - backend:
+          serviceName: simple-nginx-service
+          servicePort: 80
   - host: simple-nginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
@@ -68,6 +76,8 @@ spec:
           servicePort: 80
   tls:
   - hosts:
+    - n.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     - simple-nginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     secretName: simple-nginx-ingress-tls
+
 ---
