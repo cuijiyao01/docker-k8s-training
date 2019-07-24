@@ -8,13 +8,11 @@ In this folder you find scripts & yaml files to deploy a **monitoring system** b
 
 Grafana is exposed via an `ingress` resource, so make sure your cluster has a running ingress controller. When running with Gardener this prerequisite is already fulfilled.  
 
+In it's current version, the helm chart values will be set in a way to instruct Gardener to provision a let's encrypt certificate for the ingress. Due to the long URL (more than 64 characters), there will be 2 hostnames. The first one has to have less than 64 characters to fit into the CN field and the 2nd will be written into the SAN field when requesting the certificates. Details can be found [here](https://gardener.cloud/050-tutorials/content/howto/x509_certificates/).
+
 ## step-by-step setup
 
 ### preparation
-* prepare `cfssl` tools:
-  * if not present, download `cfssl` & `cfssljson` tools for your platform: https://pkg.cfssl.org/ (`curl -L https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 -o cfssl`)
-  * make the binaries executable (`chmod +x`)
-  * move them to a directory covered by your `$PATH` variable ( e.g. `/usr/local/bin/`).
 * check, that `kubectl` works with your cluster
 * If not yet done - setup `helm` in your `kube-system` namespace with a separate service account and cluster-admin permissions. Use the `helm_init.sh` [script](../helm_init.sh) to carry out all required steps.
 
@@ -23,13 +21,10 @@ run `setup_monitoring.sh [project name] [cluster name]` and supply the name or y
 
 The script will
   * construct a URL for Gardener ingress
-  * create a private key & a signing request
-  * upload the signing request to k8s
-  * approve the signing request & download the certificate
   * create a namespace `monitoring`
-  * create a secret `grafana-tls` in the new namespace
   * deploy the chart `stable/prometheus` into the new namespace
   * deploy the chart `stable/grafana` into the new namespace
+  * request a let's encrypt certificate for the grafana ingress
   * create a configmap with the dashboard json files and import it to grafana
 
 Finally, follow the instructions printed by the Grafana chart to obtain the ingress URL and the admin password.

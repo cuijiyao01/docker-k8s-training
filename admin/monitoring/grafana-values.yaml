@@ -16,13 +16,18 @@ datasources:
       isDefault: true
 ingress:
   enabled: true
+  labels:
+    # gardener injects let's encrypt certs
+    garden.sapcloud.io/purpose: managed-cert
   path: /
   hosts:
-    - INGRESS_HOSTNAME
+    - INGRESS_HOSTNAME_SHORT
+    - INGRESS_HOSTNAME_LONG
   tls:
   - secretName: grafana-tls
     hosts:
-    - INGRESS_HOSTNAME
+    - INGRESS_HOSTNAME_SHORT
+    - INGRESS_HOSTNAME_LONG
 sidecar:
   dashboards:
     enabled: true

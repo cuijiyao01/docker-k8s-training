@@ -10,23 +10,6 @@ if [ ! -r $CONFIG_FILE ]; then
 	exit 1
 fi
 
-# check if cfssl is available
-[ -z "$CFSSL" ] && CFSSL=$(which cfssl 2> /dev/null)
-if [ -z "$CFSSL" -o ! -x "$CFSSL" ]; then
-	echo "cfssl could not be found, downloading it from from https://pkg.cfssl.org..."
-	curl --progress-bar -o $MYHOME/cfssl https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
-	chmod 755 $MYHOME/cfssl
-	CFSSL=$MYHOME/cfssl
-fi
-# check if cfssl-json is available
-[ -z "$CFSSLJSON" ] && CFSSLJSON=$(which cfssljson 2> /dev/null)
-if [ -z "$CFSSLJSON" -o ! -x "$CFSSLJSON" ]; then
-	echo "cfssljson could not be found, downloading it from from https://pkg.cfssl.org..."
-	curl --progress-bar -o $MYHOME/cfssljson https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
-	chmod 755 $MYHOME/cfssljson
-	CFSSLJSON=$MYHOME/cfssljson
-fi
-
 # check if we have a working kubectl ready
 [ -z "$KUBECTL" ] && KUBECTL=$(which kubectl 2> /dev/null)
 if [ -z "$KUBECTL" -o ! -x "$KUBECTL" ]; then
@@ -70,36 +53,8 @@ fi
 # construct ingress hostname string
 GARDENER_PROJECTNAME=$1
 GARDENER_CLUSTERNAME=$2
-INGRESS_HOSTNAME=registry.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
-# generate a private key & certificate signing request
-cat <<__EOF | $CFSSL genkey - | $CFSSLJSON -bare server
-{
-  "hosts": [
-    "$INGRESS_HOSTNAME"
-  ],
-  "CN": "$INGRESS_HOSTNAME",
-  "key": {
-    "algo": "rsa",
-    "size": 2048
-  }
-}
-__EOF
-
-# upload certificate signing request to k8s
-cat <<__EOF | $KUBECTL create -f -
-apiVersion: certificates.k8s.io/v1beta1
-kind: CertificateSigningRequest
-metadata:
- name: training-registry.registry
-spec:
- groups:
- - system:authenticated
- request: $(cat server.csr | base64 | tr -d '\n')
- usages:
- - digital signature
- - key encipherment
- - server auth
-__EOF
+INGRESS_HOSTNAME_LONG=registry.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
+INGRESS_HOSTNAME_SHORT=r.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 
 # create htpasswd file for basic authentication
 echo 'participant:$apr1$5KiSajCb$WS1TN7L0KTOltFHuDYle1/' > auth
@@ -107,21 +62,13 @@ echo 'participant:$apr1$5KiSajCb$WS1TN7L0KTOltFHuDYle1/' > auth
 # create a namespace for the registry
 ${KUBECTL} create ns registry
 
-# approve certificate signing request
-${KUBECTL} -n registry certificate approve training-registry.registry
-
-# download certificate
-${KUBECTL} -n registry get csr training-registry.registry -o jsonpath='{.status.certificate}' | base64 --decode > server.crt
-
-# create a secret with certificate
-${KUBECTL} -n registry create secret tls registry-certs --cert=./server.crt --key=./server-key.pem
-
 # create a secret with username/password for basic authentication
 ${KUBECTL} -n registry create secret generic basic-auth --from-file=auth
 
 ## prepare values file and install helm chart
-sed -i.bck "s/INGRESS_HOSTNAME/${INGRESS_HOSTNAME}/g" $CONFIG_FILE
+sed -i.bck "s/INGRESS_HOSTNAME_SHORT/${INGRESS_HOSTNAME_SHORT}/g" $CONFIG_FILE
+sed -i.bck "s/INGRESS_HOSTNAME_LONG/${INGRESS_HOSTNAME_LONG}/g" $CONFIG_FILE
 ${HELM} install stable/docker-registry --namespace registry -f $CONFIG_FILE
 
-# clean-up
-rm server.csr server.crt server-key.pem auth
+# cleanup
+rm auth
