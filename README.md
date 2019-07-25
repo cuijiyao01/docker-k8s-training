@@ -1,5 +1,4 @@
 # Docker and Kubernetes fundamentals  
-#### (UNDER DEVELOPMENT)
 
 This is the repo for the "docker & kubernetes fundamentals course". Gain basic Docker knowledge and learn to orchestrate your containers with Kubernetes. Get started with Docker and run your first container as well as build custom Docker images. When working with Kubernetes you will get to know the common entities in Kubernetes and apply your knowledge during exercises.
 For an overview of topics see the agenda pages on top level.
