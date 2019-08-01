@@ -77,7 +77,10 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - [root container](https://www.youtube.com/watch?v=ltrV-Qmh3oY&feature=youtu.be) @KubeCon by Liz Rice
 
-- secret management with [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets) or [vault](https://www.vaultproject.io/docs/what-is-vault/index.html). 
+- secret management with [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets) or [vault](https://www.vaultproject.io/docs/what-is-vault/index.html).
+
+### SAP Kubernetes Summits
+- Slides and recordings from all the sessions at SAP's first Kubernetes Summit 2019 in Walldorf/Rot, Germany can be found in [Jam](https://jam4.sapjam.com/blogs/show/rW4XILnu81NbcUpiMQWWuu)
 
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
