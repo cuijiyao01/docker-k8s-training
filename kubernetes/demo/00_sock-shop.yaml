@@ -278,7 +278,7 @@ metadata:
   namespace: sock-shop
 spec:
   rules:
-  - host: sock-shop.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
+  - host: s.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     http:
       paths:
         - backend:
