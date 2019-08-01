@@ -292,9 +292,9 @@ spec:
             servicePort: http
   tls:
   - hosts:
+    - s.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
+    - sock-shop.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
     secretName: garden-sock-shop
-     - s.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
-     - sock-shop.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com
 ---
 apiVersion: apps/v1
 kind: Deployment
