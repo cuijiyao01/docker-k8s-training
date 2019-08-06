@@ -90,7 +90,7 @@ Purpose: Create the **"headless" Service**, required to access the pod, created 
 
 - Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless" Service**.
 
-> [Hint](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/extend_helm/kubernetes/exercise_07_statefulset.md#step-0-create-a-headless-service)
+> [Hint](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/kubernetes/exercise_08_statefulset.md#step-0-create-a-headless-service)
 
 ## Step 5: Statefulset
 
