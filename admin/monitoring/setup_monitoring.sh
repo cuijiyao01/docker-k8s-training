@@ -1,14 +1,6 @@
 #!/bin/bash
 
 ## check prerequisites
-# check if userinput is there
-if [ $# -lt 2 ]; then
-  echo "ERROR: Please specify your Gardener project name as 1st argument."
-  echo "       Please specify your Gardener cluster name as 2nd argument"
-  echo "       It is required to build the ingress URL"
-  exit 5
-fi
-
 NAMESPACE="monitoring"
 
 # this is where we expect our helm values files
@@ -72,8 +64,8 @@ ${HELM} install --namespace $NAMESPACE -n prometheus stable/prometheus -f $PROME
 ## prepare for grafana
 
 # construct ingress hostname string
-GARDENER_PROJECTNAME=$1
-GARDENER_CLUSTERNAME=$2
+GARDENER_PROJECTNAME=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}' | cut -d. -f3)
+GARDENER_CLUSTERNAME=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}' | cut -d. -f2)
 INGRESS_HOSTNAME_SHORT=m.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 INGRESS_HOSTNAME_LONG=training-monitoring.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 
