@@ -1,0 +1,115 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-ingest
+  namespace: logging
+  labels:
+    component: elasticsearch
+    role: ingest
+spec:
+  selector:
+    component: elasticsearch
+    role: ingest
+  ports:
+  - name: http
+    port: 9200
+type: ClusterIp 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: es-ingest
+  namespace: logging
+  labels:
+    component: elasticsearch
+    role: ingest
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: elasticsearch
+      role: ingest
+  template:
+    metadata:
+      labels:
+        component: elasticsearch
+        role: ingest
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchLabels:
+                  component: elasticsearch
+                  role: ingest      
+      initContainers:
+      - name: init-sysctl
+        image: busybox:1.27.2
+        command:
+        - sysctl
+        - -w
+        - vm.max_map_count=262144
+        securityContext:
+          privileged: true
+      containers:
+      - name: es-ingest
+        image: quay.io/pires/docker-elasticsearch-kubernetes:6.3.2
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: CLUSTER_NAME
+          value: myesdb
+        - name: NODE_MASTER
+          value: "false"
+        - name: NODE_DATA # NODE_INGEST, NODE_MASTER, NODE_DATA all set to true by default in Dockerfile
+          value: "false"
+        - name: NODE_INGEST
+          value: "true"          
+        - name: HTTP_ENABLE
+          value: "true"
+        - name: ES_JAVA_OPTS
+          value: -Xms1024m -Xmx1024m
+        - name: NETWORK_HOST
+          value: "_eth0_"
+        - name: PROCESSORS
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.cpu
+        resources:
+          requests:
+            cpu: "0.25"
+          limits:
+            cpu: 1
+        ports:
+        - containerPort: 9200
+          name: http
+        - containerPort: 9300
+          name: transport
+        livenessProbe:
+          tcpSocket:
+            port: transport
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /_cluster/health
+            port: http
+          initialDelaySeconds: 300
+          timeoutSeconds: 5
+        volumeMounts:
+        - name: storage
+          mountPath: /data
+      volumes:
+          - emptyDir:
+              medium: ""
+            name: storage
