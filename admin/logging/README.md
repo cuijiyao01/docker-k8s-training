@@ -18,7 +18,5 @@ All namespaced Resources are in the logging namespace
 - ServiceAccount: fluent-bit
 - DaemonSet: fluent-bit (+ ConfigMap, mounting Hostfilesystem)
 - Deployment: kibana (+ Service, + Ingress)
-- Deployment: es-ingest (+ Service)
-- StatefulSet: es-master (+ two Services)
-- StatefulSet: es-data (+ two Service)
+- StatefulSet: elasticsearch (+ two Services)
  
