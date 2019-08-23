@@ -121,7 +121,7 @@ Furthermore, during the training these ranges will be used for the network polic
 You can use the [network information portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml) to get your local office's CIDR blocks. For the exercise 8 you can give the info to participants as well or ask them to search for it.
 
 ### Setup helm & tiller
-To continue with the setup, you have to initialize tiller in `kube-sytem` namespace. Run the [helm_init](.helm_init.sh) script within your VM to download the helm client (if not present) and bring up tiller with a dedicated service account & cluster admin permissions.
+To continue with the setup, you have to initialize tiller in `kube-sytem` namespace. Run the [helm_init](helm_init.sh) script within your VM to download the helm client (if not present) and bring up tiller with a dedicated service account & cluster admin permissions.
 
 ### Setup a docker registry (~1 day before course starts)
 For the docker exercises you need a private docker registry. Participants will upload their custom images to it during the course. Recommendation is to spin up a registry without any persistence in the k8s cluster you use for the training.
