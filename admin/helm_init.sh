@@ -26,11 +26,8 @@ fi
 [ -z "$HELM" ] && HELM=$(which helm 2> /dev/null)
 if [ -z "$HELM" -o ! -x "$HELM" ]; then
 	echo "HELM could not be found, downloading it..."
-	curl --progress-bar -o $MYHOME/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.13.1-linux-amd64.tar.gz
-    tar -zxvf $MYHOME/helm.tar.gz -C $MYHOME/
-    sudo mv linux-amd64/helm /usr/local/bin/helm
-    rm -rf $MYHOME/helm.tar.gz linux-amd64 
-	HELM=/usr/local/bin/helm
+  curl -L https://git.io/get_helm.sh | bash
+	HELM=$(which helm)
 fi
 
 echo "setting up tiller with a dedicated service account in kube-system namespace ..."
