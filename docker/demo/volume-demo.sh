@@ -24,7 +24,7 @@ echo "We mount host etc into our pod, and due to root rights in it we can e.g. s
 docker run -it --name hackerpod -v /etc:/hostetc alpine:3.8
 echo "press enter to continue"
 read
-docker rm demo
+docker rm hackerpod
 clear
 
 echo "docker run -d -p 8081:8080 --name jenkins -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-alpine"
