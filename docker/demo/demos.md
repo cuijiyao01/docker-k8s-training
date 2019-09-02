@@ -38,13 +38,13 @@ It executes all nessaccery docker command for this demo and awaits a "enter" bef
 
 Let’s start simple and (bind) mount a directory into a container. Therefore assume you have a toolbox container and you need some environment in there (like a config file or ssh keys).
 
-`docker run -it --mount,type=bind,source=/home/vagrant,target=/mnt/home alpine:3.8`
+`docker run -it --mount type=bind,source=/home/vagrant,target=/mnt/home alpine:3.8`
 Show the content of /mnt/home, which would be you’re home directory
 
 ### Second part
 
 Let’s see what else you could do with a bind mount:
-`docker run -it --mount,type=bind,source=/home/vagrant,target=/etc alpine:3.8`
+`docker run -it --mount type=bind,source=/home/vagrant,target=/etc alpine:3.8`
 What happens? Well, our home directory is mounted to /etc. The original content of /etc is still there but hidden.
 
 Of course you can also inject a nginx index page or any configuration this way, but that’s part of the exercise ;)
@@ -52,7 +52,7 @@ Of course you can also inject a nginx index page or any configuration this way, 
 ### hacker part
 
 Let’s see what else you could do with a bind mount:
-`docker run -it --mount,type=bind,source=/etc,target=/hostetc alpine:3.8`
+`docker run -it --mount type=bind,source=/etc,target=/hostetc alpine:3.8`
 In Container we are root and can e.g. see shadow file: `cat /hostetc/shadow`.
 
 Even more fun, mount host / into the container and chroot inside container into it....
