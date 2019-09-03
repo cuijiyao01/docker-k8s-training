@@ -122,7 +122,7 @@ _EOF
 Start a new container that bind-mounts this directory to `/usr/share/nginx/html` as a volume.
 
 ```bash
-$ docker run -d -p 1081:80 -v `pwd`/nginx-html:/usr/share/nginx/html --name ex33nginx nginx
+$ docker run -d -p 1081:80 --mount type=bind,source=`pwd`/nginx-html,target=/usr/share/nginx/html --name ex33nginx nginx
 ```
 
 Now use your browser once again to go to `http://localhost:1081` - you will now see the webpage you just created.
