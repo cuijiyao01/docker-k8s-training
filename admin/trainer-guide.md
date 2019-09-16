@@ -128,14 +128,14 @@ For the docker exercises you need a private docker registry. Participants will u
 In the admin folder of this repo, you find a registry folder with `install.registry.sh` script. Check the prerequisites and run the script as described [here](./registry/readme.md) to deploy a registry and make it available via an ingress.
 
 ### Setup cluster monitoring (~1 day before course starts)
-If you want to keep track of things happening in the cluster, you can use these [scripts](./monitoring) to setup  prometheus/grafana based monitoring.
+If you want to keep track of things happening in the cluster, you can use these [scripts](./monitoring) to setup prometheus/grafana based monitoring.
 
 ### (Optional) [Gain access to the Dashboard](accessDashboard.md)
 
 ## During the Course
 
 ### Use the "master" kube.config 
-For all demos to work properly (especially the RBAC demo), you have to use an "admin" user when talking to the cluster. When you use the `kube.config` you got along with the cluster details, you are on the save side. However if you use a participant user / namespace, the RBAC demo will fail due to missing autorization. 
+For all demos to work properly (especially the RBAC demo), you have to use an "admin" user when talking to the cluster. When you use the `kube.config` you got along with the cluster details, you are on the save side. However if you use a participant user / namespace, the RBAC demo will fail due to missing authorization. 
 
 Of course, you can create a separate namespace (!= `default`) and add it to the `kube.config` context definition to send requests to it by default.
 

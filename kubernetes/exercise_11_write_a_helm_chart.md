@@ -90,4 +90,4 @@ Use the `helm upgrade` command to bring your release to a new version. As part o
 Try to run an upgrade and change `food` or `drink` with a `--set` command line parameter to a new value.  
 Maybe an upgrade does not restart the job so delete the job-pod before you do an upgrade with `kubectl delete pod <name of the pod completed>`.
 
-By default, the charts `values.yaml` file will be used. But of course you can overwrite it completely or by specifiying single values in a separate file. Create a file with custom values and use the `-f` flag to pass it on while upgrading.
+By default, the charts `values.yaml` file will be used. But of course you can overwrite it completely or by specifying single values in a separate file. Create a file with custom values and use the `-f` flag to pass it on while upgrading.

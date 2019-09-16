@@ -88,6 +88,6 @@
 * These proxies are so-called [forward proxies](https://en.wikipedia.org/wiki/Proxy_server) because they forward requests from the intranet to the external internet. 
 * There are also so-called [reverse-proxies](https://en.wikipedia.org/wiki/Reverse_proxy) whose main purpose is to distribute incoming requests from the internet to systems in the [DMZ](https://en.wikipedia.org/wiki/DMZ_(computing)) (see also below) and make the responses appear as coming from a single server.
 
-* **Currently the proxy has to be explicitly set in the internet explorer / all browsers as well as in all tools (e.g. Eclipse) and runtimes (e.g. a Java process) that want to access the internet.** This can be done through parameter settings or command line options depending on the tool.    
+* **Currently the proxy has to be explicitly set in the internet explorer / all browsers as well as in all tools (e.g. Eclipse) and runtimes (e.g. a Java process) that want to access the internet.** This can be done through parameter settings or command line options depending on the tool.
 
 

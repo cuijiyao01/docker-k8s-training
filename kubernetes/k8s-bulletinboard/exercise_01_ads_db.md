@@ -115,7 +115,7 @@ metadata:
 
 - Refer to the "headless" service, created earlier and make sure that only one DB pod gets created. 
 - Additional refer under `volumes` to the secret item with database initialization script and refer to the configmap and right secret item when setting up Postgres environment variables in the Docker container.
-- Also in the definition of the stateful set you need to give the names of the  **environment variables**. So the name of the environment variable for the location for the database files  is `PGDATA` and for the superuser password it is `POSTGRES_PASSWORD`.
+- Also in the definition of the stateful set you need to give the names of the  **environment variables**. So the name of the environment variable for the location for the database files is `PGDATA` and for the superuser password it is `POSTGRES_PASSWORD`.
 
 ```
 spec:
@@ -180,12 +180,12 @@ spec:
 
 - When you are ready with the specification of the **Statefulset** save it under the filename `ads-db-statefulset.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-db-statefulset.yaml` to create the **Statefulset** `ads-db-statefulset`.
 
-- After successful creation of the **Statefulset** check, whether the **Pod** `ads-db-statefulset-0` got created properly  via `kubectl get pod ads-db-statefulset-0` or in more detail via `kubectl describe pod ads-db-statefulset-0` . Also check whether the Database is ready to be connected via `kubectl logs ads-db-statefulset-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
+- After successful creation of the **Statefulset** check, whether the **Pod** `ads-db-statefulset-0` got created properly via `kubectl get pod ads-db-statefulset-0` or in more detail via `kubectl describe pod ads-db-statefulset-0` . Also check whether the Database is ready to be connected via `kubectl logs ads-db-statefulset-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
 
 
 ## Optional- Step 6: Detailed Check whether Pod with Postgres DB is running properly
 
-Purpose: check whether the database is running and accepting connections. Use either  a temporary postgresql pod with sql or the [**pgadmin tool**](https://www.pgadmin.org/) for that.
+Purpose: check whether the database is running and accepting connections. Use either a temporary postgresql pod with sql or the [**pgadmin tool**](https://www.pgadmin.org/) for that.
 
 Here are two different ways how you could test if the statefulset is configured correctly and the db initialized with the right user and password:
 

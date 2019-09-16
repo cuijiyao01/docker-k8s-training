@@ -32,7 +32,7 @@ docker exec -it 567d71edcab0 /bin/sh
 ```
 
 Perform `ps` or again `top` to see the processes that run in there.
-If you started top, quit by pressing `q`. Detach from container using `Ctrl+p` and then `Ctrl+q`.
+If you started top, quit by pressing `q`. Detach from container using `ctrl + p` and then `ctrl + q`.
 
 ## Step 2: Reattaching to containers
 

@@ -3,9 +3,11 @@
         "artifactory",
         "bulletinboard",
         "chroot",
+        "dhcp",
         "dockerfile",
         "dockerfiles",
         "don'ts",
+        "etcd",
         "grafana",
         "hana",
         "ipconfig",
@@ -28,7 +30,11 @@
         "psql",
         "rbac",
         "repos",
+        "runtime",
+        "runtimes",
         "stateful",
+        "webserver",
+        "webservers",
         "wlan"
     ]
 }

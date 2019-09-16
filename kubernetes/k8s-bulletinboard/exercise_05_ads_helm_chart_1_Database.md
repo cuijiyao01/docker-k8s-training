@@ -262,7 +262,7 @@ data:
 ```
 ### Step 4.1 The Secrets
 
-- Create a `initdb.txt` file in `bulletinboard-ads` folder with the following content. When helm reads it in, it will substitute all the placeholders with the values we specified in  the `values.yaml`
+- Create a `initdb.txt` file in `bulletinboard-ads` folder with the following content. When helm reads it in, it will substitute all the placeholders with the values we specified in the `values.yaml`
 
 ```
 -- This is a postgres initialization script for the postgres container. 
@@ -323,8 +323,6 @@ spec:
             secretKeyRef:
               name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
               key: postgres_password_value
-          
-          
 ```
 
 ## Step 5: Install the Chart and test the Microservice

@@ -25,6 +25,6 @@ The script will demonstrate how cgroups can be used to control processes. The ex
 Docker as well as Kubernetes can make use of cgroups to manage resources in a container environment.
 
 ## 04 seccomp (based on Docker for convenience)
-The script will demonstrate how seccomp profiles can be used to control access to the kernel via syscalls. To make things easier, this demo  is based on Docker so it might give already an impression on how Docker works. 
+The script will demonstrate how seccomp profiles can be used to control access to the kernel via syscalls. To make things easier, this demo is based on Docker so it might give already an impression on how Docker works. 
 
 While the syscalls are blocked in this demo, it is worth to mention, that you can also implement trap wires to inform the underlying platform of what's going on and potentially invoke countermeasures.

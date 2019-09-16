@@ -85,7 +85,7 @@ Run `kubectl create configmap nginxconf --from-file=<path/to/your/>default.conf`
 Verify the configmap exists with `kubectl get configmap`.
 
 ## Step 5: Combine everything into a deployment
-Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. As a result nignx should display the custom index.html page, serve http traffic on port 80 and https on port 443. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
+Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. As a result nginx should display the custom index.html page, serve http traffic on port 80 and https on port 443. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
 
 Complete the snippet below by inserting the missing parts (look for `???` blocks):
 

@@ -25,7 +25,7 @@ $ helm dependency update bulletinboard-ads
 
 ## Step 3: Make necessary changes to ads chart
 
-When using dependencies it is important to know that templates (e.g. defined in _helpers.tpl files) are shared globally between subcharts and the main chart. This means that our "db-connection" template in ads overwrites the one in the users chart. For this not to happen please rename the `"db-connection"` template to `"ads-db-connection"` and adapt also the name in the application-k8s.txt file  and templates/ads-app-deployment.yaml file where it is used.
+When using dependencies it is important to know that templates (e.g. defined in _helpers.tpl files) are shared globally between subcharts and the main chart. This means that our "db-connection" template in ads overwrites the one in the users chart. For this not to happen please rename the `"db-connection"` template to `"ads-db-connection"` and adapt also the name in the application-k8s.txt file and templates/ads-app-deployment.yaml file where it is used.
 
 ## Step 4: Install chart
 
