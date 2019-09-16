@@ -15,7 +15,7 @@ What does the LFS258 course contain as topics (rough overview)
    - 
  6. API Objects
    - API groups, 
-   - deployments, deamonset, statefulset, 
+   - deployments, daemonset, statefulset, 
    - autoscaling, jobs, RBAC
  7. Managing State with Deployments
    - deployments, rolling updates, rollbacks, scaling with deployments
