@@ -6,7 +6,7 @@
 
 <img src="images/k8s-bulletinboard-target-picture-ads-db-3.png" width="800" />
 
-- As we do not need horizontal scaling for the database (by our assumned requirements) we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replica count=1).
+- As we do not need horizontal scaling for the database (by our assumed requirements) we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replica count=1).
 
 - As database we will use Postgresql, where on Docker hub we can find a well suiting offical [Postgresql Docker image](https://hub.docker.com/_/postgres/).
 
@@ -183,11 +183,11 @@ spec:
 - After successful creation of the **Statefulset** check, whether the **Pod** `ads-db-statefulset-0` got created properly  via `kubectl get pod ads-db-statefulset-0` or in more detail via `kubectl describe pod ads-db-statefulset-0` . Also check whether the Database is ready to be connected via `kubectl logs ads-db-statefulset-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
 
 
-## Optional- Step 6: Detailled Check whether Pod with Postgres DB is running properly
+## Optional- Step 6: Detailed Check whether Pod with Postgres DB is running properly
 
-Purpose: check whether the database is running and accepting connections. Use either  atemporary postgresql pod with sql or the [**pgadmin tool**](https://www.pgadmin.org/) for that.
+Purpose: check whether the database is running and accepting connections. Use either  a temporary postgresql pod with sql or the [**pgadmin tool**](https://www.pgadmin.org/) for that.
 
-Here are two different ways how you could test if the statefulset is configured correctly and the db intialized with the right user and password:
+Here are two different ways how you could test if the statefulset is configured correctly and the db initialized with the right user and password:
 
 ### Using a temporary postgres pod and psql
 
@@ -198,7 +198,7 @@ kubectl run tester -it --generator=run-pod/v1 --restart=Never --rm --image=postg
 ```
 
 A prompt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
-`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial` if you have not changed it). After this you should connect to the ads db, a promt `ads=>` will ask you for the next command. If this does, all is correctly set up!  
+`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial` if you have not changed it). After this you should connect to the ads db, a prompt `ads=>` will ask you for the next command. If this does, all is correctly set up!  
 Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command. The pod should be automatically removed after this. 
 
 ### Using port-forward and pgadmin in the VM

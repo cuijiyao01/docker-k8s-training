@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Eclipse Project File: Added to allow Git handling with Eclipse.
+-->
+<projectDescription>
+	<name>docker-k8s-training</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>

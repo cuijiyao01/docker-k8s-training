@@ -32,7 +32,7 @@ Exit the pod and end the script
 ## Demo of Docker volumes
 
 You can use volume-demo.sh script. 
-It executes all nessaccery docker command for this demo and awaits a "enter" before it cleans up and goes to the next part.
+It executes all necessary docker command for this demo and awaits a "enter" before it cleans up and goes to the next part.
 
 ### First part
 
@@ -49,7 +49,7 @@ What happens? Well, our home directory is mounted to /etc. The original content 
 
 Of course you can also inject a nginx index page or any configuration this way, but that’s part of the exercise ;)
 
-### hacker part
+### Hacker part
 
 Let’s see what else you could do with a bind mount:
 `docker run -it --mount type=bind,source=/etc,target=/hostetc alpine:3.8`
@@ -62,7 +62,7 @@ Even more fun, mount host / into the container and chroot inside container into 
 Let’s move on to docker volumes. When working with a container, you might want to persist some data during runtime. For this example you will use a Jenkins and make it’s home a volume.
 `docker run -d -P --mount source=jenkins_home,target=/var/jenkins_home jenkins/jenkins:lts`
 Next, get the ports and connect the port that forwards to container port 8080
-On the jenkins logon page, you’re asked for a password, run “docker logs <container name>”  and obtain the logon token
+On the jenkins logon page, you’re asked for a password, run “docker logs \<container name>”  and obtain the logon token
 Logon to the jenkins and choose “select plugins to install”, select “none” (upper left corner) and continue. 
 Create a user e.g ‘root’ with a simple password and finish the setup.
 Now stop the container and restart it – obviously you’re still able to logon with the credentials created before.

@@ -23,7 +23,7 @@
 * Role based authorization (RBAC)
 * Image pull secrets
 * Network policies
-  * Excercise 08 - add a network policy to the nginx deployment
+  * Exercise 08 - add a network policy to the nginx deployment
 * Node management
 * Kubernetes Dashboard
 * Scheduling pods on dedicated nodes

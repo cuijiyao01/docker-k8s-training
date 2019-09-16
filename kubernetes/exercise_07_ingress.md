@@ -6,10 +6,10 @@ Ingress resources allow us to expose services through a URL. In addition, it is 
 
 In addition to all that, you will use Init-Containers to initialize your nginx deployment and load the application's content.
 
-**Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the script [prereq-exercise-07.sh](solutions/prereq-exercise-07.sh) in the *solutions* folder to create the prerequites. Please use this script only if you did not manage to complete the previous exercises.
+**Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the script [prereq-exercise-07.sh](solutions/prereq-exercise-07.sh) in the *solutions* folder to create the prerequisites. Please use this script only if you did not manage to complete the previous exercises.
 
 ## Step 0 - obtain necessary detail information
-Since the ingress controller is specific to the cluster, you need a few information to construct a valid URL processible by the controller.
+Since the ingress controller is specific to the cluster, you need a few information to construct a valid URL processable by the controller.
 
 Here is a command to find our your cluster and projectname:
 ```bash
@@ -74,11 +74,11 @@ Finally, deploy your ingress and test the URL.
 
 ## Step 3 - annotate!
 Besides the labels, K8s uses also a concept called "[annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)". Annotations are part of the metadata section and can be written directly to the yaml file as well as added via `kubectl annotate ...`. Similar to the labels, annotations are also key-value pairs.
-Most commonly annontations are used to store additional information, describe a resource more detailed or tweak it's behaviour.
+Most commonly annotations are used to store additional information, describe a resource more detailed or tweak it's behavior.
 
 In our case, the used ingress controller knows several annotations and reacts to them in a predefined way. The known annotations and their effect are described [here]( https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/).
 
-So let's assume, you want to change the timeout behaviour of the nginx exposed via the ingress. Check the list of [annotations](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/) for the `proxy-connect-timeout` and apply a suitable configuration to your ingress. Of course don't forget to test the URL.
+So let's assume, you want to change the timeout behavior of the nginx exposed via the ingress. Check the list of [annotations](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/) for the `proxy-connect-timeout` and apply a suitable configuration to your ingress. Of course don't forget to test the URL.
 
 ## optional step 4 - rewrite target
 Now that you know how an annotation works and how it affects your ingress, lets move on the fanout scenario. Assume you want your ingress to serve something different at its root level `/` and you want to move your application to `/my-app`. Your URL would look like this `<your-custom-endpoint>.ingress.<GARDENER-CLUSTER-NAME>.<GARDENER-PROJECT-NAME>.shoot.canary.k8s-hana.ondemand.com/my-app`.
@@ -91,7 +91,7 @@ The ingress is forwarding traffic to `/my-app` also to `/my-app` at the backend.
 ## Troubleshooting
 In addition to the checking of service <> deployment connection via labels and selectors, there is another entity which holds relevant information - the actual ingress router running in `kube-system` namespace.
 
-Get the full name of the `addons-nginx-ingress-controller` pod running in `kube-system` and check the last 50 log entries for occurrences of your ingress name or host name and related errors. Increase the number (--tail=100), when your resoure is not part of the output:
+Get the full name of the `addons-nginx-ingress-controller` pod running in `kube-system` and check the last 50 log entries for occurrences of your ingress name or host name and related errors. Increase the number (--tail=100), when your resource is not part of the output:
 ```bash
 kubectl -n kube-system get pods
 

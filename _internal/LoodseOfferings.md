@@ -1,4 +1,4 @@
-# Offerings from Loodse 
+# Offerings from Loodse
 
 loodse.com offers Docker and K8S trainings. We can potentially use / license some stuff if we want to. Here we list the agendas of the courses.
 

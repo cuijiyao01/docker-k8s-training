@@ -10,7 +10,7 @@ Exercise 5.2: Authoring the chart to include the ads application itself
 
 ## Prerequisite
 
-- Chart from Excercise 2 correctly installed (check out ads-db-* files in the bulletionboard-users helm solutions if previous exercise not done)
+- Chart from Exercise 2 correctly installed (check out ads-db-* files in the bulletinboard-users helm solutions if previous exercise not done)
 
 ## Step 1: Copy all app K8s manifest files (`ads-app-*.yaml`) to the `templates` folder
 
@@ -81,7 +81,7 @@ $ helm upgrade <release-name> bulletinboard-ads
 ## Step 3: Check if the service is up and running
 
 ```bash
-http://bulletionboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
+http://bulletinboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
 ```
 
 

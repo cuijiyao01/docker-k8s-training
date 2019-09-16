@@ -24,7 +24,7 @@ Postman is a Google Chrome app for interacting with HTTP APIs. It has a friendly
     <img src="images/postman_post_options.png" />
   - Enter below JSON in the text field
     - **Hint:** Replace `<place-holder>` accordingly
-```
+```json
 {
 	"title":"new-advertisement-from-<your-user-id>-1",
 	"price": "140",

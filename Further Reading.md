@@ -88,7 +88,7 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 ## Helm
 - overview of available charts: https://github.com/kubernetes/charts/tree/master/stable
-- offical documentatio: https://docs.helm.sh/
+- official documentation: https://docs.helm.sh/
 - Videos from internal events:
   - https://video.sap.com/playlist/dedicated/31122632/1_b597m58u/1_910vsh7f
   - https://video.sap.com/playlist/dedicated/31122632/1_b597m58u/1_hkwlxqmn
@@ -100,13 +100,13 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 ## General
 
-- Brendan Burns, Distinguished Engineer at Microsoft and Chief Architect behind the container infrastucture within Azure released one of his books on distributed software design for free: [Designing Distributed Systems](https://azure.microsoft.com/en-us/resources/designing-distributed-systems/)
+- Brendan Burns, Distinguished Engineer at Microsoft and Chief Architect behind the container infrastructure within Azure released one of his books on distributed software design for free: [Designing Distributed Systems](https://azure.microsoft.com/en-us/resources/designing-distributed-systems/)
 
 - [katacoda learning platform](https://www.katacoda.com/learn) offers browser-based tutorials around docker & kubernetes  
 
 - [CTO Circle – Container Delivery Guidance](https://sap.sharepoint.com/sites/60001485/Shared%20Documents/01_Communication/CTO%20Circle%20%26%20Technology%20Board%20Meetings/CTO%20Circle/Container%20Delivery_RELEASED.pdf?csf=1&e=THkcxG)
 
-## Further contact informations:
+## Further contact information
 
 - [kubernetes mailing list @sap](https://listserv.sap.corp/mailman/listinfo/kubernetes-users)
 - [Cloud Platform enabling Team JAM Contact Page](https://go.sap.corp/cpet)

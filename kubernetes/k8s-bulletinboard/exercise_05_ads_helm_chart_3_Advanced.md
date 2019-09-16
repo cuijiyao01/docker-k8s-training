@@ -10,7 +10,7 @@ Exercise 5.3: Advanced topics
 
 ## Step 1: Create file `requirements.yaml` in the `bulletinboard-ads` folder
 
-```
+```yaml
 dependencies:
 - name: bulletinboard-users
   version: "0.1.0"
@@ -63,6 +63,6 @@ Upgrade chart, kill app pod, check that application still works and that you can
 
 **Bonus 1:** WE have a fixed user service name without the release name being part of it. Figure it out how to make the user service name configurable and how to path the name to the ads chart during installation. (Please send us your example.)
 
-**Bonus 2:** Make app manifest files fully configurable (simiar with db manifest files)
+**Bonus 2:** Make app manifest files fully configurable (similar with db manifest files)
 
  

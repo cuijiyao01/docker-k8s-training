@@ -19,7 +19,7 @@ You will now see the processes inside your container:
 
 ## Step 1: Executing commands in containers
 
-Start another shell into the container by issueing the following command. You will need your container's ID or its simple name.
+Start another shell into the container by issuing the following command. You will need your container's ID or its simple name.
 
 ```bash
 docker exec -it <your container ID or Silly_Name> /bin/sh
