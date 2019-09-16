@@ -98,7 +98,7 @@ docker tag 28ffc0efbc9b secure-nginx:0001
 
 ## Step 9: Push the image to a registry
 
-Tag your image (again) so that it will have a reference to a registry. The URL for the registry is  **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com**, the values for `<cluster-name>` and `<project-name>` **must be sustituted** with those given to you by your trainer.
+Tag your image (again) so that it will have a reference to a registry. The URL for the registry is  **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com**, the values for `<cluster-name>` and `<project-name>` **must be substituted** with those given to you by your trainer.
 
 Assuming that `<cluster-name>` is `wdfcw01`, that `<project-name>` is `k8s-train`, that your participant-ID is `part-0001` and that the image ID returned to you in Step 7 is `28ffc0efbc9b`, tag your image like this:
 

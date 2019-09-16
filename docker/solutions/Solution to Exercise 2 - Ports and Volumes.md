@@ -55,7 +55,7 @@ CONTAINER ID    IMAGE    COMMAND                  CREATED           STATUS      
 44b447735dc1    nginx    "nginx -g 'daemon ..."   3 seconds ago     Up 2 seconds    0.0.0.0:32768->80/tcp   ex31nginx
 ```
 
-In this example, port 80 of the container was forwarded to port 32768 of the Docker host (this number might be different in your case). Use your webbrowser again and direct it to
+In this example, port 80 of the container was forwarded to port 32768 of the Docker host (this number might be different in your case). Use your web browser again and direct it to
 `http://localhost:<your port number>` (so to `http://localhost:32768` in this example). This time you will see *nginx'* default landing page.
 
 Stop and remove your container:

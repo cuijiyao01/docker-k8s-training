@@ -1,5 +1,4 @@
-Exercise 5.1: Creating a chart to include the Database required by the ads application
-====================================================
+# Exercise 5.1: Creating a chart to include the Database required by the ads application
 
 ## Learning Goal
 Create a new helm chart with all DB related Kubernetes objects with the help of a Helm chart
@@ -111,7 +110,7 @@ Everything is removed at once or is there still something there? Why? Also try `
 > **IMPORTANT: Uninstall chart first**
 You need to do this because trying to update the chart will not work due to all the changes we will make to the files.
 
-We will now start to parameterize the  yamls.
+We will now start to parameterize the yamls.
 **Hint:** To test if what we do has the desired effect we should use `helm install --dry-run --debug .` and/or `helm lint`. 
 
 ### Step 3.1: Values and Helpers 
@@ -138,7 +137,7 @@ Db:
   
 ```
 {{/*
-Complete tages for labels selectors etc.
+Complete tags for labels selectors etc.
 */}}
 {{- define "tags.ads.db" }}
 component: ads
@@ -181,7 +180,7 @@ Used for Names of Chart entities
 | `ads-db-statefulset.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.StatefulsetName) }}`|
 | `ads-db-networkpolicy.yaml`| `metadata:  `<br/>`  {{ template "add-release-name" (dict "dot" . "name" .Values.Db.Access) }}`|
 
-Here some explanation on the template: Normally you can give to template the name of the template and the scope. We use a dictionary (dict) to pass more arguments to the template so its more like a function. The frist entry of the dict is the root context ` . ` saved as `dot`. The second is the name to which we want to add the releasename. Of course you could add even more entries into the dictonary to pass more arguments to the template. 
+Here some explanation on the template: Normally you can give to template the name of the template and the scope. We use a dictionary (dict) to pass more arguments to the template so its more like a function. The first entry of the dict is the root context ` . ` saved as `dot`. The second is the name to which we want to add the releasename. Of course you could add even more entries into the dictionary to pass more arguments to the template. 
 
 - Also Updated references in `ads-db-statefulset.yaml'
 

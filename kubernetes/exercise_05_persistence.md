@@ -10,7 +10,7 @@ After you exposed your webserver to the network in the previous exercise, we wil
 Firstly, remove the deployment you created in the earlier exercise. Check the cheat sheet for the respective command.
 
 Next, take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`. Are there already  resources present in the cluster?
-Inspect the resouces you found and try to figure out how they are related (hint - look for `status: bound`).
+Inspect the resources you found and try to figure out how they are related (hint - look for `status: bound`).
 
 By the way, you don't have to type `PersistentVolume` all the time. You can abbreviate it with `pv` and similarly use `pvc` for the claim resource.
 
@@ -75,7 +75,7 @@ Please note that our storage backend (`default` storage class based on [`gcePers
 Once you successfully created the deployment, check that all replicas are up and running.
 
 ### Step 5: Check the content
-Remember the service from the previous exercise? Since the labels where not changed, the service will route incoming traffic to the new pods with the attached storage volume. Open a web browser and verfiy that your custom index.html page is displayed properly.
+Remember the service from the previous exercise? Since the labels where not changed, the service will route incoming traffic to the new pods with the attached storage volume. Open a web browser and verify that your custom index.html page is displayed properly.
 
 **Important: do not delete the deployment,service or PVC**
 

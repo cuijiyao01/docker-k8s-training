@@ -21,7 +21,7 @@ Run `kubectl get nodes -o wide` to get the IP addresses of all cluster nodes. Yo
 
 ## Step 3: create a service from a yaml file.
 Before going on, delete the service you created with the `expose` command. Now write your own yaml to define the service.
-Check, that the label selector matches the lables of your deployment/pods and (re-)create the service (`kubectl create -f <your-file>.yaml`).
+Check, that the label selector matches the labels of your deployment/pods and (re-)create the service (`kubectl create -f <your-file>.yaml`).
 
 **Important: don't delete this service, you will need it during the following exercises.**
 

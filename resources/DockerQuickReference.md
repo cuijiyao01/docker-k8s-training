@@ -56,7 +56,7 @@ RUN <cmd>     : run a command during build, mostly mkdir, ... apt-get to install
 CMD           : specify command / software to be run inside the container (runtime) on startup
                 (shell form or JSON form)
 EXPOSE <port> : container will listen on (local) port; mapped in "docker run -p target:port". 
-                Can specify protocal "port/prot"; TCP is default, UDP is possible
+                Can specify protocol "port/prot"; TCP is default, UDP is possible
 COPY f t      : copy local file to target t
 ADD src dest  : same as COPY but src can be tar.gz or url that will be unpacked
 ENV n=v n=v   : set environment vars (use \ to continue the line; use one ENV so get only one cache layer)
@@ -71,7 +71,7 @@ USER          : switch to given user
 
 ## Managing data in containers
 
-- "Data volumes are designed to persist data, independent of the container’s life cycle. "
+- "Data volumes are designed to persist data, independent of the container's lifecycle."
 This can be a file or more generally a directory and is then mounted. Data Volumes bypass the Union File System (which is per container).
 - A volume creates / mounts a directory in the container to a directory in the host VM.
 - Docker keeps volumes in the host VM at: `/var/lib/docker/volumes/`. This is inside the VM in virtualbox, (not visible in the docker console window.)

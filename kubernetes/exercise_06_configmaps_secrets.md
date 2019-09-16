@@ -5,10 +5,10 @@ In this exercise, you will be dealing with _Pods_, _Deployments_, _Services_, _L
 ConfigMaps and secrets bridge the gap between the requirements to build generic images but run them with a specific configuration in an secured environment.
 In this exercise you will move credentials and configuration into the Kubernetes cluster and make them available to your pods.
 
-**Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the script [prereq-exercise-06.sh](solutions/prereq-exercise-06.sh) in the *solutions* folder to create the prerequites. Please use this script only if you did not manage to complete the previous exercises.
+**Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the script [prereq-exercise-06.sh](solutions/prereq-exercise-06.sh) in the *solutions* folder to create the prerequisites. Please use this script only if you did not manage to complete the previous exercises.
 
 ## Step 0: clean-up
-Before you start with this exercise, remove the deployment(s) and service(s) from the previous excercises. **However do NOT delete the persistentVolumeClaim!** We will use it in this excercise as well. Check the cheat sheet for respective delete commands.
+Before you start with this exercise, remove the deployment(s) and service(s) from the previous exercises. **However do NOT delete the persistentVolumeClaim!** We will use it in this exercise as well. Check the cheat sheet for respective delete commands.
 
 ## Step 1: Create a certificate
 In the first exercises you ran a webserver with plain http. Now you are going to rebuild this setup and add https to your nginx.
@@ -40,7 +40,7 @@ tls.key:  1708 bytes
 
 **Important: remember the file names in the data section of the output. They are relevant for the next step.**
 
-## Step 3: Create a ngnix configuration
+## Step 3: Create a nginx configuration
 Once the certificate secret is prepared, create a configuration and store it to kubernetes as well. It will enable nginx to serve https traffic on port 443 using a certificate located at `/etc/nginx/ssl/`.
 
 Download from [gitHub](./solutions/06_default.conf) or create a file `default.conf` with the following content. In any case, ensure the file's name is `default.conf`.
@@ -157,7 +157,7 @@ Once the service has an external IP try to call it with an https prefix. Check t
 ## Troubleshooting
 The deployment has grown throughout this exercise. There should be 3 volumes specified as part of `deployment.spec.template.spec.volumes` (a pvc, configMap & secret). Each item of the volumes list defines a (local/pod-internal) name and references the actual K8s object. Also these 3 volumes should be used and mounted to a specific location within the container (defined in `deployment.spec.template.spec.containers.volumeMount`). The local/pod-internal name is used for the `name` field.
 
-When creating the servie double check the used selector. It should match the labels given to any pod created by the new deployment. The value can be found at `deployment.spec.template.metadata.labels`. In case your service is not routing traffic properly, run `kubectl describe service <service-name>` and check, if the list of `Endpoints` contains at least 1 IP address. The number of addresses should match the replica count of the deployment it is supposed to route traffic to. 
+When creating the service double check the used selector. It should match the labels given to any pod created by the new deployment. The value can be found at `deployment.spec.template.metadata.labels`. In case your service is not routing traffic properly, run `kubectl describe service <service-name>` and check, if the list of `Endpoints` contains at least 1 IP address. The number of addresses should match the replica count of the deployment it is supposed to route traffic to. 
 
 Also check, if the IP addresses point to the pods created during this exercise. In case of doubt check the correctness of the label - selector combination by running the query manually. Firstly, get the selector from the service by running `kubectl get service <service-name> -o yaml`. Use the `<key>: <value>` pairs stored in `service.spec.selector` to get all pods with the corresponding label set: `kubectl get pods -l <key>=<value>`. These pods are what the service is selecting / looking for. Quite often the selector used within service matches the selector specified within the deployment.
 
