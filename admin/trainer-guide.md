@@ -31,7 +31,7 @@ You can use the participant VM also for all work as a trainer.
 
 - In case you have already a Gardener K8s cluster, you can take this cluster for the training.
 
-  **Note:** This training has been developed and tested using K8S clusters on GCP provided by Gardener. Clusters on other platforms and/or not provided by Gardener might result in some demos and exercises (e.g. Ingress, persistens volumes, LoadBalancers, etc.) not working as designed. Therefore, please make sure your K8S cluster is running on GCP and has been provided by Gardener.
+  **Note:** This training has been developed and tested using K8S clusters on GCP provided by Gardener. Clusters on other platforms and/or not provided by Gardener might result in some demos and exercises (e.g. Ingress, persistence volumes, LoadBalancers, etc.) not working as designed. Therefore, please make sure your K8S cluster is running on GCP and has been provided by Gardener.
 
 ### Create your trainer .kube/config
 
@@ -52,7 +52,7 @@ Now run the script `kubecfggen.sh`. Give it the number of participants/namespace
 - Generates the kubeconfig files for the participants in the subdir for the training
 - Packages all files for this training into a tar.
 
-**Please note:** The script creates not only the namespaces. It also deploys a ResourceQuota & LimitRange to each namespace. With this, abuse of the training cluster should become harder. The ResourceQuota limits the number of pods accepted by each namespace to 15. Any particpant trying to scale a deployment to a hundred pods or more will not harm other participants. The LimitRange assigns default values for memory and CPU requested by a pod. It also give a default limit. If a pod does not specify any of these it will inherit the defaults. In other terms, by specifying a cpu/memory request & limit, the defaults can be overwritten.
+**Please note:** The script creates not only the namespaces. It also deploys a ResourceQuota & LimitRange to each namespace. With this, abuse of the training cluster should become harder. The ResourceQuota limits the number of pods accepted by each namespace to 15. Any participant trying to scale a deployment to a hundred pods or more will not harm other participants. The LimitRange assigns default values for memory and CPU requested by a pod. It also give a default limit. If a pod does not specify any of these it will inherit the defaults. In other terms, by specifying a cpu/memory request & limit, the defaults can be overwritten.
 
 ### Copy the configs to the share
 

@@ -134,7 +134,7 @@ func main() {
 	http.HandleFunc("/save/", makeHandler(saveHandler))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { http.Redirect(w, r, "/view/welcome", http.StatusFound) })
 
-	log.Println("Running web server ...")
+	log.Println("Running webserver ...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 
 }

@@ -1,5 +1,4 @@
-Exercise 5.1: Creating a chart to include the Database required by the ads application
-====================================================
+# Exercise 5.1: Creating a chart to include the Database required by the ads application
 
 ## Learning Goal
 Create a new helm chart with all DB related Kubernetes objects with the help of a Helm chart

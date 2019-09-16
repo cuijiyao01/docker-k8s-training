@@ -1,5 +1,4 @@
-Exercise 5.3: Advanced topics
-====================================================
+# Exercise 5.3: Advanced topics
 
 ## Learning Goal
 - Define dependencies to other charts by connection users ands ads.
@@ -61,7 +60,7 @@ Upgrade chart, kill app pod, check that application still works and that you can
 
 ## Step 6: Bonus tasks (optional)
 
-**Bonus 1:** WE have a fixed user service name without the release name being part of it. Figure it out how to make the user service name configurable and how to path the name to the ads chart during installation. (Please send us your example.)
+**Bonus 1:** We have a fixed user service name without the release name being part of it. Figure it out how to make the user service name configurable and how to path the name to the ads chart during installation. (Please send us your example.)
 
 **Bonus 2:** Make app manifest files fully configurable (similar with db manifest files)
 

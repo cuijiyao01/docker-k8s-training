@@ -16,13 +16,13 @@ loodse.com offers Docker and K8S trainings. We can potentially use / license som
 - Naming and inspecting
 - Networking fundamentals
 - Local development workflow
-- Docker don’ts
+- Docker don'ts
 - Advanced networking
 - Working with volumes
 - Securing Docker
 
 ## Kubernetes for developers (16 hrs)
-- Kubernetes Basics 
+- Kubernetes Basics
 -  Creating a Kubernetes cluster
 -  Creating pods and services
 -  Deploying microservices
@@ -30,7 +30,7 @@ loodse.com offers Docker and K8S trainings. We can potentially use / license som
 -  Scaling a ReplicaSet
 -  Canary deployments
 -  Kubernetes dashboard
--  Kubernetes Advanced 
+-  Kubernetes Advanced
 -  Deployments
 -  Deploying a new version
 -  Rollback a deployment

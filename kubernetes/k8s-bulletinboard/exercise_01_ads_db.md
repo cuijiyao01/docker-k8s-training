@@ -8,7 +8,7 @@
 
 - As we do not need horizontal scaling for the database (by our assumed requirements) we will use a **Statefulset** (instead of a K8s deployment) with only one instance (replica count=1).
 
-- As database we will use Postgresql, where on Docker hub we can find a well suiting offical [Postgresql Docker image](https://hub.docker.com/_/postgres/).
+- As database we will use Postgresql, where on Docker hub we can find a well suiting official [Postgresql Docker image](https://hub.docker.com/_/postgres/).
 
 - The Postgresql Docker image gives us the possibility to override several default values via **environment variables** for e.g. the location for the database files (`PGDATA`) and the superuser password (`POSTGRES_PASSWORD`). (Information needed in step 5)
 
@@ -150,7 +150,7 @@ spec:
         - name: init
           mountPath: /docker-entrypoint-initdb.d/
         env:
-        - name: <postgres-environment-variable-for-path-of-datebase-files>
+        - name: <postgres-environment-variable-for-path-of-database-files>
           valueFrom:
             configMapKeyRef:
               name: <name-of-configmap>

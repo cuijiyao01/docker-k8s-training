@@ -40,7 +40,7 @@ tls.key:  1708 bytes
 
 **Important: remember the file names in the data section of the output. They are relevant for the next step.**
 
-## Step 3: Create a ngnix configuration
+## Step 3: Create a nginx configuration
 Once the certificate secret is prepared, create a configuration and store it to kubernetes as well. It will enable nginx to serve https traffic on port 443 using a certificate located at `/etc/nginx/ssl/`.
 
 Download from [gitHub](./solutions/06_default.conf) or create a file `default.conf` with the following content. In any case, ensure the file's name is `default.conf`.

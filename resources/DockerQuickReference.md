@@ -71,7 +71,7 @@ USER          : switch to given user
 
 ## Managing data in containers
 
-- "Data volumes are designed to persist data, independent of the container’s life cycle. "
+- "Data volumes are designed to persist data, independent of the container's lifecycle."
 This can be a file or more generally a directory and is then mounted. Data Volumes bypass the Union File System (which is per container).
 - A volume creates / mounts a directory in the container to a directory in the host VM.
 - Docker keeps volumes in the host VM at: `/var/lib/docker/volumes/`. This is inside the VM in virtualbox, (not visible in the docker console window.)

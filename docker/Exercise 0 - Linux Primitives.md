@@ -11,7 +11,7 @@ Now that you know, how it works, give it a try. As user `vagrant` create a new d
 
 ## Step 1: prepare your chroot environment first
 
-Since chroot isolates a directory from the rest of the file system, the process to be started must be present inside the chroot directory tree - and so do all the libraries and accompanying files that binary needs. For this, we need to create the basic directory layout of the Linux file system within your chrooted directory.
+Since chroot isolates a directory from the rest of the file system, the process to be started must be present inside the chroot directory tree - and so do all the libraries and accompanying files that binary needs. For this, we need to create the basic directory layout of the Linux file system within your chroot-ed directory.
 
 Create the directories `bin`, `lib`, `lib64` and `proc` in your `container` directory. Copy the binary for BASH into `container/bin`. Use `ldd` to find out, which libraries are needed to run bash and copy them into the appropriate directories inside your container. Note that `ld-linux-x86-64.so.2` goes into the `lib64` directory, the rest goes into `lib`.
 

@@ -21,7 +21,7 @@ chroot .
 **Note:** This will (intentionally) fail with the following error message:
 
 ```
-chroot: failed to run command ‘/bin/bash’: No such file or directory
+chroot: failed to run command '/bin/bash': No such file or directory
 ```
 
 
@@ -70,7 +70,7 @@ In this new shell, try to look at which files are there and which directories yo
 
 You can leave the chroot session as expected via `exit`.
 
-## Step 2: use unshare to run a process in a seperate namespace
+## Step 2: use unshare to run a process in a separate namespace
 
 Make sure you are root for this step.
 

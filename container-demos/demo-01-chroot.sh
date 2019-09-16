@@ -63,7 +63,7 @@ source /bin/demo-magic.sh -w2
 DEMO_PROMPT="${GREEN}➜ ${RED}chroot ${CYAN}\W # "
 TYPE_SPEED=50
 
-p "# now we are in our chrooted container"
+p "# now we are in our chroot-ed container"
 p "# which directory are we in?"
 pe "pwd"
 p "# so which files can we see?"

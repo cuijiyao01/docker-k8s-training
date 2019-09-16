@@ -18,7 +18,7 @@ Log in to the [firewall settings of the GCP project](https://console.cloud.googl
 - The name should be `<clustername>-allow-nodeports`.
 - The network must be the one that has been created by Gardener for your cluster.
 - Direction of traffic is _Ingress_.
-- The action on match is _Allow_ and should apply to _All intances in the network_.
+- The action on match is _Allow_ and should apply to _All instances in the network_.
 - The source filter must be set to match on an IP range which has to be obtained from the [NIP](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml).
 - Only allow access to the ports 30000-32767, TCP and UDP.
 
