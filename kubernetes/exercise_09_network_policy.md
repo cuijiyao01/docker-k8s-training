@@ -14,7 +14,7 @@ Alternatively spin up a a temporary deployment with `kubectl run tester --genera
 
 Do you remember, that your service name is also a valid DNS name? Instead of using an IP address to connect to your service, you can use its actual name (like `nginx-https`).
 
-Run `wget --timeout=1 -q -O - <your-service-name>` from within the pod to send an http request to the nginx service.
+Run `wget --timeout=1 -q -O - <your-service-name>` from within the pod to send an HTTP request to the nginx service.
 
 If everything works fine, the result should look like this (maybe with a different service name):
 ```bash

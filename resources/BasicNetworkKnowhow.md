@@ -12,8 +12,8 @@
 - **NAT = Network Address Translation** : Network address translation is the process where an *internal address* is used *inside* a subnet and an *external address* is used *outside* of the subnet. For example, a pod can have the address `10.10.10.1` inside a cluster but it is exposed as another IP address, e.g. `155.56.13.04`. The latter address is part of the 'B-class network of SAP'. (see [NAT on wikipedia](https://en.wikipedia.org/wiki/Network_address_translation))
 
 ## More stuff
-- **SSL and certificates**: links to: how https works, certificates and keys, CA authorities, why browser warnings, ... How generate certificates for your services 
-- **http**: intro plus links to headers, cookies, http 1.1, 2.0; predefined headers
+- **SSL and certificates**: links to: how HTTPS works, certificates and keys, CA authorities, why browser warnings, ... How generate certificates for your services 
+- **HTTP**: intro plus links to headers, cookies, HTTP 1.1, 2.0; predefined headers
 
 ## Network related topics for Linux
 
@@ -32,7 +32,7 @@
 * On the bottom you have the physical / electrical layer (what wire, what voltage, what plugs, …), on the top you have application level exchange protocols (e.g. command patterns, document exchange formats etc)
 * Higher protocols are based on lower ones; each layer wraps lower layer content in its own headers / frames. 
 * The [OSI Stack model](https://en.wikipedia.org/wiki/OSI_model) is pretty much the standard for networking. Levels 1 - 4 are well standardized and will be described briefly below.
-* Protocols 'run' on a layer. For example, TCP/IP is a layer 3/4 protocol. Http runs on layer 7.
+* Protocols 'run' on a layer. For example, TCP/IP is a layer 3/4 protocol. HTTP runs on layer 7.
 
 ![OSI stack model](images/OSILayers.png)
 
@@ -83,7 +83,7 @@
 ## Proxies 
 * Every request that goes outside of the SAP intranet to the internet goes through a proxy. A proxy typically provides multiple functions such as caching, blocking/filtering, reporting, and network address translation (NAT).
 * A device that performs NAT (such as our proxy) forwards the request to the real target (outside IP address) and hides the internal requesting computer's IP address by inserting its own IP address as the 'from' address in the request. This way all computers behind a proxy appear as having the same source IP address. 
-* In order to be able to send a request outside of the SAP intranet, each client (e.g. browser) has to set a proxy address. All requests that go outside of the office network zone must go through the proxy server. Http(s) requests are forwarded through the proxy, most other protocols and ports are blocked. 
+* In order to be able to send a request outside of the SAP intranet, each client (e.g. browser) has to set a proxy address. All requests that go outside of the office network zone must go through the proxy server. HTTP(S) requests are forwarded through the proxy, most other protocols and ports are blocked. 
 * Each SAP location that has its own local independent internet connection has its own proxy, e.g. `proxy.wdf.sap.corp`, `proxy.shg.sap.corp`, etc.
 * These proxies are so-called [forward proxies](https://en.wikipedia.org/wiki/Proxy_server) because they forward requests from the intranet to the external internet. 
 * There are also so-called [reverse-proxies](https://en.wikipedia.org/wiki/Reverse_proxy) whose main purpose is to distribute incoming requests from the internet to systems in the [DMZ](https://en.wikipedia.org/wiki/DMZ_(computing)) (see also below) and make the responses appear as coming from a single server.
