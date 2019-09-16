@@ -1,4 +1,4 @@
-# Agenda Day 2 Kubernetes
+# Agenda Day 2 - Kubernetes
 
 ## Basics
 * Introduction to Kubernetes

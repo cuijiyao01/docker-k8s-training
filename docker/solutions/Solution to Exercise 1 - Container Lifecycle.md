@@ -66,7 +66,7 @@ docker run -d nginx
 Perform `docker ps` to see the running containers.
 Perform `docker stop <your container ID or Silly_Name>` (e.g. `docker stop 94cb514de45e`) to end your container.
 
-# Step 5: Cleaning up
+## Step 5: Clean up
 
 Unless you want to use the command `docker rm $(docker ps -aq)` (which REALLY deletes ALL the containers - and this might be dangerous !), you may also perform: `docker ps -a` to see a list with all the running & exited containers and then delete multiple of them with one command: `docker rm <container1> <container2> <containerN>`.
 

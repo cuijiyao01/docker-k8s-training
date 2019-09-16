@@ -2,7 +2,9 @@
     "cSpell.words": [
         "artifactory",
         "bulletinboard",
+        "chaoskube",
         "chroot",
+        "cidr",
         "dhcp",
         "dockerfile",
         "dockerfiles",
@@ -33,6 +35,11 @@
         "runtime",
         "runtimes",
         "stateful",
+        "statefulset",
+        "statefulsets",
+        "subnet",
+        "subnets",
+        "walldorf",
         "webserver",
         "webservers",
         "wlan"

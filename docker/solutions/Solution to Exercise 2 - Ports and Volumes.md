@@ -84,7 +84,7 @@ $ docker rm ex32nginx
 
 **Hint:** You can use `docker inspect` to find out which port is exposed by the image like this. The exposed port is clearly visible:
 
-```
+```bash
 $ docker inspect nginx | grep -2 ExposedPorts
 "AttachStdout": false,
 "AttachStderr": false,

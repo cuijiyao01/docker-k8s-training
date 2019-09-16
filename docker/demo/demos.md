@@ -25,7 +25,7 @@ If you want to wire 2 containers, you have to put them into the same docker netw
 create test network: `docker network create test`
 Spin up a nginx: `docker run -d --name nginx --network test nginx:mainline`
 Spin up a helper: `docker run -it --name helper --network test alpine:3.8`
-From within the helper container, show the dns resolution : `nslookup nginx`
+From within the helper container, show the DNS resolution : `nslookup nginx`
 And connect to the webserver: `wget nginx`
 Show the downloaded index.html page: `cat index.html`
 Exit the pod and end the script

@@ -1,4 +1,4 @@
-# Agenda Day 3 Kubernetes
+# Agenda Day 3 - Kubernetes
 
 ## Configuration
 * Entities part 5

@@ -66,7 +66,7 @@ spec:
           release: {{ .Release.Name | quote }}
     - podSelector:
         matchLabels:
-          # the dns server
+          # the DNS server
           k8s-app: kube-dns
       namespaceSelector:
         matchLabels:

@@ -87,7 +87,6 @@ This can be a file or more generally a directory and is then mounted. Data Volum
 
 
 
-
 ## Questions and Answers
 
 - Difference between images and containers?

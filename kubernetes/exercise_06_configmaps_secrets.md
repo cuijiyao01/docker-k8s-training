@@ -7,7 +7,7 @@ In this exercise you will move credentials and configuration into the Kubernetes
 
 **Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the script [prereq-exercise-06.sh](solutions/prereq-exercise-06.sh) in the *solutions* folder to create the prerequisites. Please use this script only if you did not manage to complete the previous exercises.
 
-## Step 0: clean-up
+## Step 0: clean up
 Before you start with this exercise, remove the deployment(s) and service(s) from the previous exercises. **However do NOT delete the persistentVolumeClaim!** We will use it in this exercise as well. Check the cheat sheet for respective delete commands.
 
 ## Step 1: Create a certificate
@@ -45,7 +45,7 @@ Once the certificate secret is prepared, create a configuration and store it to 
 
 Download from [gitHub](./solutions/06_default.conf) or create a file `default.conf` with the following content. In any case, ensure the file's name is `default.conf`.
 
-```
+```nginx
 server {
         listen 80 default_server;
         listen [::]:80 default_server ipv6only=on;

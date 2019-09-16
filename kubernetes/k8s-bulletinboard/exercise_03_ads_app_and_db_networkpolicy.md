@@ -83,7 +83,7 @@ app: nginx-ingress
 component: controller 
 origin: gardener
 ```
-Futher we can also allow  __ads:app__ to send traffic only to certain pods. This would currently be __ads:db__ and the dns server in our cluster. This dns server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`. 
+Futher we can also allow  __ads:app__ to send traffic only to certain pods. This would currently be __ads:db__ and the DNS server in our cluster. This DNS server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`. 
 
 Configure a network policy in a file named `ads-app-networkpolicy.yaml` accordingly.  
 Hints: [this example](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/07-allow-traffic-from-some-pods-in-another-namespace.md) and the egress rules. (See above reference and [here](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#networkpolicyspec-v1-networking-k8s-io)). 

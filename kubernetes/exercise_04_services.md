@@ -32,7 +32,7 @@ You will probably get an error message concerning missing labels. Solve this by 
 
 Once you are able to access the nginx via the `NodePort`, take a look at the pod and the service. Determine the label as well as the corresponding selectors. Now remove the label from the pod: `kubectl label pod <your-pod> --overwrite <your-label-key>-` and try again to access the nginx via the `NodePort`. Most likely this won't work anymore.
 
-Finally, clean-up and remove the pod as well as the service you created in step 4.
+Finally, clean up and remove the pod as well as the service you created in step 4.
 
 ## Troubleshooting
 In case your service is not routing traffic properly, run `kubectl describe service <service-name>` and check, if the list of `Endpoints` contains at least 1 IP address. The number of addresses should match the replica count of the deployment it is supposed to route traffic to. 
