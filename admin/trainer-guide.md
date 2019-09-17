@@ -121,21 +121,21 @@ Furthermore, during the training these ranges will be used for the network polic
 You can use the [network information portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml) to get your local office's CIDR blocks. For the exercise 8 you can give the info to participants as well or ask them to search for it.
 
 ### Setup helm & tiller
-To continue with the setup, you have to initialize tiller in `kube-sytem` namespace. Run the [helm_init](helm_init.sh) script within your VM to download the helm client (if not present) and bring up tiller with a dedicated service account & cluster admin permissions.
+To continue with the setup, you have to initialize tiller in `kube-system` namespace. Run the [helm_init](helm_init.sh) script within your VM to download the helm client (if not present) and bring up tiller with a dedicated service account & cluster admin permissions.
 
 ### Setup a docker registry (~1 day before course starts)
 For the docker exercises you need a private docker registry. Participants will upload their custom images to it during the course. Recommendation is to spin up a registry without any persistence in the k8s cluster you use for the training.
 In the admin folder of this repo, you find a registry folder with `install.registry.sh` script. Check the prerequisites and run the script as described [here](./registry/readme.md) to deploy a registry and make it available via an ingress.
 
 ### Setup cluster monitoring (~1 day before course starts)
-If you want to keep track of things happening in the cluster, you can use these [scripts](./monitoring) to setup  prometheus/grafana based monitoring.
+If you want to keep track of things happening in the cluster, you can use these [scripts](./monitoring) to setup prometheus/grafana based monitoring.
 
 ### (Optional) [Gain access to the Dashboard](accessDashboard.md)
 
 ## During the Course
 
 ### Use the "master" kube.config 
-For all demos to work properly (especially the RBAC demo), you have to use an "admin" user when talking to the cluster. When you use the `kube.config` you got along with the cluster details, you are on the save side. However if you use a participant user / namespace, the RBAC demo will fail due to missing autorization. 
+For all demos to work properly (especially the RBAC demo), you have to use an "admin" user when talking to the cluster. When you use the `kube.config` you got along with the cluster details, you are on the save side. However if you use a participant user / namespace, the RBAC demo will fail due to missing authorization. 
 
 Of course, you can create a separate namespace (!= `default`) and add it to the `kube.config` context definition to send requests to it by default.
 

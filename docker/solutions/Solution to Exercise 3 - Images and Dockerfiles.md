@@ -74,7 +74,7 @@ COPY ssl.conf /etc/nginx/conf.d/ssl.conf
 COPY nginx.key /etc/nginx/ssl/
 COPY nginx.crt /etc/nginx/ssl/
 
-# expose the https port
+# expose the HTTPS port
 EXPOSE 443
 ```
 

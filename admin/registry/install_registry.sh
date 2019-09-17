@@ -69,5 +69,5 @@ sed -i.bck "s/INGRESS_HOSTNAME_SHORT/${INGRESS_HOSTNAME_SHORT}/g" $CONFIG_FILE
 sed -i.bck "s/INGRESS_HOSTNAME_LONG/${INGRESS_HOSTNAME_LONG}/g" $CONFIG_FILE
 ${HELM} install stable/docker-registry --namespace registry -f $CONFIG_FILE
 
-# cleanup
+# clean up
 rm auth

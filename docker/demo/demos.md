@@ -25,7 +25,7 @@ If you want to wire 2 containers, you have to put them into the same docker netw
 create test network: `docker network create test`
 Spin up a nginx: `docker run -d --name nginx --network test nginx:mainline`
 Spin up a helper: `docker run -it --name helper --network test alpine:3.8`
-From within the helper container, show the dns resolution : `nslookup nginx`
+From within the helper container, show the DNS resolution : `nslookup nginx`
 And connect to the webserver: `wget nginx`
 Show the downloaded index.html page: `cat index.html`
 Exit the pod and end the script
@@ -63,8 +63,8 @@ Even more fun, mount host / into the container and chroot inside container into 
 Let's move on to docker volumes. When working with a container, you might want to persist some data during runtime. For this example you will use a Jenkins and make it's home a volume.
 `docker run -d -P --mount source=jenkins_home,target=/var/jenkins_home jenkins/jenkins:lts`
 Next, get the ports and connect the port that forwards to container port 8080
-On the jenkins logon page, you're asked for a password, run “docker logs \<container name>”  and obtain the logon token
-Logon to the jenkins and choose “select plugins to install”, select “none” (upper left corner) and continue. 
+On the jenkins logon page, you're asked for a password, run "docker logs \<container name>"  and obtain the logon token
+Logon to the jenkins and choose "select plugins to install", select "none" (upper left corner) and continue. 
 Create a user e.g 'root' with a simple password and finish the setup.
 Now stop the container and restart it – obviously you're still able to logon with the credentials created before.
 Finally, delete the container and with that also the RW layer and re-execute the docker run jenkins command. 

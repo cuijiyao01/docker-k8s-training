@@ -53,7 +53,7 @@ Let's create an environment that reflects the file system structure mentioned in
 Data from earlier stages can be consumed with `COPY --from=<previous stage name>` commands. Move the `wiki` executable to the runtime stage and place it directly in the `/app/` directory.
 
 ## Step 6: Adapt the environment
-So far all directories / files are owned by the `root` user. Time to change that and grant the `appuser` access to the required parts of the filesystem. Since everything relevent is stored within `/app` you can `RUN` this command to do the changes: `chown -R appuser /app`
+So far all directories / files are owned by the `root` user. Time to change that and grant the `appuser` access to the required parts of the filesystem. Since everything relevant is stored within `/app` you can `RUN` this command to do the changes: `chown -R appuser /app`
 
 Now you can user the `USER` directive to change to `appuser`. Also the wiki expects to find files relative to its location. So you have to set the `WORKDIR` accordingly.
 

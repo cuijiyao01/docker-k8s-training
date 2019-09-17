@@ -83,7 +83,7 @@ app: nginx-ingress
 component: controller 
 origin: gardener
 ```
-Futher we can also allow  __ads:app__ to send traffic only to certian pods. This would currently be __ads:db__ and the dns server in our cluster. This dns server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`. 
+Futher we can also allow  __ads:app__ to send traffic only to certain pods. This would currently be __ads:db__ and the DNS server in our cluster. This DNS server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`. 
 
 Configure a network policy in a file named `ads-app-networkpolicy.yaml` accordingly.  
 Hints: [this example](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/07-allow-traffic-from-some-pods-in-another-namespace.md) and the egress rules. (See above reference and [here](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#networkpolicyspec-v1-networking-k8s-io)). 
@@ -93,7 +93,7 @@ Again test the policy, first by restarting ads, and then creating an ads with th
 ## Step 3: TLS
 
 We also want to enable TLS for our communication with ads. Therefore we activate TLS on our ingress service. 
-Because we use the ingress we can not just follow the steps of the [configmap and secrets](../exercise_06_configmaps_secrets.md) exercise to optain the key and certificate files and create the tls-secret. The certificate has to have the url in it, and it is to long to just put it in the CN (63 Char limit) field. 
+Because we use the ingress we can not just follow the steps of the [configmap and secrets](../exercise_06_configmaps_secrets.md) exercise to obtain the key and certificate files and create the tls-secret. The certificate has to have the url in it, and it is to long to just put it in the CN (63 Char limit) field. 
 Create a `tls` subfolder in the `ads` folder: `mkdir tls; cd tls`
 We will first create our own Root certificate:
 ```
@@ -119,8 +119,8 @@ spec:
   tls:
   - secretName: ingress-tls-sec
 ```
-Now we have enabled https connection for the ingress and therefore also for the ads service behind the ingress.
-Open `https://<firstpart of url>.ingress.<clustername>.<projectname>.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with https. 
+Now we have enabled HTTPS connection for the ingress and therefore also for the ads service behind the ingress.
+Open `https://<first part of url>.ingress.<clustername>.<projectname>.shoot.canary.k8s-hana.ondemand.com/` and after the warning that the certificate is insecure you can use the UI with HTTPS. 
 To check that everything worked check out the certificate you get when opening the url, it should look like this:  
 <p align="center"><img src="images/Certificate.png" width="700"/></p>
 

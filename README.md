@@ -27,7 +27,7 @@ High level topics are:
     - deployments  ([slides](./kubernetes/03_labels_and_deployments.pptx) & [exercise 3](./kubernetes/exercise_03_deployment.md))
 - networking in k8s with services ([slides](./kubernetes/04_networking_services.pptx) & [exercise 4](./kubernetes/exercise_04_services.md))
 - storage API in k8s ([slides](./kubernetes/05_persistence.pptx) & [exercise 5](./kubernetes/exercise_05_persistence.md))
-- basic trouble-shooting ([slides](./kubernetes/06_troubleshooting.pptx))
+- basic troubleshooting ([slides](./kubernetes/06_troubleshooting.pptx))
 - configure applications with config maps and secrets ([slides](./kubernetes/07_configmap_secrets.pptx) & [exercise 6](./kubernetes/exercise_06_configmaps_secrets.md))
 - expose applications via ingress ([slides](./kubernetes/09_ingress.pptx) & [exercise 7](./kubernetes/exercise_07_ingress.md))
 - run stateful applications with stateful sets ([slides](./kubernetes/10_statefulset.pptx) & [exercise 8](./kubernetes/exercise_08_statefulset.md))

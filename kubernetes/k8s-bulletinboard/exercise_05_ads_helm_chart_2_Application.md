@@ -89,18 +89,14 @@ http://bulletinboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k8
 Do a fresh install of the chart
 
 ```bash
-
 helm delete <release-name> --prune
 
 helm install bulletinboard-ads
-
 ```
 
 Watch for the pods coming to live:
 
 ```bash
-
-
 $ kubectl get pods
 NAME                            READY     STATUS              RESTARTS   AGE
 ads-app-54fd856ccb-k79sb        1/1       Running             0          12s
@@ -116,7 +112,6 @@ $ kubectl get pods
 NAME                            READY     STATUS    RESTARTS   AGE
 ads-app-54fd856ccb-k79sb        1/1       Running   1          1m
 queenly-newt-ads-db-sset-0      1/1       Running   0          1m
-
 ```
 
 You'll notice that ads app pod starts before the db pod starts, which leads to error. Of course, kubernetes we'll retry to start the pod until it succeeds.
@@ -132,8 +127,6 @@ Add following configuration to the specification for the app deployment (`ads-ap
       - name: init-postgres
         image: alpine
         command: ['sh', '-c', 'for i in $(seq 1 200); do nc -z -w3 {{ template "db-connection" . }} {{ .Values.Db.Postgres.Port }} && exit 0 || sleep 3; done; exit 1']
-
-
 ```
 
 Now the pod for the app will be started only after the db service is listening on defined port.

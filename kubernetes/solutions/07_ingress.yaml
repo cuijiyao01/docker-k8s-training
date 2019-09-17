@@ -72,7 +72,7 @@ metadata:
 # define the routing rules for the ingress in its 'spec'
 spec:
   rules:
-    # an ingress can have one to many hosts. A host is fully quallified URL
+    # an ingress can have one to many hosts. A host is fully qualified URL
     # TODO: replace in ingress host URL the <participantId>, <cluster-name> and <project-name> parameters of the training cluster 
     # e.g. '0007-simple-nginx.ingress.wdfcw48.k8s-train.shoot.canary.k8s-hana.ondemand.com'
   - host: <participantId>-simple-nginx.ingress.<cluster-name>.<project-name>.shoot.canary.k8s-hana.ondemand.com

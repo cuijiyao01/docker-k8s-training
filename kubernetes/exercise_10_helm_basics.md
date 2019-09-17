@@ -33,7 +33,7 @@ Hint: If you are getting tired of typing in your tiller namespace for every comm
 
 <details><summary>Bash command to set TILLER_NAMESPACE to namespace of kube config</summary><p> 
 
-You can use this bash line to set  TILLER_NAMESPACE:  
+You can use this bash line to set TILLER_NAMESPACE:  
 `export TILLER_NAMESPACE=$(kubectl config view -o json | jq -r ".contexts[0].context.namespace")` 
 </p></details>
 
@@ -53,7 +53,7 @@ In addition the helm organization recently created [Helm Hub](https://hub.helm.s
 Run the following command to install the chaoskube chart:
 `helm install --name <any-name> stable/chaoskube --set namespaces=<your-namespace> --set rbac.serviceAccountName=tiller --tiller-namespace <your-namespace> --debug`
 It installs everything that is associated to the chart into your namespace. Note the `--set` flag, it specifies a parameter of chart.
-The parameter `namespaces` defines in which namespaces the choaskube will delete pods, `rbac.serviceAccountName` tells helm which serviceAccount chaoskube will get. Here we give it the tiller account because it has to be able to delete pods.  
+The parameter `namespaces` defines in which namespaces the chaoskube will delete pods, `rbac.serviceAccountName` tells helm which serviceAccount chaoskube will get. Here we give it the tiller account because it has to be able to delete pods.  
 Check the github page mentioned above again, if you want to learn what it does and which other parameters are available.
 
 ## Step 4: inspect your chaoskube
@@ -63,7 +63,7 @@ Get more information by running `helm status <your-releases-name> --tiller-names
 Also check the pods running inside your kubernetes namespace. Don't forget to look into the logs of the chaoskube to see what would have happened with the dry-run flag set.
 `kubectl logs -f pod/<your chaoskube-pod-name>`
 
-# Step 5: clean-up
+## Step 5: clean up
 Clean up by deleting the chaoskube:
 `helm delete <your-releases-name> --tiller-namespace <your-namespace>`
 

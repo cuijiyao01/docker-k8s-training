@@ -2,9 +2,16 @@
     "cSpell.words": [
         "artifactory",
         "bulletinboard",
+        "chaoskube",
         "chroot",
+        "cidr",
+        "dhcp",
+        "dockerfile",
+        "dockerfiles",
         "don'ts",
+        "etcd",
         "grafana",
+        "hana",
         "ipconfig",
         "jenkinsfile",
         "jenkinsfiles",
@@ -25,7 +32,16 @@
         "psql",
         "rbac",
         "repos",
+        "runtime",
+        "runtimes",
         "stateful",
+        "statefulset",
+        "statefulsets",
+        "subnet",
+        "subnets",
+        "walldorf",
+        "webserver",
+        "webservers",
         "wlan"
     ]
 }

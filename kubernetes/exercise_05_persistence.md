@@ -9,7 +9,7 @@ After you exposed your webserver to the network in the previous exercise, we wil
 ## Step 0: Prepare and check your environment
 Firstly, remove the deployment you created in the earlier exercise. Check the cheat sheet for the respective command.
 
-Next, take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`. Are there already  resources present in the cluster?
+Next, take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`. Are there already resources present in the cluster?
 Inspect the resources you found and try to figure out how they are related (hint - look for `status: bound`).
 
 By the way, you don't have to type `PersistentVolume` all the time. You can abbreviate it with `pv` and similarly use `pvc` for the claim resource.
@@ -83,7 +83,7 @@ Remember the service from the previous exercise? Since the labels where not chan
 ## Troubleshooting
 In case the pods of the deployment stay in status `Pending` for quite some time, make sure the pod `nginx-storage-pod` got deleted. Also check the events of one of the pods by running `kubectl describe pod <pod-name>`. 
 
-If one of the events is a warning that contains something like "resource already in use", delete the deployment as well as the pod `nginx-storage-pod` (if not already done) but do NOT delete the PVC. Next, wait around 1-2min, to ensure  that the referenced storage device is unmounted from the node, where it was used before. Then re-create the deployment.  
+If one of the events is a warning that contains something like "resource already in use", delete the deployment as well as the pod `nginx-storage-pod` (if not already done) but do NOT delete the PVC. Next, wait around 1-2min, to ensure that the referenced storage device is unmounted from the node, where it was used before. Then re-create the deployment.  
 
 In case your service is not routing traffic properly, run `kubectl describe service <service-name>` and check, if the list of `Endpoints` contains at least 1 IP address. The number of addresses should match the replica count of the deployment it is supposed to route traffic to. 
 

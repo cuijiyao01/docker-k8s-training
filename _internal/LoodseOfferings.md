@@ -62,7 +62,7 @@ Daily Operation of Kubernetes
 - Surviving machine failures
 - Disaster recovery of etcd
 - Destroy a cluster and restore from Backup
-- Diagnosing  and  resolving  Kubernetes  API  server,  scheduler and  controller-manager failures
+- Diagnosing and resolving Kubernetes API server, scheduler and controller-manager failures
 - Upgrading the control plane
 
 

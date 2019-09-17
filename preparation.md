@@ -1,6 +1,6 @@
 # Environment Setup and Prerequisites
 
-This page describes the necessary **preparation steps** before the course and as well what you should fullfill as **prerequisites** before taking this course - with points to sources for that information.
+This page describes the necessary **preparation steps** before the course and as well what you should fulfill as **prerequisites** before taking this course - with points to sources for that information.
 
 ## Environment setup
 

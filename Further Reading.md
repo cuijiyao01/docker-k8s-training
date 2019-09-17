@@ -34,7 +34,7 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - If you are looking for more detailed information about Gardener, check out this [kubernetes blog post](https://kubernetes.io/blog/2018/05/17/gardener/).
 
-- Interested in the architecture behing Gardener? There was a talk about it at *devX*, too:
+- Interested in the architecture behind Gardener? There was a talk about it at *devX*, too:
 [Project Gardener: Multicloud Kubernetes Cluster Provisioning at Scale](https://video.sap.com/media/t/1_9ifoaxbx/84675141)
 
 - Gardener's curated [link list](https://github.wdf.sap.corp/pages/kubernetes/gardener/doc/2017/01/16/howto-curated-links.html)

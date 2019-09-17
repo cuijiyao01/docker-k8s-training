@@ -25,7 +25,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 - Increase security and establish a **Network policy** for
   - Ads DB
   - Ads App
-- Enable https connection by adding TLS certificates to **Ingress**
+- Enable HTTPS connection by adding TLS certificates to **Ingress**
 
 ### [04 Exercise: "Using Helm-chart to setup Bulletinboard-Users Application and -DB](exercise_04_users_app_and_db_by_helm.md)
 - Create Users DB and Users App via existing **Helm chart**

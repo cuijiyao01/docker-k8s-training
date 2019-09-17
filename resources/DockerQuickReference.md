@@ -9,7 +9,7 @@ docker info
 
 docker images   : list local images
 docker run      :create and run container from image with command (optional)
-        -d      : as deamon
+        -d      : as daemon
         -P      : all exposed ports mapped to host (random high)
         -p 80:5000  : map port 5000 (exposed from image) to 80 on host (virtualbox)
         -rm     : delete container after completion
@@ -87,8 +87,7 @@ This can be a file or more generally a directory and is then mounted. Data Volum
 
 
 
-
-## Questions and Answers 
+## Questions and Answers
 
 - Difference between images and containers?
   - Image is a template that is turned into a container. Container is image + read-write file system. Stopped container persists the file system changes and other settings - and it can be restarted.

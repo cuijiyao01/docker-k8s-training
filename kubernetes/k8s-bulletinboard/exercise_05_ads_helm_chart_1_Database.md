@@ -17,7 +17,7 @@ Create a new helm chart with all DB related Kubernetes objects with the help of 
 
 To get things started, create a default chart with helm authoring tools:
 
-```commandline
+```bash
 $ helm create bulletinboard-ads                                                    
 Creating bulletinboard-ads
 ```
@@ -180,7 +180,7 @@ Used for Names of Chart entities
 | `ads-db-statefulset.yaml`| `metadata:  `<br/>`  name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.StatefulsetName) }}`|
 | `ads-db-networkpolicy.yaml`| `metadata:  `<br/>`  {{ template "add-release-name" (dict "dot" . "name" .Values.Db.Access) }}`|
 
-Here some explanation on the template: Normally you can give to template the name of the template and the scope. We use a dictionary (dict) to pass more arguments to the template so its more like a function. The first entry of the dict is the root context ` . ` saved as `dot`. The second is the name to which we want to add the releasename. Of course you could add even more entries into the dictionary to pass more arguments to the template. 
+Here some explanation on the template: Normally you can give to template the name of the template and the scope. We use a dictionary (dict) to pass more arguments to the template so its more like a function. The first entry of the dict is the root context ` . ` saved as `dot`. The second is the name to which we want to add the release name. Of course you could add even more entries into the dictionary to pass more arguments to the template. 
 
 - Also Updated references in `ads-db-statefulset.yaml'
 
@@ -212,7 +212,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service | quote }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: {{ .Release.Name | quote }}    
+    release: {{ .Release.Name | quote }}
     component: "{{ .Values.Db.Component }}"
     module: "{{ .Values.Db.Module }}"
 
@@ -262,7 +262,7 @@ data:
 ```
 ### Step 4.1 The Secrets
 
-- Create a `initdb.txt` file in `bulletinboard-ads` folder with the following content. When helm reads it in, it will substitute all the placeholders with the values we specified in  the `values.yaml`
+- Create a `initdb.txt` file in `bulletinboard-ads` folder with the following content. When helm reads it in, it will substitute all the placeholders with the values we specified in the `values.yaml`
 
 ```
 -- This is a postgres initialization script for the postgres container. 
@@ -323,8 +323,6 @@ spec:
             secretKeyRef:
               name: {{ template "add-release-name" (dict "dot" . "name" .Values.Db.SecretName) }}
               key: postgres_password_value
-          
-          
 ```
 
 ## Step 5: Install the Chart and test the Microservice

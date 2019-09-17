@@ -7,11 +7,11 @@ In this exercise you will move credentials and configuration into the Kubernetes
 
 **Note**: This exercise builds upon the previous exercises. If you did not manage to finish the previous exercises successfully, you can use the script [prereq-exercise-06.sh](solutions/prereq-exercise-06.sh) in the *solutions* folder to create the prerequisites. Please use this script only if you did not manage to complete the previous exercises.
 
-## Step 0: clean-up
+## Step 0: clean up
 Before you start with this exercise, remove the deployment(s) and service(s) from the previous exercises. **However do NOT delete the persistentVolumeClaim!** We will use it in this exercise as well. Check the cheat sheet for respective delete commands.
 
 ## Step 1: Create a certificate
-In the first exercises you ran a webserver with plain http. Now you are going to rebuild this setup and add https to your nginx.
+In the first exercises you ran a webserver with plain HTTP. Now you are going to rebuild this setup and add HTTPS to your nginx.
 
 Start by creating a new certificate:
 
@@ -41,11 +41,11 @@ tls.key:  1708 bytes
 **Important: remember the file names in the data section of the output. They are relevant for the next step.**
 
 ## Step 3: Create a nginx configuration
-Once the certificate secret is prepared, create a configuration and store it to kubernetes as well. It will enable nginx to serve https traffic on port 443 using a certificate located at `/etc/nginx/ssl/`.
+Once the certificate secret is prepared, create a configuration and store it to kubernetes as well. It will enable nginx to serve HTTPS traffic on port 443 using a certificate located at `/etc/nginx/ssl/`.
 
 Download from [gitHub](./solutions/06_default.conf) or create a file `default.conf` with the following content. In any case, ensure the file's name is `default.conf`.
 
-```
+```nginx
 server {
         listen 80 default_server;
         listen [::]:80 default_server ipv6only=on;
@@ -85,7 +85,7 @@ Run `kubectl create configmap nginxconf --from-file=<path/to/your/>default.conf`
 Verify the configmap exists with `kubectl get configmap`.
 
 ## Step 5: Combine everything into a deployment
-Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. As a result nignx should display the custom index.html page, serve http traffic on port 80 and https on port 443. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
+Now it is time to combine the persistentVolumeClaim, secret and configMap in a new deployment. As a result nginx should display the custom index.html page, serve HTTP traffic on port 80 and HTTPS on port 443. In order for new the setup to work, use `app: nginx-https` as label/selector for the "secured" nginx.
 
 Complete the snippet below by inserting the missing parts (look for `???` blocks):
 
@@ -149,7 +149,7 @@ Finally, you have to create a new service to expose your https-deployment.
 
 Derive the ports you have to expose and extend the service.yaml from the previous exercise. Make sure, that the labels used in the deployment and the selector specified by the service match.
 
-Once the service has an external IP try to call it with an https prefix. Check the certificate it returns - it should match the subject and organization specified in step 1. Since we signed the certificate ourself, your Browser will complain about the certificate (depending on your browser) and you have to accept the risk browsing the url. 
+Once the service has an external IP try to call it with an HTTPS prefix. Check the certificate it returns - it should match the subject and organization specified in step 1. Since we signed the certificate ourself, your Browser will complain about the certificate (depending on your browser) and you have to accept the risk browsing the url. 
 
 **Important: do not delete this setup with deployment, PVC, configMap, secret and service.**
 
