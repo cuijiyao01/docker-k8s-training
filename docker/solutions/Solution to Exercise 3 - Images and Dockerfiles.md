@@ -6,7 +6,7 @@ In this exercise, you will build an image with a Dockerfile, tag it and upload i
 
 Run the following commands, to prepare your local environment inside the VM. Replace _<training_id>_ and _<your_namespace_id>_ with the values that have been given to you by your trainer.
 
-```
+```bash
 ~/setup/get_kube_config.sh <training_id> <your_namespace_id>
 sudo systemctl restart docker.service
 ```

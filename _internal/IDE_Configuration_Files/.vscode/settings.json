@@ -2,6 +2,7 @@
     "cSpell.words": [
         "artifactory",
         "bulletinboard",
+        "busybox",
         "chaoskube",
         "chroot",
         "cidr",
@@ -26,6 +27,7 @@
         "mkdir",
         "nginx",
         "nslookup",
+        "openssl",
         "pgadmin",
         "postgres",
         "postgresql",

@@ -5,14 +5,14 @@ In this exercise, you will create a Dockerfile consisting of two stages. Within 
 The app is a simple webserver providing view and edit functionality for "wiki pages" and is based on this [tutorial](https://golang.org/doc/articles/wiki/). It serves on port 8080, renders web pages based on templates parsed from files and can persist pages on the filesystem.
 
 The structure looks like this
-```
+```directory-structure
 /app
-├── wiki                --> executable
-├── tmpl                --> template for page rendering
-│   ├── edit.html
-│   └── view.html
-└── data                --> location to store pages as txt files
-│   ├── somepage.txt
++-- wiki                --> executable
++-- tmpl                --> template for page rendering
+|   +-- edit.html
+|   +-- view.html
++-- data                --> location to store pages as txt files
+|   +-- somepage.txt
 ```
 
 ## Step 0: Setting up your build context

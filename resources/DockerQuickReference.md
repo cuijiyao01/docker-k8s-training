@@ -2,7 +2,7 @@
 
 ## Basic Commands
 
-```
+```text
 docker --help
 docker <cmd> --help
 docker info
@@ -49,7 +49,7 @@ see also
 -----------------------------------------------------
 ### Dockerfile commands
 
-```
+```text
 FROM  img:ver : specify start image and optionally version (or 'latest')
 WORKDIR       : sets working directory (= cd) during build; creates it (path) if not exists
 RUN <cmd>     : run a command during build, mostly mkdir, ... apt-get to install stuff

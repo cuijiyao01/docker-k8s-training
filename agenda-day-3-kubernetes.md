@@ -15,7 +15,7 @@
 * controller & custom resources
 
 ## Stateful workloads
-* statefulSets and headless services
+* StatefulSets and headless services
 * Exercise 07 - deploy a statefulset
 
 ## Administration

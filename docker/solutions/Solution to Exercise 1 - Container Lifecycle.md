@@ -11,7 +11,7 @@ top
 
 You will now see the processes inside your container:
 
-```
+```bash-output
   PID  PPID USER     STAT   VSZ %VSZ CPU %CPU COMMAND
     1     0 root     S     1248  0.0   1  0.0 sh
    10     1 root     R     1240  0.0   0  0.0 top

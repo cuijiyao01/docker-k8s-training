@@ -26,7 +26,7 @@ Check, if the secret is present by running `kubectl get secret nginx-sec`.
 
 Run `kubectl describe secret nginx-sec` to get more detailed information. The result should look like this:
 
-```
+```bash-output
 Name:         nginx-sec
 ...
 
@@ -89,7 +89,7 @@ Now it is time to combine the persistentVolumeClaim, secret and configMap in a n
 
 Complete the snippet below by inserting the missing parts (look for `???` blocks):
 
-```
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:

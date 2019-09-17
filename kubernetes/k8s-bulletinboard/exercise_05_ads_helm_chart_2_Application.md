@@ -15,7 +15,7 @@
 
 
 Now the contents of the `templates` directory should look like this:
-```
+```directory-structure
 templates
   ads-app.yaml
   ads-app-configmap.yaml
@@ -80,7 +80,7 @@ $ helm upgrade <release-name> bulletinboard-ads
 ## Step 3: Check if the service is up and running
 
 ```bash
-http://bulletinboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
+$ curl http://bulletinboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
 ```
 
 
@@ -116,13 +116,11 @@ queenly-newt-ads-db-sset-0      1/1       Running   0          1m
 
 You'll notice that ads app pod starts before the db pod starts, which leads to error. Of course, kubernetes we'll retry to start the pod until it succeeds.
 
-
 However, you can configure the app pod to start only after db pod is started by using init containers.
 
 Add following configuration to the specification for the app deployment (`ads-app-deployment.yaml`)
 
 ```yaml
-
       initContainers:
       - name: init-postgres
         image: alpine

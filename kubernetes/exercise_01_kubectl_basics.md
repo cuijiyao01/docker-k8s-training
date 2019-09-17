@@ -7,7 +7,7 @@ Login to your VM and locate the kubectl binary by running `which kubectl`. The r
 
 Run the following commands, to download your personal `kube.config`. Replace _<training_id>_ and _<your_namespace_id>_ with the values that have been given to you by your trainer.
 
-```
+```bash
 ~/setup/get_kube_config.sh <training_id> <your_namespace_id>
 ```
 

@@ -57,7 +57,7 @@ spec:
 
 To test the ingress rule, restart one of your __ads:app__ pods (delete it, the deployment will create a new one). If it comes up the app can still connect to the DB. 
 You can also test it by creating a temporary pod with psql installed (e.g. a postgres:9.6 image like our DB) and use psql from this pod to connect to the DB. First we will use the right labels:
-```
+```bash
 kubectl run --restart=Never -it  --generator=run-pod/v1 --restart=Never --rm --image=postgres:9.6 --labels="component=ads,module=app" --env="PGCONNECT_TIMEOUT=5" helper --command -- /bin/bash
 ```
 
@@ -78,12 +78,12 @@ __Purpose: control traffic to and from *ads:app* pod, learn how to select a pod 
 
 We want that __ads:app__ only takes messages from the ingress. 
 The ingress controller is in the `kube-system` namespace and has the following labels you can use: 
-```
+```yaml
 app: nginx-ingress 
 component: controller 
 origin: gardener
 ```
-Futher we can also allow  __ads:app__ to send traffic only to certain pods. This would currently be __ads:db__ and the DNS server in our cluster. This DNS server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`. 
+Further we can also allow  __ads:app__ to send traffic only to certain pods. This would currently be __ads:db__ and the DNS server in our cluster. This DNS server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`. 
 
 Configure a network policy in a file named `ads-app-networkpolicy.yaml` accordingly.  
 Hints: [this example](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/07-allow-traffic-from-some-pods-in-another-namespace.md) and the egress rules. (See above reference and [here](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#networkpolicyspec-v1-networking-k8s-io)). 
@@ -96,23 +96,23 @@ We also want to enable TLS for our communication with ads. Therefore we activate
 Because we use the ingress we can not just follow the steps of the [configmap and secrets](../exercise_06_configmaps_secrets.md) exercise to obtain the key and certificate files and create the tls-secret. The certificate has to have the url in it, and it is to long to just put it in the CN (63 Char limit) field. 
 Create a `tls` subfolder in the `ads` folder: `mkdir tls; cd tls`
 We will first create our own Root certificate:
-```
+```bash
 openssl genrsa -out ca.key 2048
 openssl req -new -x509 -days 365 -key ca.key -subj "/C=DE/L=Walldorf/O=SAP/CN=SAP Fake Root CA" -out ca.crt
 ```
 Now use this ca.crt to sign the server certificate: Please change the `/CN` field to fit your namespace, also add the complete ingress url at `<THE INGRESS ULR>`. You can change the `/C` and `/L` to fit your location if you want.
-```
+```bash
 openssl req -newkey rsa:2048 -nodes -keyout server.key -subj "/C=DE/L=Walldorf/O=SAP/CN=bulletinboard--<namespace>" -out server.csr
 openssl x509 -req -extfile <(printf "subjectAltName=DNS:<THE INGRESS URL WITHOUT HTTP(S)://>") -days 365 -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt
 ```
 Finally create the tls secret yaml, move it into the ads folder and apply it:
-```
+```bash
 kubectl create secret tls ingress-tls-sec --cert=server.crt --key=server.key --dry-run -o yaml > tls.yaml
 cd ..; mv tls/tls.yaml .
 kubectl apply -f tls.yaml
 ``` 
 With this we can change `spec:` of ingress in the yaml to the following (added the last 2 lines) and apply the change:
-```
+```yaml
 spec:
   rules:
  < ... >

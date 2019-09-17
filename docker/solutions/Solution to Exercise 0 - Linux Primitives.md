@@ -20,7 +20,7 @@ chroot .
 
 **Note:** This will (intentionally) fail with the following error message:
 
-```
+```bash-output
 chroot: failed to run command '/bin/bash': No such file or directory
 ```
 
@@ -92,7 +92,7 @@ ps -ef
 
 You should only get a list of two processes: your shell (with PID 1) and the `ps` command itself. The output should look something like this:
 
-```bash
+```bash-output
 UID        PID  PPID  C STIME TTY          TIME CMD
 root         1     0  2 12:46 pts/6    00:00:00 /bin/bash
 root        41     1  0 12:46 pts/6    00:00:00 ps -ef

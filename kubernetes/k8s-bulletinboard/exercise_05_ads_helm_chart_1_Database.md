@@ -22,7 +22,7 @@ $ helm create bulletinboard-ads
 Creating bulletinboard-ads
 ```
 The new chart is stored in a directory named `bulletinboard-ads`. Inspect the structure created by Helm.
-```
+```directory-structure
 bulletinboard-ads
   Chart.yaml         
   charts/
@@ -42,14 +42,15 @@ bulletinboard-ads
 Copy all kubernetes files `ads-db-*.yaml` you created for ads-db into the templates folder. 
 
 Now the contents of the `templates` directory should look like this:
-```
+
+```directory-structure
 templates
-  ads-db-configmap.yaml      
+  ads-db-configmap.yaml
   ads-db-networkpolicy.yaml  
-  ads-db-secrets.yaml         
+  ads-db-secrets.yaml
   ads-db-service.yaml
   ads-db.yaml
-``` 
+```
 
 ## Step 2: First Install
 
@@ -135,7 +136,7 @@ Db:
  
 <details><summary> Here is the code for the 3 template/functions</summary><p>
   
-```
+```yaml
 {{/*
 Complete tags for labels selectors etc.
 */}}
@@ -260,11 +261,12 @@ Db:
 data:
   pgdata_value: "{{ .Values.Db.Postgres.MountPath }}/pgdata"
 ```
+
 ### Step 4.1 The Secrets
 
 - Create a `initdb.txt` file in `bulletinboard-ads` folder with the following content. When helm reads it in, it will substitute all the placeholders with the values we specified in the `values.yaml`
 
-```
+```initdb.sql
 -- This is a postgres initialization script for the postgres container. 
 -- Will be executed during container initialization ($> psql postgres -f initdb.sql)
 CREATE ROLE {{ .Values.Db.Postgres.Username }} WITH LOGIN PASSWORD '{{ .Values.Db.Postgres.UserPassword }}' INHERIT CREATEDB;
@@ -276,7 +278,7 @@ ALTER DATABASE {{ .Values.Db.Postgres.Database }} OWNER TO {{ .Values.Db.Postgre
 ```
 
 - Add the following code to the `_helpers.yaml` file. The `tpl` function takes a text and applies all templates on it before passing it along. The `b64enc` is used to then encoded it for the secret.  
-```
+```yaml
 {{/*
 template for initdb sql secret
 */}}

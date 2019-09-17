@@ -14,7 +14,6 @@ dependencies:
 - name: bulletinboard-users
   version: "0.1.0"
   repository: "file://../../../users/helm/bulletinboard-users"
-
 ``` 
 
 ## Step 2: Update dependencies
@@ -49,7 +48,7 @@ Edit `ads-app-configmap.yaml` and set parameter `post_user_check` to `true`, if 
 Check URL of the user service to match your newly created service (Should be the same as before):
 
 
-```bash
+```yaml
 data:
   profile: k8s
   post_user_check: "true"
