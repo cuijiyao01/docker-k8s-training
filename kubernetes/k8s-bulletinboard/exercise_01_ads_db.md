@@ -48,7 +48,7 @@ This hierarchy allows us to retrieve e.g all entities for our databases via a `k
   You can change the password (in line 3) to something else, however we will need it in Exercise 2&5 too, so remember it. 
   Since the file contains sensitive data like password, we will store it as a generic **secret**. First save this script in an `initdb.sql` named file.
 
- ```
+ ```initdb.sql
  -- This is a postgres initialization script for the postgres container. 
  -- Will be executed during container initialization ($> psql postgres -f initdb.sql)
  CREATE ROLE adsuser WITH LOGIN PASSWORD 'initial' INHERIT CREATEDB;
@@ -61,7 +61,7 @@ This hierarchy allows us to retrieve e.g all entities for our databases via a `k
 
 - Because the data in a **Secret** is base64 encoded we will use *kubectl* itself to generate the yaml: 
 
-```
+```bash
  kubectl create secret generic ads-db-secret --from-file initdb.sql --dry-run -o yaml > ads-db-secret.yaml
 ```
 
@@ -102,7 +102,7 @@ _Hint: In the following sections we will provide you yaml-snippets of the Statef
 
 - Specify a **Statefulset** for the Postgres Database Pod with name `ads-db-statefulset` with proper labels and selector for [component and module](exercise_01_ads_db.md#labels). 
 
-```
+```yaml
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -117,7 +117,7 @@ metadata:
 - Additional refer under `volumes` to the secret item with database initialization script and refer to the configmap and right secret item when setting up Postgres environment variables in the Docker container.
 - Also in the definition of the stateful set you need to give the names of the  **environment variables**. So the name of the environment variable for the location for the database files is `PGDATA` and for the superuser password it is `POSTGRES_PASSWORD`.
 
-```
+```yaml
 spec:
   serviceName: <name-of-headless-service>
   replicas: <#-of-DB-pods>
@@ -164,7 +164,7 @@ spec:
 
 - For the creation of the PVC we are using the volumeClaimTemplates mechanism. Here just make sure you are using proper labels for [component and module](exercise_01_ads_db.md#labels). 
 
-```
+```yaml
   volumeClaimTemplates:
   - metadata:
       name: ads-db-volume
@@ -193,7 +193,7 @@ Here are two different ways how you could test if the statefulset is configured 
 
 Create a temporary pod with psql installed (e.g. a postgres:9.6 image like our DB) and use psql from this pod to connect to the DB.
 
-```
+```bash
 kubectl run tester -it --generator=run-pod/v1 --restart=Never --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash
 ```
 

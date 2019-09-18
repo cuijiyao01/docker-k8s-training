@@ -14,7 +14,7 @@ In this step you are going to describe a pod in a yaml file (`pod.yaml`). Take t
 
 Either check the official [API reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#pod-v1-core) of the pod resource for help or use `kubectl explain pod` to get a command-line based description of the resource. By appending `.<field>` to the resource type, the explain command will provide more details on the specified field (example: `kubectl explain pod.spec`).
 
-```
+```yaml
 apiVersion: v1
 metadata:
 spec:

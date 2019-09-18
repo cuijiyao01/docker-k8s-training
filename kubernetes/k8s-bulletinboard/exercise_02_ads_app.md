@@ -26,7 +26,7 @@ Purpose: The Dockerimage for Bulletinboard-ads is pushed to the [**SAP Artifacto
 
 - To create a docker-registry **Secret** named _artifactory_ by executing the command below (Using the prepared credentials):
 
-```
+```bash
 kubectl create secret docker-registry artifactory --docker-server=cc-k8s-course.docker.repositories.sap.ondemand.com --docker-username=cc-k8s-course-r1 --docker-password=oQHCMaS05Z1i
 ```
 - We will uses the **Secret** name to identify in the **Deployment** what ImagePullSecret to use.
@@ -37,7 +37,7 @@ Purpose: Create a **Secret** for the external (outside the docker image) configu
 
 - The content of the file - finally created at the filesystem of the Docker Container - should look like the following:
 
-```
+```yaml
 spring: 
   datasource: 
     url: jdbc:postgresql://<name-of-ads-db-pod>.<name-of-ads-db-headless-service>:5432/ads
@@ -52,7 +52,7 @@ _**Hint: Please substitute the place holders below <...> by proper values !**_
 
 - Because the data in a **Secret** is base64 encoded we will use *kubectl* itself to generate the yaml for the **Secret** itself: 
 
-```
+```bash
  kubectl create secret generic ads-app-secret --from-file application-k8s.yml --dry-run -o yaml > ads-app-secret.yaml
 ```
 
@@ -90,7 +90,7 @@ _Hint: In the following sections we will provide you several yaml-snippets of th
 
 - Specify a **Deployment** for the **Bulletinboard Ads** with 2 instances, with name `ads-app-deployment` and with proper labels and selector for component and module. 
 
-```
+```yaml
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -107,14 +107,14 @@ spec:
       module: <name-of-module>
 ```
 
-- Assign to the volume `ads-app-properties` from the **Secret** the key for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:  
-```
+- Assign to the volume `ads-app-properties` from the **Secret** the key for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:
+```yaml
 cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
 ```
 
 - Additional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
 
-```  
+```yaml
   template:
     metadata:
       labels:
@@ -169,7 +169,7 @@ _Hint: In the following sections we will provide you yaml-snippets of the Deploy
 - Specify a **Service** for the **Bulletinboard Ads**, with name `ads-app-service`, a named targetPort `ads-app-port` and with proper labels and selector for component and module. 
 
 
-```
+```yaml
 ---
 apiVersion: v1
 kind: Service
@@ -198,7 +198,7 @@ spec:
 
 - Refer to the above created **Service** `ads-app-service` in field `serviceName` and `servicePort` (Section '- backend').
 
-```
+```yaml
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress

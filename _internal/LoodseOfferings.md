@@ -23,28 +23,28 @@ loodse.com offers Docker and K8S trainings. We can potentially use / license som
 
 ## Kubernetes for developers (16 hrs)
 - Kubernetes Basics
--  Creating a Kubernetes cluster
--  Creating pods and services
--  Deploying microservices
--  Kubernetes networking
--  Scaling a ReplicaSet
--  Canary deployments
--  Kubernetes dashboard
--  Kubernetes Advanced
--  Deployments
--  Deploying a new version
--  Rollback a deployment
--  Health checks
--  Graceful shutdown
--  Configuring your application
--  Environmental variables
--  Command line arguments
--  Using ConfigMaps
--  Managing credentials
--  Autoscaling pods
--  Running daemons on every machine
--  Managing batched and run-once jobs
--  Managing applications with Helm
+- Creating a Kubernetes cluster
+- Creating pods and services
+- Deploying microservices
+- Kubernetes networking
+- Scaling a ReplicaSet
+- Canary deployments
+- Kubernetes dashboard
+- Kubernetes Advanced
+- Deployments
+- Deploying a new version
+- Rollback a deployment
+- Health checks
+- Graceful shutdown
+- Configuring your application
+- Environment variables
+- Command line arguments
+- Using ConfigMaps
+- Managing credentials
+- Autoscaling pods
+- Running daemons on every machine
+- Managing batched and run-once jobs
+- Managing applications with Helm
 
 ## Kubernetes Operations (8 hrs)
 - Deployment of Kubernetes
@@ -68,19 +68,19 @@ Daily Operation of Kubernetes
 
 ## Monitoring with Prometheus (8 hrs)
 - Getting started with Prometheus
-  -  Pull model monitoring
-  -  The Prometheus server
-  -  Metrics exporters
-  -  Service discovery mechanisms
--  Using the expression browser
--  Start the node exporter
--  Configure Prometheus to monitor the node exporter
--  Use prometheus-operator
--  Monitor kubernetes components and etcd
--  Learn the expression language
--  Instrument Code and run example-app based on Go or Python
--  Run Grafana Dashboard
--  Write example-app alert
+  - Pull model monitoring
+  - The Prometheus server
+  - Metrics exporters
+  - Service discovery mechanisms
+- Using the expression browser
+- Start the node exporter
+- Configure Prometheus to monitor the node exporter
+- Use prometheus-operator
+- Monitor kubernetes components and etcd
+- Learn the expression language
+- Instrument Code and run example-app based on Go or Python
+- Run Grafana Dashboard
+- Write example-app alert
 
 
 

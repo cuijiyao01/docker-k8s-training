@@ -11,7 +11,7 @@ In addition to all that, you will use Init-Containers to initialize your nginx d
 ## Step 0 - obtain necessary detail information
 Since the ingress controller is specific to the cluster, you need a few information to construct a valid URL processable by the controller.
 
-Here is a command to find our your cluster and projectname:
+Here is a command to find our your cluster name and project name:
 ```bash
 echo "Clustername: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f2)"; echo "Projectname: $(kubectl config view -o json | jq  ".clusters[0].cluster.server" | cut -d. -f3)"
 ```
@@ -28,7 +28,6 @@ The snippets below might give an idea, how to create a cache volume and pass an 
 volumes:
 - name: index-html
   emptyDir: {}
-
 ```
 
 ```yaml
@@ -92,11 +91,11 @@ The ingress is forwarding traffic to `/my-app` also to `/my-app` at the backend.
 In addition to the checking of service <> deployment connection via labels and selectors, there is another entity which holds relevant information - the actual ingress router running in `kube-system` namespace.
 
 Get the full name of the `addons-nginx-ingress-controller` pod running in `kube-system` and check the last 50 log entries for occurrences of your ingress name or host name and related errors. Increase the number (--tail=100), when your resource is not part of the output:
+
 ```bash
 kubectl -n kube-system get pods
 
 kubectl -n kube-system logs --tail=50 addons-nginx-ingress-controller-<some ID>
-
 ```
 
 ## Further information & references
