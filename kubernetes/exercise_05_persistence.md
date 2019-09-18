@@ -68,7 +68,7 @@ Navigate to the directory mentioned in the `volumeMounts` section and create a c
 
 ### Step 4: Remove and re-attach the storage
 Delete the alpine helper pod, you created earlier: ` kubectl delete pod nginx-storage-pod`
-Then create a new deployment that uses the `nginx-pvc`. However `run nginx` will not work this time, since you need to specify the volume mount. Extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as an example.
+Then create a new deployment that uses the `nginx-pvc`. However `create nginx` will not work this time, since you need to specify the volume mount. Extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as an example.
 
 Please note that our storage backend (`default` storage class based on [`gcePersistentDisk`](https://kubernetes.io/docs/concepts/storage/volumes/#gcepersistentdisk)) does not support `readWriteMany` mounts. You can either mount the volume once for write access (like you did in step 2) or several times as readOnly. Since our deployment has 3 replicas and we don't want to modify the `index.html`, mount the `nginx-pvc` by adding `readOnly: true` to both the `volumeMounts` and the `volumes.persistentVolumeClaim` sections.
 
