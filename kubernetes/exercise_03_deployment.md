@@ -88,7 +88,7 @@ spec:
 ```
 
 ## Step 6: deploy(ment)!
-Now create the deployment again. Remember that you can always use the `--dry-run` flag to test. Use the yaml file you just wrote instead of the `run` generator.
+Now create the deployment again. Remember that you can always use the `--dry-run` flag to test. Use the yaml file you just wrote instead of the `create` generator.
 
 `kubectl apply -f <your-file>.yaml`
 
