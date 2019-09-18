@@ -9,10 +9,10 @@ After you exposed your webserver to the network in the previous exercise, we wil
 ## Step 0: Prepare and check your environment
 Firstly, remove the deployment you created in the earlier exercise. Check the cheat sheet for the respective command.
 
-Next, take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`. Are there already resources present in the cluster?
+Next, take a look around: `kubectl get persistentvolume` and `kubectl get persistentvolumeclaims`. Are there already resources present in the cluster?
 Inspect the resources you found and try to figure out how they are related (hint - look for `status: bound`).
 
-By the way, you don't have to type `PersistentVolume` all the time. You can abbreviate it with `pv` and similarly use `pvc` for the claim resource.
+By the way, you don't have to type `persistentvolume` all the time. You can abbreviate it with `pv` and similarly use `pvc` for the claim resource.
 
 ## Step 1: Create a PersistentVolume and a corresponding claim
 Instead of creating a PersistentVolume (PV) first and then bind it to a PersistentVolumeClaim (PVC), you will directly request storage via a PVC using the default storage class.
