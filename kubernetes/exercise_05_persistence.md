@@ -9,10 +9,10 @@ After you exposed your webserver to the network in the previous exercise, we wil
 ## Step 0: Prepare and check your environment
 Firstly, remove the deployment you created in the earlier exercise. Check the cheat sheet for the respective command.
 
-Next, take a look around: `kubectl get PersistentVolumes` and `kubectl get PersistentVolumeClaims`. Are there already resources present in the cluster?
+Next, take a look around: `kubectl get persistentvolume` and `kubectl get persistentvolumeclaims`. Are there already resources present in the cluster?
 Inspect the resources you found and try to figure out how they are related (hint - look for `status: bound`).
 
-By the way, you don't have to type `PersistentVolume` all the time. You can abbreviate it with `pv` and similarly use `pvc` for the claim resource.
+By the way, you don't have to type `persistentvolume` all the time. You can abbreviate it with `pv` and similarly use `pvc` for the claim resource.
 
 ## Step 1: Create a PersistentVolume and a corresponding claim
 Instead of creating a PersistentVolume (PV) first and then bind it to a PersistentVolumeClaim (PVC), you will directly request storage via a PVC using the default storage class.
@@ -68,7 +68,7 @@ Navigate to the directory mentioned in the `volumeMounts` section and create a c
 
 ### Step 4: Remove and re-attach the storage
 Delete the alpine helper pod, you created earlier: ` kubectl delete pod nginx-storage-pod`
-Then create a new deployment that uses the `nginx-pvc`. However `run nginx` will not work this time, since you need to specify the volume mount. Extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as an example.
+Then create a new deployment that uses the `nginx-pvc`. However `create nginx` will not work this time, since you need to specify the volume mount. Extend the deployment.yaml from exercises 3 with a `volumes` and `volumeMounts` section. You can use the pod spec listed above as an example.
 
 Please note that our storage backend (`default` storage class based on [`gcePersistentDisk`](https://kubernetes.io/docs/concepts/storage/volumes/#gcepersistentdisk)) does not support `readWriteMany` mounts. You can either mount the volume once for write access (like you did in step 2) or several times as readOnly. Since our deployment has 3 replicas and we don't want to modify the `index.html`, mount the `nginx-pvc` by adding `readOnly: true` to both the `volumeMounts` and the `volumes.persistentVolumeClaim` sections.
 
