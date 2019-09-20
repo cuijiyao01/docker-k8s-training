@@ -209,6 +209,7 @@ metadata:
     module: <name-of-module>
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/app-root: /ads/
 spec:
   rules:
   - host: bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.<your-project-name>.shoot.canary.k8s-hana.ondemand.com
@@ -251,7 +252,7 @@ Now, access the application using the browser.
   - **REST API, health Endpoint**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/health`
   - **REST API, Get All**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads`
   - **REST API, Get Single**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads/<advertisement-id>`
-  - **Web-UI**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/`
+  - **Web-UI**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/` . Note the `app-root` annotation, which will force a redirect to `/ads/`, if you you just enter `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com`
   
   _**Hint: Do not miss the '/' at the end of the URL !**_
   _**Another Hint: If there is only a blue screen that comes up, and are faced with a Blocked by client error message on your console, try pausing your adblocker - The file is literally named Advertisement.view.xml, which any self respecting adblocker will block :) **_
