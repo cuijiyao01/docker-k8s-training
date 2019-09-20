@@ -162,7 +162,7 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
 
 Purpose: Make **Bulletinboard-Ads** available within your K8s Cluster via **Service** and "publish" externally into the Internet via a **Ingress**.
 
-_Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
+_Hint: In the following sections we will provide you yaml-snippets of the Service specification. Just substitute the place holders `<...>` by proper values !_
 
 ### Service
 
