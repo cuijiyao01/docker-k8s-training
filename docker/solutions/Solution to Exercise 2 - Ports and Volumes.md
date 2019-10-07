@@ -27,7 +27,7 @@ $ docker pull nginx
 And run the image in detached mode:
 
 ```bash
-$ docker run -d --name ex3nginx nginx
+$ docker run -d --name ex2nginx nginx
 ```
 
 Now open a browser in your VM (like Firefox or Chrome) and type in `http://localhost:80` - you will get no reply as the container is not exposed yet.
@@ -35,8 +35,8 @@ Now open a browser in your VM (like Firefox or Chrome) and type in `http://local
 Stop and remove your container:
 
 ```bash
-$ docker stop ex3nginx
-$ docker rm ex3nginx
+$ docker stop ex2nginx
+$ docker rm ex2nginx
 ```
 
 ## Step 1: forward NGINX' port
@@ -44,7 +44,7 @@ $ docker rm ex3nginx
 Start a new container and export the port of the _nginx_ webserver to a random port that is chosen by Docker.
 
 ```bash
-$ docker run -d -P --name ex31nginx nginx
+$ docker run -d -P --name ex21nginx nginx
 ```
 
 Use the `docker ps` command to find you which port the webserver is forwarded to. The result will look like this:
@@ -52,7 +52,7 @@ Use the `docker ps` command to find you which port the webserver is forwarded to
 ```bash
 $ docker ps
 CONTAINER ID    IMAGE    COMMAND                  CREATED           STATUS          PORTS                   NAMES
-44b447735dc1    nginx    "nginx -g 'daemon ..."   3 seconds ago     Up 2 seconds    0.0.0.0:32768->80/tcp   ex31nginx
+44b447735dc1    nginx    "nginx -g 'daemon ..."   3 seconds ago     Up 2 seconds    0.0.0.0:32768->80/tcp   ex21nginx
 ```
 
 In this example, port 80 of the container was forwarded to port 32768 of the Docker host (this number might be different in your case). Use your web browser again and direct it to
@@ -61,8 +61,8 @@ In this example, port 80 of the container was forwarded to port 32768 of the Doc
 Stop and remove your container:
 
 ```bash
-$ docker stop ex31nginx
-$ docker rm ex31nginx
+$ docker stop ex21nginx
+$ docker rm ex21nginx
 ```
 
 ## Step 2: forward NGINX' to a specified port
@@ -70,7 +70,7 @@ $ docker rm ex31nginx
 Start another _nginx_ container but this time, make sure the exposed port of the webserver is forwarded to port 1080 on your host.
 
 ```bash
-$ docker run -d -p 1080:80 --name ex32nginx nginx
+$ docker run -d -p 1080:80 --name ex22nginx nginx
 ```
 
 You can now connect to `http://localhost:1080` with your web browser and see _nginx'_ default landing page.
@@ -78,8 +78,8 @@ You can now connect to `http://localhost:1080` with your web browser and see _ng
 Stop and remove your container.
 
 ```bash
-$ docker stop ex32nginx
-$ docker rm ex32nginx
+$ docker stop ex22nginx
+$ docker rm ex22nginx
 ```
 
 **Hint:** You can use `docker inspect` to find out which port is exposed by the image like this. The exposed port is clearly visible:
@@ -122,7 +122,7 @@ _EOF
 Start a new container that bind-mounts this directory to `/usr/share/nginx/html` as a volume.
 
 ```bash
-$ docker run -d -p 1081:80 --mount type=bind,source=`pwd`/nginx-html,target=/usr/share/nginx/html --name ex33nginx nginx
+$ docker run -d -p 1081:80 --mount type=bind,source=`pwd`/nginx-html,target=/usr/share/nginx/html --name ex23nginx nginx
 ```
 
 Now use your browser once again to go to `http://localhost:1081` - you will now see the webpage you just created.
@@ -130,6 +130,6 @@ Now use your browser once again to go to `http://localhost:1081` - you will now 
 Stop and remove your container once you are finished.
 
 ```bash
-$ docker stop ex33nginx
-$ docker rm ex33nginx
+$ docker stop ex23nginx
+$ docker rm ex23nginx
 ```
