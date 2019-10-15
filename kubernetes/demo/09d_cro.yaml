@@ -1,10 +1,12 @@
-apiVersion: events.training.sap/v1
-kind: Course
+apiVersion: food.training.sap/v1
+kind: SteakfulSet
 metadata:
-    labels:
-        id: "42"
-    name: course-example
+  labels:
+    hungry: very
+  name: lean-rump-steak
 spec:
-    training:
-      name: "k8s-fundamentals"
-      participants: 21
+  steak:
+    cookLevel: medium
+    fat: lean
+    weight: 250
+
