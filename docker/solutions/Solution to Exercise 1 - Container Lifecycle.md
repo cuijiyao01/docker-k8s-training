@@ -19,54 +19,41 @@ You will now see the processes inside your container:
 
 ## Step 1: Executing commands in containers
 
+Start a new nginx container in detached mode and get its name:
+
+```bash
+docker run -d nginx
+docker container list
+```
+
 Start another shell into the container by issuing the following command. You will need your container's ID or its simple name.
 
 ```bash
 docker exec -it <your container ID or Silly_Name> /bin/sh
 ```
 
-Using the example above, it would be:
+Install `ps` within the container invoke it to see the processes running in the context of the container.
 
 ```bash
-docker exec -it 567d71edcab0 /bin/sh
+apt-get update && apt-get install -y procps
+ps -ef
 ```
 
-Perform `ps` or again `top` to see the processes that run in there.
-If you started top, quit by pressing `q`. Detach from container using `ctrl + p` and then `ctrl + q`.
-
-## Step 2: Reattaching to containers
-
-Reattach with the following command. Again, you will need your container's ID or friendly name:
-
+Once finished, exit from the shell. Check whether or not the container is still running.
 ```bash
-docker attach <your container ID or Silly_Name>
+docker container list -a
 ```
 
-With the example above:
+## Step 2: Getting logs of a container
 
-```bash
-docker attach 567d71edcab0
-```
+`docker logs <your container ID or Silly_Name>`  displays the output of PID 1 as [documented](https://docs.docker.com/engine/reference/commandline/logs/). Since PID 1 runs an nginx webserver, there is nothing to view (yet).
 
-**Bonus answer:** You'll see that you're still running the `top` command from Step 0 you had on screen before performing Step 1.
-As per [documentation](https://docs.docker.com/engine/reference/commandline/attach/) `docker attach` will always connect to `ENTRYPOINT/CMD` process, i.e. the special process running with PID 1. So no matter how often you perform `docker attach`, you'll always get the terminal from Step 0.  The other terminals are lost once you detached from them.
+## Step 3: Killing containers
 
-## Step 3: Getting logs of a container
-
-`docker logs <your container ID or Silly_Name>`  displays the logs present at the time of execution as [documented](https://docs.docker.com/engine/reference/commandline/logs/). In our case it displays the `top` output, and if you run this command several times while container still runs, you'll see the output changes.
-
-## Step 4: Killing containers
-
-Run a new container from the nginx image:
-
-```bash
-docker run -d nginx
-```
-
-Perform `docker ps` to see the running containers.
+Perform `docker ps` or `docker container list` to see the running containers.
 Perform `docker stop <your container ID or Silly_Name>` (e.g. `docker stop 94cb514de45e`) to end your container.
 
-## Step 5: Clean up
+## Step 4: Clean up
 
 Unless you want to use the command `docker rm $(docker ps -aq)` (which REALLY deletes ALL the containers - and this might be dangerous !), you may also perform: `docker ps -a` to see a list with all the running & exited containers and then delete multiple of them with one command: `docker rm <container1> <container2> <containerN>`.
 
