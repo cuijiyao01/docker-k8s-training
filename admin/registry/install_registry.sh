@@ -49,6 +49,12 @@ GARDENER_CLUSTERNAME=$(kubectl config view --minify -o jsonpath='{.clusters[0].c
 INGRESS_HOSTNAME_LONG=registry.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 INGRESS_HOSTNAME_SHORT=r.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 
+if [ $(echo $INGRESS_HOSTNAME_SHORT | wc -m) -gt 64 ]; then
+	echo "The short hostname for registry is longer than 64 chars!"
+	echo "Certification of url and usage of registry would not work, please use a shorter cluster name!"
+	exit 5
+fi
+
 # create htpasswd file for basic authentication
 echo 'participant:$apr1$5KiSajCb$WS1TN7L0KTOltFHuDYle1/' > auth
 
@@ -63,5 +69,5 @@ sed -i.bck "s/INGRESS_HOSTNAME_SHORT/${INGRESS_HOSTNAME_SHORT}/g" $CONFIG_FILE
 sed -i.bck "s/INGRESS_HOSTNAME_LONG/${INGRESS_HOSTNAME_LONG}/g" $CONFIG_FILE
 ${HELM} install stable/docker-registry --namespace registry -f $CONFIG_FILE
 
-# cleanup
+# clean up
 rm auth

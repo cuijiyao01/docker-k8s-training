@@ -7,7 +7,7 @@ Login to your VM and locate the kubectl binary by running `which kubectl`. The r
 
 Run the following commands, to download your personal `kube.config`. Replace _<training_id>_ and _<your_namespace_id>_ with the values that have been given to you by your trainer.
 
-```
+```bash
 ~/setup/get_kube_config.sh <training_id> <your_namespace_id>
 ```
 
@@ -31,10 +31,10 @@ With kubernetes version 1.11 the `kubectl` binary was extend with an `api-resour
 Firstly, check your `kubectl version`. If it is 1.11.x or higher, run the `api-resources` command and search for the short name for the `nodes` resource. Can you `describe` a node using the short name notation?  
 
 ## Step 5: talk to kubernetes like an application
-If you access kubernetes as an application rather than an administrator, you cannot use the the convenient syntax of `kubectl`. Instead you have to send http requests to the cluster. Though there are client libraries available, in the end everything boils down to an http request.
-In this step of the exercise, you will send an http request directly to the cluster asking for the available nodes. Instead of `kubectl` you can use the program `curl`.
+If you access kubernetes as an application rather than an administrator, you cannot use the the convenient syntax of `kubectl`. Instead you have to send HTTP requests to the cluster. Though there are client libraries available, in the end everything boils down to an HTTP request.
+In this step of the exercise, you will send an HTTP request directly to the cluster asking for the available nodes. Instead of `kubectl` you can use the program `curl`.
 
-To figure out, how `kubectl` converts your query into http requests, run the command from step 1 again and add a `-v=9` flag to it. This increases the verbosity of `kubectl` drastically, showing you all the information you need. Go through the command's output and find the correct curl request.
+To figure out, how `kubectl` converts your query into HTTP requests, run the command from step 1 again and add a `-v=9` flag to it. This increases the verbosity of `kubectl` drastically, showing you all the information you need. Go through the command's output and find the correct curl request.
 
 Before you continue, make sure `kubectl proxy` is running and serving on `localhost:8001`. Now modify the request to be send via the proxy. Since the proxy has already taken care of authentication, you can omit the bearer token in your request.
 

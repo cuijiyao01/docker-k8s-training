@@ -9,14 +9,14 @@ Network policies in your namespace help you restrict access to your nginx deploy
 ## Step 0: verify the setup
 Before you deploy a network policy, check the connection from a random pod to the nginx pods via the service.
 
-Start a busybox image and connect to it. Try to re-use the busybox.yaml from exercise 05 but without the volumes and mounts. Use the `exec` command to open a shell session into it.
+Start an alpine image and connect to it. Try to re-use the storage-pod.yaml from exercise 05 but without the volumes and mounts. Use the `exec` command to open a shell session into it.
 Alternatively spin up a a temporary deployment with `kubectl run tester --generator=run-pod/v1 -i --tty --restart=Never --rm --image=alpine:3.8 /bin/sh`.
 
 Do you remember, that your service name is also a valid DNS name? Instead of using an IP address to connect to your service, you can use its actual name (like `nginx-https`).
 
-Run `wget --timeout=1 -q -O - <your-serivce-name>` from within the pod to send an http request to the nginx service.
+Run `wget --timeout=1 -q -O - <your-service-name>` from within the pod to send an HTTP request to the nginx service.
 
-If everything works fine, the result should look like this (maybe with a different serivce name):
+If everything works fine, the result should look like this (maybe with a different service name):
 ```bash
 # wget --timeout=1 -q -O - nginx-https
 Connecting to nginx (10.7.249.39:80)
@@ -57,7 +57,7 @@ spec:
         cidr: 155.56.0.0/16
     - ipBlock:
         # Germany WDF
-        cidr: 193.16.224.0/28
+        cidr: 193.16.224.0/24
     - ipBlock:
         # Ireland
         cidr: 84.203.229.48/29

@@ -22,7 +22,5 @@ Concept | Purpose | Defines / controls / has feature
 [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)  | Run time-based jobs  |  Run **job**s at given times; one-time or repeatedly by time & date
 [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)  | Provide external access to some services in the cluster   <br/>Ingress can provide load balancing, SSL termination and name-based virtual hosting|  Defines: **Service** to expose, DNS name to expose externally, offers load balancing and URL mapping (to multiple target services), SSL termination
 [Secret](https://kubernetes.io/docs/concepts/configuration/secret/) | Provide sensitive information to pods | Sensitive information (e.g. credentials) should not be part of containers/pods but be injected from outside; secret can be file or key-value pair; are assigned to pods and can be read as file (via volume) or in ENV
-[ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configmap/)   | Provide configuration to pod  | Provide as key-value pair of file; assign to pod; access via volume (file) or ENV 
+[ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configmap/) | Provide configuration to pod  | Provide as key-value pair of file; assign to pod; access via volume (file) or ENV
 
-   
-   

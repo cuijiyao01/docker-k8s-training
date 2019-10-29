@@ -25,7 +25,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 - Increase security and establish a **Network policy** for
   - Ads DB
   - Ads App
-- Enable https connection by adding TLS certificates to **Ingress**
+- Enable HTTPS connection by adding TLS certificates to **Ingress**
 
 ### [04 Exercise: "Using Helm-chart to setup Bulletinboard-Users Application and -DB](exercise_04_users_app_and_db_by_helm.md)
 - Create Users DB and Users App via existing **Helm chart**
@@ -35,7 +35,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 
 ## Naming conventions of files and labels 
 
-The choosen structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the Application-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.  
+The chosen structure for **Labels** (and with this for **Selectors**) has 2 levels. To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the Application-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.  
 For name of files and of the entities itself we choose the schema: `<component>-<module>-<entity>.yaml` so e.g the yaml for the service for Bulletinboard-ads application would be named `ads-app-service.yaml`.  
 To shorten names in the exercise descriptions, entities will be referenced by their component & module values, like __ads:app__ to name the pod(s) for bulletinboard-ads application pod.
 

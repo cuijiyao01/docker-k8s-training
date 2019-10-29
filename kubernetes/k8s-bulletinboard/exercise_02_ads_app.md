@@ -10,13 +10,13 @@
 
 - We decided our initial expected load to **Ads App** requires at least 2 instances of our **Ads App**. Therefore we need horizontal scaling for the **Ads App**, which we provide using a **Deployment** with 2 instances (replicas is 2).
 
-- A specific version of Cloud Curriculum **Bulletinboard-Ads**, slighty adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in [**SAP Artifactory in DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home).
+- A specific version of Cloud Curriculum **Bulletinboard-Ads**, slightly adapted for this training, is available as [Docker Image](https://docker.repositories.sap.ondemand.com/webapp/#/artifacts/browse/tree/General/cc-k8s-course/k8s/bulletinboard-ads/latest) in [**SAP Artifactory in DMZ**](https://docker.repositories.sap.ondemand.com/webapp/#/home).
 
 - **Bulletinboard-Ads** is a **Spring Boot** application and can read [configuration from various external sources](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html). The Docker Image of **Bulletinboard-Ads** is reading the configuration from an **Application properties file** with name `application-k8s.yml`.
 
 - Additional we can configure **Bulletinboard-Ads** via environment variables for de-/activation of a check against **Bulletinboard-Users** when creating an advertisement (`POST_USER_CHECK`), the Service-URL to the **Bulletinboard-Users** (`USER_ROUTE`) and the [Active Spring Profile](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html#howto-set-active-spring-profiles) (`SPRING_PROFILES_ACTIVE`).
 
-- The structure for **Labels** (and with this for **Selectors**) has 2 levels as in exercice 1: To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
+- The structure for **Labels** (and with this for **Selectors**) has 2 levels as in exercise 1: To separate **Bulletinboard-Ads** from **Bulletinboard-Users** we introduce the **Label** `component` with value `ads` and `users`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-labels-1.png" width="800" />
 
@@ -26,7 +26,7 @@ Purpose: The Dockerimage for Bulletinboard-ads is pushed to the [**SAP Artifacto
 
 - To create a docker-registry **Secret** named _artifactory_ by executing the command below (Using the prepared credentials):
 
-```
+```bash
 kubectl create secret docker-registry artifactory --docker-server=cc-k8s-course.docker.repositories.sap.ondemand.com --docker-username=cc-k8s-course-r1 --docker-password=oQHCMaS05Z1i
 ```
 - We will uses the **Secret** name to identify in the **Deployment** what ImagePullSecret to use.
@@ -37,7 +37,7 @@ Purpose: Create a **Secret** for the external (outside the docker image) configu
 
 - The content of the file - finally created at the filesystem of the Docker Container - should look like the following:
 
-```
+```yaml
 spring: 
   datasource: 
     url: jdbc:postgresql://<name-of-ads-db-pod>.<name-of-ads-db-headless-service>:5432/ads
@@ -46,13 +46,13 @@ spring:
     driverClassName: org.postgresql.Driver
 ```
 
-_**Hint: Please substitute the place holders below <...> by proper values !**_
+_**Hint: Please substitute the place holders above <...> by proper values !**_
 
 - Save the file under the filename `application-k8s.yml` in folder `k8s-bulletinboard/ads`.
 
 - Because the data in a **Secret** is base64 encoded we will use *kubectl* itself to generate the yaml for the **Secret** itself: 
 
-```
+```bash
  kubectl create secret generic ads-app-secret --from-file application-k8s.yml --dry-run -o yaml > ads-app-secret.yaml
 ```
 
@@ -62,27 +62,27 @@ _**Hint: Please substitute the place holders below <...> by proper values !**_
 
 - Now call `kubectl apply -f ads-app-secret.yaml` to create the **Secret**.
 
-_Further informations on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
+_Further information on [Configmap from files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)_
 
 ## Step 2: Configmap for Spring Profile 
 
 Purpose: Create a **Configmap** for the external (outside the docker image) configuration of **ads:app**, which will be the environment variable SPRING_PROFILES_ACTIVE, we want to "pass" to **Bulletinboard-Ads** Docker container.
 
-- The app needs to get specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way **Spring** gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Dockercontainer. 
+- The app needs to be specified which profile **Spring** should use. We will use the name **k8s** for the profile (thus the name application-__k8s__.yml). One way **Spring** gets this information is by providing an environment variable `SPRING_PROFILES_ACTIVE` in the Docker container. 
 
 - Therefore specify a **Configmap** `ads-app-configmap` with key `spring_profiles_active_value` and value `k8s`.
 
-- By default this specific version of **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (Will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefore we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
+- By default this specific version of **Bulletinboard-Ads** does not check against **Bulletinboard-Users** when creating an advertisement. Anyhow a **Bulletinboard-Users** App is not yet available/ running in our K8s Cluster (will be done in [Exercise 04](exercise_04_users_app_and_db_by_helm.md)). Therefore we do not need to specify/ "pass" the environment variables `POST_USER_CHECK` and `USER_ROUTE` now.
 
 - Save the **Configmap** spec under the filename `ads-app-configmap.yaml` in folder `k8s-bulletinboard/ads`. Do not forget to specify proper labels for component and module !
 
 - Now call `kubectl apply -f ads-app-configmap.yaml` to create the **Configmap**.
 
-_Further informations on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
+_Further information on [Configmap and Container Environment Variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-using-configmap-data)_
 
 ## Step 3: Deployment
 
-Purpose: Create the **Deployment**, which is dependend on the **Configmap** and **Secret**, created in step 1 (Creation of Deployment will fail, if those are not yet available !). Also the **Secret** `artifactory` is needed to pull the image.
+Purpose: Create the **Deployment**, which is dependent on the **Configmap** and **Secret**, created in step 1 (Creation of Deployment will fail, if those are not yet available !). Also the **Secret** `artifactory` is needed to pull the image.
 
 <img src="images/k8s-bulletinboard-target-picture-ads-app-deployment.png" width="300" />
 
@@ -90,7 +90,7 @@ _Hint: In the following sections we will provide you several yaml-snippets of th
 
 - Specify a **Deployment** for the **Bulletinboard Ads** with 2 instances, with name `ads-app-deployment` and with proper labels and selector for component and module. 
 
-```
+```yaml
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -107,14 +107,14 @@ spec:
       module: <name-of-module>
 ```
 
-- Assign to the volume `ads-app-properties` from the **Secret** the key for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:  
-```
+- Assign to the volume `ads-app-properties` from the **Secret** the key for the **Applicaton Properties file** and choose as Docker container the **Bulletinboard-Ads** Docker Image:
+```yaml
 cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
 ```
 
-- Addtional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
+- Additional refer for the environment variable `STRING_PROFILES_ACTIVE` the corresponding **Configmap** (key & name).
 
-```  
+```yaml
   template:
     metadata:
       labels:
@@ -162,14 +162,14 @@ cc-k8s-course.docker.repositories.sap.ondemand.com/k8s/bulletinboard-ads:latest
 
 Purpose: Make **Bulletinboard-Ads** available within your K8s Cluster via **Service** and "publish" externally into the Internet via a **Ingress**.
 
-_Hint: In the following sections we will provide you yaml-snippets of the Deployment specification. Just substitute the place holders `<...>` by proper values !_
+_Hint: In the following sections we will provide you yaml-snippets of the Service specification. Just substitute the place holders `<...>` by proper values !_
 
 ### Service
 
 - Specify a **Service** for the **Bulletinboard Ads**, with name `ads-app-service`, a named targetPort `ads-app-port` and with proper labels and selector for component and module. 
 
 
-```
+```yaml
 ---
 apiVersion: v1
 kind: Service
@@ -198,7 +198,7 @@ spec:
 
 - Refer to the above created **Service** `ads-app-service` in field `serviceName` and `servicePort` (Section '- backend').
 
-```
+```yaml
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -209,6 +209,7 @@ metadata:
     module: <name-of-module>
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/app-root: /ads/
 spec:
   rules:
   - host: bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.<your-project-name>.shoot.canary.k8s-hana.ondemand.com
@@ -219,7 +220,7 @@ spec:
           serviceName: <name-of-ads-service>
           servicePort: <name-of-ads-port>
 ```
-  In the examble above the namespace would be `part-0040`, cluster name would be `testcw43` and project name would be `k8s-train`.
+  In the example above the namespace would be `part-0040`, cluster name would be `testcw43` and project name would be `k8s-train`.
   You can find out what your *cluster name* and *project name* is by looking into the config: `kubectl config view`. Here `clusters.cluster.server` contains the api url, which contains both cluster and project name. You can see an example in the picture below.  
   <img src="images/ClusterConfigNameFromConfig.png" width="600" />
 
@@ -247,11 +248,11 @@ Purpose: Check **Bulletinboard-Ads** App running properly together with **Bullet
 Now, access the application using the browser.
 - Open Chromium browser
 - Open a new tab
-- Paste the following URLs into the adress field and check the results.
+- Paste the following URLs into the address field and check the results.
   - **REST API, health Endpoint**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/health`
   - **REST API, Get All**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads`
   - **REST API, Get Single**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads/<advertisement-id>`
-  - **Web-UI**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/`
+  - **Web-UI**: `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/` . Note the `app-root` annotation, which will force a redirect to `/ads/`, if you you just enter `http://bulletinboard--<your-name-space>.ingress.<your-trainings-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com`
   
   _**Hint: Do not miss the '/' at the end of the URL !**_
   _**Another Hint: If there is only a blue screen that comes up, and are faced with a Blocked by client error message on your console, try pausing your adblocker - The file is literally named Advertisement.view.xml, which any self respecting adblocker will block :) **_

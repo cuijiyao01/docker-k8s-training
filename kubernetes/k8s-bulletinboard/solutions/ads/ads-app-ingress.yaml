@@ -8,6 +8,7 @@ metadata:
     module: app
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/app-root: /ads/
 spec:
   rules:
   - host: bulletinboard--<your-name-space>.ingress.<your-training-cluster>.k8s-train.shoot.canary.k8s-hana.ondemand.com

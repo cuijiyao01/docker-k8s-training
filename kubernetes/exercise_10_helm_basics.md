@@ -33,12 +33,12 @@ Hint: If you are getting tired of typing in your tiller namespace for every comm
 
 <details><summary>Bash command to set TILLER_NAMESPACE to namespace of kube config</summary><p> 
 
-You can use this bash line to set  TILLER_NAMESPACE:  
+You can use this bash line to set TILLER_NAMESPACE:  
 `export TILLER_NAMESPACE=$(kubectl config view -o json | jq -r ".contexts[0].context.namespace")` 
 </p></details>
 
 ## Step 2: looking for charts?
-Now that helm is able to talk to its tiller in Kubernetes it is time to use it. Helm organizes applications in so called charts, which contain parameters you can set during installation. By default there is a local and an official repository where you can look for charts, but of course you can also add futher repos. Check out the available repos and search for a chaoskube chart
+Now that helm is able to talk to its tiller in Kubernetes it is time to use it. Helm organizes applications in so called charts, which contain parameters you can set during installation. By default there is a local and an official repository where you can look for charts, but of course you can also add further repos. Check out the available repos and search for a chaoskube chart
 
 `helm repo list`
 
@@ -46,14 +46,14 @@ Now that helm is able to talk to its tiller in Kubernetes it is time to use it. 
 
 Found it? Check the github [page](https://github.com/kubernetes/charts/tree/master/stable/chaoskube) for a description of the chart.
 
-Of course, there are other ways to find charts. You can go to [charts org on github](https://github.com/kubernetes/charts) and take a look into the stable, test or incubatior repositories. This is also where you find the yaml / template files of charts.
+Of course, there are other ways to find charts. You can go to [charts org on github](https://github.com/kubernetes/charts) and take a look into the stable, test or incubator repositories. This is also where you find the yaml / template files of charts.
 In addition the helm organization recently created [Helm Hub](https://hub.helm.sh/). It is a very convenient way to search for a chart and lets you access multiple / different repositories at once (like stable or incubator). Take a look and see, if you can find the chaoskube there as well.
 
 ## Step 3: install a chart
 Run the following command to install the chaoskube chart:
 `helm install --name <any-name> stable/chaoskube --set namespaces=<your-namespace> --set rbac.serviceAccountName=tiller --tiller-namespace <your-namespace> --debug`
-It installs eveything that is associated to the chart into your namespace. Note the `--set` flag, it specifies a parameter of chart.
-The parameter `namespaces` defines in which namespaces the choaskube will delete pods, `rbac.serviceAccountName` tells helm which serviceAccount chaoskube will get. Here we give it the tiller account because it has to be able to delete pods.  
+It installs everything that is associated to the chart into your namespace. Note the `--set` flag, it specifies a parameter of chart.
+The parameter `namespaces` defines in which namespaces the chaoskube will delete pods, `rbac.serviceAccountName` tells helm which serviceAccount chaoskube will get. Here we give it the tiller account because it has to be able to delete pods.  
 Check the github page mentioned above again, if you want to learn what it does and which other parameters are available.
 
 ## Step 4: inspect your chaoskube
@@ -63,7 +63,7 @@ Get more information by running `helm status <your-releases-name> --tiller-names
 Also check the pods running inside your kubernetes namespace. Don't forget to look into the logs of the chaoskube to see what would have happened with the dry-run flag set.
 `kubectl logs -f pod/<your chaoskube-pod-name>`
 
-# Step 5: clean-up
+## Step 5: clean up
 Clean up by deleting the chaoskube:
 `helm delete <your-releases-name> --tiller-namespace <your-namespace>`
 

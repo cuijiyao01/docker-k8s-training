@@ -1,6 +1,6 @@
 # Optional - Exercise: "Create Helm chart for Bulletinboard-Ads App and -Database"
 
-The following exercises are still a bit rough and not completly finished. But they should give you an idea on how writing a helmchart works and introduces a few more functions of helm. We do not expect you to finish them. But we highly appreciate [feadback](https://github.wdf.sap.corp/slvi/docker-k8s-training/issues) on them.
+The following exercises are still a bit rough and not completely finished. But they should give you an idea on how writing a helmchart works and introduces a few more functions of helm. We do not expect you to finish them. But we highly appreciate [feedback](https://github.wdf.sap.corp/slvi/docker-k8s-training/issues) on them.
 
 ## On the current state of this exercise
 

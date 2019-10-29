@@ -27,17 +27,17 @@ You can use the participant VM also for all work as a trainer.
 
 ### K8s cluster in Gardener
 
-- **Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<Location>-<DateOfYourTraining>) to get a Gardener K8s Cluster** for the training (~ 2 weeks in advance to the training), in case you want to use the Cloud Curriculum Resources in [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/) (incl. Cloud Curriculum Google Account). In the email body please refer to the corresponding event in the [Cloud Curriculum Event Calendar](https://jam4.sapjam.com/groups/zAfXdXPcJGlCUrBScXSWKP/events) (e.g. link/ URL of event).
+- **Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@global.corp.sap?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<Location>-<DateOfYourTraining>) to get a Gardener K8s Cluster** for the training (~ 2 weeks in advance to the training), in case you want to use the Cloud Curriculum Resources in [Gardener](https://github.wdf.sap.corp/pages/kubernetes/gardener/) (incl. Cloud Curriculum Google Account). In the email body please refer to the corresponding event in the [Cloud Curriculum Event Calendar](https://jam4.sapjam.com/groups/zAfXdXPcJGlCUrBScXSWKP/events) (e.g. link/ URL of event).
 
 - In case you have already a Gardener K8s cluster, you can take this cluster for the training.
 
-  **Note:** This training has been developed and tested using K8S clusters on GCP provided by Gardener. Clusters on other platforms and/or not provided by Gardener might result in some demos and exercises (e.g. Ingress, persistens volumes, LoadBalancers, etc.) not working as designed. Therefore, please make sure your K8S cluster is running on GCP and has been provided by Gardener.
+  **Note:** This training has been developed and tested using K8S clusters on GCP provided by Gardener. Clusters on other platforms and/or not provided by Gardener might result in some demos and exercises (e.g. Ingress, persistence volumes, LoadBalancers, etc.) not working as designed. Therefore, please make sure your K8S cluster is running on GCP and has been provided by Gardener.
 
 ### Create your trainer .kube/config
 
 On your VM / machine
 - Create a directory `.kube` under HOME (e.g. /home/vagrant on VM) and cd into it
-- Create new file `config` and paste the kubeconfig yaml, you have got from [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) for your training.
+- Create new file `config` and paste the kubeconfig yaml, you have got from [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@global.corp.sap?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) for your training.
 - run `kubectl get nodes` - this command must complete by giving you a short list of nodes in the cluster
 
 ### Generate the kube configs for the participants
@@ -52,7 +52,7 @@ Now run the script `kubecfggen.sh`. Give it the number of participants/namespace
 - Generates the kubeconfig files for the participants in the subdir for the training
 - Packages all files for this training into a tar.
 
-**Please note:** The script creates not only the namespaces. It also deploys a ResourceQuota & LimitRange to each namespace. With this, abuse of the training cluster should become harder. The ResourceQuota limits the number of pods accepted by each namespace to 15. Any particpant trying to scale a deployment to a hundred pods or more will not harm other participants. The LimitRange assigns default values for memory and CPU requested by a pod. It also give a default limit. If a pod does not specify any of these it will inherit the defaults. In other terms, by specifying a cpu/memory request & limit, the defaults can be overwritten.
+**Please note:** The script creates not only the namespaces. It also deploys a ResourceQuota & LimitRange to each namespace. With this, abuse of the training cluster should become harder. The ResourceQuota limits the number of pods accepted by each namespace to 15. Any participant trying to scale a deployment to a hundred pods or more will not harm other participants. The LimitRange assigns default values for memory and CPU requested by a pod. It also give a default limit. If a pod does not specify any of these it will inherit the defaults. In other terms, by specifying a cpu/memory request & limit, the defaults can be overwritten.
 
 ### Copy the configs to the share
 
@@ -114,28 +114,28 @@ Check the following files for `<cluster-name>` and `<project-name>` placeholders
 
 
 ### Check IP address ranges
-Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we/[Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) have limited the access to whatever you expose in the cluster to traffic originating from the SAP network at your training location. Therefor we have configured the firewall rules to block traffic, that does not originate from these addresses.
+Most likely, the Gardener cluster runs on SAP external infrastructure like AWS or GCP. To make our setup a bit more secure, we/[Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@global.corp.sap?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) have limited the access to whatever you expose in the cluster to traffic originating from the SAP network at your training location. Therefor we have configured the firewall rules to block traffic, that does not originate from these addresses.
 
 Furthermore, during the training these ranges will be used for the network policy exercise. Check the yaml files in the [demo](../kubernetes/demo/11c_network_policy_ingress.yaml) and [solutions](../kubernetes/solutions/08_network_policy_ingress.yaml) folder and adapt it to your local IP blocks, if necessary.
 
 You can use the [network information portal](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml) to get your local office's CIDR blocks. For the exercise 8 you can give the info to participants as well or ask them to search for it.
 
 ### Setup helm & tiller
-To continue with the setup, you have to initialize tiller in `kube-sytem` namespace. Run the [helm_init](helm_init.sh) script within your VM to download the helm client (if not present) and bring up tiller with a dedicated service account & cluster admin permissions.
+To continue with the setup, you have to initialize tiller in `kube-system` namespace. Run the [helm_init](helm_init.sh) script within your VM to download the helm client (if not present) and bring up tiller with a dedicated service account & cluster admin permissions.
 
 ### Setup a docker registry (~1 day before course starts)
 For the docker exercises you need a private docker registry. Participants will upload their custom images to it during the course. Recommendation is to spin up a registry without any persistence in the k8s cluster you use for the training.
 In the admin folder of this repo, you find a registry folder with `install.registry.sh` script. Check the prerequisites and run the script as described [here](./registry/readme.md) to deploy a registry and make it available via an ingress.
 
 ### Setup cluster monitoring (~1 day before course starts)
-If you want to keep track of things happening in the cluster, you can use these [scripts](./monitoring) to setup  prometheus/grafana based monitoring.
+If you want to keep track of things happening in the cluster, you can use these [scripts](./monitoring) to setup prometheus/grafana based monitoring.
 
 ### (Optional) [Gain access to the Dashboard](accessDashboard.md)
 
 ## During the Course
 
 ### Use the "master" kube.config 
-For all demos to work properly (especially the RBAC demo), you have to use an "admin" user when talking to the cluster. When you use the `kube.config` you got along with the cluster details, you are on the save side. However if you use a participant user / namespace, the RBAC demo will fail due to missing autorization. 
+For all demos to work properly (especially the RBAC demo), you have to use an "admin" user when talking to the cluster. When you use the `kube.config` you got along with the cluster details, you are on the save side. However if you use a participant user / namespace, the RBAC demo will fail due to missing authorization. 
 
 Of course, you can create a separate namespace (!= `default`) and add it to the `kube.config` context definition to send requests to it by default.
 
@@ -143,9 +143,9 @@ Of course, you can create a separate namespace (!= `default`) and add it to the 
 - Raise your question via email in the [kubernetes-users Mailinglist](https://listserv.sap.corp/mailman/listinfo/kubernetes-users) or in the [K8s CaaS in SAP Cloud Platform Jam Group](https://jam4.sapjam.com/groups/Niq7TSBxLlzgb3nroBZJVx/overview_page/e9uqTDxXBRFbk7FJXEA4Cd) or in the Slack Channel [k8s-landscape-gardener](https://sap-cp.slack.com/messages/CBV3JS9S4/).
 
 ### Add nodes to K8s cluster
-In exceptional cases it might happen that your cluster needs more resources to deal with all the participants pods because autoscaler configuration is not sufficient high. In order to scale the cluster up, get in contact with [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>).
+In exceptional cases it might happen that your cluster needs more resources to deal with all the participants pods because autoscaler configuration is not sufficient high. In order to scale the cluster up, get in contact with [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@global.corp.sap?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>).
 
 ## After the course
 
-- Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@sap.com?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) to let destroy the Gardener cluster, you used for the training. If needed you can request to keep the cluster for one additional week, so participants can rework on their exercises.
+- Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@global.corp.sap?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) to let destroy the Gardener cluster, you used for the training. If needed you can request to keep the cluster for one additional week, so participants can rework on their exercises.
 - As well request to delete the kube config files, you stored for your training at https://cc-admin.mo.sap.corp/userContent/k8s-trainings/

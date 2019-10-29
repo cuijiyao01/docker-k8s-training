@@ -1,5 +1,4 @@
-Exercise 5.3: Advanced topics
-====================================================
+# Exercise 5.3: Advanced topics
 
 ## Learning Goal
 - Define dependencies to other charts by connection users ands ads.
@@ -10,12 +9,11 @@ Exercise 5.3: Advanced topics
 
 ## Step 1: Create file `requirements.yaml` in the `bulletinboard-ads` folder
 
-```
+```yaml
 dependencies:
 - name: bulletinboard-users
   version: "0.1.0"
   repository: "file://../../../users/helm/bulletinboard-users"
-
 ``` 
 
 ## Step 2: Update dependencies
@@ -26,7 +24,7 @@ $ helm dependency update bulletinboard-ads
 
 ## Step 3: Make necessary changes to ads chart
 
-When using dependencies it is important to know that templates (e.g. defined in _helpers.tpl files) are shared globally between subcharts and the main chart. This means that our "db-connection" template in ads overwrites the one in the users chart. For this not to happen please rename the `"db-connection"` template to `"ads-db-connection"` and adapt also the name in the application-k8s.txt file  and templates/ads-app-deployment.yaml file where it is used.
+When using dependencies it is important to know that templates (e.g. defined in _helpers.tpl files) are shared globally between subcharts and the main chart. This means that our "db-connection" template in ads overwrites the one in the users chart. For this not to happen please rename the `"db-connection"` template to `"ads-db-connection"` and adapt also the name in the application-k8s.txt file and templates/ads-app-deployment.yaml file where it is used.
 
 ## Step 4: Install chart
 
@@ -50,7 +48,7 @@ Edit `ads-app-configmap.yaml` and set parameter `post_user_check` to `true`, if 
 Check URL of the user service to match your newly created service (Should be the same as before):
 
 
-```bash
+```yaml
 data:
   profile: k8s
   post_user_check: "true"
@@ -61,8 +59,8 @@ Upgrade chart, kill app pod, check that application still works and that you can
 
 ## Step 6: Bonus tasks (optional)
 
-**Bonus 1:** WE have a fixed user service name without the release name being part of it. Figure it out how to make the user service name configurable and how to path the name to the ads chart during installation. (Please send us your example.)
+**Bonus 1:** We have a fixed user service name without the release name being part of it. Figure it out how to make the user service name configurable and how to path the name to the ads chart during installation. (Please send us your example.)
 
-**Bonus 2:** Make app manifest files fully configurable (simiar with db manifest files)
+**Bonus 2:** Make app manifest files fully configurable (similar with db manifest files)
 
  

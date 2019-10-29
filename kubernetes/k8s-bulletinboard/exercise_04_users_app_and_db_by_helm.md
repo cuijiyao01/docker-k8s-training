@@ -48,19 +48,20 @@ __Purpose: Get familar with the provided template files and the user service.__
 
 Before you can install the helm chart, open the *values.yaml* file. We left out the values of a few entries, you have to fill them out yourself:
 - The values for e.g. Image and Version are mentioned above.
-- For the password you can choose any string, if you want to generate one, you can do so by executing in an termial e.g. `openssl rand -base64 9` ([here are a few more ways](https://www.howtogeek.com/howto/30184/10-ways-to-generate-a-random-password-from-the-command-line/)). 
+- For the password you can choose any string, if you want to generate one, you can do so by executing in an terminal e.g. `openssl rand -base64 9` ([here are a few more ways](https://www.howtogeek.com/howto/30184/10-ways-to-generate-a-random-password-from-the-command-line/)). 
 - ServicePort can be any port (e.g. 80 or 8080), you will need this one later to configure the route used by ads.
 - TomcatPort should be 8080 (default port of the tomcat docker image).
 
 Now do `helm install bulletinboard-users` in the `k8s-bulletinboard` folder containing the `bulletinboard-users` subfolder. In the current state the user-service will run, but there will be no data in the database. 
-You can test that the user-service is runing by doing: 
+You can test that the user-service is running by doing: 
 - `kubectl get all -l "component=users"`, the pods should be on state running. <details><summary> Here you can see a example output.</summary><p><img src="images/kubectl-get-all-users.png" width="800"></p></details>
-- `kubectl port-forward <name-of-user-app-pod> 8081:8080`: this terminal is blocked by the open connection to the pod, either put it in the background (`crtl + z` + `bg`) or open a second terminal (`crtl + shift + t`)
+- `kubectl port-forward <name-of-user-app-pod> 8081:8080`: this terminal is blocked by the open connection to the pod, either put it in the background (`ctrl + z` + `bg`) or open a second terminal (`ctrl + shift + t`)
 - get users: `curl localhost:8081/bulletinboard-users-service/api/v1.0/users`
 - post a user: `curl -i -X POST localhost:8081/bulletinboard-users-service/api/v1.0/users -H "Content-Type: application/json" --data '{"id" : "42", "premiumUser" : true, "email" : "john.doe@sample.org"}'`
 
 If you do a "get-curl" request again you should now get the user back. It should look something like this: 
-```vagrant@vagrant:~$ curl localhost:8081/bulletinboard-users-service/api/v1.0/users
+```bash
+vagrant@vagrant:~$ curl localhost:8081/bulletinboard-users-service/api/v1.0/users
 [{"createdAt":1536141529412,"updatedAt":null,"version":1,"id":"42","email":"john.doe@sample.org","premiumUser":true}]
 ``` 
 With this you have a running users service and now know a way to fill the DB with users.

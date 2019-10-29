@@ -1,5 +1,4 @@
-Exercise 5.2: Authoring the chart to include the ads application itself
-====================================================
+# Exercise 5.2: Authoring the chart to include the ads application itself
 
 ## Learning Goal
 - Include application manifest files in the Helm chart
@@ -10,13 +9,13 @@ Exercise 5.2: Authoring the chart to include the ads application itself
 
 ## Prerequisite
 
-- Chart from Excercise 2 correctly installed (check out ads-db-* files in the bulletionboard-users helm solutions if previous exercise not done)
+- Chart from Exercise 2 correctly installed (check out ads-db-* files in the bulletinboard-users helm solutions if previous exercise not done)
 
 ## Step 1: Copy all app K8s manifest files (`ads-app-*.yaml`) to the `templates` folder
 
 
 Now the contents of the `templates` directory should look like this:
-```
+```directory-structure
 templates
   ads-app.yaml
   ads-app-configmap.yaml
@@ -81,7 +80,7 @@ $ helm upgrade <release-name> bulletinboard-ads
 ## Step 3: Check if the service is up and running
 
 ```bash
-http://bulletionboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
+$ curl http://bulletinboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k8s-hana.ondemand.com/ads/api/v1/ads
 ```
 
 
@@ -90,18 +89,14 @@ http://bulletionboard--<your namespace>.ingress.ccdev01.k8s-train.shoot.canary.k
 Do a fresh install of the chart
 
 ```bash
-
 helm delete <release-name> --prune
 
 helm install bulletinboard-ads
-
 ```
 
 Watch for the pods coming to live:
 
 ```bash
-
-
 $ kubectl get pods
 NAME                            READY     STATUS              RESTARTS   AGE
 ads-app-54fd856ccb-k79sb        1/1       Running             0          12s
@@ -117,24 +112,19 @@ $ kubectl get pods
 NAME                            READY     STATUS    RESTARTS   AGE
 ads-app-54fd856ccb-k79sb        1/1       Running   1          1m
 queenly-newt-ads-db-sset-0      1/1       Running   0          1m
-
 ```
 
 You'll notice that ads app pod starts before the db pod starts, which leads to error. Of course, kubernetes we'll retry to start the pod until it succeeds.
-
 
 However, you can configure the app pod to start only after db pod is started by using init containers.
 
 Add following configuration to the specification for the app deployment (`ads-app-deployment.yaml`)
 
 ```yaml
-
       initContainers:
       - name: init-postgres
         image: alpine
         command: ['sh', '-c', 'for i in $(seq 1 200); do nc -z -w3 {{ template "db-connection" . }} {{ .Values.Db.Postgres.Port }} && exit 0 || sleep 3; done; exit 1']
-
-
 ```
 
 Now the pod for the app will be started only after the db service is listening on defined port.

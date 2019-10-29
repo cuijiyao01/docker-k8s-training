@@ -46,7 +46,7 @@ done
 
 
 # demote LoadBalancers to just NodePorts
-LB=$(kubectl -n $NAMESPACE get svc -o jsonpath="{range .items[?(@.spec.type == 'LoadBalancer')]}{.metadata.name}")
+LB=$(kubectl -n $NAMESPACE get svc -o jsonpath="{range .items[?(@.spec.type == 'LoadBalancer')]}{.metadata.name} ")
 
 for l in $LB; do
 	kubectl -n $NAMESPACE patch svc $l -p '{"spec": {"type": "NodePort"}}'

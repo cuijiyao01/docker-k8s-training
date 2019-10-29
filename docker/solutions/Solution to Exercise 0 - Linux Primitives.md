@@ -20,8 +20,8 @@ chroot .
 
 **Note:** This will (intentionally) fail with the following error message:
 
-```
-chroot: failed to run command ‘/bin/bash’: No such file or directory
+```bash-output
+chroot: failed to run command '/bin/bash': No such file or directory
 ```
 
 
@@ -70,7 +70,7 @@ In this new shell, try to look at which files are there and which directories yo
 
 You can leave the chroot session as expected via `exit`.
 
-## Step 2: use unshare to run a process in a seperate namespace
+## Step 2: use unshare to run a process in a separate namespace
 
 Make sure you are root for this step.
 
@@ -92,7 +92,7 @@ ps -ef
 
 You should only get a list of two processes: your shell (with PID 1) and the `ps` command itself. The output should look something like this:
 
-```bash
+```bash-output
 UID        PID  PPID  C STIME TTY          TIME CMD
 root         1     0  2 12:46 pts/6    00:00:00 /bin/bash
 root        41     1  0 12:46 pts/6    00:00:00 ps -ef

@@ -1,4 +1,4 @@
-# Agenda Day 3 Kubernetes
+# Agenda Day 3 - Kubernetes
 
 ## Configuration
 * Entities part 5
@@ -15,7 +15,7 @@
 * controller & custom resources
 
 ## Stateful workloads
-* statefulSets and headless services
+* StatefulSets and headless services
 * Exercise 07 - deploy a statefulset
 
 ## Administration
@@ -23,7 +23,7 @@
 * Role based authorization (RBAC)
 * Image pull secrets
 * Network policies
-  * Excercise 08 - add a network policy to the nginx deployment
+  * Exercise 08 - add a network policy to the nginx deployment
 * Node management
 * Kubernetes Dashboard
 * Scheduling pods on dedicated nodes

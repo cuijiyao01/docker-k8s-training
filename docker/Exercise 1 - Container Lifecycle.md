@@ -20,11 +20,11 @@ Once finished, exit from the shell. Check whether or not the container is still 
 
 Use `docker logs` to display the logs of the container you just exited from. What do you see?
 
-## Step 3: Killing Containers
+## Step 3: Killing containers
 
 Use the `docker stop` command to end your nginx container.
 
-## Step 4: Cleaning up
+## Step 4: Clean up
 
 Get a list of all currently running and already exited containers. Remove them with `docker rm`.
 

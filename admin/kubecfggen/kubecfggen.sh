@@ -212,6 +212,9 @@ metadata:
 spec:
   hard:
     pods: "15"
+    services.loadbalancers: "3"
+    requests.storage: "10Gi"
+    persistentvolumeclaims: "10"
 __EOF
 done
 

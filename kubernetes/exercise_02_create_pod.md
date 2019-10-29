@@ -14,7 +14,7 @@ In this step you are going to describe a pod in a yaml file (`pod.yaml`). Take t
 
 Either check the official [API reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#pod-v1-core) of the pod resource for help or use `kubectl explain pod` to get a command-line based description of the resource. By appending `.<field>` to the resource type, the explain command will provide more details on the specified field (example: `kubectl explain pod.spec`).
 
-```
+```yaml
 apiVersion: v1
 metadata:
 spec:
@@ -54,8 +54,8 @@ The `exec` command helps you in this situation. Adapt and run the following comm
 
 `kubectl exec -ti <my-pod> bash`
 
-## Step 5: clean-up
-It's time to clean-up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`.
+## Step 5: clean up
+It's time to clean up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`.
 Now you can remove the pod from the cluster by running a `delete` command. Check the [cheat-sheet](./cheat-sheet.md) for help.
 Which phases of the pod do you observe in your second shell?
 

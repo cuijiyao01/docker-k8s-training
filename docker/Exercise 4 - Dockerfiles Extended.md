@@ -2,17 +2,17 @@
 
 In this exercise, you will create a Dockerfile consisting of two stages. Within a build stage you will compile a go-based web app. Next, copy the binary to run stage, which consists of a minimal set of libs only. (and yes, you could also link everything statically and have an image with the binary only). 
 
-The app is a simple web server providing view and edit functionality for "wiki pages" and is based on this [tutorial](https://golang.org/doc/articles/wiki/). It serves on port 8080, renders web pages based on templates parsed from files and can persist pages on the filesystem.
+The app is a simple webserver providing view and edit functionality for "wiki pages" and is based on this [tutorial](https://golang.org/doc/articles/wiki/). It serves on port 8080, renders web pages based on templates parsed from files and can persist pages on the filesystem.
 
 The structure looks like this
-```
+```directory-structure
 /app
-├── wiki                --> executable
-├── tmpl                --> template for page rendering
-│   ├── edit.html
-│   └── view.html
-└── data                --> location to store pages as txt files
-│   ├── somepage.txt
++-- wiki                --> executable
++-- tmpl                --> template for page rendering
+|   +-- edit.html
+|   +-- view.html
++-- data                --> location to store pages as txt files
+|   +-- somepage.txt
 ```
 
 ## Step 0: Setting up your build context
@@ -53,7 +53,7 @@ Let's create an environment that reflects the file system structure mentioned in
 Data from earlier stages can be consumed with `COPY --from=<previous stage name>` commands. Move the `wiki` executable to the runtime stage and place it directly in the `/app/` directory.
 
 ## Step 6: Adapt the environment
-So far all directories / files are owned by the `root` user. Time to change that and grant the `appuser` access to the required parts of the filesystem. Since everything relevent is stored within `/app` you can `RUN` this command to do the changes: `chown -R appuser /app`
+So far all directories / files are owned by the `root` user. Time to change that and grant the `appuser` access to the required parts of the filesystem. Since everything relevant is stored within `/app` you can `RUN` this command to do the changes: `chown -R appuser /app`
 
 Now you can user the `USER` directive to change to `appuser`. Also the wiki expects to find files relative to its location. So you have to set the `WORKDIR` accordingly.
 
@@ -66,4 +66,4 @@ Use the `docker build` command to build your image. Tag it along the way so you 
 
 ## Step 8: Run your image
 
-Run the image in detached mode, create a port forwarding from port 8080 in the container to some port on your host and connect with your webbrowser to it.
+Run the image in detached mode, create a port forwarding from port 8080 in the container to some port on your host and connect with your web browser to it.

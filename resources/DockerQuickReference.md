@@ -2,18 +2,20 @@
 
 ## Basic Commands
 
-```
+```text
 docker --help
 docker <cmd> --help
 docker info
 
 docker images   : list local images
 docker run      :create and run container from image with command (optional)
-        -d      : as deamon
+        -d      : as daemon
         -P      : all exposed ports mapped to host (random high)
         -p 80:5000  : map port 5000 (exposed from image) to 80 on host (virtualbox)
         -rm     : delete container after completion
-        --tmpfs : mount a /tmp file system
+        --mount \
+          type=tmpfs 
+                : mount a /tmp file system
 docker ps       : list running containers
         -s      : show size used by container on read-write file system; 
                  'virtual' is the read-only shared part     
@@ -47,21 +49,21 @@ see also
 -----------------------------------------------------
 ### Dockerfile commands
 
-```
+```text
 FROM  img:ver : specify start image and optionally version (or 'latest')
 WORKDIR       : sets working directory (= cd) during build; creates it (path) if not exists
 RUN <cmd>     : run a command during build, mostly mkdir, ... apt-get to install stuff
 CMD           : specify command / software to be run inside the container (runtime) on startup
                 (shell form or JSON form)
 EXPOSE <port> : container will listen on (local) port; mapped in "docker run -p target:port". 
-                Can specify protocal "port/prot"; TCP is default, UDP is possible
+                Can specify protocol "port/prot"; TCP is default, UDP is possible
 COPY f t      : copy local file to target t
 ADD src dest  : same as COPY but src can be tar.gz or url that will be unpacked
 ENV n=v n=v   : set environment vars (use \ to continue the line; use one ENV so get only one cache layer)
 VOLUME <dir>  : expose mount point (e.g. VOLUME /data/jenkins) that can be shared with other containers
                 (shared directory); the local mount point must exist (created before with "WORKDIR ..." or
                 "RUN mkdir -p /data/jenkins"); host directory is declared / assigned at container runtime
-                by the "docker run -v .." argument
+                by the "docker run --mount .." argument
 USER          : switch to given user
 ```
 
@@ -69,24 +71,23 @@ USER          : switch to given user
 
 ## Managing data in containers
 
-- "Data volumes are designed to persist data, independent of the container’s life cycle. "
+- "Data volumes are designed to persist data, independent of the container's lifecycle."
 This can be a file or more generally a directory and is then mounted. Data Volumes bypass the Union File System (which is per container).
 - A volume creates / mounts a directory in the container to a directory in the host VM.
 - Docker keeps volumes in the host VM at: `/var/lib/docker/volumes/`. This is inside the VM in virtualbox, (not visible in the docker console window.)
 - A volume can be mounted into multiple containers and is then shared. 
-- Volumes are created by `docker volume create` or as parameter of a `docker run -v ...`
+- Volumes are created by `docker volume create` or as parameter of a `docker run --mount ...`
 - Normally volumes are stored on the docker host VM but you can also use a 'volume driver' from a provider that e.g. offers network file storage (e.g. on AWS)
 - "tmpfs mount" can be used to store non-persistent state (in-memory / local fs)
 - Volume use cases:
   - Read access of static files shared between all the containers (e.g. static mimes)
   - History and config shared between VMs (needs unique work dirs, e.g. for jenkins)
 - Examples
-  - `$ docker run --rm -v test:/opt/test ubuntu bash -c 'echo $HOSTNAME >> /opt/test/hostnames'` 
+  - `$ docker run --rm --mount source=test,target=/opt/test ubuntu bash -c 'echo $HOSTNAME >> /opt/test/hostnames'` 
 
 
 
-
-## Questions and Answers 
+## Questions and Answers
 
 - Difference between images and containers?
   - Image is a template that is turned into a container. Container is image + read-write file system. Stopped container persists the file system changes and other settings - and it can be restarted.
