@@ -81,11 +81,31 @@ Remember the service from the previous exercise? Since the labels where not chan
 
 
 ## Troubleshooting
-In case the pods of the deployment stay in status `Pending` for quite some time, make sure the pod `nginx-storage-pod` got deleted. Also check the events of one of the pods by running `kubectl describe pod <pod-name>`. 
+In case the pods of the deployment stay in status `Pending` or `ContainerCreation` for quite some time, make sure the pod `nginx-storage-pod` got deleted. Also check the events of one of the pods by running `kubectl describe pod <pod-name>`. 
+
+#### Resource already in use?
 
 If one of the events is a warning that contains something like "resource already in use", delete the deployment as well as the pod `nginx-storage-pod` (if not already done) but do NOT delete the PVC. Next, wait around 1-2min, to ensure that the referenced storage device is unmounted from the node, where it was used before. Then re-create the deployment.  
 
+#### How to check if a disk is mounted!
+
+You can try to see if the storage device is unmounted by:
+1. Use `kubectl get pvc <pcv-name>` to get the name of the bounded persistent volume.
+2. Use `kubectl get pv <pv-name> -o json | jq ".spec.gcePersistentDisk"` to get the name of the physical disk used by the persistent volume.
+3. Use `kubectl get nodes -o yaml | grep <physical-disk-name>` to see if the physical disk is still conected to a node? If it is you get  3 lines per connected node. 
+
+#### ReadOnly is needed twice
+
+If only **one** pod of your deployment reaches running state make sure you have defined `readOnly: true` at the volumes ***and*** at the volumeMounts part of the deployment. If you forgot, add both readOnly statements, delete the old deployment, wait for the unbinding of the disk from the nodes and reapply the fixed deployment to the cluster.  
+You need it in both places because: 
+- The addition of `readOnly: true` at the volumes part tells k8s to mount the disk with readOnly to each node. This is needed to be able to mount the disk to multiple nodes. 
+- The addition of `readOnly: true` at the volumeMounts part tells k8s to do the docker bind mount into the container also with readOnly. Since the disk is mounted readOnly docker **can not** mount the volume with read&write access into the container. 
+
+#### Service Problems
+
 In case your service is not routing traffic properly, run `kubectl describe service <service-name>` and check, if the list of `Endpoints` contains at least 1 IP address. The number of addresses should match the replica count of the deployment it is supposed to route traffic to. 
+
+#### Caching issues
 
 Finally, there might be some caching on various levels of the used infrastructure. To break caching on corporate proxy level and display the custom page, request index.html directly: `http:<LoadBalancer IP>/index.html`.
 
