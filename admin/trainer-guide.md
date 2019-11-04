@@ -148,7 +148,7 @@ In exceptional cases it might happen that your cluster needs more resources to d
 ## After the course
 
 - Contact the [Cloud Curriculum K8s Trainings DevOps Team](mailto:DL_5B2CDDFFECB21162D9000010@global.corp.sap?subject=[Docker%20and%20K8s%20fundamentals%20training]%20Request%20for%20trainings%20cluster%20-%20<DateOfYourTraining>) to let destroy the Gardener cluster, you used for the training. If needed you can request to keep the cluster for one additional week, so participants can rework on their exercises.
-- If you ask for one additional week please run Cleanup Script after the last day of training on the trainings cluster to help us save some money.
+- If you ask for one additional week please run [Cleanup Script](cluster_cleanup.sh) after the last day of training on the trainings cluster to help us save some money.
   - it scales statefulsets and deployments down to one replica,
   - it removes unused pvcs.
   - it scales LoadBalancer Services to NodePorts.   
