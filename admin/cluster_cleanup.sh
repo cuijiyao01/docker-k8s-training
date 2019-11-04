@@ -62,8 +62,8 @@ if [ "$1" == "all" ]; then
 
 	for namespace in $NAMESPACELIST; do
 		case $namespace in 
-			'logging'|'kube-system'|'monitoring') echo "Skipping this namespace $namespace";;
-			*) echo "Starting cleanup in $namespace"; cleanupNamespace $namespace;;
+			'logging'|'kube-system') echo "Skipping this namespace: $namespace";;
+			*) echo "Starting cleanup in namespace $namespace"; cleanupNamespace $namespace;;
 		esac
 	done
 
