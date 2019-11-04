@@ -69,6 +69,12 @@ GARDENER_CLUSTERNAME=$(kubectl config view --minify -o jsonpath='{.clusters[0].c
 INGRESS_HOSTNAME_SHORT=m.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 INGRESS_HOSTNAME_LONG=training-monitoring.ingress.${GARDENER_CLUSTERNAME}.${GARDENER_PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com
 
+if [ $(echo $INGRESS_HOSTNAME_SHORT | wc -m) -gt 64 ]; then
+	echo "The short hostname for monitoring is longer than 64 chars!"
+	echo "Certification of url will not work, please use a shorter cluster name!"
+	exit 5
+fi
+
 # set ingress url in values file
 sed -i.bck "s/INGRESS_HOSTNAME_SHORT/${INGRESS_HOSTNAME_SHORT}/g" $GRAFANA_CONFIG_FILE
 sed -i.bck "s/INGRESS_HOSTNAME_LONG/${INGRESS_HOSTNAME_LONG}/g" $GRAFANA_CONFIG_FILE
