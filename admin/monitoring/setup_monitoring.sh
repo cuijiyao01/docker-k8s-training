@@ -53,6 +53,9 @@ if [ $RC -ne 0 ]; then
 	exit 4
 fi
 
+## update repository info
+${HELM} repo update
+
 ## deploy prometheus components
 
 # create a namespace for the monitoring

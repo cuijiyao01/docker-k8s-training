@@ -42,6 +42,9 @@ if [ $RC -ne 0 ]; then
 	exit 4
 fi
 
+## update repository info
+${HELM} repo update
+
 # construct ingress hostname string
 GARDENER_PROJECTNAME=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}' | cut -d. -f3)
 GARDENER_CLUSTERNAME=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}' | cut -d. -f2)
