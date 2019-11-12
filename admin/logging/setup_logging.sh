@@ -5,7 +5,7 @@ pushd `dirname "$BASH_SOURCE"`
 CLUSTERNAME=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}' | cut -d. -f2)
 PROJECTNAME=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}' | cut -d. -f3)
 
-if [ $(echo 'k.ingress.${CLUSTERNAME}.${PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com' | wc -m) -gt 64 ]; then
+if [ $(echo k.ingress.${CLUSTERNAME}.${PROJECTNAME}.shoot.canary.k8s-hana.ondemand.com | wc -m) -gt 64 ]; then
 	echo "The short hostname for kibana is longer than 64 chars!"
 	echo "Certification of url will not work, please use a shorter cluster name!"
 	exit 1
