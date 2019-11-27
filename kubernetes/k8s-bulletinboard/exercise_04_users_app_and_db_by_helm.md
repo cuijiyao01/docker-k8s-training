@@ -35,7 +35,7 @@ Go to your project base folder `k8s-bulletinboard`, which you created at the beg
 Download the chart into that subfolder and extract it: 
 ```bash
 cd users
-wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/kubernetes/k8s-bulletinboard/bulletinboard-users.tar.gz
+wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/kubernetes/k8s-bulletinboard/bulletinboard-users.tgz
 tar -xvzf bulletinboard-users.tar.gz
 cd bulletinboard-users
 ```
@@ -43,8 +43,6 @@ cd bulletinboard-users
 ## Step 1: helm
 
 __Purpose: Get familar with the provided template files and the user service.__
-
-**Hint:** Remember setting the TILLER_NAMESPACE 
 
 Before you can install the helm chart, open the *values.yaml* file. We left out the values of a few entries, you have to fill them out yourself:
 - The values for e.g. Image and Version are mentioned above.
