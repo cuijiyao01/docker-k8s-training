@@ -91,7 +91,7 @@ Do a fresh install of the chart
 ```bash
 helm delete <release-name> --prune
 
-helm install bulletinboard-ads
+helm install <release-name> bulletinboard-ads
 ```
 
 Watch for the pods coming to live:
