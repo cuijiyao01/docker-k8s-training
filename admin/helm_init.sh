@@ -26,41 +26,19 @@ fi
 [ -z "$HELM" ] && HELM=$(which helm 2> /dev/null)
 if [ -z "$HELM" -o ! -x "$HELM" ]; then
 	echo "HELM could not be found, downloading it..."
-  curl -L https://git.io/get_helm.sh | bash
+  curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 	HELM=$(which helm)
 fi
-
-echo "setting up tiller with a dedicated service account in kube-system namespace ..."
-
-# create service account
-$KUBECTL create serviceaccount tiller -n kube-system
-
-# create cluster role binding
-cat <<__EOF | $KUBECTL create -f -
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: tiller
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: tiller
-  namespace: kube-system
-__EOF
-
-# init tiller in kube-system namespace 
-$HELM init --service-account tiller --tiller-namespace kube-system --upgrade --wait
 
 # print helm & tiller version
 $HELM version
 RC=$?
 if [ $RC -ne 0 ]; then
-    echo "ERROR: Something went wrong during helm initialization."
+    echo "ERROR: Something went wrong during helm setup."
     echo "       Check the error message above or run 'helm version' again"
     exit 4
 fi
 
-echo "** Successfully installed helm & tiller into your cluster **"
+$HELM repo add stable https://kubernetes-charts.storage.googleapis.com/
+
+echo "** Successfully installed helm client locally **"
