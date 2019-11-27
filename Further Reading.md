@@ -59,7 +59,9 @@ If you would like to get some more information on Docker and/or Kubernetes insid
 
 - for managing access to multiple clusters, we put some small bash snippets into a [gist](https://github.wdf.sap.corp/gist/D051945/3f3daf9f71f7e012c1e25a48c1c6e8da)
 
-- getting started locally - with [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/)
+- [kubectl efficiency](https://www.youtube.com/watch?v=vVAFctQP1Vg&list=PLj6h78yzYM2NDs-iu8WU5fMxINxHXlien&index=12&t=0s)
+
+- getting started locally - with [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/) or [k3s](https://k3s.io/)
 
 #### networking
 - The nitty gritty details about the networking in and behind Kubernetes are explained in the final *devX* talk we would like to point you to: [Insights into Kubernetes Networking](https://video.sap.com/media/t/1_8fawa5io/84675141)
