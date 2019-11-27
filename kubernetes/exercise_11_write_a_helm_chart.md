@@ -1,6 +1,6 @@
 # Exercise 11: Write your first helm chart
 
-In this exercise, you will be dealing with _Tiller_ and _Helm_.
+In this exercise, you will be dealing with _Helm_.
 
 After having used a ready-made helm chart from the public chart repository on GitHub, it is now time to author a very basic helm chart consisting of a config map which stores information about your favorite food & drinks.
 
@@ -9,9 +9,10 @@ After having used a ready-made helm chart from the public chart repository on Gi
 ## Documentation
 The usage of helm and the go functions might not be intuitive. There take a look at these links, they explain the most relevant:
 
-* [overview of helm docs](https://github.com/kubernetes/helm/tree/master/docs)
-* [how values files work in helm](https://github.com/kubernetes/helm/blob/master/docs/chart_template_guide/values_files.md)
-* [functions and pipelines](https://github.com/kubernetes/helm/blob/master/docs/chart_template_guide/functions_and_pipelines.md)
+* [overview of helm docs](https://helm.sh/docs/)
+* [getting started with chart development](https://helm.sh/docs/intro/getting_started/)
+* [how values files work in helm](https://helm.sh/docs/topics/chart_template_guide/values_files/)
+* [functions and pipelines](https://helm.sh/docs/topics/chart_template_guide/functions_and_pipelines/)
 
 ## Useful commands & flags
 * `--dry-run`: simulate your action (like installation or upgrade)
