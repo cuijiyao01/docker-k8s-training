@@ -14,7 +14,7 @@ In it's current version, the helm chart values will be set in a way to instruct 
 
 ### preparation
 * check, that `kubectl` works with your cluster
-* If not yet done - setup `helm` in your `kube-system` namespace with a separate service account and cluster-admin permissions. Use the `helm_init.sh` [script](../helm_init.sh) to carry out all required steps.
+* If not yet done - setup `helm`. Use the `helm_init.sh` [script](../helm_init.sh) to carry out all required steps. Run `helm repo list` to check, if the `stable` repository is accessible. If it is not, run the following command to add it your local helm configuration: `helm repo add stable https://kubernetes-charts.storage.googleapis.com/` 
 
 ### Run the setup script
 run `setup_monitoring.sh [project name] [cluster name]` and supply the name or your Gardener project as well as the cluster name.
