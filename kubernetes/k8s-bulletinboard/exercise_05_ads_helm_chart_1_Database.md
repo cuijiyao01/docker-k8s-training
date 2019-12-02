@@ -35,8 +35,6 @@ bulletinboard-ads
 > **Tip**: Don't delete them, you can use them as an example for the next steps. Just move them out of the chart folder structure.
 - To `Chart.yaml` Add some more fields, like sources or maintainers. See https://github.com/helm/helm/blob/master/docs/charts.md#the-chartyaml-file
 
-> **IMPORTANT**: Please do `export TILLER_NAMESPACE=<your namespace>` so you do not always have to add `--tiller-namespace <your namespace>` to all helm calls. 
-
 ## Step 1: Getting the templates
 
 Copy all kubernetes files `ads-db-*.yaml` you created for ads-db into the templates folder. 
@@ -56,7 +54,7 @@ templates
 
 We will see what the helm chart looks like now! Execute the following in bulletinboard-ads folder and Inspect installation.
 ```bash
-$ helm install .
+$ helm install <release-name> .
 ```
 
 <details><summary>An example printout:</summary><p>
@@ -112,7 +110,7 @@ Everything is removed at once or is there still something there? Why? Also try `
 You need to do this because trying to update the chart will not work due to all the changes we will make to the files.
 
 We will now start to parameterize the yamls.
-**Hint:** To test if what we do has the desired effect we should use `helm install --dry-run --debug .` and/or `helm lint`. 
+**Hint:** To test if what we do has the desired effect we should use `helm install -g --dry-run --debug .` and/or `helm lint`. 
 
 ### Step 3.1: Values and Helpers 
 
@@ -202,7 +200,7 @@ spec:
 [...]
 ```
 
-Now do `helm install --debug --dry-run .` in the bulletinboard-ads folder and inspect if the names are changed as you thought and also the references still link correctly.
+Now do `helm install -g --debug --dry-run .` in the bulletinboard-ads folder and inspect if the names are changed as you thought and also the references still link correctly.
 
 ### Step 3.3. Labels and their references
 
@@ -234,7 +232,7 @@ metadata:
 in `ads-db-networkpolicy.yaml` as this is defining the labels for accessing the database service (for the application later)
 
 
-Now again do `helm install --debug --dry-run .` in the bulletinboard-ads folder and inspect if the labels are changed as you thought and also the selectory still link correctly.
+Now again do `helm install -g --debug --dry-run .` in the bulletinboard-ads folder and inspect if the labels are changed as you thought and also the selectory still link correctly.
 
 ## Step 4: Parameterize PostgreSQL
 
@@ -329,10 +327,10 @@ spec:
 
 ## Step 5: Install the Chart and test the Microservice
 
-- First after checking with `helm install --debug --dry-run .` that all yamls are generated correctly do
+- First after checking with `helm install -g --debug --dry-run .` that all yamls are generated correctly do
 
 ```bash
-$ helm install bulletinboard-ads 
+$ helm install <release-name> bulletinboard-ads 
 ```
 
 

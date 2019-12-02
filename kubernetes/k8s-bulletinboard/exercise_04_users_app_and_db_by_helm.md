@@ -35,7 +35,7 @@ Go to your project base folder `k8s-bulletinboard`, which you created at the beg
 Download the chart into that subfolder and extract it: 
 ```bash
 cd users
-wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/kubernetes/k8s-bulletinboard/bulletinboard-users.tar.gz
+wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/kubernetes/k8s-bulletinboard/bulletinboard-users.tgz
 tar -xvzf bulletinboard-users.tar.gz
 cd bulletinboard-users
 ```
@@ -44,15 +44,13 @@ cd bulletinboard-users
 
 __Purpose: Get familar with the provided template files and the user service.__
 
-**Hint:** Remember setting the TILLER_NAMESPACE 
-
 Before you can install the helm chart, open the *values.yaml* file. We left out the values of a few entries, you have to fill them out yourself:
 - The values for e.g. Image and Version are mentioned above.
 - For the password you can choose any string, if you want to generate one, you can do so by executing in an terminal e.g. `openssl rand -base64 9` ([here are a few more ways](https://www.howtogeek.com/howto/30184/10-ways-to-generate-a-random-password-from-the-command-line/)). 
 - ServicePort can be any port (e.g. 80 or 8080), you will need this one later to configure the route used by ads.
 - TomcatPort should be 8080 (default port of the tomcat docker image).
 
-Now do `helm install bulletinboard-users` in the `k8s-bulletinboard` folder containing the `bulletinboard-users` subfolder. In the current state the user-service will run, but there will be no data in the database. 
+Now do `helm install <release-name> bulletinboard-users` in the `k8s-bulletinboard` folder containing the `bulletinboard-users` subfolder. In the current state the user-service will run, but there will be no data in the database. 
 You can test that the user-service is running by doing: 
 - `kubectl get all -l "component=users"`, the pods should be on state running. <details><summary> Here you can see a example output.</summary><p><img src="images/kubectl-get-all-users.png" width="800"></p></details>
 - `kubectl port-forward <name-of-user-app-pod> 8081:8080`: this terminal is blocked by the open connection to the pod, either put it in the background (`ctrl + z` + `bg`) or open a second terminal (`ctrl + shift + t`)

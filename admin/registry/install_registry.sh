@@ -29,7 +29,7 @@ fi
 # check if we have a working helm ready
 [ -z "$HELM" ] && HELM=`which helm`
 if [ -z "$HELM" -o ! -x "$HELM" ]; then
-	echo "Cannot find or execute helm. Download it from https://github.com/kubernetes/helm#install."
+	echo "Cannot find or execute helm. Download it from https://helm.sh/docs/intro/install/."
 	exit 3
 fi
 
@@ -70,7 +70,7 @@ ${KUBECTL} -n registry create secret generic basic-auth --from-file=auth
 ## prepare values file and install helm chart
 sed -i.bck "s/INGRESS_HOSTNAME_SHORT/${INGRESS_HOSTNAME_SHORT}/g" $CONFIG_FILE
 sed -i.bck "s/INGRESS_HOSTNAME_LONG/${INGRESS_HOSTNAME_LONG}/g" $CONFIG_FILE
-${HELM} install stable/docker-registry --namespace registry -f $CONFIG_FILE
+${HELM} install docker-registry stable/docker-registry --namespace registry -f $CONFIG_FILE
 
 # clean up
 rm auth

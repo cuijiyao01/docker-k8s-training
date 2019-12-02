@@ -40,7 +40,7 @@ fi
 # check if we have a working helm ready
 [ -z "$HELM" ] && HELM=`which helm`
 if [ -z "$HELM" -o ! -x "$HELM" ]; then
-	echo "Cannot find or execute helm. Download it from https://github.com/kubernetes/helm#install."
+	echo "Cannot find or execute helm. Download it from https://helm.sh/docs/intro/install/."
 	exit 3
 fi
 
@@ -62,7 +62,7 @@ ${HELM} repo update
 ${KUBECTL} create ns $NAMESPACE
 
 # install prometheus chart
-${HELM} install --namespace $NAMESPACE -n prometheus stable/prometheus -f $PROMETHEUS_CONFIG_FILE
+${HELM} install --namespace $NAMESPACE prometheus stable/prometheus -f $PROMETHEUS_CONFIG_FILE
 
 ## prepare for grafana
 
@@ -88,7 +88,7 @@ ${KUBECTL} -n $NAMESPACE create configmap monitoring-dashboards --from-file=./da
 ${KUBECTL} -n $NAMESPACE label configmap monitoring-dashboards grafana_dashboard=1
 
 # install grafana chart
-${HELM} install --namespace $NAMESPACE -n grafana stable/grafana -f $GRAFANA_CONFIG_FILE
+${HELM} install --namespace $NAMESPACE grafana stable/grafana -f $GRAFANA_CONFIG_FILE
 
 ## print some help
 echo "To access grafana, follow the instructions above."

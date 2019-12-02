@@ -7,7 +7,7 @@
 
 - uninstall all charts for **users** and **ads**.
 
-## Step 1: Create file `requirements.yaml` in the `bulletinboard-ads` folder
+## Step 1: Add a `dependencies` section to `Charts.yaml` in the `bulletinboard-ads` folder
 
 ```yaml
 dependencies:
@@ -15,6 +15,8 @@ dependencies:
   version: "0.1.0"
   repository: "file://../../../users/helm/bulletinboard-users"
 ``` 
+
+Check the [Chart documentation](https://helm.sh/docs/topics/charts/#the-chart-yaml-file) for details about the dependencies.
 
 ## Step 2: Update dependencies
 
@@ -29,7 +31,7 @@ When using dependencies it is important to know that templates (e.g. defined in 
 ## Step 4: Install chart
 
 ```bash
-$ helm install bulletinboard-ads
+$ helm install <release-name> bulletinboard-ads
 ```
 
 Now both charts should be installed

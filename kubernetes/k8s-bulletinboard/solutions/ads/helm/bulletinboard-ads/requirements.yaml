@@ -1,8 +1,0 @@
-# parent's requirements.yaml file
-dependencies:
-- name: bulletinboard-users
-  repository: file://../../../users/helm/bulletinboard-users/
-  version: 0.1.1
-  import-values:
-  - child: App
-    parent: UsersApp

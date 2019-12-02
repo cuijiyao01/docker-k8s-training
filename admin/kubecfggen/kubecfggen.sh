@@ -20,7 +20,8 @@
 #                    0.5 - 18-Oct-2018 - Introducing the access service account which gets ClusterAdmin rights
 #                    0.6 - 31-Oct-2018 - Simply numbering the namespace IDs - K.I.S.S.
 #                    0.7 - 08-Nov-2018 - Added security by locking participants into their namespaces
-#                    0.8 - 30-Jan-2019 - Use client certificates instead of service account tokens 
+#                    0.8 - 30-Jan-2019 - Use client certificates instead of service account tokens
+#                    0.9 - 26-Nov-2019 - Rename service account 'tiller' to 'chaoskube' 
 #
 
 # version tag
@@ -125,7 +126,7 @@ echo -e "> Compiling $YAML_FILE...\n"
 # Do we have a namespace prefix? If not, we fall back to a default.
 [ -z "$NS_PREFIX" ] && NS_PREFIX="part"
 
-# create the namespace ojects for the YAML file along with the tiller service account
+# create the namespace ojects for the YAML file along with the chaoskube service account
 for i in $(seq $NS_START 1 $NS_END); do
 	NS_NUM=$(printf "%04d" $i)
 	NS_NAME=$NS_PREFIX-$NS_NUM
@@ -151,7 +152,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: tiller
+  name: chaoskube
   namespace: $NS_NAME
   labels:
     heritage: kubecfggen
@@ -182,7 +183,7 @@ subjects:
   name: $ns
   namespace: $ns
 - kind: ServiceAccount
-  name: tiller
+  name: chaoskube
   namespace: $ns
 ---
 apiVersion: v1
@@ -302,7 +303,7 @@ __EOF
 for ns in $NAMESPACES; do
         cat << __EOF >> $YAML_FILE
 - kind: ServiceAccount
-  name: tiller
+  name: chaoskube
   namespace: $ns
 __EOF
 done
