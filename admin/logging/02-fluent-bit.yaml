@@ -107,7 +107,7 @@ data:
         # =============|==================|=================
         Decode_Field_As   escaped    log
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: fluent-bit
