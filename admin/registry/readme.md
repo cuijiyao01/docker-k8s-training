@@ -16,7 +16,7 @@ In it's current version, the helm chart values will be set in a way to instruct 
 * If not yet done - setup `helm`. Use the `helm_init.sh` [script](../helm_init.sh) to carry out all required steps. Run `helm repo list` to check, if the `stable` repository is accessible. If it is not, run the following command to add it your local helm configuration: `helm repo add stable https://kubernetes-charts.storage.googleapis.com/` 
 
 ### Install the registry
-run `install_registry.sh [project name] [cluster name]` and supply the name or your Gardener project as well as the cluster name.
+run `install_registry.sh`. The script will find the name of your Gardener project as well as the cluster name from the helm configuration file.
 
 The script will
   * construct a URL for Gardener ingress
