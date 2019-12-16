@@ -67,8 +67,7 @@ Also check the pods running inside your kubernetes namespace. Don't forget to lo
 `kubectl logs -f pod/<your chaoskube-pod-name>`
 
 ## Step 5: clean up
-Clean up by deleting the chaoskube:
+Clean up by deleting the chaoskube release:
 `helm delete <your-releases-name>`
 
-Now run `helm status <your-releases-name>` again. Though the pod has been removed from kubernetes, there are still meta information available.
-To completely remove the list use `helm delete <your-releases-name>`.
+Now run `helm list` again to verify there are no leftovers.
