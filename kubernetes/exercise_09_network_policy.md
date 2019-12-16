@@ -31,7 +31,7 @@ The network policy features two selector sections:
 - `networkpolicy.spec.ingress.from` lists the sources, from which traffic is accepted. There are different ways to identify trusted sources
   - by `podSelector.matchLabels` - to filter for labels of pods in the same namespace
   - by `namespaceSelector.matchLabels`- to filter for traffic from a specific namespace (can be combined with `podSelector`)
-  - by `piBlock.cidr` - an IP address range defined as trustworthy
+  - by `ipBlock.cidr` - an IP address range defined as trustworthy
 
 Use the snippet below and fill in the correct values for the `matchLabels` selector.
 
