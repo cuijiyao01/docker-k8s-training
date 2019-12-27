@@ -16,9 +16,6 @@ With `--type=LoadBalancer` you request our training infrastructure (GCP) to prov
 ## Step 2: connect to your service
 Checkout the newly created `service` object in your namespace. Try to get detailed information with `get -o=yaml` or `describe`. Note down the different ports exposed and try to access the application via the external IP.
 
-Next try to access the service via the NodePort. Since the NodePort is opened on any cluster node, all you need, is the IP of a cluster node + the NodePort.
-Run `kubectl get nodes -o wide` to get the IP addresses of all cluster nodes. You can take any of them and combine it with your NodePort.
-
 ## Step 3: create a service from a yaml file.
 Before going on, delete the service you created with the `expose` command. Now write your own yaml to define the service.
 Check, that the label selector matches the labels of your deployment/pods and (re-)create the service (`kubectl create -f <your-file>.yaml`).
