@@ -139,6 +139,9 @@ For all demos to work properly (especially the RBAC demo), you have to use an "a
 
 Of course, you can create a separate namespace (!= `default`) and add it to the `kube.config` context definition to send requests to it by default.
 
+### Node ports won't work for external access
+Please be aware, that Gardener does no longer assign external IP addresses to cluster nodes. Hence, accessing applications externally via node ports does not work any longer. Node ports are still used to route traffic into the cluster network but they are only exposed within the GCP VPC of the cluster.
+
 ### Get support from Gardener Team
 - Raise your question via email in the [kubernetes-users Mailinglist](https://listserv.sap.corp/mailman/listinfo/kubernetes-users) or in the [K8s CaaS in SAP Cloud Platform Jam Group](https://jam4.sapjam.com/groups/Niq7TSBxLlzgb3nroBZJVx/overview_page/e9uqTDxXBRFbk7FJXEA4Cd) or in the Slack Channel [k8s-landscape-gardener](https://sap-cp.slack.com/messages/CBV3JS9S4/).
 

@@ -15,15 +15,5 @@ Use the [Gardener canary landscape](https://dashboard.garden.canary.k8s.ondemand
 - Set the Maintenance Schedule to a time that does not interfere with the training (remember the different timezones).
 - Delete the Hibernation Schedule.
 
-## Poke a hole into the firewall for the NodePorts
-Log in to the [firewall settings of the GCP project](https://console.cloud.google.com/networking/firewalls/list?project=sap-pi-coo-acdc-dev). Create a new firewall rule with the following settings.
-
-- The name should be `<clustername>-allow-nodeports`.
-- The network must be the one that has been created by Gardener for your cluster.
-- Direction of traffic is _Ingress_.
-- The action on match is _Allow_ and should apply to _All instances in the network_.
-- The source filter must be set to match on an IP range which has to be obtained from the [NIP](https://nip.wdf.sap.corp/nip2/faces/networking/wan/PublicAddresses.xhtml).
-- Only allow access to the ports 30000-32767, TCP and UDP.
-
 ## Deploy the kube.config
 Retrieve the kube.config file from Gardener and send it to the requestor.
