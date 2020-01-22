@@ -10,9 +10,9 @@ After having used a ready-made helm chart from the public chart repository on Gi
 The usage of helm and the go functions might not be intuitive. There take a look at these links, they explain the most relevant:
 
 * [overview of helm docs](https://helm.sh/docs/)
-* [getting started with chart development](https://helm.sh/docs/intro/getting_started/)
+* [getting started with chart development](https://helm.sh/docs/intro/quickstart/)
 * [how values files work in helm](https://helm.sh/docs/chart_template_guide/values_files/)
-* [functions and pipelines](https://helm.sh/docs/topics/chart_template_guide/functions_and_pipelines/)
+* [functions and pipelines](https://helm.sh/docs/chart_template_guide/functions_and_pipelines/)
 
 ## Useful commands & flags
 * `--dry-run`: simulate your action (like installation or upgrade)
