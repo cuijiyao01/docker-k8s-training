@@ -31,7 +31,7 @@ With kubernetes version 1.11 the `kubectl` binary was extend with an `api-resour
 Firstly, check your `kubectl version`. If it is 1.11.x or higher, run the `api-resources` command and search for the short name for the `nodes` resource. Can you `describe` a node using the short name notation?  
 
 ## Step 5: talk to kubernetes like an application
-If you access kubernetes as an application rather than an administrator, you cannot use the the convenient syntax of `kubectl`. Instead you have to send HTTP requests to the cluster. Though there are client libraries available, in the end everything boils down to an HTTP request.
+If you access kubernetes as an application rather than an administrator, you cannot use the convenient syntax of `kubectl`. Instead you have to send HTTP requests to the cluster. Though there are client libraries available, in the end everything boils down to an HTTP request.
 In this step of the exercise, you will send an HTTP request directly to the cluster asking for the available nodes. Instead of `kubectl` you can use the program `curl`.
 
 To figure out, how `kubectl` converts your query into HTTP requests, run the command from step 1 again and add a `-v=9` flag to it. This increases the verbosity of `kubectl` drastically, showing you all the information you need. Go through the command's output and find the correct curl request.
