@@ -22,6 +22,7 @@
 #                    0.7 - 08-Nov-2018 - Added security by locking participants into their namespaces
 #                    0.8 - 30-Jan-2019 - Use client certificates instead of service account tokens
 #                    0.9 - 26-Nov-2019 - Rename service account 'tiller' to 'chaoskube' 
+#                    0.10- 19-Feb-2020 - Add `lease` resource to cluster-wide view role
 #
 
 # version tag
@@ -268,6 +269,9 @@ metadata:
   labels:
     heritage: kubecfggen
 rules:
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "list", "watch"]
 - apiGroups: [""]
   resources: ["pods", "componentstatuses", "namespaces", "nodes", "persistentvolumes"]
   verbs: ["get", "list", "watch"]
