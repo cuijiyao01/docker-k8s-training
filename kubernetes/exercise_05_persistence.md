@@ -107,7 +107,7 @@ In case your service is not routing traffic properly, run `kubectl describe serv
 
 #### Caching issues
 
-Finally, there might be some caching on various levels of the used infrastructure. To break caching on corporate proxy level and display the custom page, request index.html directly: `http:<LoadBalancer IP>/index.html`.
+Finally, there might be some caching on various levels of the used infrastructure. To break caching on corporate proxy level and display the custom page, append a URL parameter with a random number (like 15): `http:<LoadBalancer IP>/?random=15`.
 
 ## Further information & references
 - descripton of the [volumes API](https://kubernetes.io/docs/concepts/storage/volumes/)
