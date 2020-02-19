@@ -64,7 +64,7 @@ Firstly, delete the deployment you just created:
 
 Secondly, try to write your own yaml file for a new deployment that creates 3 replicas of an `nginx` image, with version tag `mainline`.
 
-Below is a skeleton of a deployment, however it is still missing some essential fields. Check the [api reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#deployment-v1-apps) for details.
+Below is a skeleton of a deployment, however it is still missing some essential fields. Use `kubectl explain deployment` or check the [api reference](https://kubernetes.io/docs/reference/#api-reference) for details.
 
 * `kind: Deployment`
 * `containers` (check the pod spec from exercise 2 or the deployment created with run)
