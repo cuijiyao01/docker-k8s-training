@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ads-db-statefulset
+  labels:
+    component: ads
+    module: db
+spec:
+  serviceName: ads-db-service
+  replicas: 1
+  selector:
+    matchLabels:
+      component: ads
+      module: db
+  template:
+    metadata:
+      labels:
+        component: ads
+        module: db
+    spec:
+      containers:
+      - name: ads-db-pod
+        image: postgres:9.6
+        ports:
+        - containerPort: 5432
+          name: ads-db-port
+        volumeMounts:
+        - name: ads-db-volume
+          mountPath: /var/lib/postgresql/data/
+        env:
+        - name: PGDATA
+          value: "/var/lib/postgresql/data/pgdata"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: postgres_password
+              name: ads-db-secret
+  volumeClaimTemplates:
+  - metadata:
+      name: ads-db-volume
+      labels:
+        component: ads
+        module: db
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

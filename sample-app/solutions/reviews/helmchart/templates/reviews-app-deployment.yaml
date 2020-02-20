@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-app-deployment
+  labels:
+    {{- include "labels.resources" . | indent 4}}
+    {{- include "labels.reviews.app" . | indent 4}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {{- include "labels.reviews.app" . | indent 6}}
+  template:
+    metadata:
+      labels: {{- include "labels.reviews.app" . | indent 8}}
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.App.ImagePullSecret}}
+      containers:
+      - name: reviews-app-container
+        image: {{ .Values.App.Image | quote }}
+        ports:
+        - containerPort: 9090
+          name: reviews-appport
+        env:
+        - name: PORT
+          value: "9090"
+        - name: POSTGRES_URI
+          valueFrom:
+            configMapKeyRef:
+              key: postgres_url
+              name: reviews-app-configmap
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 800Mi

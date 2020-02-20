@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ads-app-deployment
+  labels:
+    component: ads
+    module: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: ads
+      module: app
+  template:
+    metadata:
+      labels:
+        component: ads
+        module: app
+    spec:
+      imagePullSecrets:
+      - name: internal-registry
+      containers:
+      - name: ads-app-container
+        image: registry.ingress.<CLUSTER_NAME>.<PROJECT_NAME>.shoot.canary.k8s-hana.ondemand.com/<image-repository>:<tag>
+        ports:
+        - containerPort: 8080
+          name: ads-app-port
+        env:
+        - name: REVIEWS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: reviews_host
+              name: ads-app-configmap
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: postgres_url
+              name: ads-app-configmap
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              key: postgres_password
+              name: ads-db-secret
+        - name: SPRING_DATASOURCE_USERNAME
+          value: postgres
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 800Mi  

@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ads-db-service
+  labels:
+    component: ads
+    module: db
+spec:
+  ports:
+  - port: 5432
+    name: ads-db-port
+  clusterIP: None
+  selector:
+    component: ads
+    module: db

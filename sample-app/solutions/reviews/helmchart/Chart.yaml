@@ -1,0 +1,8 @@
+apiVersion: v2
+name: bulletinboard-reviews
+version: 0.0.1
+description: The bulletinboard reviews service
+home: https://github.wdf.sap.corp/cloud-native-bootcamp/bulletinboard-reviews
+icon: https://github.wdf.sap.corp/avatars/u/26308?s=200
+sources:
+  - https://github.wdf.sap.corp/cloud-native-bootcamp/bulletinboard-reviews

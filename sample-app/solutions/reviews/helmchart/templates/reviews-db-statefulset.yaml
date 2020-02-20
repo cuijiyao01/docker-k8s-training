@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: reviews-db-statefulset
+  labels:
+    {{- include "labels.resources" . | indent 4}}
+    {{- include "labels.reviews.db" . | indent 4 }}
+spec:
+  serviceName: reviews-db-service
+  replicas: 1
+  selector:
+    matchLabels: {{- include "labels.reviews.db" . | indent 6}}
+  template:
+    metadata:
+      labels: {{- include "labels.reviews.db" . | indent 8}}
+    spec:
+      containers:
+      - name: reviews-db-pod
+        image: postgres:9.6
+        ports:
+        - containerPort: 5432
+          name: reviews-db-port
+        volumeMounts:
+        - name: reviews-db-volume
+          mountPath: /var/lib/postgresql/data/
+        env:
+        - name: PGDATA
+          value: "/var/lib/postgresql/data/pgdata"
+  volumeClaimTemplates:
+  - metadata:
+      name: reviews-db-volume
+      labels: {{- include "labels.reviews.db" . | indent 8}}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.Db.StorageSize }}

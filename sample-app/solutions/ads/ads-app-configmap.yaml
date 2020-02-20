@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ads-app-configmap
+  labels:
+    component: ads
+    module: app
+data:
+  reviews_host: <URL to Reviews-Ingress>
+  postgres_url: jdbc:postgresql://ads-db-statefulset-0.ads-db-service:5432/postgres
+  
