@@ -20,7 +20,7 @@ spec:
           component: controller
       namespaceSelector:
         matchLabels:
-          name: kube-system
+          gardener.cloud/purpose: kube-system
     - podSelector:
         matchLabels:
           component: ads
@@ -30,7 +30,7 @@ spec:
         matchLabels: {{- include "labels.reviews.db" . | indent 10}}
     - namespaceSelector:
         matchLabels:
-          name: kube-system
+          gardener.cloud/purpose: kube-system
       podSelector:
         matchLabels:
           k8s-app: kube-dns
