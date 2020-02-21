@@ -2,7 +2,7 @@
 
 ## Scope
 
-- In this second exercise we will focus on the **setup of Bulletinboard-Ads Database**, where the Bulletinboard-Ads Microservice can store the advertisements (See picture below).
+- In this second exercise we will focus on the **setup of bulletinboard-ads database**, where the bulletinboard-ads microservice can store the advertisements (See picture below).
 - Since a database needs to store data, we will use a **Statefulset** with only one instance (replica count=1).
 - As database we will use Postgresql, where on DockerHub we can find a well suiting official [Postgresql Docker image](https://hub.docker.com/_/postgres/).
 - The Postgresql Docker image gives us the possibility to override several default values via **environment variables** for e.g. the location for the database files (`PGDATA`) and the superuser password (`POSTGRES_PASSWORD`). (Information needed in step 3)
@@ -12,7 +12,11 @@
 
 We make use of labels on **all** entities so they can be easier selected/searched for with kubectl. 
 
-- The structure for **Labels** (and with this for **Selectors**) has 2 levels. On the first level we want to separate **Bulletinboard-Ads** from **Bulletinboard-Reviews**. For this we introduce the **Label** `component` with value `ads` or `reviews`. On the second level we separate the App-part from the Database-part within each "Component". Here we introduce the **Label** `module` with value `app` or `db`. 
+The structure for **Labels** (and hence for **Selectors** as well) has 2 levels.
+On the first level we want to separate **Bulletinboard-Ads** from **Bulletinboard-Reviews**.
+For this we introduce the **Label** `component` with value `ads` or `reviews`.
+On the second level we separate the App-part from the Database-part within each "Component".
+Here we introduce the **Label** `module` with value `app` or `db`. 
 
 This hierarchy allows us to retrieve e.g all entities for our databases via a `kubectl get deploy,sts,pods,cm,secrets,svc -l module=db`, or for ads with `kubectl get deploy,sts,pods,cm,secrets,svc -l component=ads`.
 
@@ -27,7 +31,8 @@ This hierarchy allows us to retrieve e.g all entities for our databases via a `k
 
 Purpose: Create a **Secret** with password for Postgres superuser
  
-You can take any String as a master password, but if you want a random string you could do e.g. `openssl rand -base64 15` which will already give you a random password. (The `-base64` option is used to only have alphanumerics (almost) in the password).
+You can take any String as a master password.
+If you want a random string you could do e.g. `openssl rand -base64 15`, which will already give you a random password (the `-base64` option is used to only have alphanumerics (almost) in the password).
 
 - To create the yaml-file for the secret with the password use `kubectl create secret generic ads-db-secret --from-literal=<key>=<password> --dry-run -o yaml > ads-db-secret.yaml`.
 - Now apply it to the cluster `kubectl apply -f ads-db-secret.yaml`

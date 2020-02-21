@@ -19,10 +19,10 @@ spec:
         module: app
     spec:
       imagePullSecrets:
-      - name: internal-registry
+      - name: training-registry
       containers:
-      - name: ads-app-container
-        image: registry.ingress.<CLUSTER_NAME>.<PROJECT_NAME>.shoot.canary.k8s-hana.ondemand.com/<image-repository>:<tag>
+      - name: ads
+        image: <image>
         ports:
         - containerPort: 8080
           name: ads-app-port
@@ -38,7 +38,7 @@ spec:
               key: postgres_url
               name: ads-app-configmap
         - name: SPRING_DATASOURCE_PASSWORD
-          valueFrom: 
+          valueFrom:
             secretKeyRef:
               key: postgres_password
               name: ads-db-secret
@@ -48,4 +48,4 @@ spec:
           limits:
             memory: 1Gi
           requests:
-            memory: 800Mi  
+            memory: 800Mi

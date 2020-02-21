@@ -1,4 +1,4 @@
-# Exercise 05: Reviews Service with Helm
+# Exercise 04: Reviews Service with Helm
 
 ## Scope
 The bulletinboard-reviews service will be installed with a provided helm chart.
@@ -12,7 +12,7 @@ Also it gives us an easy way to setup the user service without you having to wri
 
 ## The helm chart
 
-We provide an almost complete helm chart for the reviews-service: **bulletinboard-reviews.tar.gz**.
+We provide an almost complete helm chart for the reviews-service: **bulletinboard-reviews-chart.tar.gz**.
 The chart is rather similar to the setup of the bulletinboard-ads but can't be deployed right away.
 Some parameters are required:
 
@@ -29,22 +29,21 @@ Ingress.LongName: (mandatory)
 If you have done so already install helm. This was also a prerequisite of the helm exercise.
 
 Go to your project base folder `k8s-bulletinboard`, which you created at the beginning of exercise 2, and create a sub-folder `reviews`.
-Download the chart into that folder and extract it:
+Download the chart into that folder:
 
 ```bash
-wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/kubernetes/k8s-bulletinboard/bulletinboard-reviews-chart.tgz
-tar -xvzf bulletinboard-reviews-chart.tar.gz
+wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/sample-app/solutions/bulletinboard-reviews-chart.tgz
 ```
 
 ## Step 1: Helm
 
-Purpose: Get familiar with the provided template files and deploy bulletinboard-reviews.
+Purpose: Get use an helm chart provided by someone else.
 
 Providing all necessary parameters through the command line is cumbersome.
 Therefore create a new file next to the chart-folder called `customValues.yaml` and provide all parameters there.
 Remember to use the url that you gave put in the bulletinboard-ads config as ingress url.
 
-Now do `helm install <release-name> ./helm-chart --values customValues.yaml` in the directory containing the helm-chart folder and the `customValues.yaml`. (Or adapt the path in command accordingly)
+Now do `helm install <release-name> bulletinboard-reviews-chart.tgz --values customValues.yaml` in the directory containing the helm-chart-archive and the `customValues.yaml`. (Or adapt the path in command accordingly.)
 
 You can test that the reviews-service is running by executing `kubectl get all -l "component=reviews"`.
 The pods should be on state running.
@@ -53,6 +52,7 @@ The pods should be on state running.
 
 - Do some stuff in the UI of both services and test your deployment.
 
-
 ## Troubleshooting tips
-If you encounter difficulties you can use `--dry-run --debug` with the helm install command to view the generated yaml files.
+- You can extract the tar-ball to see the templates inside the helm chart with `tar --extract --verbose --gunzip --file=bulletinboard-reviews-chart.tgz`
+- The reviews chart contains network policies!
+- If you encounter difficulties with helm you can use `--dry-run --debug` with the helm install command to view the generated yaml files.
