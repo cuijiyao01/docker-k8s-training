@@ -17,8 +17,8 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 ## Exercises
 
 ### [01 Exercise: "Build and Push the Docker Images"](exercise_01_make_images_available.md)
-- Database will run as a **Statefulset**: Create prerequisites and configuration entities: configmap, secret and service
-- Create a **Statefulset** for the Ads DB, based on above entities.
+- Build and push the docker images for bulletinboard-ads and bulletinboard-reviews.
+- Create ImagePullSecret
 
 ### [02 Exercise: "Setup Bulletinboard-Ads Database"](exercise_02_ads_db.md)
 - Database will run as a **Statefulset**: Create prerequisites and configuration entities: configmap, secret and service
