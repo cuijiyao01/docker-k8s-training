@@ -44,7 +44,7 @@ Providing all necessary parameters through the command line is cumbersome.
 Therefore create a new file next to the chart-folder called `customValues.yaml` and provide all parameters there.
 Remember to use the url that you gave put in the bulletinboard-ads config as ingress url.
 
-Now do `helm install <release-name> ./helmchart --values customValues.yaml` in the directory containing the helmchart folder and the `customValues.yaml`. (Or adapt the path in command accordingly)
+Now do `helm install <release-name> ./helm-chart --values customValues.yaml` in the directory containing the helm-chart folder and the `customValues.yaml`. (Or adapt the path in command accordingly)
 
 You can test that the reviews-service is running by executing `kubectl get all -l "component=reviews"`.
 The pods should be on state running.

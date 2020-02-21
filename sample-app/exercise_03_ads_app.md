@@ -16,11 +16,11 @@
 
 Purpose: Create a **ConfigMap** containing the values for the environment variables `REVIEWS_HOST` and `SPRING_DATASOURCE_URL`.
 
-- The **Bulletinboard-Reviews** is not yet deployed to the cluster, therefore we don't know the reviews-host-url yet, but let us asume we will make the **Bulletinboard-Reviews** available under `https://bulletinboard-reviews-<your-participant-number>.ingress.<CLUSTER_NAME>.<PROJECT_NAME>.shoot.canary.k8s-hana.ondemand.com`.
+- The **Bulletinboard-Reviews** is not yet deployed to the cluster, therefore we don't know the reviews-host-url yet, but let us assume we will make the **Bulletinboard-Reviews** available under `https://bulletinboard-reviews-<your-participant-number>.ingress.<CLUSTER_NAME>.<PROJECT_NAME>.shoot.canary.k8s-hana.ondemand.com`.
 
 - The datasource url on the other hand is `jdbc:postgresql://ads-db-statefulset-0.ads-db-service:5432/postgres`.
 
-- Remeber the keys you use to store these values. YOu need them in the `deployment.yaml`-file in the next step.
+- Remember the keys you use to store these values. YOu need them in the `deployment.yaml`-file in the next step.
 
 - > [Hint](/kubernetes/exercise_06_configmaps_secrets.md)
 
@@ -117,7 +117,7 @@ spec:
 
 - Additional specify an **Ingress** for the **Bulletinboard Ads**, with name `ads-app-ingress` and with proper labels and selector for component and module. 
 
-- As the host URL has to be unique across the whole K8s Cluster, add `-<name-of-your-namespace>` as suffix to the hostname 'bulletinboard', so if you namespace were *part-0040* the host URL would look like: `bulletinboard-ads-part-0040.ingress.testcw43.k8s-train.shoot.canary.k8s-hana.ondemand.com`.
+- As the host URL has to be unique across the whole K8s Cluster, add `-<name-of-your-namespace>` as suffix to the hostname 'bulletinboard', so if you namespace were *part-0040* the host URL would look like: `bulletinboard-ads-part-0040.ingress.cw43.k8s-train.shoot.canary.k8s-hana.ondemand.com`.
 
 - Refer to the above created **Service** `ads-app-service` in field `serviceName` and `servicePort` (Section '- backend').
 
@@ -140,7 +140,7 @@ spec:
           serviceName: <name-of-ads-service>
           servicePort: <name-of-ads-port>
 ```
-  In the example above the namespace would be `part-0040`, cluster name would be `testcw43` and project name would be `k8s-train`.
+  In the example above the namespace would be `part-0040`, cluster name would be `cw43` and project name would be `k8s-train`.
   You can find out what your *cluster name* and *project name* is by looking into the config: `kubectl config view`. Here `clusters.cluster.server` contains the api url, which contains both cluster and project name. You can see an example in the picture below.  
   <img src="images/ClusterConfigNameFromConfig.png" width="600" />
 

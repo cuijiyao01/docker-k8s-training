@@ -58,7 +58,7 @@ kubectl run --restart=Never -it  --generator=run-pod/v1 --restart=Never --rm --i
 ```
 
 A prompt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
-`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial`). After this you should connect to the ads db, a prompt `ads=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
+`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial`). After this you should connect to the ads db, a prompt `ads=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
 
 <p align="center"><img src="images/successful_psql_connection.png"></p>
 
