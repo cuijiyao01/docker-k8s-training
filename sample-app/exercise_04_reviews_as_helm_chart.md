@@ -12,7 +12,7 @@ Also it gives us an easy way to setup the user service without you having to wri
 
 ## The helm chart
 
-We provide an almost complete helm chart for the reviews-service: **bulletinboard-reviews-chart.tar.gz**.
+We provide an almost complete helm chart for the reviews-service: **bulletinboard-reviews-chart.gtz**.
 The chart is rather similar to the setup of the bulletinboard-ads but can't be deployed right away.
 Some parameters are required:
 
@@ -32,7 +32,7 @@ Go to your project base folder `k8s-bulletinboard`, which you created at the beg
 Download the chart into that folder:
 
 ```bash
-wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/sample-app/solutions/bulletinboard-reviews-chart.tgz
+wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/sample-app/solutions/reviews/bulletinboard-reviews-chart.tgz
 ```
 
 ## Step 1: Helm

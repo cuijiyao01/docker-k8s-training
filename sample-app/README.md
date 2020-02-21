@@ -32,7 +32,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 ### [04 Exercise: "Using Helm-chart to setup Bulletinboard-Reviews](exercise_04_reviews_as_helm_chart.md)
 - Deploy Bulletinboard-Reviews via existing **Helm chart**
 
-### [05 Exercise: "Networkpolicies & TLS for Bulletinboard-Ads"](exercise_05_networkpolicies_and_certificate.md)
+### [05 Exercise: "Networkpolicies & TLS for Bulletinboard-Ads"](exercise_05_ads_networkpolicies_and_certificate.md)
 - Increase security and establish a **Network policy** for
   - Bulletinboard-Ads Database
   - Bulletinboard-Ads App

@@ -1,25 +1,26 @@
 # Exercise 5: Secure your connections
 
+You have maybe noticed that the helm chart contains already networkpolicies for the reviews app and the database.
+Also the ingress is working with TLS encryption.
+
+We want reach this security level for our bulletinboard-ads as well.
+
 ## Scope
 
-Increase security by **establishing a network policy** for Ads DB and **enable TLS** (https) for the **Ingress** for Ads App. 
+Increase security by **establishing a network policy** for bulletinboard-ads app and database and **enable TLS** (https) for the **Ingress**. 
 
-## Step 0: prerequisites
+## Step 1: Network policy for bulletinboard-ads database
 
-Test that the kube-system namespace has the proper label: 
-```bash
-$ kubectl get namespaces --show-labels | grep system
-kube-system     Active    20d       name=kube-system
-```
-If the last value is `<none>` your kube-system namespace is missing the label. In this case talk to the trainers that it gets the label.
+Purpose: control traffic to and from *ads:db* pod
 
-## Step 1: Network policy for DB
+- Specify a **NetworkPolicy** for the **bulletinboard ads database**, with name `ads-db-networkpolicy` and with proper labels and selector for component and module. 
 
-__Purpose: control traffic to and from *ads:db* pod__ 
+- We want only that  __ads:db__ only takes messages from __ads:app__. Configure the network policy accordingly. 
 
-We want only that  __ads:db__ only takes messages from __ads:app__. Configure a network policy in a file named `ads-db-networkpolicy.yaml` accordingly. 
 You can check the [network policy exercise](/kubernetes/exercise_09_network_policy.md) and [this reference](https://kubernetes.io/docs/concepts/services-networking/network-policies/) on how to write a network policy.  
 Also we want to block all outgoing traffic by denying all egress traffic. You can see [here how to do so](https://github.com/ahmetb/kubernetes-network-policy-recipes/blob/master/11-deny-egress-traffic-from-an-application.md).
+
+- Save the **Networkpolicy** under the filename `ads-db-networkpolicy.yaml` in folder `k8s-bulletinboard/ads` and apply it with `kubectl apply -f ads-db-networkpolicy.yaml`
 
 <details> <summary>If you need further hints here is a skeleton network policy!</summary>
 <p>
@@ -51,35 +52,61 @@ spec:
 
 ### Testing of the implemented policy
 
-To test the ingress rule, restart one of your __ads:app__ pods (delete it, the deployment will create a new one). If it comes up the app can still connect to the DB. 
-You can also test it by creating a temporary pod with psql installed (e.g. a postgres:9.6 image like our DB) and use psql from this pod to connect to the DB. First we will use the right labels:
+To test the ingress rule, create a new ads in the UI. If you can create it without any error the app can still connect to the DB. 
+On the other hand create a temporary pod with psql installed (e.g. a postgres:9.6 image like our DB) and use psql from this pod to connect to the DB. First we will use the right labels:
+
 ```bash
-kubectl run --restart=Never -it  --generator=run-pod/v1 --restart=Never --rm --image=postgres:9.6 --labels="component=ads,module=app" --env="PGCONNECT_TIMEOUT=5" helper --command -- /bin/bash
+kubectl run helper -it --restart=Never --rm --image=postgres:9.6 --labels="component=ads,module=app" --env="PGCONNECT_TIMEOUT=5" --command -- bash
 ```
 
 A prompt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
-`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -W ads`. You will be ask for the adsuser pw (you defined that in the initdb.sql script, should be `initial`). After this you should connect to the ads db, a prompt `ads=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
+`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U postgres -W postgres`. You will be ask for the password, which you stored in the ads-db-secret. After this you should connect to the database, a prompt `postgres=>` will ask you for the next command. Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command.
 
 <p align="center"><img src="images/successful_psql_connection.png"></p>
 
-To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above: `kubectl run tester -it --generator=run-pod/v1 --restart=Never --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash`. Again you should get a root prompt, execute `psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U adsuser -W ads` which, after you entered the password, should return with `timeout expired` after 5 seconds.
+To test that no one else can connect, change the labels in the kubectl command to anything different (or just leave them out) and repeat the steps above:
 
-To test the egress `kubectl exec -it ads-db-statefulset-0 bash` and try to "ping" any page/pod e.g. `wget <service of ads:app>/api/v1/ads` or `wget google.de`. Both should fail. If `wget` is not there, try e.g. `apt-get update`. This will also timeout.
+```bash
+kubectl run helper -it --restart=Never --rm --image=postgres:9.6 --env="PGCONNECT_TIMEOUT=5" --command -- bash
+```
+Again you should get a root prompt, execute `psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U postgres -W postgres` which, after you entered the password, should return with `timeout expired` after 5 seconds.
 
-## Step 2: Network policy for Ads
+To test the egress `kubectl exec -it ads-db-statefulset-0 bash` and try to "ping" any page/pod e.g. `wget google.de`.
+It should fail.
+If `wget` is not there, try e.g. `apt-get update`.
+This will also timeout.
 
-__Purpose: control traffic to and from *ads:app* pod, learn how to select a pod in a different namespace in your policy__ 
+## Step 2: Network policy for bulletinboard-ads app
 
-We want that __ads:app__ only takes messages from the ingress. 
+Purpose: control traffic to and from *ads:app* pod, learn how to select a pod in a different namespace in your policy
+
+- Specify a **NetworkPolicy** for the **bulletinboard ads app**, with name `ads-app-networkpolicy` and with proper labels and selector for component and module. 
+
+- We want that __ads:app__ only takes messages from the ingress-controller. Configure the network policy accordingly. 
 The ingress controller is in the `kube-system` namespace and has the following labels you can use: 
 ```yaml
 app: nginx-ingress 
 component: controller 
 origin: gardener
 ```
-Further we can also allow  __ads:app__ to send traffic only to certain pods. This would be __ads:db__ and the DNS server in our cluster, as well as the reviews service. This DNS server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`. But again since the reviews service is not yet running we will tackle the egress rules later on. For now we will just restrict the ingress traffic.
 
-Configure a network policy in a file named `ads-app-networkpolicy.yaml` accordingly.
+Before we continue with the egress traffic, let us apply the ingress restriction.
+
+- Save the **Networkpolicy** under the filename `ads-app-networkpolicy.yaml` in folder `k8s-bulletinboard/ads` and apply it with `kubectl apply -f ads-app-networkpolicy.yaml`
+
+- Test that everything still works fine.
+
+- Furthermore we want to restrict the egress traffic from __ads:app__ to certain pods only. This would be __ads:db__ and the DNS server in our cluster as well as the reviews service.
+  - The DNS server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`
+  - The bulletinboard-reviews
+  - The bulletinboard-ads database pod was labeled earlier by ourselves
+
+We have to consider that the bulletinboard-ads connects to the bulletinboard-reviews through the public internet (e.g. https://bulletinboard-reviews-part-0040.ingress.vw43.k8s-train.shoot.canary.k8s-hana.ondemand.com), therefore we cannot simple use a PodSelector here.
+But we can use a `ipBlock` to allow egress traffic to the bulletinboard-reviews.
+
+- Find out the IP of the LoadBalancer Service that is publishing the ingress-controller to the internet and use this IP Address in the egress section.
+
+- Again test the bulletinboard, if everything still works.
 
 ## Step 3: TLS
 

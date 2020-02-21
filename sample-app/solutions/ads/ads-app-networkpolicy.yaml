@@ -12,14 +12,28 @@ spec:
       module: app
   policyTypes:
   - Ingress
+  - Egress
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          app: nginx-ingress 
-          component: controller 
+          app: nginx-ingress
+          component: controller
           origin: gardener
       namespaceSelector:
         matchLabels:
-          name: kube-system  
-
+          gardener.cloud/purpose: kube-system
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          component: ads
+          module: db
+    - ipBlock:
+        cidr: <IPAddress>/0
+    - podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+      namespaceSelector:
+        matchLabels:
+          gardener.cloud/purpose: kube-system
