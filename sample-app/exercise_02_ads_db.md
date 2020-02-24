@@ -141,7 +141,9 @@ kubectl run tester -it --generator=run-pod/v1 --restart=Never --rm --image=postg
 
 A prompt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
 `psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U postgres -W postgres`. After this you should connect to the postgres db, a prompt `postgres=>` will ask you for the next command. If this does, all is correctly set up!  
-Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command. The pod should be removed after this automatically. 
+Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command. The pod should be removed after this automatically.
+
+<p align="center"><img src="images/successful_psql_connection.png" width="800"/></p>
 
 ### Using port-forward and pgadmin in the VM
 
