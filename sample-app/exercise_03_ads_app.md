@@ -4,6 +4,8 @@
 
 - In this third exercise we will focus on the **setup of bulletinboard-ads app** itself (Ads:App) and make it available within a K8s cluster via a **Service** and publish externally/ into the Internet via an **Ingress** (See picture below).
 
+<img src="images/Bulletinboard_Exercise_3.png" width="800"/>
+
 - Finally we will check **Ads App** running properly together with **Ads Database**.
 
 - We decided our initial expected load to **Ads App** requires at least 2 instances of our **Ads App**. Therefore we need horizontal scaling for the **Ads App**, which we provide using a **Deployment** with 2 instances (replicas is 2).

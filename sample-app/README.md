@@ -10,7 +10,7 @@ The Bulletinboard is build up by two individual microservices:
 The advertisements are presented differently depending of the rating of the user, who created the advertisement.
 The overall structure of **Bulletinboard 'in K8s'**, incl. the different **K8s entities** needed for Kubernetes can be found in the following picture.
 
-<img src="images/k8s-bulletinboard-target-picture-detail-3.png" width="800" />
+<img src="images/Bulletinboard_Overview.png" width="800" />
 
 _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap, `sec`: Secret_
 
