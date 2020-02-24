@@ -8,7 +8,7 @@
 
 - Finally we will check **Ads App** running properly together with **Ads Database**.
 
-- We decided our initial expected load to **Ads App** requires at least 2 instances of our **Ads App**. Therefore we need horizontal scaling for the **Ads App**, which we provide using a **Deployment** with 2 instances (replicas is 2).
+- We decided our initial expected load to **Ads App** requires only 1 instance of our **Ads App**. Therefore we use a **Deployment** with 1 instances (replicas is 1).
 
 - The **Bulletinboard-Ads**-App needs some environment variables set: `REVIEWS_HOST` containing a url to the **Bulletinboard-Reviews-App** and `SPRING_DATASOURCE_URL` containing the URI to the database along with `SPRING_DATASOURCE_PASSWORD` containing the password for the database.
 
