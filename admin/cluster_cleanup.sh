@@ -14,6 +14,17 @@ function cleanupNamespace () {
 		return
 	fi
 
+	if [ "$NAMESPACE" == "kube-public" ]; then
+		echo "Not doing anything to the kube-system namespace."
+		return
+	fi
+
+	if [ "$NAMESPACE" == "kube-node-lease" ]; then
+		echo "Not doing anything to the kube-system namespace."
+		return
+	fi
+
+
 	# scale down Deployments
 	DEPLOY=$(kubectl -n $NAMESPACE get deploy -o jsonpath="{.items[*].metadata.name}")
 	for d in $DEPLOY; do
@@ -62,7 +73,7 @@ if [ "$1" == "all" ]; then
 
 	for namespace in $NAMESPACELIST; do
 		case $namespace in 
-			'logging'|'kube-system') echo "Skipping this namespace: $namespace";;
+			'logging'|'monitoring'|'kube-system'|'kube-public'|'kube-node-lease') echo "Skipping this namespace: $namespace";;
 			*) echo "Starting cleanup in namespace $namespace"; cleanupNamespace $namespace;;
 		esac
 	done
