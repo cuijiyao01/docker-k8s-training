@@ -89,7 +89,8 @@ spec:
 
 - When you are ready with the specification of the **Deployment** save it under the filename `ads-app-deployment.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-app-deployment.yaml` to create the **Deployment** `ads-app-deployment`.
 
-- After successful creation of the **Deployment** check, wether **2** Pods got created properly via `kubectl get pods`. The names of the 2 pods should be something like `ads-app-deployment-xx-yx` and `ads-app-deployment-xx-yy`.
+- After successful creation of the **Deployment** check, wether a Pod got created properly via `kubectl get pods`.
+The names of the pod should be something like `ads-app-deployment-xx-yx`.
 
 ## Step 3: Service & Ingress
 
