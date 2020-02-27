@@ -48,7 +48,7 @@ docker push <registry-url>/bulletinboard-reviews-<participant-id>
 ## Step 5: create imagePullSecret
 
 The registry is secured with basic authentication. You need to provide the credentials as a ImagePullSecret in order to uses the images from there inside the cluster.
-Let's be prepared for that an create the secret already.
+Let's be prepared for that and create the secret already.
 
 ```bash
 kubectl create secret docker-registry training-registry --docker-server=<registry-url> --docker-username=<registry-username> --docker-password=<registry-password>
