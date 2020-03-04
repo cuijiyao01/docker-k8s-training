@@ -33,6 +33,6 @@ spec:
           value: "9090"
         - name: POSTGRES_URI
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: postgres_url
-              name: reviews-app-configmap
+              name: reviews-app-secret
