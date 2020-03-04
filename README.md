@@ -36,7 +36,7 @@ High level topics are:
 - deploy packaged applications with helm ([slides](./kubernetes/12_helm.pptx) & [exercise 10](./kubernetes/exercise_10_helm_basics.md))
 - write a helm chart ([slides](./kubernetes/12_helm.pptx) & [exercise 11](./kubernetes/exercise_11_write_a_helm_chart.md))
 
-### [Kubernetes: HowTo 'bring' Bulletinboard in K8s](./kubernetes/k8s-bulletinboard/README.md) (day 4)
+### [Kubernetes: HowTo 'bring' Bulletinboard in K8s](./sample-app/README.md) (day 4)
 
 ## Preparation and Setup
 
