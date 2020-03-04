@@ -158,4 +158,9 @@ In the example above the namespace would be `part-0040`, cluster name would be `
 
 - Additional check wether you can call your **Bulletinboard-Ads** via the **Ingress** Url with a browser.
 
-- You might need to disable your ad-blocker to correctly render the UI.
+- **Important:** The two microservices **Bulletinboard-Ads** and **Bulletinboard-Reviews** from the [**CloudNativeBootcamp**](https://github.wdf.sap.corp/cloud-native-bootcamp/info) are tightly coupled.
+Therefore ads can't be created in **Bulletinboard-Ads** without a failure message and not rendered at all, if no **Bulletinboard-Reviews** instance can be reached.
+This dependency is by design as part of a challenge in the **CloudNativeBootcamp**.
+
+- Go a head and continue with exercise 4, to deploy **Bulletinboard-Reviews** and test the bulletinboard via the UI.
+

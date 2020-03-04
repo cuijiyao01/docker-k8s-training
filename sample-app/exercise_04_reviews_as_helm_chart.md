@@ -53,7 +53,9 @@ The pods should be on state running.
 
 ## Step 2: Test Bulletinboard
 
-- Do some stuff in the UI of both services and test your deployment.
+- Test the running application with a browser, for example follow along the "HappyPath" (Create Ad, View Ad details, Navigate to Reviews, Create Reviews, Observe different colouring in the Ads-UI).
+
+- You might need to disable your ad-blocker to correctly render the UI.
 
 ## Troubleshooting tips
 - You can extract the tar-ball to see the templates inside the helm chart with `tar --extract --verbose --gunzip --file=bulletinboard-reviews-chart.tgz`
