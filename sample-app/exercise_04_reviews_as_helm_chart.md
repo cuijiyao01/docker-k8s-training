@@ -35,7 +35,7 @@ Go to your project base folder `k8s-bulletinboard`, which you created at the beg
 Download the chart into that folder:
 
 ```bash
-wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/master/sample-app/solutions/reviews/bulletinboard-reviews-chart.tgz
+wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/newSampleApp/sample-app/solutions/reviews/bulletinboard-reviews-chart.tgz
 ```
 
 ## Step 1: Helm
