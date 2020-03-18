@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    run: echoheaders
+  name: echoheaders
+spec:
+  selector:
+    matchLabels:
+      run: echoheaders
+  template:
+    metadata:
+      labels:
+        run: echoheaders
+    spec:
+      containers:
+      - image: brndnmtthws/nginx-echo-headers
+        name: echoheaders
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echoheaders
+spec:
+  selector:
+    run: echoheaders
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: echoheaders
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /echoheaders
+        backend:
+          serviceName: echoheaders
+          servicePort: 8080
