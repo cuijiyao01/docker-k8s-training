@@ -29,7 +29,7 @@ Ingress.LongName: (mandatory)
 ```
 
 ## Step 0: Prerequisites
-If you have done so already install helm. This was also a prerequisite of the helm exercise.
+If you haven't done so already install helm. This was also a prerequisite of the helm exercise.
 
 Go to your project base folder `k8s-bulletinboard`, which you created at the beginning of exercise 2, and create a sub-folder `reviews`.
 Download the chart into that folder:
