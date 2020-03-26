@@ -1,4 +1,4 @@
-# Exercise 5: Secure your connections
+# Exercise 5 - Secure your connections
 
 You have maybe noticed that the helm chart contains already networkpolicies for the reviews app and the database.
 Also the ingress is working with TLS encryption.
