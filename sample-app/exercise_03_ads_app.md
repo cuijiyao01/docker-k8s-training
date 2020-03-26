@@ -1,4 +1,4 @@
-# Exercise: Setup Bulletinboard-Ads Microservice/ Application
+# Exercise 3 - Setup Bulletinboard-Ads Microservice/ Application
 
 ## Scope
 
