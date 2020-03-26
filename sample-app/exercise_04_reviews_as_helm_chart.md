@@ -1,4 +1,4 @@
-# Exercise 04: Reviews Service with Helm
+# Exercise 4 - Reviews Service with Helm
 
 ## Scope
 - In the fourth exercise we will bring up the bulletinboard-reviews service with a provided helm chart (See picture below).
