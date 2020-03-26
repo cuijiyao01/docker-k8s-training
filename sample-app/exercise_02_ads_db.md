@@ -1,4 +1,4 @@
-# Exercise: Setup Bulletinboard-Ads Database
+# Exercise 2 - Setup Bulletinboard-Ads Database
 
 ## Scope
 
