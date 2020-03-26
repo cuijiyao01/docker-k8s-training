@@ -38,21 +38,18 @@ You can take any String as a master password.
 If you want a random string you could do e.g. `openssl rand -base64 15`, which will already give you a random password (the `-base64` option is used to only have alphanumerics (almost) in the password).
 
 - To create the yaml-file for the secret with the password use `kubectl create secret generic ads-db-secret --from-literal=<key>=<password> --dry-run -o yaml > ads-db-secret.yaml`.
+- Add proper labels.
 - Now apply it to the cluster `kubectl apply -f ads-db-secret.yaml`
 
-## Step 2: "Headless" Service
+## Step 2: Statefulset & "Headless" Service
 
-Purpose: Create the **"headless" Service**, required to access the pod, created by the statefulset.
+Purpose: Create the **Statefulset**, which uses the Secret, together with the a **"headless" Service**, required to access the pod, created by the statefulset.
 
-- Specify a **"headless" Service** `ads-db-service` with proper labels and selector for [component and module](exercise_02_ads_db.md#labels). Use the default port, given by the Docker image (port 5432 as depicted by the description on [Docker Hub](https://hub.docker.com/_/postgres/)) and make sure you are using a named port (name it `ads-db-port`). Save the service under the filename `ads-db-service.yaml` in folder `k8s-bulletinboard/ads`.
+We will describe both resources in the same file called `ads-db-statefulset.yaml` in the folder `k8s-bulletinboard/ads` .
 
-- Now call `kubectl apply -f ads-db-service.yaml` to create the **"headless" Service**.
+- Start with a **"headless" Service** named `ads-db-service` and with proper labels.
 
-> [Hint](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/kubernetes/exercise_08_statefulset.md#step-0-create-a-headless-service)
-
-## Step 3: Statefulset
-
-Purpose: Create the **Statefulset**, which uses the Secret and the "headless" Service, created in step 1+2 (Creation of Statefulset will fail, if those entities are not yet available !).
+The service should target the pods of the statefulset, therefore we pause our work on the service for now and continue with the statefulset.
 
 _Hint: In the following sections we will provide you yaml-snippets of the Statefulset specification. Just substitute the place holders `<...>` by proper values !_
 
@@ -69,7 +66,7 @@ metadata:
     module: <name-of-module>
 ```
 
-- Refer to the "headless" service, created earlier and make sure that only one DB pod gets created. 
+- Refer to the "headless" service by name and make sure that only one DB pod gets created. 
 
 ```yaml
 spec:
@@ -120,12 +117,15 @@ spec:
           storage: 1Gi
 ```
 
-- When you are ready with the specification of the **Statefulset** save it under the filename `ads-db-statefulset.yaml` in folder `k8s-bulletinboard/ads` and call `kubectl apply -f ads-db-statefulset.yaml` to create the **Statefulset** `ads-db-statefulset`.
+- Now continue with the service by using a selector for the `component` and `module`-labels of the pods of the statefulset. Use a named port (name it `ads-db-port`) to reference the port of the pod. It should be the port given by the Docker image (port 5432 as depicted by the description on [Docker Hub](https://hub.docker.com/_/postgres/)).
+
+> [Hint](https://github.wdf.sap.corp/slvi/docker-k8s-training/blob/master/kubernetes/exercise_08_statefulset.md#step-0-create-a-headless-service)
+
+- Now save your changes and call `kubectl apply -f ads-db-statefulset.yaml` to create the **Statefulset** and the **"headless" Service**.
 
 - After successful creation of the **Statefulset** check, whether the **Pod** `ads-db-statefulset-0` got created properly via `kubectl get pod ads-db-statefulset-0` or in more detail via `kubectl describe pod ads-db-statefulset-0` . Also check whether the Database is ready to be connected via `kubectl logs ads-db-statefulset-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
 
-
-## Optional- Step 3: Detailed Check whether Pod with Postgres DB is running properly
+## Optional - Step 3: Detailed Check whether Pod with Postgres DB is running properly
 
 Purpose: check whether the database is running and accepting connections. Use either a temporary postgresql pod with sql or the [**pgadmin tool**](https://www.pgadmin.org/) for that.
 
@@ -140,7 +140,7 @@ kubectl run tester -it --generator=run-pod/v1 --restart=Never --rm --image=postg
 ```
 
 A prompt with root@... should come up. You are now connected to the pod, here we can use psql to try to connect to our ads-db:
-`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U postgres -W postgres`. After this you should connect to the postgres db, a prompt `postgres=>` will ask you for the next command. If this does, all is correctly set up!  
+`psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U postgres -W postgres`. You should be prompted for the password of the database, which was specified in the secret. After this you should connect to the postgres db, a prompt `postgres=>` will ask you for the next command. If this does, all is correctly set up!  
 Type `\q` to quit psql since we only wanted to test that we can connect. Also exit the pod with the `exit` command. The pod should be removed after this automatically.
 
 <p align="center"><img src="images/successful_psql_connection.png" width="800"/></p>

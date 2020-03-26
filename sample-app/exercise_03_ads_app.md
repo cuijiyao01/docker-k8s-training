@@ -70,11 +70,14 @@ spec:
           name: ads-app-port
         env:
         - name: "???"
-          value:
+          valueFrom: 
+            <reference to configmap/secret>
         - name: "???"
-          value:
+          valueFrom:
+            <reference to configmap/secret>
         - name: "???"
-          value:
+          valueFrom:
+            <reference to configmap/secret>
         - name: SPRING_DATASOURCE_USERNAME
           value: postgres
         resources:

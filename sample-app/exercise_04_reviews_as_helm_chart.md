@@ -44,7 +44,15 @@ Purpose: Get use an helm chart provided by someone else.
 
 Providing all necessary parameters through the command line is cumbersome.
 Therefore create a new file next to the chart-folder called `customValues.yaml` and provide all parameters there.
-Remember to use the url that you gave put in the bulletinboard-ads config as ingress url.
+Remember to use the url that you put in the bulletinboard-ads config as ingress url.
+
+> **Important:** The syntax for helm value files differs from the syntax used above to explain the different parameters. For example `Image` and `ImagePullSecret` should both be nested under the same `App` key.
+
+The parameters `ShortName` and `LongName` are used as a workaround to overcome limitations for the automatic https-certificate creation.
+- The `LongName` should be the hostname for the reviews app, which you already specified in the configmap of the bulletinboard ads (`bulletinboard-reviews-<your-participant-number>`).
+- The `ShortName` should consists of maximal 4 characters. Let's use `br??`, where the two `?` are the last to digits of you participant number.
+
+If want to know more about this limitation read Step 3 of the next exercise.
 
 Now do `helm install <release-name> bulletinboard-reviews-chart.tgz --values customValues.yaml` in the directory containing the helm-chart-archive and the `customValues.yaml`. (Or adapt the path in command accordingly.)
 
