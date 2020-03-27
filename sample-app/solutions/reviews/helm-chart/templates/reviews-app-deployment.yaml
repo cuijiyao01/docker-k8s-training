@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reviews-app-deployment
+  name: {{ .Release.Name }}-reviews-app-deployment
   labels:
     {{- include "labels.resources" . | indent 4}}
     {{- include "labels.reviews.app" . | indent 4}}
@@ -20,7 +20,7 @@ spec:
       - name: check-db-ready
         image: postgres:9.6
         command: ['sh', '-c',
-          'until pg_isready -h reviews-db-statefulset-0.reviews-db-service -p 5432 -U postgres;
+          'until pg_isready -h {{ .Release.Name }}-reviews-db-statefulset-0.{{ .Release.Name }}-reviews-db-service -p 5432 -U postgres;
           do echo waiting for database; sleep 2; done;']
       containers:
       - name: reviews-app-container
@@ -35,4 +35,4 @@ spec:
           valueFrom:
             secretKeyRef:
               key: postgres_url
-              name: reviews-app-secret
+              name: {{ .Release.Name }}-reviews-app-secret

@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: reviews-db-access
+  name: {{ .Release.Name }}-reviews-db-access
   labels:
     {{- include "labels.resources" . | indent 4}}
     {{- include "labels.reviews.db" . | indent 4}}

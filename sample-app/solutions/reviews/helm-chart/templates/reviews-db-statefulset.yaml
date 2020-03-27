@@ -2,12 +2,12 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: reviews-db-statefulset
+  name: {{ .Release.Name }}-reviews-db-statefulset
   labels:
     {{- include "labels.resources" . | indent 4}}
     {{- include "labels.reviews.db" . | indent 4 }}
 spec:
-  serviceName: reviews-db-service
+  serviceName: {{ .Release.Name }}-reviews-db-service
   replicas: 1
   selector:
     matchLabels: {{- include "labels.reviews.db" . | indent 6}}
@@ -22,7 +22,7 @@ spec:
         - containerPort: 5432
           name: reviews-db-port
         volumeMounts:
-        - name: reviews-db-volume
+        - name: {{ .Release.Name }}-reviews-db-volume
           mountPath: /var/lib/postgresql/data/
         env:
         - name: PGDATA
@@ -31,10 +31,10 @@ spec:
           valueFrom:
             secretKeyRef:
               key: postgres_password
-              name: reviews-db-secret
+              name: {{ .Release.Name }}-reviews-db-secret
   volumeClaimTemplates:
   - metadata:
-      name: reviews-db-volume
+      name: {{ .Release.Name }}-reviews-db-volume
       labels: {{- include "labels.reviews.db" . | indent 8}}
     spec:
       accessModes: [ "ReadWriteOnce" ]

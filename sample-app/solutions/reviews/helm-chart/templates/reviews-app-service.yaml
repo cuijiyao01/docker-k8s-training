@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: reviews-app-service
+  name: {{ .Release.Name }}-reviews-app-service
   labels:
     {{- include "labels.resources" . | indent 4}}
     {{- include "labels.reviews.app" .| indent 4 }}
