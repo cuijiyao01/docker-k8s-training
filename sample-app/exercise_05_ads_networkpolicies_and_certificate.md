@@ -74,7 +74,7 @@ kubectl run helper -it --restart=Never --rm --image=postgres:9.6 --env="PGCONNEC
 ```
 Again you should get a root prompt, execute `psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U postgres -W postgres` which, after you entered the password, should return with `timeout expired` after 5 seconds.
 
-To test the egress `kubectl exec -it ads-db-statefulset-0 bash` and try to "ping" any page/pod e.g. `wget google.de`.
+To test the egress `kubectl exec -it ads-db-statefulset-0 -- bash` and try to "ping" any page/pod e.g. `wget google.de`.
 It should fail.
 If `wget` is not there, try e.g. `apt-get update`.
 This will also timeout.
