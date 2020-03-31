@@ -8,5 +8,6 @@ metadata:
     module: app
 data:
   reviews_host: <URL to Reviews-Ingress>
+  reviews_host-internal: http://reviews-reviews-app-service
   postgres_url: jdbc:postgresql://ads-db-statefulset-0.ads-db-service:5432/postgres
   

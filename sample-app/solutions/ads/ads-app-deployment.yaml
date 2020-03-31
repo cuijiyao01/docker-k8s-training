@@ -32,6 +32,11 @@ spec:
             configMapKeyRef:
               key: reviews_host
               name: ads-app-configmap
+        - name: REVIEWS_HOST_INTERNAL
+          valueFrom:
+            configMapKeyRef:
+              key: reviews_host_internal
+              name: ads-app-configmap
         - name: SPRING_DATASOURCE_URL
           valueFrom:
             configMapKeyRef:

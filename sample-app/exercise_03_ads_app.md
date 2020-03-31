@@ -10,16 +10,21 @@
 
 - We decided our initial expected load to **Ads App** requires only 1 instance of our **Ads App**. Therefore we use a **Deployment** with 1 instances (replicas is 1).
 
-- The **Bulletinboard-Ads**-App needs some environment variables set: `REVIEWS_HOST` containing a url to the **Bulletinboard-Reviews-App** and `SPRING_DATASOURCE_URL` containing the URI to the database along with `SPRING_DATASOURCE_PASSWORD` containing the password for the database.
+- The **Bulletinboard-Ads**-App needs four environment variables set: 
+  - `REVIEWS_HOST_INTERNAL` contains the url to the **Bulletinboard-Reviews-App** and is used to make calls to the app.
+  - `REVIEWS_HOST` contains a urls to the **Bulletinboard-Reviews-App** which can be used for a redirect in the browser.
+  - `SPRING_DATASOURCE_URL` containing the URI to the database along with
+  - `SPRING_DATASOURCE_PASSWORD` containing the password for the database.
 
 - The structure for **Labels** (and with this for **Selectors**) has 2 levels as in exercise 2: To separate **Bulletinboard-Ads** from **Bulletinboard-Reviews** we introduce the **Label** `component` with value `ads` and `reviews`. To separate the App-part from the Database-part within each "Component" we introduce the **Label** `module` with value `app` and `db`.
 
 ## Step 1: ConfigMap
 
-Purpose: Create a **ConfigMap** containing the values for the environment variables `REVIEWS_HOST` and `SPRING_DATASOURCE_URL`.
+Purpose: Create a **ConfigMap** containing the values for the environment variables `REVIEWS_HOST`, `REVIEWS_HOST_INTERNAL` and `SPRING_DATASOURCE_URL`.
 
-- Specify a **ConfigMap** for the **Bulletinboard-Ads** with name `ads-app-configmap`, with two key-value pairs and with proper labels for component and module.
+- Specify a **ConfigMap** for the **Bulletinboard-Ads** with name `ads-app-configmap`, with three key-value pairs and with proper labels for component and module.
 - The **Bulletinboard-Reviews** is not yet deployed to the cluster, therefore we don't know the reviews-host-url yet, but let us assume we will make **Bulletinboard-Reviews** available under `https://bulletinboard-reviews-<your-participant-number>.ingress.<CLUSTER_NAME>.<PROJECT_NAME>.shoot.canary.k8s-hana.ondemand.com`.
+- Since we want to keep the data traffic inside of the cluster we will use the ingress url only for a redirect in the browser. For direct calls to the **Bulletinboard-Reviews** we will use `http://reviews-reviews-app-service`. This will be the name of the service exposing the reviews pods. The double word `reviews` is intended! We will talk about this dns name later on.
 - The datasource url given through the headless-service is `jdbc:postgresql://ads-db-statefulset-0.ads-db-service:5432/postgres`.
 - Remember the keys you use for these values. You need them in yaml-file for the **Deployment** in the next step.
 - Save your **ConfigMap** under the filename `ads-app-configmap.yaml` in folder `k8s-bulletinboard/ads`.
@@ -78,6 +83,9 @@ spec:
         - name: "???"
           valueFrom:
             <reference to configmap/secret>
+        - name: "???"
+          valueFrom:
+            <reference to configmap/secret>
         - name: SPRING_DATASOURCE_USERNAME
           value: postgres
         resources:
@@ -86,7 +94,7 @@ spec:
           requests:
             memory: 800Mi
 ```
-- The missing environment variables in the snippet are `REVIEWS_HOST`, `SPRING_DATASOURCE_URL` and `SPRING_DATASOURCE_PASSWORD`.
+- The missing environment variables in the snippet are `REVIEWS_HOST`, `REVIEWS_HOST_INTERNAL`, `SPRING_DATASOURCE_URL` and `SPRING_DATASOURCE_PASSWORD`.
 
 - We also add a specific resource request for this app. The default memory-limit in each trainings namespace is 500Mi which is not enough for a spring boot application. We request 800Mi and allow an increase to 1G of Memory to be consumed by each pod. 
 

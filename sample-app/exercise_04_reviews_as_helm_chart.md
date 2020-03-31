@@ -54,7 +54,9 @@ The parameters `ShortName` and `LongName` are used as a workaround to overcome l
 
 If want to know more about this limitation read Step 3 of the next exercise.
 
-Now do `helm install <release-name> bulletinboard-reviews-chart.tgz --values customValues.yaml` in the directory containing the helm-chart-archive and the `customValues.yaml`. (Or adapt the path in command accordingly.)
+Now do `helm install reviews bulletinboard-reviews-chart.tgz --values customValues.yaml` in the directory containing the helm-chart-archive and the `customValues.yaml`. (Or adapt the path in command accordingly.) The third word (reviews) in this command will be the name of the helm release. You can choose any name here, but the name will be part of every resource deployed by the chart.
+
+> **Important**: If you choose a different name for the helm release you have to adapt the configmap of the **Bulletinboard-Ads** because the name of the service will then be `<release-name>-reviews-app-service`, therefor the `REVIEWS_HOST_INTERNAL` value needs to be `http://<release-name>-reviews-app-service`. 
 
 You can test that the reviews-service is running by executing `kubectl get all -l "component=reviews"`.
 The pods should be on state running.
