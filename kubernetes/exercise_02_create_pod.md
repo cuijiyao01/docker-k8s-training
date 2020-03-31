@@ -52,7 +52,7 @@ You should see the liveness probe requests coming in.
 In case `logs` or `describe` or any other of the output generating commands don't help you to get to the root cause of an issue, you may want to take a look yourself.
 The `exec` command helps you in this situation. Adapt and run the following command, to open a shell session into the container running as part of the pod:
 
-`kubectl exec -ti <my-pod> bash`
+`kubectl exec -ti <my-pod> -- bash`
 
 ## Step 5: clean up
 It's time to clean up - go and delete the pod you created. But before open a second shell and run `watch kubectl get pods`.

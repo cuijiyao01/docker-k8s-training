@@ -62,7 +62,7 @@ spec:
 ```
 
 ### Step 3: create custom content
-Locate the alpine pod and open a shell session into it: `kubectl exec -ti nginx-storage-pod ash`
+Locate the alpine pod and open a shell session into it: `kubectl exec -ti nginx-storage-pod -- ash`
 Alpine Linux has no `bash` binary, `ash` is actually correct :wink:
 Navigate to the directory mentioned in the `volumeMounts` section and create a custom `index.html`. You can re-use the code you used in the docker exercises the other day. Once you are done, disconnect from the pod and close the shell session.
 

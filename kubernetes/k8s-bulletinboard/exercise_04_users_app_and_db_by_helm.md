@@ -111,6 +111,6 @@ Also since we activated TLS in Exercise 3 , remember to send the requests to `ht
 - For others, like labels, you need to delete the old installation before reinstalling the new one. `helm delete <release-name>`
 - The release name are the first two words (adjective+animal) of the name of the users-db and users-app pods in `kubectl get pods`.
 - For step 3, if you can't create a new ads. 
-  - check if the new variables are known inside the pods: `kubectl exec -it <ads-app-...> bash` and do `export` to see what the environment variables are.
+  - check if the new variables are known inside the pods: `kubectl exec -it <ads-app-...> -- bash` and do `export` to see what the environment variables are.
   - check kubectl logs <ads-app-...> on both pods
   - If in postman you get a 200 and all ads as a return to a POST, check if your URL starts with https://
