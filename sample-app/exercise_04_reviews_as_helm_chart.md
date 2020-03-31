@@ -40,7 +40,7 @@ wget https://github.wdf.sap.corp/slvi/docker-k8s-training/raw/newSampleApp/sampl
 
 ## Step 1: Helm
 
-Purpose: Get use an helm chart provided by someone else.
+Purpose: Get familiar working with an helm chart provided by someone else.
 
 Providing all necessary parameters through the command line is cumbersome.
 Therefore create a new file next to the chart-folder called `customValues.yaml` and provide all parameters there.

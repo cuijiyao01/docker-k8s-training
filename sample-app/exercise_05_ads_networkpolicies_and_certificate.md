@@ -74,7 +74,7 @@ kubectl run helper -it --restart=Never --rm --image=postgres:9.6 --env="PGCONNEC
 ```
 Again you should get a root prompt, execute `psql -h ads-db-statefulset-0.ads-db-service -p 5432 -U postgres -W postgres` which, after you entered the password, should return with `timeout expired` after 5 seconds.
 
-To test the egress `kubectl exec -it ads-db-statefulset-0 bash` and try to "ping" any page/pod e.g. `wget google.de`.
+To test the egress `kubectl exec -it ads-db-statefulset-0 -- bash` and try to "ping" any page/pod e.g. `wget google.de`.
 It should fail.
 If `wget` is not there, try e.g. `apt-get update`.
 This will also timeout.
@@ -86,7 +86,7 @@ Purpose: control traffic to and from *ads:app* pod, learn how to select a pod in
 - Specify a **NetworkPolicy** for the **bulletinboard ads app**, with name `ads-app-networkpolicy` and with proper labels and selector for component and module. 
 
 - We want that __ads:app__ only takes messages from the ingress-controller. Configure the network policy accordingly. 
-The ingress controller is in the `kube-system` namespace and has the following labels you can use: 
+The ingress controller is in the `kube-system` namespace, so you will have to configure the network policy to allow traffic from specific pods in this namespace. To get the namespace's label, run `kubectl get ns kube-system --showl-labels`. The ingress controller itself has the following labels, which you have to use as well: 
 ```yaml
 app: nginx-ingress 
 component: controller 
@@ -119,12 +119,17 @@ We could go ahead a create a custom certificate and use it, like we have done in
 To secure an ingress we need to configure the ingress resource and provide a secret containing the certificate. 
 Gardener has implemented a controller which is automatically looking for ingress resources with the label `garden.sapcloud.io/purpose: managed-cert`, creates trusted certificates for them using `Let'sEncrypt` and putting those into secrets. The only thing we have to do configure the ingress and wait for the controller to do its work.
 
-Sadly this feature is limited to urls with less than 64 characters. Or to be more precise we need at least one url with less than 64 characters.
-Let us use a four letter hostname: A `b` for "bulletinboard", a `a` for "ads" and the last two digits of your participant number. 
-Hence we get for example `br40.ingress.cw43.k8s-train.shoot.canary.k8s-hana.ondemand.com` when your participant number is `part-0040` and the cluster name is `cw43`
+Sadly this feature is limited to urls with 64 or less characters. Or, to be more precise, we need at least one URL which fits into the 64 characters of the common name field of the certificate request. Any URL with more characters may be added to the certificate request via the subject alternative name field.
+To construct a URL of suitable lenght, let us use a four letter hostname pattern: A `b` for "bulletinboard", a `a` for "ads" and the last two digits of your participant number. 
+Hence we get for example `br40.ingress.cw43.k8s-train.shoot.canary.k8s-hana.ondemand.com` when your participant number is `part-0040` and the cluster name is `cw43`.
 
-Now configure the yaml accordingly. For the secret-name you can choose anything you like, the controller will pick it up and generate the required secret with the given name.
-Don't forget to put in the necessary label!
+To check the lenght of such a string, run this command:
+```bash
+echo br40.ingress.cw43.k8s-train.shoot.canary.k8s-hana.ondemand.com | wc -c
+```
+
+Now configure the yaml accordingly. For the secret-name you can choose anything you like, the controller will pick it up and generate the required secret with the given name. But be careful with the order of elements in the hosts array. The `short-hostname` has to be the first element as only this will be written into the CN field. 
+Finally, don't forget to put in the necessary label!
 
 ```yaml
 apiVersion: networking.k8s.io/v1beta1
@@ -155,3 +160,7 @@ spec:
       - <long-hostname>.ingress.<your-trainings-cluster>.<your-project-name>.shoot.canary.k8s-hana.ondemand.com
       secretName: <secret-name>
 ```
+
+### Test the updated ingress
+Usually, it takes around 1-2 minutes for the certificates to be requested, validated and added to the ingress. The best way to check the ingress' status is to `describe` it. The responsible cert-manager will post events just like all the other controllers we've seen so far.
+Once the certificate has been provisioned, check both ingress hosts. They should point to the same backend target (`ads-app-service`) and default to a https connection. Take a look at the certificate in your browser, go to the details and check the subject alternative name, which should contain the additional DNS name.
