@@ -125,6 +125,8 @@ spec:
 
 - After successful creation of the **Statefulset** check, whether the **Pod** `ads-db-statefulset-0` got created properly via `kubectl get pod ads-db-statefulset-0` or in more detail via `kubectl describe pod ads-db-statefulset-0` . Also check whether the Database is ready to be connected via `kubectl logs ads-db-statefulset-0`. There should be the line: `LOG:  database system is ready to accept connections` in the logs. 
 
+- In case you are getting stuck, revert to the well-known debugging patterns with `kubectl describe` to get events & resource information or `kubectl logs` to spot application errors. Only the last resort would be the `kubectl diff` [command](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#diff) to detect differences between a solution file and the deployed version.
+
 ## Optional - Step 3: Detailed Check whether Pod with Postgres DB is running properly
 
 Purpose: check whether the database is running and accepting connections. Use either a temporary postgresql pod with sql or the [**pgadmin tool**](https://www.pgadmin.org/) for that.
