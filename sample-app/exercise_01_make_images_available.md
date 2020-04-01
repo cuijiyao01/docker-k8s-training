@@ -67,7 +67,7 @@ The jar-file then is build with `mvn verify`.
 - Use two stages.
 - The for the builder stage you can use the image `maven:3.6.3`.
 - For simplicity copy over the complete content of the git repository.
-- In the stage use `mvn verify` to build the `.jar`-file. Maven creates the file in the folder named `target` next to the `src` folder.
+- In the first stage use `mvn verify` to build the `.jar`-file. Maven creates the file in the folder named `target` next to the `src` folder.
 - In the final stage reuse what is done in the Dockerfile, that is already part of the repository, but copy the `.jar`-file from the builder instead.
 
 ## Step 5: create imagePullSecret
