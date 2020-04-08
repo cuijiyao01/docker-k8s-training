@@ -62,7 +62,7 @@ Of course it is possible to create deployments from a yaml file. The following s
 Firstly, delete the deployment you just created:
 `kubectl delete deployment nginx`
 
-Secondly, try to write your own yaml file for a new deployment that creates 3 replicas of an `nginx` image, with version tag `mainline`.
+Secondly, try to write your own yaml file for a new deployment that creates 3 replicas of an `nginx` image, with version tag `latest`.
 
 Below is a skeleton of a deployment, however it is still missing some essential fields. Use `kubectl explain deployment` or check the [api reference](https://kubernetes.io/docs/reference/#api-reference) for details.
 
@@ -91,6 +91,12 @@ spec:
 Now create the deployment again. Remember that you can always use the `--dry-run` flag to test. Use the yaml file you just wrote instead of the `create` generator.
 
 `kubectl apply -f <your-file>.yaml`
+
+## Step 7: kubectl diff
+Congratulations - you have described a more complex resource in yaml format and deployed it to the cluster! But the above step had a bug and instead of `mainline` images with the `latest` tag are used. To switch to `mainline` you could use the `edit` mechanism again. However this will only affect the live version, not the file on disk. Instead of implementing the same change twice, let's use a more efficient way:
+- edit the local yaml file and change the image's tag to `mainline`
+- run `kubectl diff -f <your-file>.yaml` to make sure only, the image has been changed. `diff` compares the live version with the given file. It allows you to evaluate the result before acctually making the change.
+- update the live version with `kubectl apply --record -f <your-file>.yaml`
 
 ## Finally, do not delete the latest version of your deployment. It will be used throughout the following exercises.
 
