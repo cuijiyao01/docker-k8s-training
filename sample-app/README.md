@@ -37,3 +37,18 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
   - Bulletinboard-Ads Database
   - Bulletinboard-Ads App
 - Enable HTTPS connection by adding TLS certificates to **Ingress**
+
+## Troubleshooting section
+
+Since we are using the master branch, there is a slight chance that a new commit has broken the basic functionality. In case you run into any issues you can use a commit, which is tested, to build the docker images from:
+
+#### Bulletinboard-Ads
+```
+git checkout ac5ddd541d6d7d8aa0ac645ab8e865e1eb483453
+```
+
+#### Bulletinboard-Ads
+```
+git checkout 561848ef786cfe6ebad3dcb0144b040fe7239cb2
+```
+
