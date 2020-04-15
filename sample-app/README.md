@@ -21,12 +21,12 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 - Create ImagePullSecret
 
 ### [02 Exercise: "Setup Bulletinboard-Ads Database"](exercise_02_ads_db.md)
-- Database will run as a **Statefulset**: Create prerequisites and configuration entities: secret and service
-- Create a **Statefulset** for the Ads DB, based on above entities.
+- Database will run as a **Statefulset** secured with a password: Create a **Secret** for the password.
+- Create a **Statefulset** for the Ads DB together with a headless **Service**.
 
 ### [03 Exercise: "Setup Bulletinboard-Ads Application"](exercise_03_ads_app.md)
-- Create required **Configmap** and **Secret**
-- Create **Deployment** for Ads App, based on above entities
+- Create required **Configmap**
+- Create **Deployment** for Ads App, using the **Configmap** and the **Secret** of the DB.
 - Publish Ads App via **Service** and **Ingress**
 
 ### [04 Exercise: "Using Helm-chart to setup Bulletinboard-Reviews](exercise_04_reviews_as_helm_chart.md)
