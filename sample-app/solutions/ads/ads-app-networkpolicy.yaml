@@ -29,8 +29,10 @@ spec:
         matchLabels:
           component: ads
           module: db
-    - ipBlock:
-        cidr: <IPAddress>/0
+    - podSelector:
+        matchLabels:
+          component: reviews
+          module: app
     - podSelector:
         matchLabels:
           k8s-app: kube-dns

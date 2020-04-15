@@ -86,7 +86,7 @@ Purpose: control traffic to and from *ads:app* pod, learn how to select a pod in
 - Specify a **NetworkPolicy** for the **bulletinboard ads app**, with name `ads-app-networkpolicy` and with proper labels and selector for component and module. 
 
 - We want that __ads:app__ only takes messages from the ingress-controller. Configure the network policy accordingly. 
-The ingress controller is in the `kube-system` namespace, so you will have to configure the network policy to allow traffic from specific pods in this namespace. To get the namespace's label, run `kubectl get ns kube-system --showl-labels`. The ingress controller itself has the following labels, which you have to use as well: 
+The ingress controller is in the `kube-system` namespace, so you will have to configure the network policy to allow traffic from specific pods in this namespace. To get the namespace's label, run `kubectl get ns kube-system --show-labels`. The ingress controller itself has the following labels, which you have to use as well: 
 ```yaml
 app: nginx-ingress 
 component: controller 
@@ -99,15 +99,18 @@ Before we continue with the egress traffic, let us apply the ingress restriction
 
 - Test that everything still works fine.
 
-- Furthermore we want to restrict the egress traffic from __ads:app__ to certain pods only. This would be __ads:db__ and the DNS server in our cluster as well as the reviews service.
+Furthermore we want to restrict the egress traffic from __ads:app__ to certain pods only. This would be __ads:db__ and the DNS server in our cluster as well as the reviews service.
   - The DNS server is also in the `kube-system` namespace and has a label `k8s-app: kube-dns`
   - The bulletinboard-reviews
   - The bulletinboard-ads database pod was labeled earlier by ourselves
 
-We have to consider that the bulletinboard-ads connects to the bulletinboard-reviews through the public internet (e.g. https://bulletinboard-reviews-part-0040.ingress.vw43.k8s-train.shoot.canary.k8s-hana.ondemand.com), therefore we cannot simple use a PodSelector here.
-But we can use a `ipBlock` to allow egress traffic to the bulletinboard-reviews.
+The helm chart of the bulletinboard-reviews follows our labeling convention. Therefore the reviews app pod has the labels:
+```yaml
+component: reviews
+module: app
+```
 
-- Find out the IP of the LoadBalancer Service that is publishing the ingress-controller to the internet and use this IP Address in the egress section.
+- Restrict the egress traffic, to only allow the necessary traffic mentioned above.
 
 - Again test the bulletinboard, if everything still works.
 
@@ -120,10 +123,10 @@ To secure an ingress we need to configure the ingress resource and provide a sec
 Gardener has implemented a controller which is automatically looking for ingress resources with the label `garden.sapcloud.io/purpose: managed-cert`, creates trusted certificates for them using `Let'sEncrypt` and putting those into secrets. The only thing we have to do configure the ingress and wait for the controller to do its work.
 
 Sadly this feature is limited to urls with 64 or less characters. Or, to be more precise, we need at least one URL which fits into the 64 characters of the common name field of the certificate request. Any URL with more characters may be added to the certificate request via the subject alternative name field.
-To construct a URL of suitable lenght, let us use a four letter hostname pattern: A `b` for "bulletinboard", a `a` for "ads" and the last two digits of your participant number. 
+To construct a URL of suitable length, let us use a four letter hostname pattern: A `b` for "bulletinboard", a `a` for "ads" and the last two digits of your participant number. 
 Hence we get for example `br40.ingress.cw43.k8s-train.shoot.canary.k8s-hana.ondemand.com` when your participant number is `part-0040` and the cluster name is `cw43`.
 
-To check the lenght of such a string, run this command:
+To check the length of such a string, run this command:
 ```bash
 echo br40.ingress.cw43.k8s-train.shoot.canary.k8s-hana.ondemand.com | wc -c
 ```
