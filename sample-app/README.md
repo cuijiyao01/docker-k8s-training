@@ -21,7 +21,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 - Create ImagePullSecret
 
 ### [02 Exercise: "Setup Bulletinboard-Ads Database"](exercise_02_ads_db.md)
-- Database will run as a **Statefulset**: Create prerequisites and configuration entities: configmap, secret and service
+- Database will run as a **Statefulset**: Create prerequisites and configuration entities: secret and service
 - Create a **Statefulset** for the Ads DB, based on above entities.
 
 ### [03 Exercise: "Setup Bulletinboard-Ads Application"](exercise_03_ads_app.md)
