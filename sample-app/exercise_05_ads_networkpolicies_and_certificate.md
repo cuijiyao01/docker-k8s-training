@@ -124,7 +124,7 @@ Gardener has implemented a controller which is automatically looking for ingress
 
 Sadly this feature is limited to urls with 64 or less characters. Or, to be more precise, we need at least one URL which fits into the 64 characters of the common name field of the certificate request. Any URL with more characters may be added to the certificate request via the subject alternative name field.
 To construct a URL of suitable length, let us use a four letter hostname pattern: A `b` for "bulletinboard", a `a` for "ads" and the last two digits of your participant number. 
-Hence we get for example `br40.ingress.cw43.k8s-train.shoot.canary.k8s-hana.ondemand.com` when your participant number is `part-0040` and the cluster name is `cw43`.
+Hence we get for example `ba40.ingress.cw43.k8s-train.shoot.canary.k8s-hana.ondemand.com` when your participant number is `part-0040` and the cluster name is `cw43`.
 
 To check the length of such a string, run this command:
 ```bash
