@@ -4,7 +4,7 @@
 
 - In this third exercise we will focus on the **setup of bulletinboard-ads app** itself (Ads:App) and make it available within a K8s cluster via a **Service** and publish externally/ into the Internet via an **Ingress** (See picture below).
 
-<img src="images/Bulletinboard_Exercise_3.png" width="800"/>
+<a href="#scope"><img src="images/Bulletinboard_Exercise_3.png" width="800"/></a>
 
 - Finally we will check **Ads App** running properly together with **Ads Database**.
 
