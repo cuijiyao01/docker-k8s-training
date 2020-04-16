@@ -4,7 +4,7 @@
 
 - In this second exercise we will focus on the **setup of bulletinboard-ads database**, where the bulletinboard-ads microservice can store the advertisements (See picture below).
 
-<img src="images/Bulletinboard_Exercise_2.png" width="800"/>
+<a href="#scope"><img src="images/Bulletinboard_Exercise_2.png" width="800"/></a>
 
 - Since a database needs to store data, we will use a **Statefulset** with only one instance (replica count=1).
 - As database we will use Postgresql, where on DockerHub we can find a well suiting official [Postgresql Docker image](https://hub.docker.com/_/postgres/).
