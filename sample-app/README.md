@@ -18,7 +18,7 @@ _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap
 
 ### [01 Exercise: "Build and Push the Docker Images"](exercise_01_make_images_available.md)
 - Build and push the docker images for bulletinboard-ads and bulletinboard-reviews.
-- Create ImagePullSecret
+- Create an **ImagePullSecret** for the training-registry.
 
 ### [02 Exercise: "Setup Bulletinboard-Ads Database"](exercise_02_ads_db.md)
 - Database will run as a **Statefulset** secured with a password: Create a **Secret** for the password.
@@ -47,7 +47,7 @@ Since we are using the master branch, there is a slight chance that a new commit
 git checkout ac5ddd541d6d7d8aa0ac645ab8e865e1eb483453
 ```
 
-#### Bulletinboard-Ads
+#### Bulletinboard-Reviews
 ```
 git checkout 561848ef786cfe6ebad3dcb0144b040fe7239cb2
 ```
