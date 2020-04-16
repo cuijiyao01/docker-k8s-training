@@ -3,7 +3,7 @@
 ## Scope
 - In the fourth exercise we will bring up the bulletinboard-reviews service with a provided helm chart (See picture below).
 
-<img src="images/Bulletinboard_Exercise_4.png" width="800"/>
+<a href="#scope"><img src="images/Bulletinboard_Exercise_4.png" width="800"/></a>
 
 - You only have to edit/insert a few values in a `customValues.yaml`.
 - After the Service is running we will finally be able to test our "complete" bulletinboard application.
