@@ -9,7 +9,7 @@ We want reach this security level for our bulletinboard-ads as well.
 
 - In this fifth and last exercise we increase security by **establishing a network policy** for bulletinboard-ads app and database and **enable TLS** (https) for the **Ingress** (See picture below).
 
-<img src="images/Bulletinboard_Exercise_5.png" width="800"/>
+<a href="#scope"><img src="images/Bulletinboard_Exercise_5.png" width="800"/></a>
 
 ## Step 1: Network policy for bulletinboard-ads database
 
