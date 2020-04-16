@@ -7,10 +7,12 @@ The Bulletinboard is build up by two individual microservices:
 - **[Bulletinboard-Ads](https://github.wdf.sap.corp/cloud-native-bootcamp/bulletinboard-ads-java)** (Java), which can **list**, **create** and **delete advertisements**
 - **[Bulletinboard-Reviews](https://github.wdf.sap.corp/cloud-native-bootcamp/bulletinboard-reviews-nodejs)** (NodeJs), which contains ratings for users.
 
+## Scenario
+
 The advertisements are presented differently depending of the rating of the user, who created the advertisement.
 The overall structure of **Bulletinboard 'in K8s'**, incl. the different **K8s entities** needed for Kubernetes can be found in the following picture.
 
-<img src="images/Bulletinboard_Overview.png" width="800" />
+<a href="#scenario"><img src="images/Bulletinboard_Overview.png" width="800" /></a>
 
 _Legend: `ingr`: Ingress, `svc`: Service, `nwp`: Network policy, `cm`: Configmap, `sec`: Secret_
 
