@@ -56,7 +56,7 @@ You can use the `helm lint` command to have your code checked in a very basic wa
 Now that the data is configurable, let's move on to `metadata`. Most of the times you want to include the release name the labels and name of your resources.
 Luckily there are some built-in variables, like the `.Release` object with its `.Name` value. Change the specific name of your config map to include the release name in addition.
 
-**Optional:** If you're up for a challenge, try to set some labels as well. Check the [built-in](https://github.com/kubernetes/helm/blob/master/docs/chart_template_guide/builtin_objects.md) objects for suitable values.
+**Optional:** If you're up for a challenge, try to set some labels as well. Check the [built-in](https://helm.sh/docs/chart_template_guide/builtin_objects/) objects for suitable values.
 
 ### Adapt NOTES.txt
 Helm prints out some friendly words and an idea what to do next after a chart was deployed. These information is stored in the `NOTES.txt` file. Adapt the content to something meaningful (e.g. how to get the configmap or some of its content).
@@ -82,7 +82,7 @@ In order to have pod print out the contents of the config map, use the following
 command: [ "/bin/sh", "-c", "for i in $(ls -1 {{ .Values.pod.mount }}/*); do echo -e \"\\nContent of $i: \"; cat $i; done; echo -e \n\n" ]
 ```
 
-Use `helm lint` to check if your templates and values are syntactically correct and that they can be interpreted by Tiller. If everything worked so far, you can either do another installation of this chart with `helm install` or you can try to do an...
+Use `helm lint` to check if your templates and values are syntactically correct. If everything worked so far, you can either do another installation of this chart with `helm install` or you can try to do an...
 
 ## Upgrade
 The last step in this exercise is to perform various updates on your release.
