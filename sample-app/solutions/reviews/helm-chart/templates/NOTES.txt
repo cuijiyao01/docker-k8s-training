@@ -1,0 +1,7 @@
+If this is the first release of the chart, a new ssl-certificate is issued.
+This may take some time.
+
+You can access bulletinboard-reviews at:
+- {{ .Values.Ingress.LongName }}.{{ .Values.Ingress.Domain }}
+and
+- {{ .Values.Ingress.ShortName }}.{{ .Values.Ingress.Domain }}

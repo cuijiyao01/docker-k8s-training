@@ -1,0 +1,22 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ads-app-ingress
+  labels:
+    component: ads
+    module: app
+    garden.sapcloud.io/purpose: managed-cert
+spec:
+  rules:
+  - host: <Hostname>.ingress.<CLUSTER_NAME>.<PROJECT_NAME>.shoot.canary.k8s-hana.ondemand.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ads-app-service
+          servicePort: ads-app-port
+  tls:
+    - hosts:
+      - <Hostname>.ingress.<CLUSTER_NAME>.<PROJECT_NAME>.shoot.canary.k8s-hana.ondemand.com
+      secretName: ads-tls-secret 

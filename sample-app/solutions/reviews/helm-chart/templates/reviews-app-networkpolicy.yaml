@@ -1,0 +1,36 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}-reviews-app-access
+  labels:
+    {{- include "labels.resources" . | indent 4}}
+    {{- include "labels.reviews.app" . | indent 4 }}
+spec:
+  podSelector:
+    matchLabels: {{- include "labels.reviews.app" . | indent 6 }}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress
+          component: controller
+      namespaceSelector:
+        matchLabels:
+          gardener.cloud/purpose: kube-system
+    - podSelector:
+        matchLabels:
+          component: ads
+  egress:
+  - to:
+    - podSelector:
+        matchLabels: {{- include "labels.reviews.db" . | indent 10}}
+    - namespaceSelector:
+        matchLabels:
+          gardener.cloud/purpose: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns

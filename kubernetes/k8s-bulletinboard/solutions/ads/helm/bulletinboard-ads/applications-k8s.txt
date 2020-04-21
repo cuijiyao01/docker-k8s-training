@@ -1,7 +1,0 @@
----
-spring:
-  datasource:
-    url: "jdbc:postgresql:// {{- template "ads-db-connection" . -}} : {{- .Values.Db.Postgres.Port -}} / {{- .Values.Db.Postgres.Database -}}"
-    username: {{ .Values.Db.Postgres.Username }}
-    password: {{ .Values.Db.Postgres.UserPassword | quote }}
-    driverClassName: org.postgresql.Driver

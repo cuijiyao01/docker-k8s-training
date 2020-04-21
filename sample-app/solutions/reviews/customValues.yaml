@@ -1,0 +1,7 @@
+App:
+  Image: <image>
+  ImagePullSecret: training-registry
+Ingress:
+  Domain: ingress.<your-trainings-cluster>.<your-project-name>.shoot.canary.k8s-hana.ondemand.com
+  ShortName: <short-hostname>
+  LongName: <long-hostname>

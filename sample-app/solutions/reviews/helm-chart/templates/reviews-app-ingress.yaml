@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-reviews-app-ingress
+  labels:
+    garden.sapcloud.io/purpose: managed-cert
+    {{- include "labels.resources" . | indent 4}}
+    {{- include "labels.reviews.app" . | indent 4}}
+spec:
+  rules:
+  - host: "{{ .Values.Ingress.ShortName }}.{{ .Values.Ingress.Domain }}"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ .Release.Name }}-reviews-app-service
+          servicePort: 80
+  - host: "{{ .Values.Ingress.LongName }}.{{ .Values.Ingress.Domain }}"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ .Release.Name }}-reviews-app-service
+          servicePort: 80
+  tls:
+  - hosts:
+    - "{{ .Values.Ingress.ShortName }}.{{ .Values.Ingress.Domain }}"
+    - "{{ .Values.Ingress.LongName }}.{{ .Values.Ingress.Domain }}"
+    secretName: {{ .Release.Name }}-reviews-tls-secret 
