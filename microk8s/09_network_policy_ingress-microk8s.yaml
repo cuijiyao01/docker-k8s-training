@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: access-nginx
+spec:
+  # the network policy will handle traffic to pods labeled with keys and values matching this selector.  
+  podSelector:
+    matchLabels:
+      run: nginx-deployment
+ # specify how incoming traffic should be handled / filtered  
+  ingress:
+  - from:
+    # allow traffic originating from pods labeled with keys and values matching this selctor
+    - podSelector:
+        matchLabels:
+          access: "true" # pods sending request require to have a label "access=true"

@@ -13,6 +13,11 @@ Once you have your VM up and running, **clone this repository to the VM**:
 git clone https://github.wdf.sap.corp/slvi/docker-k8s-training.git
 ```
 
+## Kubernetes cluster
+For regular classroom trainings a Kubernetes cluster will be provided & configured centrally. However, if you wish to look into the training material on your own, you may check the Gardener [trial cluster](https://github.wdf.sap.corp/pages/kubernetes/gardener/documentation/015-tutorials/content/howto/trial-account/) offering.
+
+If you prefer to run everything locally, there is also a way to install [microk8s](https://microk8s.io/) within the VM. Check the [README](./microk8s/README.md) for details.
+
 ## Cheat Sheets
 We have prepared a collection of basic commands which may be helpful during the training. Feel free to print the cheat-sheets for [docker](docker/Docker%20Cheat%20Sheet.docx) and [Kubernetes](kubernetes/cheat-sheet.md) and bring them along.
 

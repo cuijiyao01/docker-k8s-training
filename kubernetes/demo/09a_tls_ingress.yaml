@@ -1,5 +1,4 @@
-# 1) run admin/create_ingress.tls.sh & create tls secret in cluster
-# 2) adapt the cluster name
+# 1) adapt the cluster name
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -59,6 +58,9 @@ kind: Ingress
 metadata:
   name: simple-nginx-ingress
   labels:
+    # check this tutorial to see how the cert-manager works
+    # https://gardener.cloud/050-tutorials/content/howto/x509_certificates/#request-a-certificate-via-ingress
+    # use kubectl describe ingress simple-nginx-ingress to view cert-manager events
     garden.sapcloud.io/purpose: managed-cert
 spec:
   rules:
