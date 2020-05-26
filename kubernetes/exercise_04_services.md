@@ -11,7 +11,7 @@ Once again make sure,  everything is up and running. Use `kubectl` and check you
 
 ## Step 1: create a service
 Kubernetes provides a convenient way to expose applications. Simply run `kubectl expose deployment <deployment-name> --type=LoadBalancer --port=80 --target-port=80`.
-With `--type=LoadBalancer` you request our training infrastructure (GCP) to provision a public IP address. It will also automatically assign a cluster-IP and a nodePort in the current setup of the cluster. To create a service that gets only a cluster IP and a NodePort, use `--type=NodePort`.
+With `--type=LoadBalancer` you request our training infrastructure (GCP) to provision a public IP address. It will also automatically assign a cluster-IP and a nodePort in the current setup of the cluster. To create a service that gets only a cluster IP, a NodePort and a LoadBalancer, use `--type=LoadBalancer`.
 
 ## Step 2: connect to your service
 Checkout the newly created `service` object in your namespace. Try to get detailed information with `get -o=yaml` or `describe`. Note down the different ports exposed and try to access the application via the external IP.
@@ -23,11 +23,11 @@ Check, that the label selector matches the labels of your deployment/pods and (r
 **Important: don't delete this service, you will need it during the following exercises.**
 
 ## Step 4: optional/advanced - learn how to label
-In this last step you will expose another pod through a service. Simply create the pod from the 2nd exercise again and try to expose it as `NodePort` with `kubectl expose pod ...`.
+In this last step you will expose another pod through a service. Simply create the pod from the 2nd exercise again and try to expose it as `LoadBalancer` with `kubectl expose pod ...`.
 
 You will probably get an error message concerning missing labels. Solve this by adding a custom label to your pod and try again to expose it.
 
-Once you are able to access the nginx via the `NodePort`, take a look at the pod and the service. Determine the label as well as the corresponding selectors. Now remove the label from the pod: `kubectl label pod <your-pod> --overwrite <your-label-key>-` and try again to access the nginx via the `NodePort`. Most likely this won't work anymore.
+Once you are able to access the nginx via the `LoadBalancer`, take a look at the pod and the service. Determine the label as well as the corresponding selectors. Now remove the label from the pod: `kubectl label pod <your-pod> --overwrite <your-label-key>-` and try again to access the nginx via the `LoadBalancer`. Most likely this won't work anymore.
 
 Finally, clean up and remove the pod as well as the service you created in step 4.
 
