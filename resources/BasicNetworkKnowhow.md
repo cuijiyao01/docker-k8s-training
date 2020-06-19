@@ -69,7 +69,7 @@
 * Dynamic assignment of IP addresses to devices is done via a DHCP (=dynamic host configuration protocol) server at the time when the device (e.g. computer) enters the network (plug in the cable, connect to WLAN).
 * Computers on the internet are also addressed with IP addresses. These are pretty static / fixed and can be looked up by a global internet DNS (see below). 
 * The address space of an intranet is kept independent of the internet by a proxy (see below) that does address translation. This way you can use IP addresses inside your intranet that also exist outside in the internet. 
-* IPv4 versus IPv6: Since the standard IP addresses (IPv4) can only distinguish 2^32 addresses (32 bit = 4 bytes, roughly 4.2 billion) and the IP address space was getting used up in the internet, a new 128 bit address standard IPv6 (8 bytes) was defined. Many devices still support only IPv4 at this time. 
+* IPv4 versus IPv6: Since the standard IP addresses (IPv4) can only distinguish 2^32 addresses (32 bit = 4 bytes, roughly 4.2 billion) and the IP address space was getting used up in the internet, a new 128 bit address standard IPv6 (16 bytes) was defined. Many devices still support only IPv4 at this time. 
 * Tools: TODO
 
 ## Domain addressing, DNS
