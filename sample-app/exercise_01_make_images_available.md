@@ -26,6 +26,7 @@ Push your image to the registry and remember to give it a unique name, e.g. `bul
 docker build -t <registry-url>/bulletinboard-reviews-<participant-id>:v1 .
 docker push <registry-url>/bulletinboard-reviews-<participant-id>:v1
 ```
+registry-url: r.ingress.sha42.k8s-train.shoot.canary.k8s-hana.ondemand.com
 
 ## Step 3: clone ads repository
 
