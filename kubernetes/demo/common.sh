@@ -15,7 +15,7 @@ function wait_until_hit_c() {
 }
 
 function step() {
-  if [ "X${stepByStep}" == 'Xtrue' ]; then
+  if [ "X${stepByStep}" == 'Xtrue' ] || [ "X$2" == 'X-p' ]; then
     wait_until_hit_c
   fi
   echo ""
@@ -37,7 +37,7 @@ function usage() {
   echo -e "\t-h\tPrints Help text"
   echo -e "\t--noTyping\tDebug mode. Disables simulated typing"
   echo -e "\t--noWaiting\tNo wait"
-  echo -e "\t-stepByStep\tstop and wait mode"
+  echo -e "\t--step-by-step|--ss\tstop and wait mode"
   echo -e "\t-silent\tno prompt for postman"
   echo -e ""
 }
