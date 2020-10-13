@@ -45,12 +45,12 @@ step "Scale the deployment up to 3 and reload the page to display the welcome te
 pe 'kubectl scale --replicas=3 deployment/webserver'
 
 replicas=`kubectl get deployment/webserver -o=jsonpath='{.status.availableReplicas}'`
-until [ "X$replicas" == "3" ];
+until [ "X$replicas" == "X3" ];
 do
-  pe "not all pods are ready, let wait for a while"
+  p "only $replicas/3 pods are ready, let wait for all pods to be ready"
   replicas=`kubectl get deployment/webserver -o=jsonpath='{.status.availableReplicas}'`
 done
-
+p "Now $replicas/3 pods are ready"
 p 'Again, describe the service and show the endpoints list' 
 pe "kubectl describe svc/webserver-service |grep -E --color 'Endpoints.*$|$'"
 
@@ -65,6 +65,6 @@ pe "kubectl get pods -l tier=web-frontend -o wide"
 p "The IP addresses of the pods and the service endpoints should match"
 
 step "show document"
-p "10 most common reasons why k8s deployments fail"
-p "https://kukulinski.com/10-most-common-reasons-kubernetes-deployments-fail-part-1/"
-p 'https://kukulinski.com/10-most-common-reasons-kubernetes-deployments-fail-part-2/'
+echo  "10 most common reasons why k8s deployments fail"
+echo  'https://kukulinski.com/10-most-common-reasons-kubernetes-deployments-fail-part-1/'
+echo  'https://kukulinski.com/10-most-common-reasons-kubernetes-deployments-fail-part-2/'
