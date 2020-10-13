@@ -72,7 +72,7 @@ With `docker tag`, give your image a nice name such as *secure_nginx* and a rele
 
 ## Step 8: Push the image to a registry
 
-The K8s cluster prepared for the training is also serving a docker registry at  **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com** to which you can push your image. The values for *\<cluster-name\>* and *\<project-name\>* will be given to you by your trainer and **must be substituted** respectively.
+The K8s cluster prepared for the training is also serving a docker registry at **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com** (r.ingress.sha42.k8s-train.shoot.canary.k8s-hana.ondemand.com) to which you can push your image. The values for *\<cluster-name\>* and *\<project-name\>* will be given to you by your trainer and **must be substituted** respectively.
 
 Since the registry is setup with basic authentication, you have to login first and Docker provides a way to manage your login data. With `docker login <registry-URL>` you can authenticate once and store the credentials in `~/.docker/config.json`. For our registry **the username is `participant` and the password is `2r4!rX6u5-qH`**.
 
