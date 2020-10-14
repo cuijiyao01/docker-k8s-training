@@ -1,10 +1,3 @@
-This demo is about services and how they relate to endpoints.
-
-
-10 most common reasons why k8s deployments fail
-https://kukulinski.com/10-most-common-reasons-kubernetes-deployments-fail-part-1/
-https://kukulinski.com/10-most-common-reasons-kubernetes-deployments-fail-part-2/
-
 #!/bin/bash
 if [ `id -u` -eq 0 ]; then
 	echo "Please do not run this script as root."
