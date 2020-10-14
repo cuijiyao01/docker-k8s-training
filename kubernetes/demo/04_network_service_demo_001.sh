@@ -22,7 +22,7 @@ step 'Show the service with the clusterIP address and associated end points'
 pe "kubectl describe svc/nginx-demo"
 
 step "Scale the deployment up and show again the updated list of end points"
-pe "kubeclt scale --replicas=2 deployment/nginx-demo"
+pe "kubectl scale --replicas=2 deployment/nginx-demo"
 
 step "show service again"
 pe "kubectl describe svc/nginx-demo"
