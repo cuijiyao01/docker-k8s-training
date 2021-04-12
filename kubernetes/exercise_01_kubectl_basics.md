@@ -5,13 +5,11 @@ In this exercise you will learn how the command line interface (CLI) `kubectl` c
 ## Step 0: check your environment
 Login to your VM and locate the kubectl binary by running `which kubectl`. The result should return the path to the binary.
 
-Run the following commands, to download your personal `kube.config`. Replace _<training_id>_ and _<your_namespace_id>_ with the values that have been given to you by your trainer.
+Get your personal `kube.config` from [share folder](https://sap.sharepoint.com/teams/Dockerk8sSFPVG2021AprilTraining/Shared%20Documents/Forms/AllItems.aspx?RootFolder=%2Fteams%2FDockerk8sSFPVG2021AprilTraining%2FShared%20Documents%2FGeneral%2Ftraining%2D82384c7b%2Dapril%2D2021%2Fkube%2Dconfigs&FolderCTID=0x012000E54FE2D3C494004E85CAE2B4BAE8F91D)
+Find the config file in folder that have been given to you by your trainer.
+Replace the `~/.kube/config` with the download `kube.config` file. 
 
-```bash
-~/setup/get_kube_config.sh <training_id> <your_namespace_id>
-```
-
-Run `kubectl config get-contexts` to ensure a configuration file is available and/or `kubectl version` to test you can connect to the cluster. If you face any issue try to re-run the script and make sure the file `~/.kube/config` exist and is not empty.
+Run `kubectl config get-contexts` to ensure a configuration file is available and/or `kubectl version` to test you can connect to the cluster. 
 
 ## Step 1: check the nodes
 Use the `kubectl get nodes` command to get the basic information about the clusters' nodes. Try to find out, how the output can be modified. Hint: use the `-o <format>` switch. More information can be found by appending `--help` to your command.
