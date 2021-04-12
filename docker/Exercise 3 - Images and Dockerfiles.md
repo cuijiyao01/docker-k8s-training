@@ -9,8 +9,8 @@ Create an empty directory on your VM, change into it and create an empty `Docker
 We want to copy a custom (yet very simple) website to the image. You can either write your own _index.html_ or you can download a ready-made website with an image into your build context:
 
 ```bash
-wget -O evil.jpg https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.jpg
-wget -O index.html https://github.wdf.sap.corp/raw/slvi/docker-k8s-training/master/docker/res/evil.html
+wget -O evil.jpg https://github.wdf.sap.corp/202104-sha-docker-k8s-training/docker-k8s-training/blob/master/docker/res/evil.jpg
+wget -O index.html https://github.wdf.sap.corp/202104-sha-docker-k8s-training/docker-k8s-training/blob/master/docker/res/evil.html
 ```
 
 ## Step 1: extend an existing image
