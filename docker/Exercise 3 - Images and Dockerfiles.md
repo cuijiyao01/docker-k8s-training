@@ -23,7 +23,7 @@ Have a look at [DockerHub](https://hub.docker.com/_/nginx) for possible image ta
 
 Use the `COPY` directive to the place the custom website files you created or downloaded in Step 1 into the image at `/usr/share/nginx/html`.
 
-## Step 3: create an SSL configuration for _nginx_
+## Step 3: (Optional) create an SSL configuration for _nginx_
 
 In order to enable SSL for nginx, you will have to place an additional configuration file into the image.
 
@@ -48,7 +48,7 @@ server {
 
 Again, with the help of the `COPY` directive, make sure that this file ends up in your image at `/etc/nginx/conf.d/ssl.conf`.
 
-## Step 4: add the certificates to image
+## Step 4: (Optional) add the certificates to image
 
 For SSL/TLS to work, we will need an encryption key and a certificate. We use OpenSSL to create a self-signed certificate. Use the following command to create an encryption key and a certificate.
 
@@ -58,7 +58,7 @@ openssl req -x509 -nodes -newkey rsa:4096 -keyout nginx.key -out nginx.crt -days
 
 With the COPY directive, make sure the files `nginx.key` and `nginx.crt` end up inside your image in the directory `/etc/nginx/ssl/` (the trailing `/` is important here).
 
-## Step 5: expose the secure HTTP port
+## Step 5: expose the (secure) HTTP port
 
 The default _nginx_ image only exposes port 80 for unencrypted HTTP. Since we want to enable encrypted HTTPS, we will have to expose port 443 with the `EXPOSE` directive as well.
 
@@ -70,16 +70,3 @@ Use the `docker build` command to build the image. Make note of the UID of the n
 
 With `docker tag`, give your image a nice name such as *secure_nginx* and a release number (again, use your participant's ID as release number).
 
-## Step 8: Push the image to a registry
-
-The K8s cluster prepared for the training is also serving a docker registry at **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com** (r.ingress.sha42.k8s-train.shoot.canary.k8s-hana.ondemand.com) to which you can push your image. The values for *\<cluster-name\>* and *\<project-name\>* will be given to you by your trainer and **must be substituted** respectively.
-
-Since the registry is setup with basic authentication, you have to login first and Docker provides a way to manage your login data. With `docker login <registry-URL>` you can authenticate once and store the credentials in `~/.docker/config.json`. For our registry **the username is `participant` and the password is `2r4!rX6u5-qH`**.
-
-Next, use the `docker tag` command to tag your image correctly so that the registry is used. The name of your image should be **secure_nginx with your participant ID** as release tag. For instance, if you are working on *part-0001*, tag your image like **"\<registry name\>/secure_nginx:part-0001"**.
-
-Use `docker push <full-image-name>:<tag>` to upload your image to the registry.
-
-If the push succeeded, open the registry in a browser: **registry.ingress.*\<cluster-name\>*.*\<project-name\>*.shoot.canary.k8s-hana.ondemand.com/v2/_catalog**
-
-Ideally you would see an "secure_nginx" repository there. To browse the list of tags use **/v2/< repo-name >/tags/list**, where the repo name should be *secure_nginx*.
